@@ -26,7 +26,7 @@ keywords:
   - interval arithmetic
   - Poisson point process
 # doi: <software DOI to be supplied by V.R.; distinct from the archive DOI>
-# repository-code: <GitHub repository URL to be supplied by V.R.>
+repository-code: "https://github.com/HubHubHubHubHub/certoutage"
 references:
   - type: software
     title: 'Reproducibility archive for "Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting"'

@@ -24,7 +24,7 @@ keywords = ["outage probability", "RIS", "NOMA", "energy harvesting",
 [project.urls]
 "Preprint" = "https://hal.science/hal-05879102"
 "Reproducibility archive" = "https://doi.org/10.5281/zenodo.24450534"
-# "Repository" = "<GitHub repository URL to be supplied by V.R.>"
+"Repository" = "https://github.com/HubHubHubHubHub/certoutage"
 # "Software DOI" = "<DOI URL for certoutage, to be supplied by V.R.>"
 
 [project.optional-dependencies]
