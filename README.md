@@ -1,5 +1,7 @@
 # certoutage
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24509256.svg)](https://doi.org/10.5281/zenodo.24509256)
+
 Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting
 
 `certoutage` provides deterministic, two-sided outage bounds for the Letter's
@@ -189,11 +191,11 @@ See [CITATION.cff](CITATION.cff) and [codemeta.json](codemeta.json). Cite this
 extraction as:
 
 > Victor Rabiet (2026). certoutage: certified outage bounds for thermal
-> RIS-NOMA. Version 0.1.0, 24 November 2026.
+> RIS-NOMA. Version 0.1.0, 24 November 2026. https://doi.org/10.5281/zenodo.24509257
 
 Also acknowledge the original [archive](https://doi.org/10.5281/zenodo.24450534)
-and the [Letter](https://hal.science/hal-05879102). The software DOI will be
-added after it has been assigned.
+and the [Letter](https://hal.science/hal-05879102). Software DOI: [10.5281/zenodo.24509256](https://doi.org/10.5281/zenodo.24509256)
+(all versions); version 0.1.0 is [10.5281/zenodo.24509257](https://doi.org/10.5281/zenodo.24509257).
 
 ## Licenses
 

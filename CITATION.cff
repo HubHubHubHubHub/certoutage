@@ -25,7 +25,7 @@ keywords:
   - energy harvesting
   - interval arithmetic
   - Poisson point process
-# doi: <software DOI to be supplied by V.R.; distinct from the archive DOI>
+doi: "10.5281/zenodo.24509256"
 repository-code: "https://github.com/HubHubHubHubHub/certoutage"
 references:
   - type: software

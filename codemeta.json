@@ -56,5 +56,6 @@
       "description": "submitted to IEEE Wireless Communications Letters"
     }
   ],
-  "codeRepository": "https://github.com/HubHubHubHubHub/certoutage"
+  "codeRepository": "https://github.com/HubHubHubHubHub/certoutage",
+  "identifier": "https://doi.org/10.5281/zenodo.24509256"
 }
