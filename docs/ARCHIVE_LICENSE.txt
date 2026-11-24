@@ -1,0 +1,49 @@
+License allocation for this archive
+===================================
+
+Copyright (c) 2026 Victor Rabiet, for the original code, data and texts.
+
+1. Original Python programs and other original executable source code:
+   MIT License, reproduced below.
+
+2. Original numerical data, figures, manuscript source and explanatory texts:
+   Creative Commons Attribution 4.0 International (CC BY 4.0).
+   https://creativecommons.org/licenses/by/4.0/
+   Full terms: LICENSES/CC-BY-4.0.txt.
+   Attribute Victor Rabiet and the archive title and version in METADATA.json;
+   include the archive DOI once available and indicate changes.
+
+3. Third-party exception: source_letter/IEEEtran.cls is an unmodified copy
+   of IEEEtran 1.8b. It remains under the LaTeX Project Public License 1.3,
+   with all original copyright and contribution notices retained.
+   See its header and LICENSES/LPPL-1.3.txt. It is not relicensed under MIT
+   or CC BY 4.0.
+
+Third-party articles cited by this work are not covered by these grants.
+The publisher PDF identified in REFERENCES.md is not distributed here.
+External software dependencies retain their own licenses and are not bundled.
+
+MIT License
+===========
+
+Copyright (c) 2026 Victor Rabiet
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+Third-party source archives added in release 1.1: MPFR 4.2.1 and MPFI 1.5.4 in campaigns/t21/vendor/ retain their GNU LGPL terms. Full corresponding source and upstream license files are present inside each unmodified tarball. They are not covered by the original-code MIT grant. GMP is an external system prerequisite, not redistributed.

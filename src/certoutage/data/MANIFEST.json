@@ -1,0 +1,318 @@
+{
+  "SIG_16.npz": {
+    "sha256": "8aa6607db696126dd78cf76ca45c2985576b296835fc5e8208fdac55fedc3d4c",
+    "bytes": 411656,
+    "source": [
+      "campaigns/t23/banques/SIG_16.npz"
+    ]
+  },
+  "m1_N8.npz": {
+    "sha256": "ebd7797ceea15697d64f72f7e579b570c573583d56a23df46aca2124f9e458f8",
+    "bytes": 5786556,
+    "source": [
+      "campaigns/t23/banques/N8.npz"
+    ]
+  },
+  "SIG_m2_N12.npz": {
+    "sha256": "b0969354b9c30249a7252c41bd71f20261f8dce24e14236ea3f71b25c7bf6304",
+    "bytes": 24245,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N12.npz"
+    ]
+  },
+  "GAMMA_l0p1_e3.npz": {
+    "sha256": "c29b9190cb8b5ce887fab567ad9fa054068b968547b77351635942bd9b563027",
+    "bytes": 121544,
+    "source": [
+      "banks_extra/GAMMA_l0p1_e3.npz"
+    ]
+  },
+  "SIG_8.npz": {
+    "sha256": "057b3250804400c2942c17c7365e1f77e1d2855462b4e62ec2030188ffc0c5f1",
+    "bytes": 412337,
+    "source": [
+      "campaigns/t23/banques/SIG_8.npz"
+    ]
+  },
+  "PPP_l1p0_e3.npz": {
+    "sha256": "22fe2a94cd02462063fc6699fc1a26c1397d6ee85dabd8eca58fd512a375ef4e",
+    "bytes": 129420,
+    "source": [
+      "banks_extra/PPP_l1p0_e3.npz"
+    ]
+  },
+  "SIG_m2_N8.npz": {
+    "sha256": "affd08504539f3111a5b78e20a030affdb7e48269cf1dc05ceffd6861cdc6557",
+    "bytes": 22830,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N8.npz"
+    ]
+  },
+  "C_N8.npz": {
+    "sha256": "3177f75feccb43784d154e54dda444f3a0d47ad01a0ec6758a308780d334caf0",
+    "bytes": 77437,
+    "source": [
+      "banks_extra/C_N8.npz"
+    ]
+  },
+  "SIG_m3_N16.npz": {
+    "sha256": "7b7e97e9a1ab4cf507ed1676e70dd42ec60f9b80f6d556a2be807dd253568ea9",
+    "bytes": 25182,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N16.npz"
+    ]
+  },
+  "commun.npz": {
+    "sha256": "05b10e482682b688a4b8dc1f2c49ecef946ee636f8d4626b0263b29cafc4bd40",
+    "bytes": 2042959,
+    "source": [
+      "campaigns/t20/banques/commun.npz"
+    ]
+  },
+  "SIG_m3_N12.npz": {
+    "sha256": "302e06b8beaea7dfe509d024ee8e088c54372ad2a2eb55f717ecf6dd14d1fccd",
+    "bytes": 24127,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N12.npz"
+    ]
+  },
+  "SIG_m2_N16.npz": {
+    "sha256": "c6bb7d694c1b331c20e55e97b48da6e13e233daa7b2a0b27b15fe1fdf63a4f71",
+    "bytes": 25179,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N16.npz"
+    ]
+  },
+  "PPP_l1p0_e4.npz": {
+    "sha256": "7ea4e2605a2935f9e4c3b7a1acf8107c70a0921d8d9d0bf481ffa0ed940dfb30",
+    "bytes": 134647,
+    "source": [
+      "banks_extra/PPP_l1p0_e4.npz"
+    ]
+  },
+  "GAMMA_l0p1_e4.npz": {
+    "sha256": "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2",
+    "bytes": 122388,
+    "source": [
+      "banks_text/GAMMA_l0p1_e4/xlo.csv",
+      "banks_text/GAMMA_l0p1_e4/xhi.csv",
+      "banks_text/GAMMA_l0p1_e4/clo.csv",
+      "banks_text/GAMMA_l0p1_e4/chi.csv"
+    ]
+  },
+  "m3_N8.npz": {
+    "sha256": "73a308f0c3a1b4a89cbb1f8825e301bdb696a5afc20173a6c133e60b805d4554",
+    "bytes": 2161989,
+    "source": [
+      "campaigns/t20/banques/m3_N8.npz"
+    ]
+  },
+  "SIG_12.npz": {
+    "sha256": "38256f32e6e5ae83baeb66bce78070349939c11f1effcfb72da9e71d560b61dc",
+    "bytes": 421212,
+    "source": [
+      "campaigns/t23/banques/SIG_12.npz"
+    ]
+  },
+  "C_N64.npz": {
+    "sha256": "acd1fe5e5b50c2b91283de90e0c0a4251c62740dcbc8506c5e8ce84b8324e85e",
+    "bytes": 225447,
+    "source": [
+      "banks_extra/C_N64.npz"
+    ]
+  },
+  "SIG_48.npz": {
+    "sha256": "b94ea0770a4e132294d9cdcd2ebe2a37cfdffb58f18c3b543b8aca896222098a",
+    "bytes": 405787,
+    "source": [
+      "campaigns/t23/banques/SIG_48.npz"
+    ]
+  },
+  "SIG_m3_N48.npz": {
+    "sha256": "8b3684119dd918c97b939b1c187ab992bcdeceada8753d51e454c061806947e9",
+    "bytes": 29251,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N48.npz"
+    ]
+  },
+  "SIG_m2_N64.npz": {
+    "sha256": "945663861e1536c806e0024a754849ebe4ca4a7ff10c7331136594f1fbd5153a",
+    "bytes": 30359,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N64.npz"
+    ]
+  },
+  "SIG_m2_N48.npz": {
+    "sha256": "fb4b2f9d4a059f61f1f7721e97a3d3d3b499ef12b356b048ef05da025e4a56a6",
+    "bytes": 29243,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N48.npz"
+    ]
+  },
+  "SIG_m3_N64.npz": {
+    "sha256": "5993fe0e3548bf7c55d5d2c7abcbb8463ad570475b5cf26ad7d9be4e11cd0e8c",
+    "bytes": 30375,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N64.npz"
+    ]
+  },
+  "SIG_64.npz": {
+    "sha256": "8b8b942a4d3da939d3cc9301b8b283615db55ebf7ab5ed2b32454c0681936456",
+    "bytes": 398975,
+    "source": [
+      "campaigns/t23/banques/SIG_64.npz"
+    ]
+  },
+  "MINORANTS_N24.json": {
+    "sha256": "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288",
+    "bytes": 5803,
+    "source": [
+      "expected/campaign_decisions/MINORANTS_N24.json"
+    ]
+  },
+  "GAMMA_l1p0_e3.npz": {
+    "sha256": "7199e7cb24ad2159807ed4a12e941e54aa6d02275685fb8b523ad38cae493c6c",
+    "bytes": 136314,
+    "source": [
+      "banks_extra/GAMMA_l1p0_e3.npz"
+    ]
+  },
+  "SIG_m3_N8.npz": {
+    "sha256": "3c6f21586de58b0adffa7dd95e8aff4247d2c22148369490f21fc688e1622a66",
+    "bytes": 22657,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N8.npz"
+    ]
+  },
+  "PPP_l0p1_e3.npz": {
+    "sha256": "cbc017baa9066efe8239d283e96e567fb1e1eaa605e10eadf95a6bae64582d00",
+    "bytes": 127057,
+    "source": [
+      "banks_text/PPP_l0p1_e3/xlo.csv",
+      "banks_text/PPP_l0p1_e3/xhi.csv",
+      "banks_text/PPP_l0p1_e3/clo.csv",
+      "banks_text/PPP_l0p1_e3/chi.csv"
+    ]
+  },
+  "PPP_l0p1_e4.npz": {
+    "sha256": "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91",
+    "bytes": 126013,
+    "source": [
+      "banks_text/PPP_l0p1_e4/xlo.csv",
+      "banks_text/PPP_l0p1_e4/xhi.csv",
+      "banks_text/PPP_l0p1_e4/clo.csv",
+      "banks_text/PPP_l0p1_e4/chi.csv"
+    ]
+  },
+  "m2_N8.npz": {
+    "sha256": "861cd99e9927d046da56a64bc01642f35d1431010dba57e6affae30458f7c95b",
+    "bytes": 2351700,
+    "source": [
+      "campaigns/t20/banques/m2_N8.npz"
+    ]
+  },
+  "GAMMA_l1p0_e4.npz": {
+    "sha256": "a883a6ce9ad9d417473c5dbd440e3142fd2b5c7a058420b9332526f308114998",
+    "bytes": 132822,
+    "source": [
+      "banks_extra/GAMMA_l1p0_e4.npz"
+    ]
+  },
+  "SIG_m2_N24.npz": {
+    "sha256": "9e07f353784cc7e4cb39c5544fd5fab566487f5e081b4ac37e60c3941b086e46",
+    "bytes": 26761,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N24.npz"
+    ]
+  },
+  "SIG_m3_N20.npz": {
+    "sha256": "67b28deef04cfcea23ef2b7a368bf7b6a2ba35df3cfc0ba97eb36055c3009cac",
+    "bytes": 25934,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N20.npz"
+    ]
+  },
+  "SIG_20.npz": {
+    "sha256": "2e8b874c0cca68394d0840f461168b343b6ebde331394c91928f2471906bf8f4",
+    "bytes": 414381,
+    "source": [
+      "banks_text/SIG_20/exact.csv",
+      "banks_text/SIG_20/gauss.csv",
+      "banks_text/SIG_20/levels.csv"
+    ]
+  },
+  "m1_N64.npz": {
+    "sha256": "f429ae113598cc2133647ee2c6b198fc0e45b156fb1de9471b2c962db71fca0a",
+    "bytes": 9989125,
+    "source": [
+      "campaigns/t23/banques/N64.npz"
+    ]
+  },
+  "SIG_C_24.npz": {
+    "sha256": "daf584c2e51cfd147498a1c43f8a6136a083745addd96ba948e8fec342749dab",
+    "bytes": 48886,
+    "source": [
+      "banks_text/SIG_C_24/chernoff.csv",
+      "banks_text/SIG_C_24/levels.csv"
+    ]
+  },
+  "SIG_m2_N32.npz": {
+    "sha256": "7ffd2c7e093e89b2f3cfa58b0fc32ad605ea6b81ec7453a42fc0e3fed9addcf4",
+    "bytes": 27750,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N32.npz"
+    ]
+  },
+  "SIG_C_20.npz": {
+    "sha256": "6ac87b53d9a667b779dba8a91140dbb59d652adb3c2b788dce7317a194a96da2",
+    "bytes": 48798,
+    "source": [
+      "banks_text/SIG_C_20/chernoff.csv",
+      "banks_text/SIG_C_20/levels.csv"
+    ]
+  },
+  "SIG_m3_N32.npz": {
+    "sha256": "1b014095f8899f51b2a75821b9b6c34065b2a209d4a814d6899dfbdfa43c5fcf",
+    "bytes": 27694,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N32.npz"
+    ]
+  },
+  "MINORANTS_N20.json": {
+    "sha256": "3596aeb39ea3e28ce41c813c3c16c7a25b5c6a6ceb0af81aa870d721ca1c8dd9",
+    "bytes": 5795,
+    "source": [
+      "expected/campaign_decisions/MINORANTS_N20.json"
+    ]
+  },
+  "SIG_24.npz": {
+    "sha256": "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e",
+    "bytes": 414036,
+    "source": [
+      "banks_text/SIG_24/exact.csv",
+      "banks_text/SIG_24/gauss.csv",
+      "banks_text/SIG_24/levels.csv"
+    ]
+  },
+  "SIG_32.npz": {
+    "sha256": "22bf8a65626af6564455f8ddf7af00fb4b4859eb62256c89a1ecb909681b24e9",
+    "bytes": 409728,
+    "source": [
+      "campaigns/t23/banques/SIG_32.npz"
+    ]
+  },
+  "SIG_m3_N24.npz": {
+    "sha256": "205f3a4b53dd1766a28c2f57af3ca71c6d91b38d30977b9dccbb2e81e1573bca",
+    "bytes": 26607,
+    "source": [
+      "campaigns/t20/banques/SIG_m3_N24.npz"
+    ]
+  },
+  "SIG_m2_N20.npz": {
+    "sha256": "973a67021d6f5bd7cdda9f6505221286b099fbd8cafb94a7eb3496e725d58394",
+    "bytes": 26057,
+    "source": [
+      "campaigns/t20/banques/SIG_m2_N20.npz"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+include LICENSE LICENSES.md CITATION.cff codemeta.json CHANGELOG.md README.md
+recursive-include docs *.md *.json *.txt
+recursive-include examples *.py
+recursive-include tools *.py
+recursive-include tests *.py *.json *.csv
+recursive-include src/certoutage/data *.npz *.json
+recursive-include src/certoutage/notices *.txt

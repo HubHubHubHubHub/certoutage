@@ -1,0 +1,250 @@
+{
+  "lam": 0.1,
+  "eta": 4,
+  "user": 1,
+  "target": "1e-5",
+  "source_zip_sha256": "e32728352532870a8053ee2bef0e3e6a2fb9fe93e84f7e427bde0f3912a1557a",
+  "rows": [
+    {
+      "N": 20,
+      "gain": "exact",
+      "interference": "PPP",
+      "ctx_floor": {
+        "lower": 0.0001588722766564716,
+        "upper": 0.00016154255197600804
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 3.125,
+        "upper_db": 3.25
+      }
+    },
+    {
+      "N": 20,
+      "gain": "exact",
+      "interference": "GAMMA",
+      "ctx_floor": {
+        "lower": 7.848033055860624e-05,
+        "upper": 7.996686356676977e-05
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 2.625,
+        "upper_db": 2.75
+      }
+    },
+    {
+      "N": 20,
+      "gain": "exact",
+      "interference": "mean",
+      "ctx_floor": {
+        "lower": 5.538930117300609e-12,
+        "upper": 5.74794634715116e-12
+      },
+      "ctx_floor_vs_target": "BELOW",
+      "C-TX_threshold": {
+        "status": "FINI",
+        "lower_db": 0.1875,
+        "upper_db": 0.25
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 0.125,
+        "upper_db": 0.1875
+      }
+    },
+    {
+      "N": 20,
+      "gain": "gauss",
+      "interference": "PPP",
+      "ctx_floor": {
+        "lower": 0.00024872592678904713,
+        "upper": 0.0002522695238367316
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 5.0625,
+        "upper_db": 5.1875
+      }
+    },
+    {
+      "N": 20,
+      "gain": "gauss",
+      "interference": "GAMMA",
+      "ctx_floor": {
+        "lower": 0.00016208521777510588,
+        "upper": 0.00016450139468203098
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 4.9375,
+        "upper_db": 5.0
+      }
+    },
+    {
+      "N": 20,
+      "gain": "gauss",
+      "interference": "mean",
+      "ctx_floor": {
+        "lower": 2.294940277645885e-06,
+        "upper": 2.3140643960223566e-06
+      },
+      "ctx_floor_vs_target": "BELOW",
+      "C-TX_threshold": {
+        "status": "FINI",
+        "lower_db": 6.875,
+        "upper_db": 7.0
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 4.0,
+        "upper_db": 4.0625
+      }
+    },
+    {
+      "N": 24,
+      "gain": "exact",
+      "interference": "PPP",
+      "ctx_floor": {
+        "lower": 1.7136263216942274e-05,
+        "upper": 1.7477746093431098e-05
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 1.1875,
+        "upper_db": 1.25
+      }
+    },
+    {
+      "N": 24,
+      "gain": "exact",
+      "interference": "GAMMA",
+      "ctx_floor": {
+        "lower": 5.629000348574364e-06,
+        "upper": 5.7562854437134805e-06
+      },
+      "ctx_floor_vs_target": "BELOW",
+      "C-TX_threshold": {
+        "status": "FINI",
+        "lower_db": 4.5,
+        "upper_db": 4.75
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 0.625,
+        "upper_db": 0.75
+      }
+    },
+    {
+      "N": 24,
+      "gain": "exact",
+      "interference": "mean",
+      "ctx_floor": {
+        "lower": 3.716491105435498e-15,
+        "upper": 3.888988626422534e-15
+      },
+      "ctx_floor_vs_target": "BELOW",
+      "C-TX_threshold": {
+        "status": "FINI",
+        "lower_db": -2.5625,
+        "upper_db": -2.5
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": -2.0625,
+        "upper_db": -2.0
+      }
+    },
+    {
+      "N": 24,
+      "gain": "gauss",
+      "interference": "PPP",
+      "ctx_floor": {
+        "lower": 3.259289669058268e-05,
+        "upper": 3.312670919068706e-05
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 2.25,
+        "upper_db": 2.3125
+      }
+    },
+    {
+      "N": 24,
+      "gain": "gauss",
+      "interference": "GAMMA",
+      "ctx_floor": {
+        "lower": 1.6396660690695157e-05,
+        "upper": 1.667603452099015e-05
+      },
+      "ctx_floor_vs_target": "ABOVE",
+      "C-TX_threshold": {
+        "status": "INATTEIGNABLE",
+        "lower_db": null,
+        "upper_db": null
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 1.9375,
+        "upper_db": 2.0
+      }
+    },
+    {
+      "N": 24,
+      "gain": "gauss",
+      "interference": "mean",
+      "ctx_floor": {
+        "lower": 9.039202781939247e-08,
+        "upper": 9.116853495842469e-08
+      },
+      "ctx_floor_vs_target": "BELOW",
+      "C-TX_threshold": {
+        "status": "FINI",
+        "lower_db": 0.75,
+        "upper_db": 0.8125
+      },
+      "C-INR_threshold": {
+        "status": "FINI",
+        "lower_db": 0.5,
+        "upper_db": 0.625
+      }
+    }
+  ],
+  "wall_seconds": 3.0996510982513428
+}

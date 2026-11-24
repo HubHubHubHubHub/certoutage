@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "certoutage"
+version = "0.1.0"
+description = "Certified outage enclosures for the thermal RIS-NOMA model"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "BSD-3-Clause AND MIT AND CC-BY-4.0"
+license-files = ["LICENSE", "LICENSES.md", "docs/ARCHIVE_LICENSE.txt", "docs/CC-BY-4.0.txt"]
+authors = [{name = "Victor Rabiet"}]
+dependencies = ["python-flint==0.9.0", "numpy>=2.0,<3"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Programming Language :: Python :: 3.11",
+]
+keywords = ["outage probability", "RIS", "NOMA", "energy harvesting",
+            "interval arithmetic", "Poisson point process"]
+
+[project.urls]
+"Preprint" = "https://hal.science/hal-05879102"
+"Reproducibility archive" = "https://doi.org/10.5281/zenodo.24450534"
+# "Repository" = "<GitHub repository URL to be supplied by V.R.>"
+# "Software DOI" = "<DOI URL for certoutage, to be supplied by V.R.>"
+
+[project.optional-dependencies]
+test = ["pytest>=8", "tomli>=2; python_version < '3.11'"]
+regenerate = ["scipy>=1.14,<2"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+certoutage = ["py.typed", "data/*.npz", "data/*.json", "notices/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit", "tests/regression"]
+addopts = "-ra"
+

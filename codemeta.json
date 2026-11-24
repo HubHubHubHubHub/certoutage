@@ -1,0 +1,59 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "certoutage",
+  "version": "0.1.0",
+  "softwareVersion": "0.1.0",
+  "description": "Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting. Extraction dated 24 November 2026 from the reproducibility archive that produced the submitted Letter's results; reproduces Table II identically.",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Victor",
+      "familyName": "Rabiet",
+      "@id": "https://orcid.org/0009-0003-3678-3457"
+    }
+  ],
+  "dateCreated": "2026-11-24",
+  "dateModified": "2026-11-24",
+  "license": "BSD-3-Clause AND MIT AND CC-BY-4.0",
+  "programmingLanguage": "Python",
+  "runtimePlatform": "Python >= 3.10; tested on Python 3.11",
+  "softwareRequirements": [
+    "python-flint == 0.9.0",
+    "numpy >= 2.0, < 3"
+  ],
+  "keywords": [
+    "outage probability",
+    "RIS",
+    "NOMA",
+    "energy harvesting",
+    "interval arithmetic",
+    "Poisson point process"
+  ],
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Reproducibility archive for \"Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting\"",
+      "author": {
+        "@type": "Person",
+        "givenName": "Victor",
+        "familyName": "Rabiet"
+      },
+      "version": "1.1",
+      "identifier": "10.5281/zenodo.24450534",
+      "url": "https://doi.org/10.5281/zenodo.24450534",
+      "description": "Archive v7; produced the numerical results of the submitted Letter."
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting",
+      "author": {
+        "@type": "Person",
+        "givenName": "Victor",
+        "familyName": "Rabiet"
+      },
+      "url": "https://hal.science/hal-05879102",
+      "description": "submitted to IEEE Wireless Communications Letters"
+    }
+  ]
+}

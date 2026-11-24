@@ -1,0 +1,111 @@
+{
+  "decision": "D3",
+  "N": 20,
+  "lam": "0.1",
+  "eta": 4,
+  "user": 1,
+  "target": "0.00001",
+  "convention": "C-TX",
+  "brackets": {
+    "exact_PPP": {
+      "status": "INATTEIGNABLE",
+      "lower_db": null,
+      "upper_db": null,
+      "undecided": null,
+      "floor": {
+        "lower": 0.0001588722766564716,
+        "upper": 0.00016154255197600804
+      }
+    },
+    "exact_mean": {
+      "status": "FINI",
+      "lower_db": 0.1875,
+      "upper_db": 0.25,
+      "undecided": 0,
+      "floor": {
+        "lower": 5.538930117300609e-12,
+        "upper": 5.74794634715116e-12
+      }
+    },
+    "gauss_mean": {
+      "status": "FINI",
+      "lower_db": 6.875,
+      "upper_db": 7.0,
+      "undecided": 1,
+      "floor": {
+        "lower": 2.294940277645885e-06,
+        "upper": 2.3140643960223566e-06
+      }
+    },
+    "gauss_gamma": {
+      "status": "INATTEIGNABLE",
+      "lower_db": null,
+      "upper_db": null,
+      "undecided": null,
+      "floor": {
+        "lower": 0.00016208521777510588,
+        "upper": 0.00016450139468203098
+      }
+    },
+    "chernoff_PPP": {
+      "status": "MAJORANT_NE_CERTIFIE_AUCUN_SNR",
+      "lower_db": null,
+      "upper_db": null,
+      "undecided": null,
+      "floor": {
+        "lower": 0.0006423397558468013,
+        "upper": 0.000667636298075431
+      },
+      "outage_impossible_from_chernoff": false
+    }
+  },
+  "errors": {
+    "interference": {
+      "status": "MOINS_INFINI",
+      "lower": null,
+      "upper": null
+    },
+    "gain": {
+      "status": "FINI",
+      "lower": 6.625,
+      "upper": 6.8125
+    },
+    "total": {
+      "status": "MOINS_INFINI",
+      "lower": null,
+      "upper": null
+    },
+    "chernoff": {
+      "status": "NON_DEFINI",
+      "lower": null,
+      "upper": null
+    }
+  },
+  "reference_checks": [
+    {
+      "method": "exact_PPP",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    },
+    {
+      "method": "exact_mean",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    },
+    {
+      "method": "gauss_mean",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    },
+    {
+      "method": "gauss_gamma",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    }
+  ],
+  "source_banks_reused": false
+}

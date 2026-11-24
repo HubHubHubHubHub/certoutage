@@ -1,0 +1,168 @@
+{
+  "grid_step": 0.015625,
+  "grid_max": 128,
+  "global_threshold_supremum_certified": true,
+  "historical_thermal_banks_reused": false,
+  "results": [
+    {
+      "N": 24,
+      "lam": "0.1",
+      "eta": 4,
+      "user": 1,
+      "kind": "nearest",
+      "best_threshold": 5.1875,
+      "best_lower_bound": 1.8444038593813162e-06,
+      "supremum_upper_bound": 1.905316499775653e-06,
+      "integrated_lower": 9.202683018542272e-06,
+      "integrated_upper": 9.503807385833934e-06,
+      "full_PPP_reference_lower": 1.7136263216942274e-05,
+      "full_PPP_reference_upper": 1.7477746093431098e-05,
+      "comparisons": [
+        {
+          "target": "0.001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": false
+        },
+        {
+          "target": "0.0001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": false
+        },
+        {
+          "target": "0.00001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": true
+        }
+      ]
+    },
+    {
+      "N": 24,
+      "lam": "0.1",
+      "eta": 4,
+      "user": 1,
+      "kind": "largest_jump",
+      "best_threshold": 5.140625,
+      "best_lower_bound": 1.8929159643161557e-06,
+      "supremum_upper_bound": 1.9556633271977176e-06,
+      "integrated_lower": 9.472565943846911e-06,
+      "integrated_upper": 9.783675378587589e-06,
+      "full_PPP_reference_lower": 1.7136263216942274e-05,
+      "full_PPP_reference_upper": 1.7477746093431098e-05,
+      "comparisons": [
+        {
+          "target": "0.001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": false
+        },
+        {
+          "target": "0.0001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": false
+        },
+        {
+          "target": "0.00001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": true
+        }
+      ]
+    },
+    {
+      "N": 24,
+      "lam": "1",
+      "eta": 4,
+      "user": 1,
+      "kind": "nearest",
+      "best_threshold": 5.328125,
+      "best_lower_bound": 1.5007020490887589e-05,
+      "supremum_upper_bound": 1.5488593083788313e-05,
+      "integrated_lower": 7.308437790528892e-05,
+      "integrated_upper": 7.54101543444203e-05,
+      "full_PPP_reference_lower": 0.005353708782316132,
+      "full_PPP_reference_upper": 0.005445845941956321,
+      "comparisons": [
+        {
+          "target": "0.001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": true
+        },
+        {
+          "target": "0.0001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": true
+        },
+        {
+          "target": "0.00001",
+          "elementary_proves_impossibility": true,
+          "no_threshold_can_prove_impossibility": false,
+          "integrated_proves_impossibility": true,
+          "integrated_upper_below_target": false,
+          "full_PPP_proves_impossibility": true
+        }
+      ]
+    },
+    {
+      "N": 24,
+      "lam": "1",
+      "eta": 4,
+      "user": 1,
+      "kind": "largest_jump",
+      "best_threshold": 5.140625,
+      "best_lower_bound": 1.8915109942148987e-05,
+      "supremum_upper_bound": 1.9541307432839868e-05,
+      "integrated_lower": 9.437696520053066e-05,
+      "integrated_upper": 9.746720821837515e-05,
+      "full_PPP_reference_lower": 0.005353708782316132,
+      "full_PPP_reference_upper": 0.005445845941956321,
+      "comparisons": [
+        {
+          "target": "0.001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": true
+        },
+        {
+          "target": "0.0001",
+          "elementary_proves_impossibility": false,
+          "no_threshold_can_prove_impossibility": true,
+          "integrated_proves_impossibility": false,
+          "integrated_upper_below_target": true,
+          "full_PPP_proves_impossibility": true
+        },
+        {
+          "target": "0.00001",
+          "elementary_proves_impossibility": true,
+          "no_threshold_can_prove_impossibility": false,
+          "integrated_proves_impossibility": true,
+          "integrated_upper_below_target": false,
+          "full_PPP_proves_impossibility": true
+        }
+      ]
+    }
+  ]
+}

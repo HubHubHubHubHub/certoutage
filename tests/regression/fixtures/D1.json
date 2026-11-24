@@ -1,0 +1,110 @@
+{
+  "decision": "D1",
+  "N": 20,
+  "lam": "0.1",
+  "eta": 4,
+  "user": 1,
+  "target": "0.00001",
+  "convention": "C-INR",
+  "brackets": {
+    "exact_PPP": {
+      "status": "FINI",
+      "lower_db": 3.125,
+      "upper_db": 3.25,
+      "undecided": 1,
+      "floor": {
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    },
+    "exact_mean": {
+      "status": "FINI",
+      "lower_db": 0.125,
+      "upper_db": 0.1875,
+      "undecided": 0,
+      "floor": {
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    },
+    "gauss_mean": {
+      "status": "FINI",
+      "lower_db": 4.0,
+      "upper_db": 4.0625,
+      "undecided": 0,
+      "floor": {
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    },
+    "gauss_gamma": {
+      "status": "FINI",
+      "lower_db": 4.9375,
+      "upper_db": 5.0,
+      "undecided": 0,
+      "floor": {
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    },
+    "chernoff_PPP": {
+      "status": "FINI",
+      "lower_db": 4.3125,
+      "upper_db": 4.4375,
+      "undecided": 1,
+      "floor": {
+        "lower": 0.0,
+        "upper": 0.0
+      }
+    }
+  },
+  "errors": {
+    "interference": {
+      "status": "FINI",
+      "lower": -3.125,
+      "upper": -2.9375
+    },
+    "gain": {
+      "status": "FINI",
+      "lower": 3.8125,
+      "upper": 3.9375
+    },
+    "total": {
+      "status": "FINI",
+      "lower": 0.75,
+      "upper": 0.9375
+    },
+    "chernoff": {
+      "status": "FINI",
+      "lower": 1.0625,
+      "upper": 1.3125
+    }
+  },
+  "reference_checks": [
+    {
+      "method": "exact_PPP",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    },
+    {
+      "method": "exact_mean",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    },
+    {
+      "method": "gauss_mean",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    },
+    {
+      "method": "gauss_gamma",
+      "bracket_identical": true,
+      "floor_identical": true,
+      "floor_contained_in_campaign_pp": true
+    }
+  ],
+  "source_banks_reused": false
+}

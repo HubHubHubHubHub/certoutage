@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "Please cite certoutage and acknowledge the original reproducibility archive and submitted Letter listed below."
+title: "certoutage: certified outage bounds for thermal RIS-NOMA"
+type: software
+version: 0.1.0
+date-released: 2026-11-24
+authors:
+  - family-names: Rabiet
+    given-names: Victor
+    orcid: "https://orcid.org/0009-0003-3678-3457"
+license:
+  - BSD-3-Clause
+  - MIT
+  - CC-BY-4.0
+abstract: >-
+  Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting.
+  Extraction dated 24 November 2026 from the reproducibility archive that produced
+  the submitted Letter's results. Reproduces Table II identically. New author
+  code is BSD-3-Clause, extracted code retains MIT and numerical data CC-BY-4.0;
+  the combined distribution uses BSD-3-Clause AND MIT AND CC-BY-4.0.
+keywords:
+  - outage probability
+  - RIS
+  - NOMA
+  - energy harvesting
+  - interval arithmetic
+  - Poisson point process
+# doi: <software DOI to be supplied by V.R.; distinct from the archive DOI>
+# repository-code: <GitHub repository URL to be supplied by V.R.>
+references:
+  - type: software
+    title: 'Reproducibility archive for "Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting"'
+    authors:
+      - family-names: Rabiet
+        given-names: Victor
+    version: "1.1"
+    doi: "10.5281/zenodo.24450534"
+    notes: "Archive v7; produced the numerical results of the submitted Letter."
+  - type: article
+    title: "Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting"
+    authors:
+      - family-names: Rabiet
+        given-names: Victor
+    url: "https://hal.science/hal-05879102"
+    notes: "submitted to IEEE Wireless Communications Letters"
