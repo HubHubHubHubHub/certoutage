@@ -85,6 +85,12 @@ Tests are written `file::function`, relative to `tests/`.
 |---|---|---|---|
 | G35 | A PPP or Gamma environment is reused only for the same intensity, path-loss exponent, interference model, DFT size M, precision and bank policy; any change in one of these builds a new one, and it is built at the precision of its key, otherwise `ArithmeticError`. N, m, the convention, the user and the gain do not rebuild it, and sharing changes no result. Tested at M = 2^12 on seven sharing cases and seven key changes. | `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_environment_is_shared_across_n_m_convention_user_and_gain`, `unit/test_runtime_guarantees.py::test_environment_is_rebuilt_when_its_key_changes` |
 
+## Interval engine and dependencies
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G36 | The contract of every result names the python-flint version actually imported, read at run time; python-flint is pinned exactly, and the pin, `codemeta.json` and the imported version agree (dependency policy in CONTRIBUTING.md). The first part holds by construction (no code passes the field explicitly); it is tested on `outage_enclosure` and `floor`. | `src/certoutage/models.py`, `pyproject.toml` | `unit/test_release.py::test_contract_names_the_interval_engine_actually_imported`, `unit/test_release.py::test_declared_dependency_matches_the_imported_engine` |
+
 ## Stated, not yet checked by a test
 
 These promises appear in the documentation. They are believed to hold, but

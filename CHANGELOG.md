@@ -51,6 +51,15 @@
   eight sizes and both conventions at a new intensity takes 5.9 s instead of
   65.6 s. Every result of the test suite is unchanged bit for bit (see
   `docs/LOGIC_CHANGES.md`). New guarantee G35 with two tests.
+- `Contract.interval_library` is read from the python-flint actually imported
+  (`flint.__version__`) when a result is built, instead of being a fixed
+  string. With python-flint 0.9.0 the text is unchanged
+  (`python-flint 0.9.0 / Arb-Acb`), and so is the Table II fixture.
+  Dependency policy written in `CONTRIBUTING.md`: python-flint stays pinned
+  exactly until another version passes every regression bit for bit. New
+  guarantee G36 with two tests.
+- Continuous integration runs the suite once more under `python -O`
+  (Ubuntu, Python 3.13).
 
 ## 0.1.0 — 2026-11-24
 
