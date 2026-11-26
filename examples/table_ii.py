@@ -3,11 +3,22 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import asdict
-from decimal import Decimal, ROUND_CEILING
+from fractions import Fraction
 import json
+import math
 from time import perf_counter
 
 from certoutage import Model, compare_approximations
+
+
+def _outward(value: float, scale: Fraction, places: int, up: bool) -> str:
+    """value/scale rounded outward to `places` decimals, in exact rationals (no decimal context)."""
+    units = Fraction(value) / scale * 10**places
+    n = math.ceil(units) if up else math.floor(units)
+    sign, n = ("-" if n < 0 else ""), abs(n)
+    if places == 0:
+        return f"{sign}{n}"
+    return f"{sign}{n // 10**places}.{n % 10**places:0{places}d}"
 
 
 def main() -> None:
@@ -20,8 +31,7 @@ def main() -> None:
     rendered = []
     for index, row in enumerate(rows):
         if index == 5:
-            upper = (Decimal.from_float(row.floor.upper) / Decimal("1e-5")).quantize(Decimal("0.0001"), rounding=ROUND_CEILING)
-            value = f"< {upper}"
+            value = f"< {_outward(row.floor.upper, Fraction(1, 10**5), 4, up=True)}"
         elif index in (0, 1, 2):
             value = row.floor.format(scale="1e-5", places=3 if index == 2 else 4)
         else:
@@ -40,7 +50,14 @@ def main() -> None:
         row = rendered[i]
         print(f"{row['label']}: {row['display']}; {row['decision']}"
               + ("; masked" if row["diagnostic"] == "masked" else ""))
-    print("Exact gain + Gamma: required SNR (threshold) [4.50, 4.75] dB.")
+    gamma = rows[1].decision
+    if gamma.status == "feasible" and all(
+            x is not None and math.isfinite(x) for x in (gamma.lower_db, gamma.upper_db)):
+        print(f"{rows[1].label}: required SNR (threshold) "
+              f"[{_outward(gamma.lower_db, Fraction(1), 2, up=False)}, "
+              f"{_outward(gamma.upper_db, Fraction(1), 2, up=True)}] dB.")
+    else:
+        print(f"{rows[1].label}: {gamma.status}, no finite threshold.")
     print("The certificates of the Gamma/mean comparators do not bound the PPP.")
     print(f"Time: {result['wall_seconds']:.3f} s.")
 

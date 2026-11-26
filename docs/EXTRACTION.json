@@ -583,9 +583,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "loading constructors with integrity checks; numerical methods inherited unchanged; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "dbd67f87d65f09f0984993b0cbd1106e05368b97cb504b829ad3b2bad6cf5b91"
+      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "campaigns/t20/code/composer.py",
@@ -594,9 +594,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "selection of the Nakagami units128 grid; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "dbd67f87d65f09f0984993b0cbd1106e05368b97cb504b829ad3b2bad6cf5b91"
+      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "nakagami/code/thermal.py",
@@ -605,9 +605,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "constructor without chdir; rectangles and masses unchanged; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "dbd67f87d65f09f0984993b0cbd1106e05368b97cb504b829ad3b2bad6cf5b91"
+      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",

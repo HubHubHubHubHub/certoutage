@@ -82,8 +82,11 @@ distinct strings changed: the six assumptions and the two
 "(raw probability)" annotations. The regression fixture
 `tests/regression/fixtures/table_ii.json` was regenerated after this check.
 The numbers in every other regression fixture are unchanged.
-The eight destination files whose bytes changed are listed in
-`EXTRACTION.json` (`post_release_sha256`).
+The eight destination files whose bytes changed since 0.1.0 are listed in
+`EXTRACTION.json`: `post_release_sha256` is the digest of the current file,
+`post_release_change` says what changed. For `_runtime.py` this includes the
+cache key below. `tests/unit/test_release.py` checks that each recorded
+digest is that of the file, and that every changed destination is recorded.
 
 ## Display of threshold differences (26 November 2026, unreleased)
 
@@ -109,3 +112,13 @@ the same 16 enclosures and contracts, with one Laplace inversion instead of
 16: 5.9 s instead of 65.6 s on the development machine. New guarantee G35,
 with two tests; each of seven mutations (one element dropped from the key,
 or the precision guard removed) makes one of them fail.
+
+## Interval engine named at run time (26 November 2026, unreleased)
+
+| Area | Change | Justification and check |
+|---|---|---|
+| `models.Contract.interval_library` | The fixed default `"python-flint 0.9.0 / Arb-Acb"` became a `default_factory` that reads `flint.__version__` when the contract is built. No code passes the field explicitly | Under python-flint 0.9.0 the string is unchanged, so is every fixture (Table II included, not regenerated). The field names the imported binding, not the FLINT C library, and is present also when nothing is computed in Arb (`provided-certificate`, `analytic`); see API.md. Guarantee G36 |
+
+`models.py` was not listed among the certifying files when this change
+was made; it is now (CONTRIBUTING.md). Its other change on this branch,
+`ThresholdDifference.format`, is declared above.

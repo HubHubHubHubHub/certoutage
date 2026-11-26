@@ -25,7 +25,8 @@
 - Support: `SUPPORT.md`, issue forms (feature request, bug report, question)
   and a README section explaining how to ask for a missing feature. Issue
   tracker and changelog links added to the package metadata.
-- Register of guarantees `docs/GUARANTEES.md`: 34 promises, each with the
+- Register of guarantees `docs/GUARANTEES.md`: 34 promises at first (36 with
+  G35 and G36 below, 37 with G37), each with the
   file that keeps it and the tests that check it, and a list of the stated
   promises not yet checked by a test; a meta-test fails if a row cites a
   missing test or file. New direct tests for the guarantees that had none or
@@ -60,6 +61,21 @@
   guarantee G36 with two tests.
 - Continuous integration runs the suite once more under `python -O`
   (Ubuntu, Python 3.13).
+- Corrections after an independent review of this branch (no numerical
+  change): `docs/EXTRACTION.json` had a stale digest for `_runtime.py` and
+  described its change as translation only, although it also carries the
+  new cache key; both fixed, and a new test (G37) checks that every digest
+  in the inventory is that of the current file. `models.py` is now listed
+  among the certifying files, and the run-time reading of
+  `interval_library` is declared in `docs/LOGIC_CHANGES.md`. The
+  documentation says that `interval_library` names the python-flint binding,
+  not the FLINT C library. `examples/table_ii.py` prints the computed
+  threshold instead of a fixed string, and rounds its last displayed bound
+  outward through exact rationals. The register states which guarantees are
+  tested on a few cases only, and lists three more documented promises that
+  no test checks yet. A test checks that the version and the release date
+  quoted in the README are those of the package, and that the python-flint
+  version quoted there is the pinned one (G34).
 
 ## 0.1.0 — 2026-11-24
 

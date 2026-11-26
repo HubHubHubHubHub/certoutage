@@ -57,7 +57,7 @@ Tests are written `file::function`, relative to `tests/`.
 
 | ID | Guarantee | Kept by | Tests |
 |---|---|---|---|
-| G24 | `excluded` is returned only when the floor's lower bound is strictly above the target; an exhausted grid gives `inconclusive`. | `src/certoutage/api.py` | `unit/test_contracts.py::test_finite_grid_never_excludes_every_snr`, `regression/test_central.py::test_all_raw_points_and_decisions` |
+| G24 | `excluded` is returned only when the floor's lower bound is strictly above the target; an exhausted grid gives `inconclusive`. The "only when" holds by construction of the decision rule; it is tested on one exhausted grid and on the archived decisions. | `src/certoutage/api.py` | `unit/test_contracts.py::test_finite_grid_never_excludes_every_snr`, `regression/test_central.py::test_all_raw_points_and_decisions` |
 | G25 | Left censoring gives `feasible` with -∞ as the lower edge; no finite edge is invented. | `src/certoutage/api.py` | `unit/test_contracts.py::test_censored_left_is_feasible_without_invented_lower` |
 | G26 | The Chernoff comparator never yields `excluded` for the physical model. This holds by construction of the decision rule; it is tested on N=20. | `src/certoutage/api.py` | `unit/test_contracts.py::test_chernoff_cannot_exclude_outage` |
 | G27 | `threshold_difference` refuses censored decisions, a missing or different target, a missing parameter, and a different user, convention, N, m, λ or η. It accepts equivalent decimal spellings and different comparators. | `src/certoutage/api.py` | `unit/test_audit_fable.py::test_m7_refuses_incomparable_thresholds`, `unit/test_runtime_guarantees.py::test_threshold_difference_refuses_other_physical_parameters`, `unit/test_runtime_guarantees.py::test_threshold_difference_refuses_missing_target_or_parameters`, `unit/test_audit_fable.py::test_m7_equivalent_targets_and_distinct_comparators_remain_comparable`, `unit/test_contracts.py::test_censored_left_is_feasible_without_invented_lower` |
@@ -71,13 +71,13 @@ Tests are written `file::function`, relative to `tests/`.
 |---|---|---|---|
 | G31 | Displayed values (`Enclosure.format`, `ThresholdDifference.format`) are rounded outward, through exact rationals, independently of the `decimal` context and its traps. | `src/certoutage/models.py` | `unit/test_contracts.py::test_rounding_is_outward`, `unit/test_contracts.py::test_threshold_display_on_fine_grid_is_outward`, `unit/test_audit_fable.py::test_m2_fable_quotients_round_outwards`, `unit/test_audit_fable.py::test_m2_large_quotient_and_exact_boundary`, `unit/test_runtime_guarantees.py::test_display_of_threshold_differences_ignores_decimal_traps`, `regression/test_central.py::test_signs_display`, `regression/test_central.py::test_floor_and_decisive_displays` |
 | G32 | The global Arb context (precision and threads) is restored after each Arb computation of the package, including after an exception; the precision used is recorded in the contract. | `src/certoutage/_runtime.py` | `unit/test_contracts.py::test_context_is_restored_and_provenance_visible`, `unit/test_runtime_guarantees.py::test_arb_context_is_restored_after_an_exception` |
-| G33 | Every Arb computation of the package runs under one lock. Validation, display and `threshold_difference` do not need it and run outside. | `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_calls_are_serialized_by_one_lock` |
+| G33 | Every Arb computation of the package runs under one lock. Validation, display and `threshold_difference` do not need it and run outside. This holds by construction (every public entry computes inside `rt.arithmetic`); it is tested on one `outage_enclosure` call. | `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_calls_are_serialized_by_one_lock` |
 
 ## Release metadata
 
 | ID | Guarantee | Kept by | Tests |
 |---|---|---|---|
-| G34 | The version and release date agree across the package, CITATION.cff and the changelog. | `CITATION.cff`, `CHANGELOG.md` | `unit/test_release.py::test_release_versions_and_dates_agree` |
+| G34 | The version and release date agree across the package, CITATION.cff, codemeta.json, the changelog and the README (every "version X.Y.Z" and the citation date); the python-flint version quoted in the README is the pinned one. | `CITATION.cff`, `CHANGELOG.md`, `README.md` | `unit/test_release.py::test_release_versions_and_dates_agree`, `unit/test_release.py::test_readme_quotes_the_package_version` |
 
 ## Caches
 
@@ -89,7 +89,13 @@ Tests are written `file::function`, relative to `tests/`.
 
 | ID | Guarantee | Kept by | Tests |
 |---|---|---|---|
-| G36 | The contract of every result names the python-flint version actually imported, read at run time; python-flint is pinned exactly, and the pin, `codemeta.json` and the imported version agree (dependency policy in CONTRIBUTING.md). The first part holds by construction (no code passes the field explicitly); it is tested on `outage_enclosure` and `floor`. | `src/certoutage/models.py`, `pyproject.toml` | `unit/test_release.py::test_contract_names_the_interval_engine_actually_imported`, `unit/test_release.py::test_declared_dependency_matches_the_imported_engine` |
+| G36 | The contract of every result names the python-flint version actually imported, read at run time; python-flint is pinned exactly, and the pin, `codemeta.json` and the imported version agree (dependency policy in CONTRIBUTING.md). The first part holds by construction (no code passes the field explicitly); it is tested on `outage_enclosure` and `floor`. The field names the Python binding, not the FLINT C library. | `src/certoutage/models.py`, `pyproject.toml` | `unit/test_release.py::test_contract_names_the_interval_engine_actually_imported`, `unit/test_release.py::test_declared_dependency_matches_the_imported_engine` |
+
+## Provenance of the extracted code
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G37 | In `docs/EXTRACTION.json`, every destination file whose bytes differ from 0.1.0 carries `post_release_sha256`, and every recorded digest, of 0.1.0 or later, is that of the file it names. | `docs/EXTRACTION.json` | `unit/test_release.py::test_extraction_inventory_matches_the_files` |
 
 ## Stated, not yet checked by a test
 
@@ -111,7 +117,14 @@ no test checks them yet:
 - No linear interpolation and no renormalization of tails; F_J(0)=0
   (CONTRACT). These are properties of the construction, argued in the
   contract.
-- The version, date and DOI quoted in the README agree with the release
-  metadata.
+- The version DOI quoted in the README is that of the release (the version
+  and the date quoted there are checked, G34).
 - The diagnostics are checked on the Table II example only (G28), and
   monotonicity on one model (G18).
+- `target` is kept on every decision, including exclusions, inconclusive
+  searches and the J_max row (API). Exercised by the Table II regression
+  and by G27, not by a dedicated test.
+- Changing a bank on disk does not retroactively change arrays that are
+  already loaded (API).
+- Normal use never reads the original archive (README). G05 and G06 cover
+  network access and writes, not reads.
