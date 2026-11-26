@@ -1,77 +1,75 @@
-# Régénérer les banques
+# Regenerating the banks
 
-Les consultations normales n'ont besoin ni du réseau ni de l'archive.
-Les générateurs ci-dessous sont des outils locaux séparés ; ils ne publient
-rien et ne soumettent aucun job. Le paquet livré conserve les banques
-originales et leur manifeste. Une régénération ne remplace jamais ces
-fichiers automatiquement.
+Normal queries need neither the network nor the archive. The generators
+below are separate local tools; they publish nothing and submit no job. The
+shipped package keeps the original banks and their manifest. A regeneration
+never replaces these files automatically.
 
-## PPP et Gamma : générateur inclus
+## PPP and Gamma: included generator
 
-Depuis la racine du paquet :
+From the root of the package:
 
 ```sh
 python tools/regenerate_ppp.py --lam 0.2 --eta 3 --kind PPP --power 18 --output work/PPP_l0p2_e3.npz
 python tools/regenerate_ppp.py --lam 0.2 --eta 3 --kind GAMMA --output work/GAMMA_l0p2_e3.npz
 ```
 
-Pour les réglages historiques : `--power 20 --bits 160`. Les quatre tableaux
-et leurs SHA-256 sont affichés. Le conteneur NPZ compressé peut avoir un
-SHA différent sans changement de tableaux. La génération PPP/Gamma pour
-λ=0,2, η=3, M=2^18 a été comparée à une copie du générateur original dont
-seul M a changé : les huit tableaux ont les mêmes octets.
+For the historical settings: `--power 20 --bits 160`. The four arrays and
+their SHA-256 digests are printed. The compressed NPZ container may have a
+different digest with unchanged arrays. PPP/Gamma generation for λ=0.2,
+η=3, M=2^18 was compared with a copy of the original generator in which
+only M was changed: the eight arrays have the same bytes.
 
-## Gain, thermique, Chernoff et J_max : copies de l'archive v7
+## Gain, thermal, Chernoff and J_max: copies of the v7 archive
 
-L'archive doit être disponible localement. Installer `.[regenerate]` pour
-SciPy, utilisé seulement par les générateurs historiques. `ARCHIVE` désigne
-ici un chemin à remplacer explicitement ; aucune découverte réseau.
+The archive must be available locally. Install `.[regenerate]` for SciPy,
+which only the historical generators use. `ARCHIVE` stands here for a path
+to be replaced explicitly; there is no network discovery.
 
 ```sh
-python tools/regenerate_from_archive.py --archive /chemin/archive_v7 --output work/rayleigh24 --kind signal --N 24
-python tools/regenerate_from_archive.py --archive /chemin/archive_v7 --output work/chernoff24 --kind chernoff --N 24
-python tools/regenerate_from_archive.py --archive /chemin/archive_v7 --output work/nakagami2_8 --kind nakagami --m 2 --N 8
-python tools/regenerate_from_archive.py --archive /chemin/archive_v7 --output work/largest24 --kind largest --N 24
+python tools/regenerate_from_archive.py --archive /path/to/archive_v7 --output work/rayleigh24 --kind signal --N 24
+python tools/regenerate_from_archive.py --archive /path/to/archive_v7 --output work/chernoff24 --kind chernoff --N 24
+python tools/regenerate_from_archive.py --archive /path/to/archive_v7 --output work/nakagami2_8 --kind nakagami --m 2 --N 8
+python tools/regenerate_from_archive.py --archive /path/to/archive_v7 --output work/largest24 --kind largest --N 24
 ```
 
-Chaque commande exige un nouveau répertoire hors archive. Elle copie les
-sources nécessaires et consigne leurs empreintes dans `COPIES.json` avant
-exécution. Seul l'accès obligatoire aux métadonnées du planificateur est
-rendu facultatif (`os.environ.get` à la place de l'indexation). L'archive
-reste en lecture seule. Les environnements historiques absolus et les
-commandes de soumission ne sont pas utilisés.
+Each command requires a new directory outside the archive. It copies the
+required sources and records their digests in `COPIES.json` before running.
+Only the mandatory access to the scheduler metadata is made optional
+(`os.environ.get` instead of indexing). The archive stays read-only. The
+historical absolute environments and submission commands are not used.
 
-`signal` recalcule la grille thermique commune, l'inversion d'amplitude
-Rayleigh et la banque de signal. `chernoff` recalcule la grille commune,
-l'amplitude et la banque Chernoff propagée. `nakagami` recalcule l'amplitude
-et le signal par les sources T20, en réutilisant la banque thermique
-commune fournie par l'archive. `largest` recalcule la distribution de
-J_max et son intégration, mais réutilise la banque utile dont l'intégrité est vérifiée du
-paquet et le tableau de planchers de référence de l'archive.
+`signal` recomputes the common thermal grid, the Rayleigh amplitude
+inversion and the signal bank. `chernoff` recomputes the common grid, the
+amplitude and the propagated Chernoff bank. `nakagami` recomputes the
+amplitude and the signal from the T20 sources, reusing the common thermal
+bank provided by the archive. `largest` recomputes the J_max distribution
+and its integration, but reuses the package's integrity-checked useful-gain
+bank and the archive's reference table of floors.
 
-La banque commune peut aussi être recalculée séparément, dans le répertoire
-copié, en exécutant `thermal_backend.common()` (ou `t4_backend.common()`
-pour T20). Les banques d'amplitude Table I correspondent aux fichiers
-`campaigns/t23/banques/N8.npz`, `N64.npz` et
-`campaigns/t20/banques/m2_N8.npz`, `m3_N8.npz`. Les Chernoff Table I viennent
-de `banks_extra/C_N8.npz` et `C_N64.npz` ; leur générateur spécifique est
-`nakagami/code/chernoff_bank.py` (copier le dossier avant exécution).
+The common bank can also be recomputed separately, in the copied directory,
+by running `thermal_backend.common()` (or `t4_backend.common()` for T20). The
+Table I amplitude banks correspond to the files
+`campaigns/t23/banques/N8.npz`, `N64.npz` and
+`campaigns/t20/banques/m2_N8.npz`, `m3_N8.npz`. The Table I Chernoff banks
+come from `banks_extra/C_N8.npz` and `C_N64.npz`; their specific generator is
+`nakagami/code/chernoff_bank.py` (copy the folder before running it).
 
-La régénération complète N=24 n'a pas été exécutée pendant cette phase.
-Il ne faut pas confondre un rejeu de consultation, le reconditionnement
-sans perte d'une banque et sa construction à partir de zéro. Les valeurs
-centrales de J_max sont les **certificats finaux** archivés, et non une
-nouvelle banque de sa distribution reconstruite durant T28.
+The full N=24 regeneration has not been run so far. A replay of queries,
+the lossless repackaging of a bank and its construction from scratch must
+not be confused. The central J_max values are the archived **final
+certificates**, not a new bank of its distribution rebuilt during the
+extraction.
 
-## Transport et intégrité
+## Transport and integrity
 
-`data/MANIFEST.json` donne le SHA du fichier chargé, sa taille et les sources.
-`docs/EXTRACTION.json` précise les opérations de copie/reconditionnement.
-Les banques textuelles centrales sont vérifiées sur les octets CSV puis
-sur les octets des tableaux, avant recompression sans perte en NPZ.
+`data/MANIFEST.json` gives the digest of each loaded file, its size and its
+sources. `docs/EXTRACTION.json` details the copy and repackaging operations.
+The central text banks are checked on the CSV bytes, then on the array
+bytes, before lossless recompression into NPZ.
 
-Pour une nouvelle version des banques, mettre à jour les données, leur
-manifeste et son empreinte épinglée dans `_banks.py` après validation.
-Ne pas seulement remplacer un fichier pour contourner `IntegrityError`.
-Les tests de régression doivent ensuite décider explicitement si la
-nouvelle version conserve les bornes brutes ou impose une version différente.
+For a new version of the banks, update the data, their manifest and the
+manifest digest pinned in `_banks.py` after validation. Never just replace a
+file to get around `IntegrityError`. The regression tests must then decide
+explicitly whether the new version preserves the raw bounds or requires a
+different version.

@@ -1,61 +1,69 @@
-# Journal des changements
+# Changelog
 
-## En cours (non publié)
+## Unreleased
 
-- Intégration continue : `.github/workflows/tests.yml` installe le paquet
-  (non éditable) et lance la suite sous Ubuntu (Python 3.10 à 3.14), macOS et
-  Windows (Python 3.11 et 3.14).
-- Nouveau test `tests/regression/test_table_ii_example.py` : la sortie
-  `examples/table_ii.py --json` doit redonner la Table II à l'octet
-  (flottants comparés par `float.hex`, seul `wall_seconds` exclu). Aucun
-  changement des calculs.
-- `.gitattributes` (`* text=auto eol=lf`, `*.npz binary`) : un clone Windows
-  (`core.autocrlf=true`) réécrivait en CRLF `data/MANIFEST.json`, dont
-  l'empreinte SHA-256 ne correspondait plus ; l'installation depuis un tel
-  clone refusait alors tout calcul (`IntegrityError`, comportement voulu).
-  Révélé par le premier passage de l'intégration continue. Les fichiers de
-  PyPI (wheel et sdist, construits avec des fins de ligne LF) n'étaient pas
-  touchés.
-- Tests : lecture des fichiers en UTF-8 explicite. Sous Windows, l'encodage
-  par défaut (cp1252) rendait illisible le « — » des titres du CHANGELOG et
-  faisait échouer `test_release_versions_and_dates_agree`.
-- All user-facing text in English: exception messages, docstrings, contract
-  assumptions, example output, test comments. Exception messages change
-  wording, not type. Numbers are unchanged; the Table II fixture changes in
-  eight strings only (see `docs/LOGIC_CHANGES.md`).
+- Continuous integration: `.github/workflows/tests.yml` installs the package
+  (non-editable) and runs the suite on Ubuntu (Python 3.10 to 3.14), macOS and
+  Windows (Python 3.11 and 3.14).
+- New test `tests/regression/test_table_ii_example.py`: the output of
+  `examples/table_ii.py --json` must reproduce Table II bit for bit (floats
+  compared through `float.hex`; only `wall_seconds` is excluded). No change
+  in the calculations.
+- `.gitattributes` (`* text=auto eol=lf`, `*.npz binary`): a Windows clone
+  (`core.autocrlf=true`) rewrote `data/MANIFEST.json` with CRLF line endings,
+  so its SHA-256 digest no longer matched, and an installation from such a
+  clone refused every calculation (`IntegrityError`, as designed). Found by
+  the first continuous-integration run. The PyPI files (wheel and sdist,
+  built with LF line endings) were not affected.
+- Tests read files as UTF-8 explicitly. On Windows, the default encoding
+  (cp1252) could not read the "—" of the changelog headings and made
+  `test_release_versions_and_dates_agree` fail.
+- All text in English: exception messages, docstrings, contract assumptions,
+  example output, test comments, documentation and changelog. Exception
+  messages change wording, not type. Numbers are unchanged; the Table II
+  fixture changes in eight strings only (see `docs/LOGIC_CHANGES.md`).
+- Support: `SUPPORT.md`, issue forms (feature request, bug report, question)
+  and a README section explaining how to ask for a missing feature. Issue
+  tracker and changelog links added to the package metadata.
 
 ## 0.1.0 — 2026-11-24
 
-- Première version préparée pour la publication : nom `certoutage`, banques
-  embarquées et résultats de la Table II conservés à l'identique.
-- README public en anglais, périmètre explicite et provenance chronologique
-  distinguant l'archive ayant produit les résultats de cette extraction ultérieure.
-- Métadonnées PEP 639, notices et répartition BSD-3-Clause AND MIT AND
-  CC-BY-4.0 ; CITATION.cff et codemeta.json cohérents.
-- Vocabulaire d'intégrité SHA-256 et fonction interne `verified_bytes` ; tests
-  des versions et d'arrêt des calculs lors d'une divergence d'empreinte.
-- Wheel et sdist destinés à une installation autonome, sans téléchargement
-  de données à l'exécution. Aucun changement des calculs numériques.
+- First version prepared for publication: name `certoutage`, embedded banks,
+  and the Table II results preserved identically.
+- Public README in English, explicit scope, and a chronological provenance
+  that separates the archive which produced the results from this later
+  extraction.
+- PEP 639 metadata, notices and the BSD-3-Clause AND MIT AND CC-BY-4.0 split;
+  consistent CITATION.cff and codemeta.json.
+- SHA-256 integrity vocabulary and internal function `verified_bytes`; tests
+  of the versions and of calculations stopping on a digest mismatch.
+- Wheel and sdist meant for a self-contained installation, with no data
+  download at run time. No change in the numerical calculations.
 
-## Corrections T28b — 24 novembre 2026 (0.1.0.dev1, non publiée)
+## T28b corrections, 24 November 2026 (0.1.0.dev1, unreleased)
 
-- Validation exacte de `SNRGrid`, indépendante du contexte `decimal` ;
-  affichage extérieur par quotient rationnel exact, sans arrondi intermédiaire.
-- Contrôle de Laplace du générateur PPP rétabli aux trois points de l'archive,
-  y compris pour la branche grossière ; erreurs explicites sous `python -O`.
-- Neuf invariants des modules vendored `commun`, `ppp` et `thermal_backend`
-  passent de `assert` à `ArithmeticError` ; calculs numériques conservés.
-- Précision réelle des certificats fournis (160 bits), message `fresh` et
-  contrat de la borne CDF stockée à B corrigés.
-- Cible conservée dans `SNRDecision.target` ; différences de seuils refusées
-  pour des cibles, usagers ou paramètres physiques incompatibles.
-- Comportement `str()` de `np.float32(0.1)` figé par test et signalé au README.
-  Tests d'audit, régressions binaires et installation propre vérifiés en T28b.
+- Exact validation of `SNRGrid`, independent of the `decimal` context;
+  outward display through an exact rational quotient, with no intermediate
+  rounding.
+- Laplace check of the PPP generator restored at the three points of the
+  archive, including for the coarse branch; explicit errors under
+  `python -O`.
+- Nine invariants of the vendored modules `commun`, `ppp` and
+  `thermal_backend` move from `assert` to `ArithmeticError`; numerical
+  calculations preserved.
+- Actual precision of the provided certificates (160 bits), the `fresh`
+  message and the contract of the stored CDF bound at B corrected.
+- Target kept in `SNRDecision.target`; threshold differences refused for
+  incompatible targets, users or physical parameters.
+- `str()` behaviour of `np.float32(0.1)` fixed by a test and stated in the
+  README. Audit tests, binary regressions and a clean installation checked
+  in T28b.
 
-## 0.1.0.dev1 — 24 novembre 2026
+## 0.1.0.dev1, 24 November 2026
 
-Première phase locale, non publiée. API typée de modèle, coupure, plancher,
-dimensionnement, comparateurs Gamma/moyenne/Eq. (3), borne J_max et Chernoff.
-Banques v7 dont l'intégrité est vérifiée ; génération PPP locale pour une intensité nouvelle.
-Régression brute des affirmations centrales, Table I, Figure 1 et Nakagami.
-Exemples Table II et cas nouveau ; documentation du contrat et de ses limites.
+First local phase, unreleased. Typed API for the model, outage, floor,
+dimensioning, the Gamma/mean/Eq. (3) comparators, the J_max bound and
+Chernoff. Integrity-checked v7 banks; local PPP generation for a new
+intensity. Raw regression of the central claims, Table I, Figure 1 and
+Nakagami. Table II and new-case examples; documentation of the contract and
+its limits.
