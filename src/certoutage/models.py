@@ -110,7 +110,7 @@ class Contract:
     """Scope of the certificate, provenance and assumptions attached to a result."""
 
     quantity: str
-    source: Literal["provided-banks", "mixed", "analytic", "provided-certificate"]
+    source: Literal["provided-banks", "mixed", "analytic", "provided-certificate", "generated-banks"]
     precision_bits: int
     banks: tuple[tuple[str, str], ...] = ()
     interval_library: str = field(default_factory=_interval_engine)

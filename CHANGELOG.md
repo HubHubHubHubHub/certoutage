@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Internal bank store: verified local generated banks, deterministic NPZ writes,
+  atomic replacement and explicit missing-bank errors. Embedded banks always
+  take precedence; public queries and numerical results are unchanged.
+- Reserve `generated-banks` in contracts and the `fetched` origin for 0.4.0.
+- Offline bank-store tests cover corruption, cache isolation, interrupted writes
+  and four concurrent processes; new guarantees G38–G44.
+
 ## 0.2.0 — 2026-11-26
 
 No change in the numerical results: every regression, Table II included,
