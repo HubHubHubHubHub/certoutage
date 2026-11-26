@@ -272,3 +272,30 @@ Existing test changed: unit/test_contracts.py removes only dict(eta=3.0)
 from test_invalid_models. Accepting 3.0 as canonical int 3 is a declared
 API change, covered positively by test_eta_canonicalization and the cache
 and bank-name test. No numerical regression assertion is changed.
+
+## Domain notes only when a PPP inversion contributes (27 November 2026, unreleased)
+
+`api._contract` attached the two general-exponent notes (2F1 transform,
+inside/outside D_M) to every PPP query with eta other than 3 or 4
+(noninteger, or an integer from 5 to 8). They were
+misleading when no inversion takes place: lam=0 (the environment is the
+exact point mass at 0), g=0 (the environment is `none`), an infeasible
+allocation (analytic [1,1]) and analytic floors (C-INR, or no PPP). The notes
+are now added only for a nonanalytic result with lam≠0 and g≠0. Bounds,
+sources, digests, parameters and assumptions are unchanged; only the `notes`
+of these contracts lose the two entries. The explicit eta=3,4 contracts are
+unchanged.
+
+Existing test changed: `unit/test_real_eta.py::test_real_eta_all_natures`
+expected the notes on the analytic C-INR floor; it now expects them exactly
+when the source is not `analytic`. New test:
+`::test_domain_notes_only_when_a_ppp_inversion_contributes`. No numerical
+regression assertion is changed. A capture of every result of the suite
+before and after (6,155 calculations, compared by `float.hex`) differs only
+in these notes: in the declared test and in the three λ=0 PPP corners of
+`::test_technical_domain_corners`, whose assertions do not read notes.
+
+In the same change, the docstrings of `_transform.py` refer to the
+propositions of `docs/PROOFS.md` instead of working labels, and attribute
+Johansson's reference to Arb's 2F1 evaluation only; no code line changes.
+`_transform.py` is not an extracted file and has no entry in EXTRACTION.json.

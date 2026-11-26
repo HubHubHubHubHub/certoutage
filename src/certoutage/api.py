@@ -59,7 +59,10 @@ def _assumptions(model: Model) -> tuple[str, ...]:
 def _contract(model: Model, gain: Gain, interference: Interference, numerics: Numerics,
               names: list[str], *, generated: bool = False, analytic: bool = False,
               notes: tuple[str, ...] = ()) -> Contract:
-    if interference == "PPP" and type(model.eta) is not int:
+    # The transform and D_M notes describe a PPP inversion: they are omitted
+    # when no inversion contributes (analytic results, lam=0, g=0).
+    ppp_used = not analytic and Decimal(model.lam) != 0 and model.g != "0"
+    if interference == "PPP" and type(model.eta) is not int and ppp_used:
         domain = "inside" if informative(model.lam, model.eta, numerics.ppp_dft_power) else "outside"
         notes += (f"eta={model.eta}: Laplace transform by the 2F1 identities (Arb, abc=True)",
                   f"(lam, eta, M) {domain} the informative domain D_M (e^20 R <= 1e-7, "

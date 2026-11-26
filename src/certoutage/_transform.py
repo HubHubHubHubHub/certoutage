@@ -1,8 +1,11 @@
 """Real-exponent PPP transform and bounds on its analytic inversion error.
 
 Call under the runtime arithmetic context. The historical integer paths are
-delegated unchanged. General transforms use C1/C2 and the certified Pfaff
-remainder C3 (Johansson, ACM TOMS 45(3), 30, 2019, doi:10.1145/3328732).
+delegated unchanged. General transforms use the two 2F1 identities of
+docs/PROOFS.md (Propositions 2.1, 2.2), evaluated by Arb's hypgeom_2f1
+(Johansson, ACM TOMS 45(3), 30, 2019, doi:10.1145/3328732), and the Pfaff
+series with the certified geometric remainder of Proposition 2.3. The domain
+helpers follow PROOFS.md § 4.
 """
 from __future__ import annotations
 
@@ -80,7 +83,8 @@ def _checked_2f1(z, b, *, allow_fallback: bool) -> acb:
 
 
 def J_general(s, ev, *, allow_fallback: bool = True) -> acb:
-    """The PPP radial integral on Re(s)>0, using deterministic C1/C2 routing."""
+    """The PPP radial integral on Re(s)>0, routed deterministically between the
+    identities of PROOFS.md, Propositions 2.1 and 2.2."""
     s, ev = acb(s), arb(ev)
     if not s.is_finite() or not s.real > 0:
         raise ValueError("J_general requires a finite s with Re(s) > 0")
@@ -154,7 +158,8 @@ class LambdaWindow:
 
 
 def lambda_window(eta, power: int, eps_R=1e-7, eps_tau=1e-10) -> LambdaWindow:
-    """Certified monotone bisection for E5, with no binary64 sign decisions."""
+    """Certified monotone bisection for PROOFS.md, Proposition 4.5, with no
+    binary64 sign decisions."""
     # Raising precision also makes this helper usable from the default context.
     with ctx.workprec(max(160, ctx.prec)):
         ev, er, et = _real(eta), _real(eps_R), _real(eps_tau)

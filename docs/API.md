@@ -27,11 +27,13 @@ R0 stays 1 and `lam` remains λ′R0². `eta` accepts exact decimal strings,
 or 4 are stored as those integers (`3.0`, `"3.00"` and `Decimal("3")`
 share the same model, cache key and bank); other values are canonical
 plain decimal strings (`"3.50"` becomes `"3.5"`, `5.0` becomes `"5"`).
-General exponents use the Arb 2F1 identities and generated PPP/Gamma arrays.
-PPP contracts then record the transform and whether the analytic remainder
-criteria of [D_M](CONTRACT.md#on-demand-ppp-inversion) are proved. Outside
-D_M the enclosure remains valid but may be wide. At eta=3,4 the explicit
-paths, banks and contract notes are unchanged.
+General exponents use the Arb 2F1 identities and generated PPP/Gamma arrays
+(provisional proofs in [PROOFS.md](PROOFS.md)). When a PPP inversion contributes, the
+contract records the transform and whether the analytic remainder criteria
+of [D_M](CONTRACT.md#on-demand-ppp-inversion) are proved; results with
+lam=0 or g=0, infeasible allocations and analytic floors carry no such note.
+Outside D_M the enclosure remains valid but may be wide. At eta=3,4 the
+explicit paths, banks and contract notes are unchanged.
 
 Before exact conversion to a fraction, nonzero decimal inputs must have
 adjusted exponent in [-4000, 4000]. This applies to link inputs, eta,

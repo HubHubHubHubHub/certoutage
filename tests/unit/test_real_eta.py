@@ -190,6 +190,26 @@ def test_general_matches_independent_integral(eta, imag):
         _finite_overlap(reference, tf.J_general(s, arb(eta), allow_fallback=False))
 
 
+@pytest.mark.parametrize("eta", ["2.1", "2.125", "2.2", "2.25"])
+@pytest.mark.parametrize("imag", ["0.3", "1", "40", "1000"])
+def test_general_matches_independent_integral_near_two(eta, imag):
+    # Below eta=2.5 the substitution r=v^(-2) of the previous test has a
+    # singular integrand at v=0. Here r=v^(-p), p=1/(eta-2), gives
+    # J(s) = p s ∫_0^1 dv / (1 + s v^(p eta)), with integer p and p*eta.
+    with rt.arithmetic(160):
+        s = acb(arb(20) / 128, arb(imag))
+        p = 1 / (Fraction(eta) - 2)
+        assert p.denominator == 1 and (p * Fraction(eta)).denominator == 1
+        power = int(p * Fraction(eta))
+
+        def integrand(v, analytic):
+            return int(p) * s / (1 + s * v ** power)
+
+        reference = acb.integral(integrand, 0, 1, rel_tol=arb(2)**-60)
+        assert reference.rad() < arb(2)**-40 * abs(reference).lower()
+        _finite_overlap(reference, tf.J_general(s, arb(eta), allow_fallback=False))
+
+
 @pytest.mark.parametrize("z", [acb(-1), acb(0, 1), acb(0, -1), acb(-0.5, 0.25)])
 def test_pfaff_truncated_series_contains_reference(z):
     with rt.arithmetic(160):
@@ -317,8 +337,10 @@ def test_real_eta_all_natures(convention, user, kind):
         assert 0 <= result.lower <= result.upper <= 1
         assert dict(result.contract.parameters)["eta"] == "3.5"
         notes = result.contract.notes
-        assert any("2F1 identities (Arb, abc=True)" in n for n in notes) == (kind == "PPP")
-        assert any("outside the informative domain D_M" in n for n in notes) == (kind == "PPP")
+        # The analytic C-INR floor performs no PPP inversion (S19).
+        inverted = kind == "PPP" and result.contract.source != "analytic"
+        assert any("2F1 identities (Arb, abc=True)" in n for n in notes) == inverted
+        assert any("outside the informative domain D_M" in n for n in notes) == inverted
         if kind == "J_max" and convention == "C-TX":
             assert result.contract.source == "mixed"
 
@@ -332,6 +354,37 @@ def test_ppp_domain_notes_and_legacy_contracts():
             result = outage_enclosure(Model(eta=value), 1, 20)
             assert result.contract == outage_enclosure(Model(eta=eta), 1, 20).contract
             assert not any("2F1" in n or "D_M" in n for n in result.contract.notes)
+
+
+def test_domain_notes_only_when_a_ppp_inversion_contributes():
+    numerics = Numerics(ppp_dft_power=12)
+
+    def ppp_notes(result):
+        return [n for n in result.contract.notes if "2F1" in n or "D_M" in n]
+
+    silent = [outage_enclosure(Model(lam=0, eta="3.5"), 1, 20, numerics=numerics),
+              outage_enclosure(Model(lam=0, eta="3.5", N=16), 1, 20, numerics=numerics),
+              outage_enclosure(Model(g=0, eta="3.5"), 1, 20, numerics=numerics),
+              outage_enclosure(Model(g=0, eta="3.5", N=8), 1, 20, numerics=numerics),
+              floor(Model(eta="3.5", convention="C-INR"), 1, numerics=numerics),
+              floor(Model(lam=0, eta="3.5"), 1, numerics=numerics),
+              outage_enclosure(Model.from_link(p1="0.5", p2="0.5", eta="3.5"), 1, 20,
+                               numerics=numerics)]
+    for result in silent:
+        assert ppp_notes(result) == []
+    assert ppp_notes(silent[2]) == [] and "g=0: no interference contribution" in silent[2].contract.notes
+    # lam=0 and g=0 give the exact case without interference.
+    none = outage_enclosure(Model(eta="3.5"), 1, 20, interference="none", numerics=numerics)
+    assert (silent[0].lower, silent[0].upper) == (none.lower, none.upper)
+    assert (silent[2].lower, silent[2].upper) == (none.lower, none.upper)
+    # Positive witnesses: noninteger eta, and an integer eta other than 3 or 4
+    # (stored as the string "5", it also takes the 2F1 path).
+    for eta in ("3.5", 5):
+        used = outage_enclosure(Model(lam="0.001", eta=eta), 1, 20, numerics=numerics)
+        assert len(ppp_notes(used)) == 2
+    for eta in (3, 4):
+        explicit = outage_enclosure(Model(lam="0.001", eta=eta), 1, 20, numerics=numerics)
+        assert ppp_notes(explicit) == []
 
 
 @pytest.mark.parametrize("lam", ["0", "0.001", "10"])
@@ -384,7 +437,8 @@ def test_lambda_window_certifies_boundaries_and_empty_case():
             lower_tau, upper_tau = window.lambda_tau
             exact_tau = (arb(64) + arb("1e-10").log()) * (arb(eta) - 2) / (2 * arb.pi())
             assert arb(lower_tau) <= exact_tau <= arb(upper_tau)
-        # M=64 is in the E5 monotone regime M>=42, below the public DFT range.
+        # M=64 is in the monotone regime Omega=pi*M/128>=1 (M>=41; PROOFS.md,
+        # Proposition 4.5), below the public DFT range.
         assert tf.lambda_window(8, 6).empty
         assert tf.lambda_window(8, 12, eps_tau="1e-30").empty
         with pytest.raises(ValueError):

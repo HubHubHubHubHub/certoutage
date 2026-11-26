@@ -98,9 +98,13 @@ The supported model is deliberately limited:
   Rayleigh (`m=1`) or Nakagami **m=2,3**, with elementary powers following a
   Gamma distribution of shape m and rate m.
 - A planar Poisson point process outside the disk **R0=1**, with unit-mean
-  exponential marks, **eta in {3,4}** and **lambda in [0,10]**. Lambda=0 gives
-  the case without PPP interference. Small intensities or a coarse
+  exponential marks and **lambda in [0,10]**. Lambda=0 gives the case without
+  PPP interference. The path-loss exponent is **eta in {3,4}** in 0.2.0; the
+  unreleased 0.3.0 accepts **any decimal eta in [2.1, 8]** (eta=3,4 keep the
+  archive's explicit paths and banks). Small intensities or a coarse
   discretization can yield wide bounds and an `inconclusive` decision.
+  R0 stays the unit of length: a physical guard radius enters through
+  `lam` (λ′R0²) and the interference gain g.
 - Thermal source `(10+Z)^2/101`, with standard normal Z; ideal alignment,
   independent amplitudes and no direct path. Link coefficients d1 and d2
   and interference gain g are free (unreleased), defaulting to 80/3, 160
@@ -113,15 +117,16 @@ The supported model is deliberately limited:
   and also N=8,64 without PPP interference. These give **sufficient designs**,
   not impossibility proofs.
 
-Arbitrary N, arbitrary real m, other eta, variable R0, Rice fading, 3GPP
-channels, correlation, phase errors and RIS without thermal harvesting are
-not implemented. Unsupported inputs raise an explicit error (`ValueError`
+Arbitrary N, arbitrary real m, eta outside [2.1, 8], other thermal
+parameters, Rice fading, 3GPP channels, correlation, phase errors and RIS
+without thermal harvesting are not implemented. Unsupported inputs raise an explicit error (`ValueError`
 for unsupported model parameters). This is **not `inconclusive`** and no
 unsupported value is rounded to a supported case.
 
 Certificates are **two-sided bounds for the specified model**, conditional
 on its mathematical assumptions, the Arb/Acb arithmetic engine, the archive's
-analytical bounds and bank integrity. They do not guarantee physical-model
+analytical bounds, the [provisional proofs](docs/PROOFS.md) of the general
+interface (free links and real eta) and bank integrity. They do not guarantee physical-model
 validity, packet latency, a universal relative width or a maximum computation
 time. Higher precision does not repair an unsuitable physical model.
 
@@ -174,6 +179,7 @@ impossibility within the PPP model. `masked` explains why exclusion under
 Eq. (3) + Gamma does not validate replacing PPP interference by Gamma.
 
 [Detailed API](docs/API.md) · [Mathematical contract](docs/CONTRACT.md) ·
+[Proofs for the general interface](docs/PROOFS.md) ·
 [Register of guarantees](docs/GUARANTEES.md) ·
 [Regeneration](docs/REGENERATION.md) · [Logic changes](docs/LOGIC_CHANGES.md) ·
 [Extraction inventory](docs/EXTRACTION.md) ·

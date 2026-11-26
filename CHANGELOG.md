@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- `docs/PROOFS.md`: provisional proofs of the statements the 0.3.0 contract
+  cannot refer to the Letter for (link and gain scaling, the two 2F1
+  identities, the Fourier bound, R and τ for every η > 2, the domain D_M,
+  the cumulants of J). § 6 of PROOFS.md says which statements have a test
+  with reference values from outside the package, which only sample tests,
+  and which none (G63). New checks: the Fourier majorant, the remainder on a
+  distribution with explicit CDF, the DFT identification at the nodes, the
+  derivatives of the remainder, and the transform near η = 2.
+- PPP transform and D_M notes now appear only when a PPP inversion
+  contributes: they are no longer attached to λ=0, g=0, infeasible or analytic
+  results. No numerical result changes.
+- Documentation of the general interface: Scope of the README, contract and
+  API updated for free d1, d2, g and real η; new example
+  `examples/free_parameters.py`.
 - Free real path-loss exponent eta in [2.1, 8] (planned 0.3.0), read exactly
   and normalized before cache/bank selection. Explicit eta=3,4 paths stay
   bit-identical; other values use Arb 2F1 and a certified Pfaff fallback.

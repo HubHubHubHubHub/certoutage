@@ -616,9 +616,9 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "dimensioning with a configurable grid, exact decimal comparisons and new public statuses; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "6e94619186dbf67c7a7c80e0682e6b119c936dab621a6ffe80e5034fe8201aec"
+      "src/certoutage/api.py": "6af943cdd9eb721ffdb1d5922851b5010d3a02226c186b4cea1a15e29df09304"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); PPP domain notes only when an inversion contributes, no numerical change (unreleased, 27 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/minorants.py",
@@ -627,8 +627,8 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "J_max: analytic distribution and integration for new cases; central certificates provided; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "6e94619186dbf67c7a7c80e0682e6b119c936dab621a6ffe80e5034fe8201aec"
+      "src/certoutage/api.py": "6af943cdd9eb721ffdb1d5922851b5010d3a02226c186b4cea1a15e29df09304"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); PPP domain notes only when an inversion contributes, no numerical change (unreleased, 27 November 2026); see docs/LOGIC_CHANGES.md"
   }
 ]
