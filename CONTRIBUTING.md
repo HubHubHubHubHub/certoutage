@@ -46,8 +46,9 @@ python -m venv .venv
 On Windows, use `.venv\Scripts\python`. Continuous integration installs the
 package **non-editable** (`pip install ".[test]"`), so that the tests import
 the installed package and its bundled banks, and runs the suite on Ubuntu
-(Python 3.10 to 3.14), macOS and Windows (Python 3.11 and 3.14). A pull
-request must pass all of these jobs.
+(Python 3.10 to 3.14), macOS and Windows (Python 3.11 and 3.14), and once
+more under `python -O` (Ubuntu, Python 3.13), where Python strips `assert`
+statements. A pull request must pass all of these jobs.
 
 The suite includes regression tests that reproduce the archived results
 **bit for bit**: floats are compared through `float.hex`, not with a
@@ -85,6 +86,31 @@ it must never do either without saying so. In practice:
   its SHA-256 digest, and its license is stated in [LICENSES.md](LICENSES.md).
   The reference digest of the manifest is pinned in `_banks.py`. Queries
   never write banks and never access the network.
+
+## Dependency policy
+
+Every certified bound is computed by Arb, through python-flint, so the
+version of python-flint is part of what a result means:
+
+- **python-flint is pinned exactly** (`python-flint==0.9.0` in
+  `pyproject.toml`, and the same in `codemeta.json`). It moves to a new
+  version only in a release, after every regression has been run again with
+  that version and found bit for bit identical, or after each difference has
+  been declared in [docs/LOGIC_CHANGES.md](docs/LOGIC_CHANGES.md) under the
+  fail-closed rule above. That release changes the pin and the stored
+  fixtures together.
+- **The contract names the engine that actually ran.** The field
+  `Contract.interval_library` is read from `flint.__version__` when the
+  result is built, not copied from the pin. If python-flint has been
+  replaced by hand, the result says so, and the regression tests fail.
+- **NumPy** only carries arrays between Arb computations and is allowed a
+  range (`numpy>=2.0,<3`). Continuous integration runs the suite with the
+  newest NumPy in that range on every push.
+- **Optional dependencies** (the `test` and `regenerate` extras) are given
+  lower bounds or ranges; the package itself imports none of them.
+
+`tests/unit/test_release.py` checks that the pin, `codemeta.json` and the
+imported engine agree.
 
 If you are unsure whether a change weakens a guarantee, say so in the pull
 request: the question is welcome, and it will be answered before merging.

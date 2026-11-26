@@ -1,11 +1,13 @@
 """Physical model, numerical settings and immutable public results."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
 import math
 from typing import Literal
+
+import flint
 
 Scalar = str | int | float | Decimal
 Gain = Literal["exact", "eq3", "chernoff"]
@@ -98,6 +100,11 @@ class SNRGrid:
             object.__setattr__(self, n, float(x))
 
 
+def _interval_engine() -> str:
+    """The interval library actually imported, read at run time (not the declared pin)."""
+    return f"python-flint {flint.__version__} / Arb-Acb"
+
+
 @dataclass(frozen=True)
 class Contract:
     """Scope of the certificate, provenance and assumptions attached to a result."""
@@ -106,7 +113,7 @@ class Contract:
     source: Literal["provided-banks", "mixed", "analytic", "provided-certificate"]
     precision_bits: int
     banks: tuple[tuple[str, str], ...] = ()
-    interval_library: str = "python-flint 0.9.0 / Arb-Acb"
+    interval_library: str = field(default_factory=_interval_engine)
     bank_precision_bits: int = 160
     assumptions: tuple[str, ...] = (
         "independent amplitudes, thermal term and marked PPP",

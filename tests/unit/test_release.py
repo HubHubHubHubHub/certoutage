@@ -88,3 +88,30 @@ def test_corrupted_final_certificate_is_rejected_before_json_loading(tmp_path, m
             largest_interferer_bound(Model(), 1)
     finally:
         clear_cache()
+
+
+def test_contract_names_the_interval_engine_actually_imported(monkeypatch):
+    """The engine in the contract is read at run time, not copied from the pin."""
+    import flint
+    from certoutage import Contract
+
+    expected = f"python-flint {flint.__version__} / Arb-Acb"
+    assert outage_enclosure(Model(), 1, 5).contract.interval_library == expected
+    assert floor(Model(), 1).contract.interval_library == expected
+    # A different engine would be named as such, not as the pinned 0.9.0.
+    monkeypatch.setattr(flint, "__version__", "99.0.0")
+    assert Contract("q", "analytic", 160).interval_library == "python-flint 99.0.0 / Arb-Acb"
+
+
+def test_declared_dependency_matches_the_imported_engine():
+    """Dependency policy: python-flint is pinned exactly, and the pin is what runs."""
+    import flint
+
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    pins = [d for d in project["dependencies"] if d.startswith("python-flint")]
+    assert len(pins) == 1
+    match = re.fullmatch(r"python-flint==(\d+\.\d+\.\d+)", pins[0])
+    assert match, f"python-flint must be pinned exactly (CONTRIBUTING.md, Dependency policy): {pins[0]}"
+    assert flint.__version__ == match[1]
+    codemeta = json.loads((ROOT / "codemeta.json").read_text(encoding="utf-8"))
+    assert f"python-flint == {match[1]}" in codemeta["softwareRequirements"]
