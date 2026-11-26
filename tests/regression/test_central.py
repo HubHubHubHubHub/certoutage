@@ -17,7 +17,7 @@ METHODS = {"exact_PPP": ("exact", "PPP"), "exact_mean": ("exact", "mean"),
 
 @pytest.mark.parametrize("name", ["D1", "D2", "D3"])
 def test_all_raw_points_and_decisions(name):
-    reference = json.loads((FIXTURES / f"{name}.json").read_text())
+    reference = json.loads((FIXTURES / f"{name}.json").read_text(encoding="utf-8"))
     model = Model(N=reference["N"], convention=reference["convention"])
     decisions = {}
     for key, old in reference["brackets"].items():
@@ -29,7 +29,7 @@ def test_all_raw_points_and_decisions(name):
         assert (new.lower_db, new.upper_db, new.undecided_points) == (old["lower_db"], old["upper_db"], old["undecided"])
         assert new.floor.as_dict() == old["floor"]
         decisions[key] = new
-    for row in csv.DictReader((FIXTURES / f"{name}_POINTS.csv").open()):
+    for row in csv.DictReader((FIXTURES / f"{name}_POINTS.csv").open(encoding="utf-8", newline="")):
         gain, interference = METHODS[row["method"]]
         kw = dict(gain=gain, interference=interference)
         actual = (floor(model, 1, **kw) if row["snr_db"] == "inf" else
@@ -57,7 +57,7 @@ def test_floor_and_decisive_displays():
     assert floor(Model(N=24), 1).format(scale="1e-5") == "[1.7136, 1.7478]"
     assert required_snr(Model(N=20), 1, "1e-5", interference="mean").upper_db == 0.25
     for N in [20, 24]:
-        old = json.loads((FIXTURES / f"MINORANTS_N{N}.json").read_text())
+        old = json.loads((FIXTURES / f"MINORANTS_N{N}.json").read_text(encoding="utf-8"))
         row = next(r for r in old["results"] if r["kind"] == "largest_jump" and r["lam"] == "0.1")
         bound = largest_interferer_bound(Model(N=N), 1)
         assert bound.as_dict() == {"lower": row["integrated_lower"], "upper": row["integrated_upper"]}
@@ -65,7 +65,7 @@ def test_floor_and_decisive_displays():
 
 
 def test_gamma_all_raw_floors_and_thresholds():
-    old = json.loads((FIXTURES / "gamma.json").read_text())
+    old = json.loads((FIXTURES / "gamma.json").read_text(encoding="utf-8"))
     for row in old["rows"]:
         gain = "exact" if row["gain"] == "exact" else "eq3"
         kind = {"GAMMA": "Gamma"}.get(row["interference"], row["interference"])

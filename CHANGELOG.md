@@ -16,6 +16,9 @@
   Révélé par le premier passage de l'intégration continue. Les fichiers de
   PyPI (wheel et sdist, construits avec des fins de ligne LF) n'étaient pas
   touchés.
+- Tests : lecture des fichiers en UTF-8 explicite. Sous Windows, l'encodage
+  par défaut (cp1252) rendait illisible le « — » des titres du CHANGELOG et
+  faisait échouer `test_release_versions_and_dates_agree`.
 
 ## 0.1.0 — 2026-11-24
 
