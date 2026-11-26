@@ -1,0 +1,103 @@
+# Register of guarantees
+
+Each row is one promise the package makes, the file that keeps it, and the
+tests that check it. `tests/unit/test_guarantees.py` fails if a row cites a
+test or a file that does not exist, or cites no test. A new promise in the
+README, the API or the contract gets a row here, with a test, in the same
+change. Where a test checks only some cases of a general rule, the row says
+so. Promises that are stated in the documentation but not yet checked by a
+test are listed at the end; they are not hidden.
+
+What these guarantees rest on, and what they do not prove, is stated in
+[CONTRACT.md](CONTRACT.md) (last section): validity is conditional on the
+analytic proofs of the Letter and its archive, on Arb/Acb, and on IEEE
+arithmetic.
+
+Tests are written `file::function`, relative to `tests/`.
+
+## Integrity of the data
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G01 | Every bank and the manifest are checked against their SHA-256 digest before any deserialization; a mismatch raises `IntegrityError`. Every read is verified, whether or not it comes after `clear_cache()`. | `src/certoutage/_banks.py` | `unit/test_contracts.py::test_integrity_check_precedes_deserialization`, `unit/test_release.py::test_corrupted_final_certificate_is_rejected_before_json_loading` |
+| G02 | A changed bank or manifest never produces a result or a decision. | `src/certoutage/_banks.py` | `unit/test_release.py::test_hash_mismatch_stops_certified_calculations` |
+| G03 | Object arrays are never unpickled (`allow_pickle=False`). | `src/certoutage/_banks.py` | `unit/test_runtime_guarantees.py::test_object_arrays_are_never_unpickled` |
+| G04 | Loaded bank arrays are read-only. A repeated query (same model, same precision) is answered without reading the banks again, and `clear_cache()` forces them to be read and verified again. Other queries may read banks again; each such read is verified (G01). | `src/certoutage/_banks.py`, `src/certoutage/_runtime.py`, `src/certoutage/api.py` | `unit/test_runtime_guarantees.py::test_loaded_bank_arrays_are_read_only`, `unit/test_runtime_guarantees.py::test_banks_are_not_read_again_until_clear_cache` |
+| G05 | Queries make no network access. Tested on outage, floor, dimensioning, comparisons and both J_max branches, with provided and generated environments. | `src/certoutage/_banks.py` | `unit/test_runtime_guarantees.py::test_queries_make_no_network_access` |
+| G06 | Queries write no file, and the banks are never rewritten. Same queries as G05. | `src/certoutage/_banks.py`, `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_queries_write_no_file` |
+| G07 | `tools/regenerate_ppp.py` never overwrites an existing file. `tools/regenerate_from_archive.py` refuses an output inside the archive and an existing output directory. | `tools/regenerate_ppp.py`, `tools/regenerate_from_archive.py` | `unit/test_runtime_guarantees.py::test_regeneration_tools_refuse_unsafe_outputs` |
+| G08 | The contract of a result records the name and verified SHA-256 digest of every bank read, and `analytic` when no bank is used. | `src/certoutage/api.py` | `unit/test_runtime_guarantees.py::test_contract_records_the_verified_digests_of_the_banks_read`, `unit/test_contracts.py::test_context_is_restored_and_provenance_visible` |
+
+## Scope and inputs
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G09 | A model outside the documented scope raises `ValueError`. It is never answered `inconclusive` and never rounded to a supported case. | `src/certoutage/models.py` | `unit/test_contracts.py::test_invalid_models` |
+| G10 | Real parameters are read through their decimal representation; booleans, NaN and infinities are rejected. | `src/certoutage/models.py` | `unit/test_contracts.py::test_invalid_models`, `unit/test_runtime_guarantees.py::test_infinite_or_nan_parameters_are_rejected`, `unit/test_audit_fable.py::test_m5_float32_is_read_by_decimal_string_and_selects_archive` |
+| G11 | The SNR is finite, numeric (not a boolean), in dB, within [-1000, 1000]; the target is in (0, 1). | `src/certoutage/api.py` | `unit/test_contracts.py::test_invalid_queries`, `unit/test_runtime_guarantees.py::test_out_of_range_or_non_numeric_snr_is_rejected`, `unit/test_contracts.py::test_invalid_targets` |
+| G12 | `Numerics` accepts integer precisions from 160 to 1024 bits, integer DFT powers from 12 to 20, and only the documented bank policies. | `src/certoutage/models.py` | `unit/test_contracts.py::test_grid_and_numerics_validation`, `unit/test_runtime_guarantees.py::test_numerics_upper_bounds_and_types` |
+| G13 | The SNR grid is exact: multiples of 1/128 dB, validated in rationals, independent of the `decimal` context. | `src/certoutage/models.py` | `unit/test_contracts.py::test_grid_and_numerics_validation`, `unit/test_audit_fable.py::test_m1_rejects_fable_grid_under_low_decimal_precision`, `unit/test_audit_fable.py::test_m1_exact_grid_is_used_with_decimal_rounding_trapped` |
+| G14 | No bank is chosen by rounding: an intensity that is not exactly an archived one is generated afresh. | `src/certoutage/_runtime.py` | `unit/test_contracts.py::test_almost_archived_intensity_does_not_select_wrong_bank`, `unit/test_audit_fable.py::test_m5_float32_is_read_by_decimal_string_and_selects_archive` |
+| G15 | The Chernoff comparator outside its covered cases raises `ValueError` (tested: m=2). | `src/certoutage/api.py` | `unit/test_contracts.py::test_chernoff_cannot_exclude_outage` |
+
+## Certified quantities
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G16 | The archived results are reproduced bit for bit: central claims, Gamma comparisons, Table I, Figure 1, the twenty Nakagami cases and Table II. | `src/certoutage/api.py`, `src/certoutage/_runtime.py` | `regression/test_central.py::test_all_raw_points_and_decisions`, `regression/test_central.py::test_gamma_all_raw_floors_and_thresholds`, `regression/test_extended.py::test_table_i_all_endpoints`, `regression/test_extended.py::test_figure_1_eight_sizes`, `regression/test_extended.py::test_nakagami_twenty_cases`, `regression/test_table_ii_example.py::test_table_ii_example_is_bit_identical` |
+| G17 | Every result is a valid probability interval: finite, 0 ≤ lower ≤ upper ≤ 1, otherwise `ArithmeticError`. | `src/certoutage/models.py` | `unit/test_runtime_guarantees.py::test_enclosures_are_valid_probability_intervals` |
+| G18 | The floor is exactly zero in C-INR and with λ=0. Outage enclosures are monotone in the SNR (tested on four SNR values, C-INR, user 2, provided banks). | `src/certoutage/api.py` | `unit/test_contracts.py::test_monotonicity_and_zero_floor` |
+| G19 | A new intensity or a configurable M keeps the proof. If the Fourier remainder exceeds 1, the CDF bounds are the explicit coarse certificate [0, 1] with the analytic tail, never an extrapolation (tested at λ=1e-500). | `src/certoutage/_generate.py` | `regression/test_new_environment.py::test_new_intensity_and_two_precisions`, `regression/test_new_environment.py::test_new_gamma_and_largest_distribution`, `unit/test_contracts.py::test_tiny_intensity_returns_valid_coarse_enclosure` |
+| G20 | After PPP generation, the envelopes are checked against the Laplace transform at s = 0.1, 0.5 and 1; an inconsistency raises `ArithmeticError`. | `src/certoutage/_generate.py` | `unit/test_audit_fable.py::test_m3_generated_ppp_checks_all_archive_laplace_points`, `unit/test_audit_fable.py::test_m3_laplace_guard_rejects_inconsistent_inversion` |
+| G21 | The nine vendored guards, the Laplace check and input validation hold under `python -O`. | `src/certoutage/_vendor/commun.py`, `src/certoutage/_vendor/ppp.py`, `src/certoutage/_vendor/thermal_backend.py`, `src/certoutage/_generate.py`, `src/certoutage/models.py` | `unit/test_runtime_guarantees.py::test_guards_hold_under_python_optimization`, `unit/test_audit_fable.py::test_m4_nonfinite_balls_raise_arithmetic_error`, `unit/test_audit_fable.py::test_m4_inward_transport_is_rejected`, `unit/test_audit_fable.py::test_m4_inconsistent_cdf_envelopes_are_rejected`, `unit/test_audit_fable.py::test_m4_negative_masses_are_rejected`, `unit/test_audit_fable.py::test_m4_tighten_rejects_crossed_bounds`, `unit/test_audit_fable.py::test_m4_series_and_poisson_preconditions_survive_optimization` |
+| G22 | No `assert` statement lies on a path reachable from the public API. The two left in `_vendor/oracles.py` are in archive code that the package never runs. | `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_no_assert_is_reachable_from_the_public_api` |
+| G23 | The stored CDF bound at B is conservative (previous node in the DFT branch). | `src/certoutage/_generate.py` | `unit/test_audit_fable.py::test_m6_dft_endpoint_is_conservative_previous_node` |
+
+## Decisions
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G24 | `excluded` is returned only when the floor's lower bound is strictly above the target; an exhausted grid gives `inconclusive`. | `src/certoutage/api.py` | `unit/test_contracts.py::test_finite_grid_never_excludes_every_snr`, `regression/test_central.py::test_all_raw_points_and_decisions` |
+| G25 | Left censoring gives `feasible` with -∞ as the lower edge; no finite edge is invented. | `src/certoutage/api.py` | `unit/test_contracts.py::test_censored_left_is_feasible_without_invented_lower` |
+| G26 | The Chernoff comparator never yields `excluded` for the physical model. This holds by construction of the decision rule; it is tested on N=20. | `src/certoutage/api.py` | `unit/test_contracts.py::test_chernoff_cannot_exclude_outage` |
+| G27 | `threshold_difference` refuses censored decisions, a missing or different target, a missing parameter, and a different user, convention, N, m, λ or η. It accepts equivalent decimal spellings and different comparators. | `src/certoutage/api.py` | `unit/test_audit_fable.py::test_m7_refuses_incomparable_thresholds`, `unit/test_runtime_guarantees.py::test_threshold_difference_refuses_other_physical_parameters`, `unit/test_runtime_guarantees.py::test_threshold_difference_refuses_missing_target_or_parameters`, `unit/test_audit_fable.py::test_m7_equivalent_targets_and_distinct_comparators_remain_comparable`, `unit/test_contracts.py::test_censored_left_is_feasible_without_invented_lower` |
+| G28 | The `falsely feasible` and `masked` diagnostics are derived from the statuses (tested on the Table II example). | `src/certoutage/api.py` | `regression/test_central.py::test_table_ii_displays_and_diagnostics` |
+| G29 | The J_max result is a floor lower bound: its upper edge is not an upper bound on the PPP floor; in C-INR its limit is zero and labelled as such. | `src/certoutage/api.py` | `unit/test_contracts.py::test_central_largest_bound_is_not_a_ppp_upper_bound`, `unit/test_contracts.py::test_largest_inr_limit_is_labelled_correctly` |
+| G30 | A provided certificate reports `precision_bits=160`, whatever precision was requested. This holds by construction; it is tested at 512 bits. | `src/certoutage/api.py` | `unit/test_audit_fable.py::test_m6_stored_certificate_reports_its_actual_precision` |
+
+## Display and arithmetic context
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G31 | Displayed values (`Enclosure.format`, `ThresholdDifference.format`) are rounded outward, through exact rationals, independently of the `decimal` context and its traps. | `src/certoutage/models.py` | `unit/test_contracts.py::test_rounding_is_outward`, `unit/test_contracts.py::test_threshold_display_on_fine_grid_is_outward`, `unit/test_audit_fable.py::test_m2_fable_quotients_round_outwards`, `unit/test_audit_fable.py::test_m2_large_quotient_and_exact_boundary`, `unit/test_runtime_guarantees.py::test_display_of_threshold_differences_ignores_decimal_traps`, `regression/test_central.py::test_signs_display`, `regression/test_central.py::test_floor_and_decisive_displays` |
+| G32 | The global Arb context (precision and threads) is restored after each Arb computation of the package, including after an exception; the precision used is recorded in the contract. | `src/certoutage/_runtime.py` | `unit/test_contracts.py::test_context_is_restored_and_provenance_visible`, `unit/test_runtime_guarantees.py::test_arb_context_is_restored_after_an_exception` |
+| G33 | Every Arb computation of the package runs under one lock. Validation, display and `threshold_difference` do not need it and run outside. | `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_calls_are_serialized_by_one_lock` |
+
+## Release metadata
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G34 | The version and release date agree across the package, CITATION.cff and the changelog. | `CITATION.cff`, `CHANGELOG.md` | `unit/test_release.py::test_release_versions_and_dates_agree` |
+
+## Stated, not yet checked by a test
+
+These promises appear in the documentation. They are believed to hold, but
+no test checks them yet:
+
+- A target equal to an endpoint is compared exactly with the binary value,
+  with no tolerance (API). Covered only indirectly by the regressions.
+- The binary search checks its two final points again, and
+  `undecided_points` counts the points between the two finite edges (API).
+  Checked only by the regressions.
+- Results are immutable dataclasses exported by `dataclasses.asdict`;
+  `compare_approximations` returns six rows; `gauss` and `GAMMA` are not
+  public method names (API).
+- The wheel and the sdist both contain every bank (README). To be checked on
+  the built distributions.
+- No linear interpolation and no renormalization of tails; F_J(0)=0
+  (CONTRACT). These are properties of the construction, argued in the
+  contract.
+- The version, date and DOI quoted in the README agree with the release
+  metadata.
+- The diagnostics are checked on the Table II example only (G28), and
+  monotonicity on one model (G18).
