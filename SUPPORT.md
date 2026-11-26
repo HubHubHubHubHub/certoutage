@@ -31,3 +31,11 @@ shortest code that shows the problem.
 
 Open an issue with the **question** template. Comments on the documentation,
 on the contract, or on how you use the package are welcome too.
+
+## Collaborations and private messages
+
+Collaborations are welcome. For them, or for anything you would rather not
+ask in public, write to the author at the e-mail address given in his
+papers on HAL, for instance the
+[Letter](https://hal.science/hal-05879102); his other papers are listed
+under his [HAL identifier](https://hal.science/search/index?q=authIdHal_s:victor-rabiet).

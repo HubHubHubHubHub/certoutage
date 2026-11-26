@@ -218,4 +218,7 @@ If your work needs a feature that is not implemented yet, please
 and say what it is for. If it can be done in a reasonable time, it will be
 implemented and you will be notified on the issue when it is released. Bug
 reports, questions and other feedback go to the same tracker; see
-[SUPPORT.md](SUPPORT.md).
+[SUPPORT.md](SUPPORT.md). Collaborations are welcome: for them, or for a
+private message, use the e-mail address given in the author's papers on
+[HAL](https://hal.science/search/index?q=authIdHal_s:victor-rabiet), for
+instance the [Letter](https://hal.science/hal-05879102).
