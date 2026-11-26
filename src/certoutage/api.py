@@ -1,4 +1,4 @@
-"""API publique de certification et de comparaison."""
+"""Public API for certification and comparison."""
 from __future__ import annotations
 
 from dataclasses import replace
@@ -24,18 +24,18 @@ _KINDS = {"PPP": "PPP", "Gamma": "GAMMA", "mean": "mean", "none": "none"}
 def _validate(model: Model, user: int, gain: Gain, interference: Interference,
               numerics: Numerics) -> None:
     if not isinstance(model, Model) or not isinstance(numerics, Numerics):
-        raise TypeError("model et numerics doivent être Model et Numerics")
+        raise TypeError("model and numerics must be a Model and a Numerics")
     if type(user) is not int or user not in (1, 2):
-        raise ValueError("user doit être l'entier 1 ou 2")
+        raise ValueError("user must be the integer 1 or 2")
     if gain not in _METHODS:
-        raise ValueError("gain doit être 'exact', 'eq3' ou 'chernoff'")
+        raise ValueError("gain must be 'exact', 'eq3' or 'chernoff'")
     if interference not in _KINDS:
-        raise ValueError("interference doit être 'PPP', 'Gamma', 'mean' ou 'none'")
+        raise ValueError("interference must be 'PPP', 'Gamma', 'mean' or 'none'")
     if gain == "chernoff":
         no_ppp = Decimal(model.lam) == 0 or interference == "none"
         supported = model.m == 1 and (model.N in (20, 24) or (no_ppp and model.N in (8, 64)))
         if not supported:
-            raise ValueError("Chernoff fourni : Rayleigh N=20,24 ; aussi N=8,64 sans PPP")
+            raise ValueError("Chernoff is provided for Rayleigh N=20, 24, and for N=8, 64 without PPP")
 
 
 def _quantity(gain: Gain, interference: Interference) -> str:
@@ -92,22 +92,22 @@ def _parameters(model: Model, user: int, gain: str, interference: str) -> tuple[
 def outage_enclosure(model: Model, user: int, snr_db: Scalar, *, gain: Gain = "exact",
                      interference: Interference = "PPP",
                      numerics: Numerics = DEFAULT_NUMERICS) -> Enclosure:
-    """Two-sided bounds à SNR FINI en dB (10 log10 rho).
+    """Two-sided bounds at a FINITE SNR in dB (10 log10 rho).
 
-    Eq. (3), Gamma et mean certifient leurs modèles comparateurs seulement.
-    Pour Chernoff, l'intervalle encadre le majorant propagé, pas la coupure.
+    Eq. (3), Gamma and mean certify their comparator models only.
+    For Chernoff, the interval encloses the propagated upper bound, not the outage.
     """
     _validate(model, user, gain, interference, numerics)
     db = decimal(snr_db, "snr_db")
     if not -1000 <= db <= 1000:
-        raise ValueError("snr_db doit appartenir à [-1000, 1000] dB ; utiliser floor pour l'infini")
+        raise ValueError("snr_db must lie in [-1000, 1000] dB; use floor for infinite SNR")
     with rt.arithmetic(numerics.precision_bits):
         return _evaluate(model, user, db, gain, interference, numerics)
 
 
 def floor(model: Model, user: int, *, gain: Gain = "exact",
           interference: Interference = "PPP", numerics: Numerics = DEFAULT_NUMERICS) -> Enclosure:
-    """Plancher certifié à SNR infini. C-INR : exactement zéro."""
+    """Certified floor at infinite SNR. C-INR: exactly zero."""
     _validate(model, user, gain, interference, numerics)
     with rt.arithmetic(numerics.precision_bits):
         return _evaluate(model, user, None, gain, interference, numerics)
@@ -116,18 +116,18 @@ def floor(model: Model, user: int, *, gain: Gain = "exact",
 def required_snr(model: Model, user: int, target: Scalar, grid: SNRGrid = DEFAULT_GRID,
                  *, gain: Gain = "exact", interference: Interference = "PPP",
                  numerics: Numerics = DEFAULT_NUMERICS) -> SNRDecision:
-    """Seuil en dB : dernier point exclu / premier point certifié faisable.
+    """Threshold in dB: last excluded point / first certified feasible point.
 
-    Une recherche finie épuisée est inconclusive ; excluded requiert un
-    plancher inférieur strictement au-dessus de la cible. Chernoff n'exclut
-    jamais le modèle physique. Les points indécidés sont conservés.
+    An exhausted finite search is inconclusive; excluded requires the lower
+    bound of the floor to lie strictly above the target. Chernoff never
+    excludes the physical model. Undecided points are kept.
     """
     _validate(model, user, gain, interference, numerics)
     p = decimal(target, "target")
     if not 0 < p < 1:
-        raise ValueError("target doit appartenir à ]0, 1[")
+        raise ValueError("target must lie in the open interval (0, 1)")
     if not isinstance(grid, SNRGrid):
-        raise TypeError("grid doit être une SNRGrid")
+        raise TypeError("grid must be an SNRGrid")
     base = floor(model, user, gain=gain, interference=interference, numerics=numerics)
     scope = "sufficient Chernoff rule" if gain == "chernoff" else _quantity(gain, interference)
     if Decimal.from_float(base.lower) > p:
@@ -167,10 +167,10 @@ def required_snr(model: Model, user: int, target: Scalar, grid: SNRGrid = DEFAUL
     lower = (a + bad * h) / 128 if bad >= 0 else -math.inf
     upper = (a + good * h) / 128 if good is not None else None
     if bad >= 0 and not Decimal.from_float(query(bad).lower) > p:
-        raise ArithmeticError("Le bord inférieur n'est pas certifié exclu")
+        raise ArithmeticError("The lower edge is not certified excluded")
     if good is not None:
         if not Decimal.from_float(query(good).upper) <= p:
-            raise ArithmeticError("Le bord supérieur n'est pas certifié faisable")
+            raise ArithmeticError("The upper edge is not certified feasible")
         return SNRDecision("feasible", lower, upper, base,
                            "left-censored threshold" if bad < 0 else "finite threshold bracket",
                            good - bad - 1 if bad >= 0 else None, scope, query(good).contract, str(p))
@@ -180,11 +180,11 @@ def required_snr(model: Model, user: int, target: Scalar, grid: SNRGrid = DEFAUL
 
 
 def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DEFAULT_NUMERICS) -> Enclosure:
-    """Encadre E F_W(d_i J_max) en C-TX, une floor lower bound du PPP.
+    """Encloses E F_W(d_i J_max) in C-TX, a lower bound on the PPP floor.
 
-    Son majorant inférieur à la cible ne prouve aucune faisabilité PPP.
-    Les cas centraux utilisent les certificats fournis dont l'intégrité est vérifiée.
-    En C-INR, renvoie la limite à SNR infini du comparateur : zéro.
+    An upper bound below the target proves no PPP feasibility.
+    The central cases use the provided, integrity-checked certificates.
+    In C-INR, returns the infinite-SNR limit of the comparator: zero.
     """
     _validate(model, user, "exact", "PPP", numerics)
     quantity = "largest-interferer bound: floor lower bound, not full PPP outage"
@@ -225,7 +225,7 @@ def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DE
 def compare_approximations(model: Model, user: int, target: Scalar, *,
                            grid: SNRGrid = DEFAULT_GRID,
                            numerics: Numerics = DEFAULT_NUMERICS) -> tuple[ComparisonRow, ...]:
-    """Table II augmentée des deux lignes moyenne, avec diagnostics PPP."""
+    """Table II extended with the two mean rows, with PPP diagnostics."""
     settings: tuple[tuple[str, Gain, Interference], ...] = (
         ("Exact gain + PPP", "exact", "PPP"),
         ("Exact gain + Gamma", "exact", "Gamma"),
@@ -257,28 +257,28 @@ def compare_approximations(model: Model, user: int, target: Scalar, *,
 
 
 def threshold_difference(a: SNRDecision, b: SNRDecision) -> ThresholdDifference:
-    """Différence de seuils finis de même cible, usager et modèle physique."""
+    """Difference of finite thresholds with the same target, user and physical model."""
     if (a.status != "feasible" or b.status != "feasible" or
             any(x is None or not math.isfinite(x) for x in (a.lower_db, a.upper_db, b.lower_db, b.upper_db))):
-        raise ValueError("Une différence exige deux encadrements de seuil finis et non censurés")
+        raise ValueError("A difference requires two finite, uncensored threshold enclosures")
     if a.target is None or b.target is None:
-        raise ValueError("Une différence exige une cible renseignée pour chaque décision")
+        raise ValueError("A difference requires a recorded target for each decision")
     if Decimal(a.target) != Decimal(b.target):
-        raise ValueError("Les deux décisions doivent porter sur la même cible")
+        raise ValueError("Both decisions must refer to the same target")
     left, right = dict(a.contract.parameters), dict(b.contract.parameters)
     for name in ("user", "convention", "N", "m", "lam", "eta", "R0"):
-        label = "usager (user)" if name == "user" else name
+        label = name
         if name not in left or name not in right:
-            raise ValueError(f"Paramètre {label} absent : décisions non comparables")
+            raise ValueError(f"Parameter {label} missing: the decisions are not comparable")
         equal = (left[name] == right[name] if name == "convention"
                  else Decimal(left[name]) == Decimal(right[name]))
         if not equal:
-            raise ValueError(f"Les deux décisions doivent avoir le même paramètre {label}")
+            raise ValueError(f"Both decisions must have the same parameter {label}")
     return ThresholdDifference(a.lower_db - b.upper_db, a.upper_db - b.lower_db)
 
 
 def clear_cache() -> None:
-    """Libère les objets de calcul ; le prochain chargement revérifie les banques."""
+    """Frees the calculation objects; the next load verifies the banks again."""
     with rt.arithmetic(160):
         rt.clear()
         _banks.manifest.cache_clear()

@@ -25,9 +25,9 @@ def envelopes(cdf_lo, cdf_hi, xlo, xhi):
     L = np.maximum.accumulate(np.clip(cdf_lo, 0, 1))
     U = np.minimum.accumulate(np.clip(cdf_hi, 0, 1)[::-1])[::-1]
     if not (np.all(L <= U) and L[0] == 0 and U[0] == 0):
-        raise ArithmeticError("CDF incohérentes : enveloppes croisées ou origine non nulle")
+        raise ArithmeticError("Inconsistent CDFs: crossed envelopes or nonzero origin")
     wl = [arb(float(b)) - arb(float(a)) for a, b in zip(np.r_[0.0, U[1:]], np.r_[U[1:], 1.0])]
     wh = [arb(float(b)) - arb(float(a)) for a, b in zip(np.r_[0.0, L[:-1]], L)]
     if not all(v >= 0 for v in wl + wh):
-        raise ArithmeticError("Les masses des enveloppes doivent être positives ou nulles")
+        raise ArithmeticError("Envelope masses must be nonnegative")
     return (wl, wh, arb(1) - arb(float(L[-1])))

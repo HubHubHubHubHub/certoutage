@@ -1,4 +1,4 @@
-"""Adaptateurs sans chdir, sans accès à l'archive et sans modification globale permanente."""
+"""Adapters with no chdir, no access to the archive and no permanent global change."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -54,7 +54,7 @@ class Signal(OriginalSignal):
         self.thi = np.array([b for a, b in thresholds])
         self.size = len(units)
         if not all(len(v[0]) == self.size for v in self.values.values()):
-            raise ArithmeticError("Dimensions incohérentes dans la banque de signal")
+            raise ArithmeticError("Inconsistent dimensions in the signal bank")
 
 
 @lru_cache(maxsize=12)

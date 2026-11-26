@@ -8,13 +8,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def out(x):
     if not x.is_finite():
-        raise ArithmeticError(f"Boule Arb non finie : {x}")
+        raise ArithmeticError(f"Non-finite Arb ball: {x}")
     lo = x.lower()
     hi = x.upper()
     a = np.nextafter(float(lo), -np.inf)
     b = np.nextafter(float(hi), np.inf)
     if not (arb(float(a)) <= lo and arb(float(b)) >= hi):
-        raise ArithmeticError(f"Transport binaire64 non extérieur : {x}, {a}, {b}")
+        raise ArithmeticError(f"Binary64 transport is not outward: {x}, {a}, {b}")
     return (a, b)
 
 def hull(a, b):
@@ -54,7 +54,7 @@ def tail_near(w, lam, eta, R):
 def poisson_tail(kappa, nmax):
     n = arb(nmax + 1)
     if not n > kappa:
-        raise ArithmeticError(f"Queue de Poisson : n doit dépasser kappa ({n}, {kappa})")
+        raise ArithmeticError(f"Poisson tail: n must exceed kappa ({n}, {kappa})")
     return (-kappa + n - n * (n / kappa).log()).exp()
 
 def env_name(lam, eta, p):

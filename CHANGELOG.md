@@ -19,6 +19,10 @@
 - Tests : lecture des fichiers en UTF-8 explicite. Sous Windows, l'encodage
   par défaut (cp1252) rendait illisible le « — » des titres du CHANGELOG et
   faisait échouer `test_release_versions_and_dates_agree`.
+- All user-facing text in English: exception messages, docstrings, contract
+  assumptions, example output, test comments. Exception messages change
+  wording, not type. Numbers are unchanged; the Table II fixture changes in
+  eight strings only (see `docs/LOGIC_CHANGES.md`).
 
 ## 0.1.0 — 2026-11-24
 

@@ -1,4 +1,4 @@
-"""Reproduit la Table II par l'API publique et affiche les lignes moyenne."""
+"""Reproduces Table II through the public API and prints the two mean rows."""
 from __future__ import annotations
 
 import argparse
@@ -25,7 +25,7 @@ def main() -> None:
         elif index in (0, 1, 2):
             value = row.floor.format(scale="1e-5", places=3 if index == 2 else 4)
         else:
-            value = repr(row.floor.as_dict()) + " (probabilité brute)"
+            value = repr(row.floor.as_dict()) + " (raw probability)"
         rendered.append(dict(label=row.label, display=value,
                              decision=row.diagnostic if row.diagnostic == "falsely feasible" else row.decision.status,
                              diagnostic=row.diagnostic, result=asdict(row)))
@@ -34,15 +34,15 @@ def main() -> None:
     if args.json:
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return
-    print("Table II — C-TX, N=24, λ=0.1, η=4, usager 1, cible 1e-5")
-    print("Les quatre valeurs de la Table II sont en unités de 1e-5.")
+    print("Table II — C-TX, N=24, λ=0.1, η=4, user 1, target 1e-5")
+    print("The four Table II values are in units of 1e-5.")
     for i in (0, 1, 2, 5, 3, 4):
         row = rendered[i]
         print(f"{row['label']}: {row['display']}; {row['decision']}"
               + ("; masked" if row["diagnostic"] == "masked" else ""))
-    print("Exact gain + Gamma : required SNR (threshold) [4.50, 4.75] dB.")
-    print("Les certificats des comparateurs Gamma/moyenne ne bornent pas le PPP.")
-    print(f"Temps : {result['wall_seconds']:.3f} s.")
+    print("Exact gain + Gamma: required SNR (threshold) [4.50, 4.75] dB.")
+    print("The certificates of the Gamma/mean comparators do not bound the PPP.")
+    print(f"Time: {result['wall_seconds']:.3f} s.")
 
 
 if __name__ == "__main__":

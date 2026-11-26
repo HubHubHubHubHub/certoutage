@@ -37,12 +37,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -109,12 +109,12 @@
               "interval_library": "python-flint 0.9.0 / Arb-Acb",
               "bank_precision_bits": 160,
               "assumptions": [
-                "indépendance des amplitudes, thermique et PPP marqué",
-                "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-                "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-                "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-                "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-                "certificat numérique du modèle ; aucune garantie physique ou de latence"
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
               ],
               "notes": [],
               "parameters": [
@@ -193,12 +193,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -265,12 +265,12 @@
               "interval_library": "python-flint 0.9.0 / Arb-Acb",
               "bank_precision_bits": 160,
               "assumptions": [
-                "indépendance des amplitudes, thermique et PPP marqué",
-                "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-                "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-                "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-                "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-                "certificat numérique du modèle ; aucune garantie physique ou de latence"
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
               ],
               "notes": [],
               "parameters": [
@@ -333,12 +333,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -412,12 +412,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -484,12 +484,12 @@
               "interval_library": "python-flint 0.9.0 / Arb-Acb",
               "bank_precision_bits": 160,
               "assumptions": [
-                "indépendance des amplitudes, thermique et PPP marqué",
-                "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-                "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-                "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-                "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-                "certificat numérique du modèle ; aucune garantie physique ou de latence"
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
               ],
               "notes": [],
               "parameters": [
@@ -543,7 +543,7 @@
     },
     {
       "label": "Exact gain + mean",
-      "display": "{'lower': 3.716491105435498e-15, 'upper': 3.888988626422534e-15} (probabilité brute)",
+      "display": "{'lower': 3.716491105435498e-15, 'upper': 3.888988626422534e-15} (raw probability)",
       "decision": "falsely feasible",
       "diagnostic": "falsely feasible",
       "result": {
@@ -564,12 +564,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -632,12 +632,12 @@
               "interval_library": "python-flint 0.9.0 / Arb-Acb",
               "bank_precision_bits": 160,
               "assumptions": [
-                "indépendance des amplitudes, thermique et PPP marqué",
-                "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-                "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-                "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-                "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-                "certificat numérique du modèle ; aucune garantie physique ou de latence"
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
               ],
               "notes": [],
               "parameters": [
@@ -696,12 +696,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -750,7 +750,7 @@
     },
     {
       "label": "Eq. (3) + mean",
-      "display": "{'lower': 9.039202781939247e-08, 'upper': 9.116853495842469e-08} (probabilité brute)",
+      "display": "{'lower': 9.039202781939247e-08, 'upper': 9.116853495842469e-08} (raw probability)",
       "decision": "falsely feasible",
       "diagnostic": "falsely feasible",
       "result": {
@@ -771,12 +771,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -839,12 +839,12 @@
               "interval_library": "python-flint 0.9.0 / Arb-Acb",
               "bank_precision_bits": 160,
               "assumptions": [
-                "indépendance des amplitudes, thermique et PPP marqué",
-                "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-                "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-                "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-                "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-                "certificat numérique du modèle ; aucune garantie physique ou de latence"
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
               ],
               "notes": [],
               "parameters": [
@@ -903,12 +903,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [],
             "parameters": [
@@ -978,12 +978,12 @@
             "interval_library": "python-flint 0.9.0 / Arb-Acb",
             "bank_precision_bits": 160,
             "assumptions": [
-              "indépendance des amplitudes, thermique et PPP marqué",
-              "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-              "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-              "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-              "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-              "certificat numérique du modèle ; aucune garantie physique ou de latence"
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
             ],
             "notes": [
               "stored endpoints at 160 bits; not recomputed"
@@ -1048,12 +1048,12 @@
               "interval_library": "python-flint 0.9.0 / Arb-Acb",
               "bank_precision_bits": 160,
               "assumptions": [
-                "indépendance des amplitudes, thermique et PPP marqué",
-                "W=(somme sqrt(E F))²(10+Z)²/101, Z normal standard",
-                "puissances E,F Exp(1) ou Gamma(m,rate=m), m entier couvert",
-                "PPP plan hors R0=1 ; marques de puissance Exp(1)",
-                "d1=80/3, d2=160 ; CSI et alignement de phase parfaits",
-                "certificat numérique du modèle ; aucune garantie physique ou de latence"
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
               ],
               "notes": [
                 "stored endpoints at 160 bits; not recomputed"
