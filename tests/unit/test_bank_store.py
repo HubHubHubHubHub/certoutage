@@ -572,3 +572,95 @@ def test_fetched_origin_is_explicitly_reserved():
     with pytest.raises(NotImplementedError, match="fetched banks are planned for version 0.4.0"):
         _banks._read_fetched("future.npz")
     assert not _banks.cache_dir().exists()
+
+
+@pytest.mark.parametrize("generator", [GENERATOR, dict(GENERATOR, code_sha256="b" * 64)])
+def test_writer_refuses_different_arrays_under_the_same_identity(generator):
+    name = _store(generator=dict(GENERATOR, code_sha256="a" * 64))
+    paths = _paths(name)
+    before = [path.read_bytes() for path in paths]
+    changed = dict(_fake_arrays(), levels=np.array([-1, 0, 2], dtype=np.int8))
+    for arrays in (changed, {"signal": _fake_arrays()["signal"]},
+                   dict(_fake_arrays(), levels=_fake_arrays()["levels"].view(np.uint8)),
+                   dict(_fake_arrays(), signal=_fake_arrays()["signal"].reshape(4))):
+        with pytest.raises(_banks.IntegrityError, match="different arrays"):
+            _store(generator=generator, arrays=arrays)
+    assert [path.read_bytes() for path in paths] == before
+
+
+def test_writer_accepts_equal_arrays_in_another_memory_layout():
+    name = _store()
+    before = [path.read_bytes() for path in _paths(name)]
+    fortran = {key: np.asfortranarray(value) for key, value in _fake_arrays().items()}
+    assert _store(arrays=fortran) == name
+    assert [path.read_bytes() for path in _paths(name)] == before
+
+
+@pytest.mark.parametrize("key", ["a\x00b", "", "a/b", "a\\b", ".", "..", "a.b", "é", "x" * 65, 1])
+def test_array_keys_are_restricted_before_any_write(key):
+    with pytest.raises(TypeError, match="keys matching"):
+        _store(arrays={key: np.arange(2)})
+    assert not _banks.cache_dir().exists()
+
+
+def test_serialized_bytes_must_reproduce_their_arrays(monkeypatch):
+    other = _banks._serialize_arrays({"signal": np.arange(3)})
+    monkeypatch.setattr(_banks, "_serialize_arrays", lambda arrays: other)
+    with pytest.raises(_banks.IntegrityError, match="does not reproduce"):
+        _store()
+    assert not _banks.cache_dir().exists()
+
+
+def test_cache_that_is_a_file_means_absent_bank():
+    _banks.cache_dir().mkdir(parents=True)
+    (_banks.cache_dir() / "generated").write_bytes(b"not a directory")
+    with pytest.raises(_banks.BankNotAvailable):
+        _banks.verified_bytes(_expected_name())
+
+
+@pytest.mark.skipif(os.name == "nt", reason="Windows reports reading a directory as PermissionError")
+@pytest.mark.parametrize("which", [0, 1])
+def test_directory_in_place_of_bank_or_descriptor_is_an_integrity_error(which):
+    name = _store()
+    path = _paths(name)[which]
+    path.unlink()
+    path.mkdir()
+    with pytest.raises(_banks.IntegrityError, match="is a directory"):
+        _banks.verified_bytes(name)
+    with pytest.raises(_banks.IntegrityError, match="is a directory"):
+        _store()
+
+
+def test_no_public_path_reaches_the_generated_store(monkeypatch):
+    package = Path(certoutage.__file__).parent
+    allowed = {"arrays", "manifest", "receipt", "verified_bytes"}
+    for module in ("__init__.py", "api.py", "_runtime.py", "_generate.py", "models.py"):
+        text = (package / module).read_text(encoding="utf-8")
+        assert set(re.findall(r"_banks\.(\w+)", text)) <= allowed, module
+        imported = re.findall(r"from (?:\.|certoutage\.)_banks import ([\w, ]+)", text)
+        assert {name.strip() for group in imported for name in group.split(",")} <= {"IntegrityError"}, module
+        for word in ("_store_generated", "_read_generated", "_resolve", "BankNotAvailable", "cache_dir"):
+            assert word not in text, (module, word)
+        if module != "models.py":
+            assert "generated-banks" not in text, module
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("A public query reached the generated-bank store")
+
+    resolved = []
+    original = _banks._resolve
+
+    def recording(name):
+        resolved.append(name)
+        return original(name)
+
+    for attribute in ("_read_generated", "_store_generated", "cache_dir"):
+        monkeypatch.setattr(_banks, attribute, forbidden)
+    monkeypatch.setattr(_banks, "_resolve", recording)
+    clear_cache()
+    results = [outage_enclosure(Model(), 1, 0),
+               outage_enclosure(Model(N=24, convention="C-INR"), 1, 0, gain="eq3", interference="mean"),
+               outage_enclosure(Model(), 1, 0, interference="Gamma"),
+               required_snr(Model(), 1, "1e-5")]
+    assert resolved and set(resolved) <= set(_banks.manifest())
+    assert all(result.contract.source != "generated-banks" for result in results)

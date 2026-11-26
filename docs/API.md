@@ -130,6 +130,9 @@ query in this version; planned for 0.4.0. The `fetched` reader raises
 The cache location is resolved on every call: nonempty `CERTOUTAGE_CACHE_DIR`,
 otherwise nonempty absolute `XDG_CACHE_HOME` plus `/certoutage`, otherwise
 `~/.cache/certoutage` (also on Windows). Relative XDG paths are ignored.
+`CERTOUTAGE_CACHE_DIR` is used as given: `~` is not expanded and a relative
+value, like a relative `HOME`, depends on the current directory, so set an
+absolute path.
 Generated banks live in `generated/`; `fetched/` is never created. Importing
 or reading creates no directory or file. Embedded names always resolve to
 the package, regardless of cache contents.
@@ -143,8 +146,13 @@ a missing bank or descriptor raises internal `BankNotAvailable(LookupError)`
 with the name and cache directory, never a fallback. Absences are not cached.
 
 Only `_store_generated` writes, using deterministic NPZ entries and temporary
-files in the destination directory: bank first, descriptor last. A verified
-existing pair is left untouched; a corrupt pair raises `IntegrityError`.
+files in the destination directory: bank first, descriptor last. Array keys
+match `[A-Za-z0-9_]{1,64}`, and the serialized bytes must decode to the
+requested arrays. A verified existing pair with the same arrays is left
+untouched; a corrupt pair, or one holding different arrays under the same
+identity, raises `IntegrityError`. A directory in place of a bank or
+descriptor raises `IntegrityError`; a file in place of the `generated`
+directory means an absent bank.
 Permission errors propagate; Windows replacement retries are limited to 20
 at 50 ms intervals. This detects accidental corruption and inconsistent
 writes, not an adversary rewriting both bank and descriptor (G38–G44).
