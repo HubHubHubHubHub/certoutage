@@ -39,6 +39,11 @@
   rationals, like `Enclosure.format`. Output is unchanged otherwise
   (112,224 cases compared, including -0.0 and subnormals). Found by the
   review of the register.
+- `CONTRIBUTING.md`: how to report, propose a change and run the tests, and
+  the fail-closed rule every change must keep. README: installation from
+  PyPI (`pip install certoutage`) instead of a supplied wheel, the tested
+  platforms, and a continuous-integration badge. Package classifiers list
+  Python 3.10 to 3.14 and Linux, macOS and Windows, as tested.
 
 ## 0.1.0 — 2026-11-24
 

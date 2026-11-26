@@ -92,8 +92,10 @@ no test checks them yet:
 - Results are immutable dataclasses exported by `dataclasses.asdict`;
   `compare_approximations` returns six rows; `gauss` and `GAMMA` are not
   public method names (API).
-- The wheel and the sdist both contain every bank (README). To be checked on
-  the built distributions.
+- The wheel and the sdist both contain every bank (README). Checked on the
+  distributions built on 26 November 2026 (all 43 banks and the manifest,
+  byte for byte, manifest digest equal to the pinned one), but not yet by an
+  automated test of the built distributions.
 - No linear interpolation and no renormalization of tails; F_J(0)=0
   (CONTRACT). These are properties of the construction, argued in the
   contract.
