@@ -4,587 +4,631 @@
     "destination": "src/certoutage/_vendor/commun.py",
     "source_sha256": "3c64e5700059bea628f679b1addc48df576e7171771bd4858c300f9734d14ad6",
     "destination_sha256": "cb4579770d8883b5420a1bd7e57801f359daa3931121b2a475f3d51ead243ca7",
-    "change": "imports relatifs ; contexte Arb géré par API ; T28b : trois assert remplacés par ArithmeticError (out, poisson_tail)"
+    "change": "relative imports; Arb context managed by the API; T28b: three assert replaced by ArithmeticError (out, poisson_tail)",
+    "post_release_sha256": {
+      "src/certoutage/_vendor/commun.py": "219b1731733ed04d92f8098730dceafd703772726883829d964b3c85b399d6b3"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/ppp.py",
     "destination": "src/certoutage/_vendor/ppp.py",
     "source_sha256": "de96f40360d4b7adbced08b6e4b8bc366519f12f201dbb889133b3086462755b",
     "destination_sha256": "dccf6dbe568404ce9454ad60a4c800aebd9fd3b18157e004c2cd15c84b570dca",
-    "change": "imports relatifs ; T28b : deux assert remplacés par ArithmeticError dans envelopes"
+    "change": "relative imports; T28b: two assert replaced by ArithmeticError in envelopes",
+    "post_release_sha256": {
+      "src/certoutage/_vendor/ppp.py": "a178530f8d70bc64de1dc53a651a7b0e3da3fd17961be5135d642d09f68a0d88"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/thermal_backend.py",
     "destination": "src/certoutage/_vendor/thermal_backend.py",
     "source_sha256": "fb51cc1dd2eb33119dd49b0dd5ca99c7d155187fb89f4fbc54b76893f79993a1",
     "destination_sha256": "cd1cc2eff3c7a0775eb4ce8e00b1b2e65618ba3a57aff7a7fd8a1c8e4d77889c",
-    "change": "imports relatifs ; contexte Arb géré par API ; T28b : quatre assert remplacés par ArithmeticError (outward, tighten, gamma_series)"
+    "change": "relative imports; Arb context managed by the API; T28b: four assert replaced by ArithmeticError (outward, tighten, gamma_series)",
+    "post_release_sha256": {
+      "src/certoutage/_vendor/thermal_backend.py": "5bb8e14359c81346017cddcd6de8ffb40d7bc1503503eb197ca5f23ff0feb58e"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
     "destination": "src/certoutage/_vendor/oracles.py",
     "source_sha256": "a5e2f3107aa19ebb37289a25f3b21e48251189368a4ac97fff55ec6188bd4440",
     "destination_sha256": "873191baf5e6ee1b360c16766274cf807c0859284f6d21044954a4190cad304e",
-    "change": "imports relatifs"
+    "change": "relative imports"
   },
   {
     "source": "nakagami/code/thermal.py",
     "destination": "src/certoutage/_vendor/nak_thermal.py",
     "source_sha256": "f68001704fbc095f1bc1facb28403e0236029063c5056a74c40182bd3ab362c9",
     "destination_sha256": "cf399d7a69ba20c5354352035989e5b4d833ab0ad039577b58b126e262f6e36c",
-    "change": "imports relatifs ; chargement remplacé par sous-classe dans _runtime.py"
+    "change": "relative imports; loading replaced by a subclass in _runtime.py",
+    "post_release_sha256": {
+      "src/certoutage/_vendor/nak_thermal.py": "2451e233faed0fdc6c6eaa9a6bf9f7d349b94a7702317a00c362e4939a92ab49"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "nakagami/code/grouped.py",
     "destination": "src/certoutage/_vendor/nak_grouped.py",
     "source_sha256": "00218212c9581b274118c94f330d2f8c5c2edb3120df5b6dc9a39753581c8085",
     "destination_sha256": "714205a24010daf025cbb1c31450196f0d042ace52f59b0e74246ba92e9a7953",
-    "change": "imports relatifs ; chargement remplacé par sous-classe dans _runtime.py"
+    "change": "relative imports; loading replaced by a subclass in _runtime.py",
+    "post_release_sha256": {
+      "src/certoutage/_vendor/nak_grouped.py": "a9c475dfb049980d5f3f7b86f4fdec425ee3862c520483be542555ef9f9148c3"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "banks_text/SIG_20/exact.csv",
     "destination": "src/certoutage/data/SIG_20.npz",
     "source_sha256": "fac602574b5d725c785b5a8a65880d9d1359a0c4230fc32bcde60cdabccb9fda",
     "destination_sha256": "2e8b874c0cca68394d0840f461168b343b6ebde331394c91928f2471906bf8f4",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_20/gauss.csv",
     "destination": "src/certoutage/data/SIG_20.npz",
     "source_sha256": "2cacc46806ea140c46dab2279d9d47a991fc74e29f1c1fe58e56b387b6b0a734",
     "destination_sha256": "2e8b874c0cca68394d0840f461168b343b6ebde331394c91928f2471906bf8f4",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_20/levels.csv",
     "destination": "src/certoutage/data/SIG_20.npz",
     "source_sha256": "f28adb0586c535301236f5c59a5ec4061fbc7688909198b161847928cc1a7094",
     "destination_sha256": "2e8b874c0cca68394d0840f461168b343b6ebde331394c91928f2471906bf8f4",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_24/exact.csv",
     "destination": "src/certoutage/data/SIG_24.npz",
     "source_sha256": "a053f1e1e2b10e156be81d3d1dd7f437d28b888ae414750e40658b45e72f3bc4",
     "destination_sha256": "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_24/gauss.csv",
     "destination": "src/certoutage/data/SIG_24.npz",
     "source_sha256": "12aa642877408e3502bf5dfaccb9f9792fbda765a3dad14dd3a4de9a23c02a61",
     "destination_sha256": "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_24/levels.csv",
     "destination": "src/certoutage/data/SIG_24.npz",
     "source_sha256": "8e97a0a28a03219644a3c7a38d2e46a0b371d01d0ba15d1eb55bb2dcaf679f6d",
     "destination_sha256": "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_C_20/chernoff.csv",
     "destination": "src/certoutage/data/SIG_C_20.npz",
     "source_sha256": "b85c870f9305e7f789567ec759c115cf97dd9742538ead98357f2d179e2163ad",
     "destination_sha256": "6ac87b53d9a667b779dba8a91140dbb59d652adb3c2b788dce7317a194a96da2",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_C_20/levels.csv",
     "destination": "src/certoutage/data/SIG_C_20.npz",
     "source_sha256": "b689489a03cba256cb3f33225e9bc63cf50bf97961af6716f3f114473771cb98",
     "destination_sha256": "6ac87b53d9a667b779dba8a91140dbb59d652adb3c2b788dce7317a194a96da2",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_C_24/chernoff.csv",
     "destination": "src/certoutage/data/SIG_C_24.npz",
     "source_sha256": "787d116ba06e51331112f2f130ddbd089a9dbc7d55fcb8add755affd1edf90ce",
     "destination_sha256": "daf584c2e51cfd147498a1c43f8a6136a083745addd96ba948e8fec342749dab",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/SIG_C_24/levels.csv",
     "destination": "src/certoutage/data/SIG_C_24.npz",
     "source_sha256": "b1c59cea76fe5f21924f31b67f91ed440a1a5d92d56269dfb4865b4db7840f1e",
     "destination_sha256": "daf584c2e51cfd147498a1c43f8a6136a083745addd96ba948e8fec342749dab",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e4/xlo.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e4.npz",
     "source_sha256": "4937ba4a360dca34a8850305d569b34eef7c4f1adf1b5d55cc6164efa371e97a",
     "destination_sha256": "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e4/xhi.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e4.npz",
     "source_sha256": "116b347fc32e61691250b6c3086cef5a89d0d72913df41beec7ad6aaea53d676",
     "destination_sha256": "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e4/clo.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e4.npz",
     "source_sha256": "6a4531b789370b1261e7897690d5e02a14177441b8968fa32e71c3b008061a6b",
     "destination_sha256": "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e4/chi.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e4.npz",
     "source_sha256": "20d7088d3811aa7cba6af31d339fdb097cb3aa1757c07e11759f10af50fe4075",
     "destination_sha256": "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/GAMMA_l0p1_e4/xlo.csv",
     "destination": "src/certoutage/data/GAMMA_l0p1_e4.npz",
     "source_sha256": "4937ba4a360dca34a8850305d569b34eef7c4f1adf1b5d55cc6164efa371e97a",
     "destination_sha256": "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/GAMMA_l0p1_e4/xhi.csv",
     "destination": "src/certoutage/data/GAMMA_l0p1_e4.npz",
     "source_sha256": "116b347fc32e61691250b6c3086cef5a89d0d72913df41beec7ad6aaea53d676",
     "destination_sha256": "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/GAMMA_l0p1_e4/clo.csv",
     "destination": "src/certoutage/data/GAMMA_l0p1_e4.npz",
     "source_sha256": "488aed139f7ce888f59110055598e3e6bac63b3ed04253c84b405d6dc173dc6d",
     "destination_sha256": "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/GAMMA_l0p1_e4/chi.csv",
     "destination": "src/certoutage/data/GAMMA_l0p1_e4.npz",
     "source_sha256": "145a4717bcbc2523b8b4a586695b8fb243010ee1059b4e1f81e1ae6dc6e4f558",
     "destination_sha256": "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e3/xlo.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e3.npz",
     "source_sha256": "4937ba4a360dca34a8850305d569b34eef7c4f1adf1b5d55cc6164efa371e97a",
     "destination_sha256": "cbc017baa9066efe8239d283e96e567fb1e1eaa605e10eadf95a6bae64582d00",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e3/xhi.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e3.npz",
     "source_sha256": "116b347fc32e61691250b6c3086cef5a89d0d72913df41beec7ad6aaea53d676",
     "destination_sha256": "cbc017baa9066efe8239d283e96e567fb1e1eaa605e10eadf95a6bae64582d00",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e3/clo.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e3.npz",
     "source_sha256": "6c0b93ad220390c718027a095a4314457843dd1520a685fce521d31e5d9e34a6",
     "destination_sha256": "cbc017baa9066efe8239d283e96e567fb1e1eaa605e10eadf95a6bae64582d00",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "banks_text/PPP_l0p1_e3/chi.csv",
     "destination": "src/certoutage/data/PPP_l0p1_e3.npz",
     "source_sha256": "4e569070ed3a1f26cc64942d7f3267bae037ccf1f60f6940f1cce1f6f2f5ac7e",
     "destination_sha256": "cbc017baa9066efe8239d283e96e567fb1e1eaa605e10eadf95a6bae64582d00",
-    "change": "reconditionnement NPZ sans perte, SHA des tableaux vérifié"
+    "change": "lossless NPZ repackaging, array SHA-256 checked"
   },
   {
     "source": "campaigns/t23/banques/SIG_8.npz",
     "destination": "src/certoutage/data/SIG_8.npz",
     "source_sha256": "057b3250804400c2942c17c7365e1f77e1d2855462b4e62ec2030188ffc0c5f1",
     "destination_sha256": "057b3250804400c2942c17c7365e1f77e1d2855462b4e62ec2030188ffc0c5f1",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/SIG_12.npz",
     "destination": "src/certoutage/data/SIG_12.npz",
     "source_sha256": "38256f32e6e5ae83baeb66bce78070349939c11f1effcfb72da9e71d560b61dc",
     "destination_sha256": "38256f32e6e5ae83baeb66bce78070349939c11f1effcfb72da9e71d560b61dc",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/SIG_16.npz",
     "destination": "src/certoutage/data/SIG_16.npz",
     "source_sha256": "8aa6607db696126dd78cf76ca45c2985576b296835fc5e8208fdac55fedc3d4c",
     "destination_sha256": "8aa6607db696126dd78cf76ca45c2985576b296835fc5e8208fdac55fedc3d4c",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/SIG_32.npz",
     "destination": "src/certoutage/data/SIG_32.npz",
     "source_sha256": "22bf8a65626af6564455f8ddf7af00fb4b4859eb62256c89a1ecb909681b24e9",
     "destination_sha256": "22bf8a65626af6564455f8ddf7af00fb4b4859eb62256c89a1ecb909681b24e9",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/SIG_48.npz",
     "destination": "src/certoutage/data/SIG_48.npz",
     "source_sha256": "b94ea0770a4e132294d9cdcd2ebe2a37cfdffb58f18c3b543b8aca896222098a",
     "destination_sha256": "b94ea0770a4e132294d9cdcd2ebe2a37cfdffb58f18c3b543b8aca896222098a",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/SIG_64.npz",
     "destination": "src/certoutage/data/SIG_64.npz",
     "source_sha256": "8b8b942a4d3da939d3cc9301b8b283615db55ebf7ab5ed2b32454c0681936456",
     "destination_sha256": "8b8b942a4d3da939d3cc9301b8b283615db55ebf7ab5ed2b32454c0681936456",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N8.npz",
     "destination": "src/certoutage/data/SIG_m2_N8.npz",
     "source_sha256": "affd08504539f3111a5b78e20a030affdb7e48269cf1dc05ceffd6861cdc6557",
     "destination_sha256": "affd08504539f3111a5b78e20a030affdb7e48269cf1dc05ceffd6861cdc6557",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N12.npz",
     "destination": "src/certoutage/data/SIG_m2_N12.npz",
     "source_sha256": "b0969354b9c30249a7252c41bd71f20261f8dce24e14236ea3f71b25c7bf6304",
     "destination_sha256": "b0969354b9c30249a7252c41bd71f20261f8dce24e14236ea3f71b25c7bf6304",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N16.npz",
     "destination": "src/certoutage/data/SIG_m2_N16.npz",
     "source_sha256": "c6bb7d694c1b331c20e55e97b48da6e13e233daa7b2a0b27b15fe1fdf63a4f71",
     "destination_sha256": "c6bb7d694c1b331c20e55e97b48da6e13e233daa7b2a0b27b15fe1fdf63a4f71",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N20.npz",
     "destination": "src/certoutage/data/SIG_m2_N20.npz",
     "source_sha256": "973a67021d6f5bd7cdda9f6505221286b099fbd8cafb94a7eb3496e725d58394",
     "destination_sha256": "973a67021d6f5bd7cdda9f6505221286b099fbd8cafb94a7eb3496e725d58394",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N24.npz",
     "destination": "src/certoutage/data/SIG_m2_N24.npz",
     "source_sha256": "9e07f353784cc7e4cb39c5544fd5fab566487f5e081b4ac37e60c3941b086e46",
     "destination_sha256": "9e07f353784cc7e4cb39c5544fd5fab566487f5e081b4ac37e60c3941b086e46",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N32.npz",
     "destination": "src/certoutage/data/SIG_m2_N32.npz",
     "source_sha256": "7ffd2c7e093e89b2f3cfa58b0fc32ad605ea6b81ec7453a42fc0e3fed9addcf4",
     "destination_sha256": "7ffd2c7e093e89b2f3cfa58b0fc32ad605ea6b81ec7453a42fc0e3fed9addcf4",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N48.npz",
     "destination": "src/certoutage/data/SIG_m2_N48.npz",
     "source_sha256": "fb4b2f9d4a059f61f1f7721e97a3d3d3b499ef12b356b048ef05da025e4a56a6",
     "destination_sha256": "fb4b2f9d4a059f61f1f7721e97a3d3d3b499ef12b356b048ef05da025e4a56a6",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m2_N64.npz",
     "destination": "src/certoutage/data/SIG_m2_N64.npz",
     "source_sha256": "945663861e1536c806e0024a754849ebe4ca4a7ff10c7331136594f1fbd5153a",
     "destination_sha256": "945663861e1536c806e0024a754849ebe4ca4a7ff10c7331136594f1fbd5153a",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N8.npz",
     "destination": "src/certoutage/data/SIG_m3_N8.npz",
     "source_sha256": "3c6f21586de58b0adffa7dd95e8aff4247d2c22148369490f21fc688e1622a66",
     "destination_sha256": "3c6f21586de58b0adffa7dd95e8aff4247d2c22148369490f21fc688e1622a66",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N12.npz",
     "destination": "src/certoutage/data/SIG_m3_N12.npz",
     "source_sha256": "302e06b8beaea7dfe509d024ee8e088c54372ad2a2eb55f717ecf6dd14d1fccd",
     "destination_sha256": "302e06b8beaea7dfe509d024ee8e088c54372ad2a2eb55f717ecf6dd14d1fccd",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N16.npz",
     "destination": "src/certoutage/data/SIG_m3_N16.npz",
     "source_sha256": "7b7e97e9a1ab4cf507ed1676e70dd42ec60f9b80f6d556a2be807dd253568ea9",
     "destination_sha256": "7b7e97e9a1ab4cf507ed1676e70dd42ec60f9b80f6d556a2be807dd253568ea9",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N20.npz",
     "destination": "src/certoutage/data/SIG_m3_N20.npz",
     "source_sha256": "67b28deef04cfcea23ef2b7a368bf7b6a2ba35df3cfc0ba97eb36055c3009cac",
     "destination_sha256": "67b28deef04cfcea23ef2b7a368bf7b6a2ba35df3cfc0ba97eb36055c3009cac",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N24.npz",
     "destination": "src/certoutage/data/SIG_m3_N24.npz",
     "source_sha256": "205f3a4b53dd1766a28c2f57af3ca71c6d91b38d30977b9dccbb2e81e1573bca",
     "destination_sha256": "205f3a4b53dd1766a28c2f57af3ca71c6d91b38d30977b9dccbb2e81e1573bca",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N32.npz",
     "destination": "src/certoutage/data/SIG_m3_N32.npz",
     "source_sha256": "1b014095f8899f51b2a75821b9b6c34065b2a209d4a814d6899dfbdfa43c5fcf",
     "destination_sha256": "1b014095f8899f51b2a75821b9b6c34065b2a209d4a814d6899dfbdfa43c5fcf",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N48.npz",
     "destination": "src/certoutage/data/SIG_m3_N48.npz",
     "source_sha256": "8b3684119dd918c97b939b1c187ab992bcdeceada8753d51e454c061806947e9",
     "destination_sha256": "8b3684119dd918c97b939b1c187ab992bcdeceada8753d51e454c061806947e9",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/SIG_m3_N64.npz",
     "destination": "src/certoutage/data/SIG_m3_N64.npz",
     "source_sha256": "5993fe0e3548bf7c55d5d2c7abcbb8463ad570475b5cf26ad7d9be4e11cd0e8c",
     "destination_sha256": "5993fe0e3548bf7c55d5d2c7abcbb8463ad570475b5cf26ad7d9be4e11cd0e8c",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/C_N8.npz",
     "destination": "src/certoutage/data/C_N8.npz",
     "source_sha256": "3177f75feccb43784d154e54dda444f3a0d47ad01a0ec6758a308780d334caf0",
     "destination_sha256": "3177f75feccb43784d154e54dda444f3a0d47ad01a0ec6758a308780d334caf0",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/C_N64.npz",
     "destination": "src/certoutage/data/C_N64.npz",
     "source_sha256": "acd1fe5e5b50c2b91283de90e0c0a4251c62740dcbc8506c5e8ce84b8324e85e",
     "destination_sha256": "acd1fe5e5b50c2b91283de90e0c0a4251c62740dcbc8506c5e8ce84b8324e85e",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/GAMMA_l0p1_e3.npz",
     "destination": "src/certoutage/data/GAMMA_l0p1_e3.npz",
     "source_sha256": "c29b9190cb8b5ce887fab567ad9fa054068b968547b77351635942bd9b563027",
     "destination_sha256": "c29b9190cb8b5ce887fab567ad9fa054068b968547b77351635942bd9b563027",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/PPP_l1p0_e3.npz",
     "destination": "src/certoutage/data/PPP_l1p0_e3.npz",
     "source_sha256": "22fe2a94cd02462063fc6699fc1a26c1397d6ee85dabd8eca58fd512a375ef4e",
     "destination_sha256": "22fe2a94cd02462063fc6699fc1a26c1397d6ee85dabd8eca58fd512a375ef4e",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/PPP_l1p0_e4.npz",
     "destination": "src/certoutage/data/PPP_l1p0_e4.npz",
     "source_sha256": "7ea4e2605a2935f9e4c3b7a1acf8107c70a0921d8d9d0bf481ffa0ed940dfb30",
     "destination_sha256": "7ea4e2605a2935f9e4c3b7a1acf8107c70a0921d8d9d0bf481ffa0ed940dfb30",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/GAMMA_l1p0_e3.npz",
     "destination": "src/certoutage/data/GAMMA_l1p0_e3.npz",
     "source_sha256": "7199e7cb24ad2159807ed4a12e941e54aa6d02275685fb8b523ad38cae493c6c",
     "destination_sha256": "7199e7cb24ad2159807ed4a12e941e54aa6d02275685fb8b523ad38cae493c6c",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "banks_extra/GAMMA_l1p0_e4.npz",
     "destination": "src/certoutage/data/GAMMA_l1p0_e4.npz",
     "source_sha256": "a883a6ce9ad9d417473c5dbd440e3142fd2b5c7a058420b9332526f308114998",
     "destination_sha256": "a883a6ce9ad9d417473c5dbd440e3142fd2b5c7a058420b9332526f308114998",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/N8.npz",
     "destination": "src/certoutage/data/m1_N8.npz",
     "source_sha256": "ebd7797ceea15697d64f72f7e579b570c573583d56a23df46aca2124f9e458f8",
     "destination_sha256": "ebd7797ceea15697d64f72f7e579b570c573583d56a23df46aca2124f9e458f8",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t23/banques/N64.npz",
     "destination": "src/certoutage/data/m1_N64.npz",
     "source_sha256": "f429ae113598cc2133647ee2c6b198fc0e45b156fb1de9471b2c962db71fca0a",
     "destination_sha256": "f429ae113598cc2133647ee2c6b198fc0e45b156fb1de9471b2c962db71fca0a",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/m2_N8.npz",
     "destination": "src/certoutage/data/m2_N8.npz",
     "source_sha256": "861cd99e9927d046da56a64bc01642f35d1431010dba57e6affae30458f7c95b",
     "destination_sha256": "861cd99e9927d046da56a64bc01642f35d1431010dba57e6affae30458f7c95b",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/m3_N8.npz",
     "destination": "src/certoutage/data/m3_N8.npz",
     "source_sha256": "73a308f0c3a1b4a89cbb1f8825e301bdb696a5afc20173a6c133e60b805d4554",
     "destination_sha256": "73a308f0c3a1b4a89cbb1f8825e301bdb696a5afc20173a6c133e60b805d4554",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/banques/commun.npz",
     "destination": "src/certoutage/data/commun.npz",
     "source_sha256": "05b10e482682b688a4b8dc1f2c49ecef946ee636f8d4626b0263b29cafc4bd40",
     "destination_sha256": "05b10e482682b688a4b8dc1f2c49ecef946ee636f8d4626b0263b29cafc4bd40",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/MINORANTS_N20.json",
     "destination": "src/certoutage/data/MINORANTS_N20.json",
     "source_sha256": "3596aeb39ea3e28ce41c813c3c16c7a25b5c6a6ceb0af81aa870d721ca1c8dd9",
     "destination_sha256": "3596aeb39ea3e28ce41c813c3c16c7a25b5c6a6ceb0af81aa870d721ca1c8dd9",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/MINORANTS_N24.json",
     "destination": "src/certoutage/data/MINORANTS_N24.json",
     "source_sha256": "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288",
     "destination_sha256": "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/D1.json",
     "destination": "tests/regression/fixtures/D1.json",
     "source_sha256": "d589debcc454e0678c798c89d54e938a3d99f0d97c3c3d64493303180e9f3e40",
     "destination_sha256": "d589debcc454e0678c798c89d54e938a3d99f0d97c3c3d64493303180e9f3e40",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/D1_POINTS.csv",
     "destination": "tests/regression/fixtures/D1_POINTS.csv",
     "source_sha256": "9b22585be91fca461bc1d3189eb732ab169b815b3e2a3de8bce4725851cdbde8",
     "destination_sha256": "9b22585be91fca461bc1d3189eb732ab169b815b3e2a3de8bce4725851cdbde8",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/D2.json",
     "destination": "tests/regression/fixtures/D2.json",
     "source_sha256": "708d3961f74f7c4780f7f51eeddbacbc29ba1180e5892f912bd30f8725393163",
     "destination_sha256": "708d3961f74f7c4780f7f51eeddbacbc29ba1180e5892f912bd30f8725393163",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/D2_POINTS.csv",
     "destination": "tests/regression/fixtures/D2_POINTS.csv",
     "source_sha256": "78cb0783b72b9443c97112e98c85a01eba556704cfcd3a94e2cbe302a372a171",
     "destination_sha256": "78cb0783b72b9443c97112e98c85a01eba556704cfcd3a94e2cbe302a372a171",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/D3.json",
     "destination": "tests/regression/fixtures/D3.json",
     "source_sha256": "566cb702df9d9a34c8dab82a6805dd3f30db450a3698e1ea6b173fcdee3dcef5",
     "destination_sha256": "566cb702df9d9a34c8dab82a6805dd3f30db450a3698e1ea6b173fcdee3dcef5",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/D3_POINTS.csv",
     "destination": "tests/regression/fixtures/D3_POINTS.csv",
     "source_sha256": "baaf2b45a066fe9a61de9215348a7802979430733c56513a2cdfb05b3d1397f4",
     "destination_sha256": "baaf2b45a066fe9a61de9215348a7802979430733c56513a2cdfb05b3d1397f4",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "tables/TABLE_I_CERTIFICATS.csv",
     "destination": "tests/regression/fixtures/TABLE_I_CERTIFICATS.csv",
     "source_sha256": "9af04a056a7b4a6d0ae616c411848eab7ecf4b5ff37b113befb1ab5e3130ded5",
     "destination_sha256": "9af04a056a7b4a6d0ae616c411848eab7ecf4b5ff37b113befb1ab5e3130ded5",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "tables/FIGURE_1.csv",
     "destination": "tests/regression/fixtures/FIGURE_1.csv",
     "source_sha256": "7e2ae362350d44b5e2c83d421fdbb8a5ce5bad04b545306e97fe633f08f93d08",
     "destination_sha256": "7e2ae362350d44b5e2c83d421fdbb8a5ce5bad04b545306e97fe633f08f93d08",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t24g_gamma/RESULTATS_gain_exact_gamma.json",
     "destination": "tests/regression/fixtures/gamma.json",
     "source_sha256": "416358124808c2ec0157d979be3baab474eff910226885cefe236d1b08c998f2",
     "destination_sha256": "416358124808c2ec0157d979be3baab474eff910226885cefe236d1b08c998f2",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "campaigns/t20/RESULTATS.csv",
     "destination": "tests/regression/fixtures/nakagami.csv",
     "source_sha256": "0633df6c74064fd53f73fb4652cfe9e4361c2241b088456a16d9390dc23878e6",
     "destination_sha256": "0633df6c74064fd53f73fb4652cfe9e4361c2241b088456a16d9390dc23878e6",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/MINORANTS_N20.json",
     "destination": "tests/regression/fixtures/MINORANTS_N20.json",
     "source_sha256": "3596aeb39ea3e28ce41c813c3c16c7a25b5c6a6ceb0af81aa870d721ca1c8dd9",
     "destination_sha256": "3596aeb39ea3e28ce41c813c3c16c7a25b5c6a6ceb0af81aa870d721ca1c8dd9",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "expected/campaign_decisions/MINORANTS_N24.json",
     "destination": "tests/regression/fixtures/MINORANTS_N24.json",
     "source_sha256": "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288",
     "destination_sha256": "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "LICENSE",
     "destination": "docs/ARCHIVE_LICENSE.txt",
     "source_sha256": "119f0d479b2a7bec6eba283689d28e7c58c03ff795d35608c3c6a2f2602285c9",
     "destination_sha256": "119f0d479b2a7bec6eba283689d28e7c58c03ff795d35608c3c6a2f2602285c9",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "LICENSES/CC-BY-4.0.txt",
     "destination": "docs/CC-BY-4.0.txt",
     "source_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
     "destination_sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
-    "change": "copie identique"
+    "change": "identical copy"
   },
   {
     "source": "ppp/code/champ.py",
     "destination": "src/certoutage/_generate.py",
     "source_sha256": "7866f042568966a41e69b64b2930bfbd1518aaff1bbb7d3833b21b4878e75b6c",
     "destination_sha256": "92421bcfcbb39a8f81f7729b75cebb96eedbeac04734af80038ad752bc945995",
-    "change": "fonction pure ; M paramétrable ; borne triviale si reste de Fourier >1 ; mêmes tableaux testés à M identique ; T28b : contrôle de Laplace rétabli, y compris R>1"
+    "change": "pure function; configurable M; trivial bound if the Fourier remainder exceeds 1; same arrays tested at equal M; T28b: Laplace check restored, including R>1",
+    "post_release_sha256": {
+      "src/certoutage/_generate.py": "237d02452c9718159e6d5b5df40c1eceb7171e5e66b14b4567f5dc8f43c1d4d5"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
     "destination": "src/certoutage/_runtime.py",
     "source_sha256": "a5e2f3107aa19ebb37289a25f3b21e48251189368a4ac97fff55ec6188bd4440",
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
-    "change": "constructeurs à chargement avec vérification d'intégrité ; méthodes numériques héritées sans modification ; T28c : vocabulaire de vérification d’intégrité, sans changement numérique"
+    "change": "loading constructors with integrity checks; numerical methods inherited unchanged; T28c: integrity-check vocabulary, no numerical change",
+    "post_release_sha256": {
+      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
+    },
+    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "campaigns/t20/code/composer.py",
     "destination": "src/certoutage/_runtime.py",
     "source_sha256": "1f3572a08fb1e436e74332e7d8d3ee426efe3c8bdb1b2a2fe7e9d774caa93e7d",
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
-    "change": "sélection de la grille units128 Nakagami ; T28c : vocabulaire de vérification d’intégrité, sans changement numérique"
+    "change": "selection of the Nakagami units128 grid; T28c: integrity-check vocabulary, no numerical change",
+    "post_release_sha256": {
+      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
+    },
+    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "nakagami/code/thermal.py",
     "destination": "src/certoutage/_runtime.py",
     "source_sha256": "f68001704fbc095f1bc1facb28403e0236029063c5056a74c40182bd3ab362c9",
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
-    "change": "constructeur sans chdir ; rectangles et masses inchangés ; T28c : vocabulaire de vérification d’intégrité, sans changement numérique"
+    "change": "constructor without chdir; rectangles and masses unchanged; T28c: integrity-check vocabulary, no numerical change",
+    "post_release_sha256": {
+      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
+    },
+    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
     "destination": "src/certoutage/api.py",
     "source_sha256": "a5e2f3107aa19ebb37289a25f3b21e48251189368a4ac97fff55ec6188bd4440",
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
-    "change": "dimensionnement avec grille paramétrable, comparaisons décimales exactes et nouveaux statuts publics ; T28b : comparabilité des décisions, cible exportée, précision des certificats fournis corrigée ; T28c : vocabulaire de vérification d’intégrité, sans changement numérique"
+    "change": "dimensioning with a configurable grid, exact decimal comparisons and new public statuses; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
+    "post_release_sha256": {
+      "src/certoutage/api.py": "59b1ced7dcd6c675a7a5ffa6e22bc1bd6d9c52ad0a17789120dc789e03060be2"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/minorants.py",
     "destination": "src/certoutage/api.py",
     "source_sha256": "94b4beb8183015a4c5d67ca6afd2776a57dd51d78c837530b0f9eaa03a443017",
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
-    "change": "J_max : distribution analytique et intégration pour nouveaux cas ; certificats centraux fournis ; T28b : comparabilité des décisions, cible exportée, précision des certificats fournis corrigée ; T28c : vocabulaire de vérification d’intégrité, sans changement numérique"
+    "change": "J_max: analytic distribution and integration for new cases; central certificates provided; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
+    "post_release_sha256": {
+      "src/certoutage/api.py": "59b1ced7dcd6c675a7a5ffa6e22bc1bd6d9c52ad0a17789120dc789e03060be2"
+    },
+    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
   }
 ]

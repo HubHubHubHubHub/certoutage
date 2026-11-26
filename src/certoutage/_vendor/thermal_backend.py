@@ -1,5 +1,5 @@
 """Numerical routines for certified Poisson-interference calculations."""
-"""Backend Arb : fonctions spéciales, DFT et produits scalaires rigoureux."""
+"""Arb backend: special functions, DFT and rigorous dot products."""
 from pathlib import Path
 import math, json, time, hashlib, csv
 import numpy as np
@@ -9,13 +9,13 @@ GAMMA_FALLBACKS = 0
 
 def outward(x):
     if not x.is_finite():
-        raise ArithmeticError(f"Boule Arb non finie : {x}")
+        raise ArithmeticError(f"Non-finite Arb ball: {x}")
     lo = x.lower()
     hi = x.upper()
     a = np.nextafter(float(lo), -np.inf)
     b = np.nextafter(float(hi), np.inf)
     if not (arb(float(a)) <= lo and arb(float(b)) >= hi):
-        raise ArithmeticError(f"Transport binaire64 non extérieur : {x}, {a}, {b}")
+        raise ArithmeticError(f"Binary64 transport is not outward: {x}, {a}, {b}")
     return (a, b)
 
 def hull(lo, hi):
@@ -46,7 +46,7 @@ def tighten(lo, hi):
     lo = np.maximum.accumulate(np.clip(lo, 0, 1))
     hi = np.minimum.accumulate(np.clip(hi, 0, 1)[::-1])[::-1]
     if not np.all(lo <= hi):
-        raise ArithmeticError("CDF incohérente : borne inférieure au-dessus de la borne supérieure")
+        raise ArithmeticError("Inconsistent CDF: lower bound above upper bound")
     return (lo, hi)
 
 def gamma_cdf(x, k):
@@ -64,7 +64,7 @@ def gamma_cdf(x, k):
 
 def gamma_series(x, k):
     if not (x > 0 and k > 0):
-        raise ArithmeticError(f"Série Gamma : x et k doivent être strictement positifs ({x}, {k})")
+        raise ArithmeticError(f"Gamma series: x and k must be strictly positive ({x}, {k})")
     term = total = arb(1)
     for n in range(10000):
         ratio = x / (k + n + 1)

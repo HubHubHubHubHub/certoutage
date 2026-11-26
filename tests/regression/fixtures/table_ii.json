@@ -1,0 +1,1111 @@
+{
+  "model": {
+    "N": 24,
+    "lam": "0.1",
+    "eta": 4,
+    "convention": "C-TX",
+    "m": 1,
+    "R0": 1
+  },
+  "target": "1e-5",
+  "units": "1e-5",
+  "rows": [
+    {
+      "label": "Exact gain + PPP",
+      "display": "[1.7136, 1.7478]",
+      "decision": "excluded",
+      "diagnostic": null,
+      "result": {
+        "label": "Exact gain + PPP",
+        "floor": {
+          "lower": 1.7136263216942274e-05,
+          "upper": 1.7477746093431098e-05,
+          "contract": {
+            "quantity": "outage: gain=exact, interference=PPP",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ],
+              [
+                "PPP_l0p1_e4.npz",
+                "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "exact"
+              ],
+              [
+                "interference",
+                "PPP"
+              ]
+            ]
+          }
+        },
+        "decision": {
+          "status": "excluded",
+          "lower_db": null,
+          "upper_db": null,
+          "floor": {
+            "lower": 1.7136263216942274e-05,
+            "upper": 1.7477746093431098e-05,
+            "contract": {
+              "quantity": "outage: gain=exact, interference=PPP",
+              "source": "provided-banks",
+              "precision_bits": 160,
+              "banks": [
+                [
+                  "SIG_24.npz",
+                  "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+                ],
+                [
+                  "PPP_l0p1_e4.npz",
+                  "faff861898a2b300831d46bd8be9ecfd1d1928260f17071f0449b7346fc1dc91"
+                ]
+              ],
+              "interval_library": "python-flint 0.9.0 / Arb-Acb",
+              "bank_precision_bits": 160,
+              "assumptions": [
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
+              ],
+              "notes": [],
+              "parameters": [
+                [
+                  "N",
+                  "24"
+                ],
+                [
+                  "m",
+                  "1"
+                ],
+                [
+                  "lam",
+                  "0.1"
+                ],
+                [
+                  "eta",
+                  "4"
+                ],
+                [
+                  "R0",
+                  "1"
+                ],
+                [
+                  "convention",
+                  "C-TX"
+                ],
+                [
+                  "user",
+                  "1"
+                ],
+                [
+                  "gain",
+                  "exact"
+                ],
+                [
+                  "interference",
+                  "PPP"
+                ]
+              ]
+            }
+          },
+          "reason": "floor lower bound exceeds target at every SNR",
+          "undecided_points": null,
+          "scope": "outage: gain=exact, interference=PPP",
+          "evaluation_contract": null,
+          "target": "0.00001"
+        },
+        "diagnostic": null
+      }
+    },
+    {
+      "label": "Exact gain + Gamma",
+      "display": "[0.5629, 0.5757]",
+      "decision": "falsely feasible",
+      "diagnostic": "falsely feasible",
+      "result": {
+        "label": "Exact gain + Gamma",
+        "floor": {
+          "lower": 5.629000348574364e-06,
+          "upper": 5.7562854437134805e-06,
+          "contract": {
+            "quantity": "outage: gain=exact, interference=Gamma",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ],
+              [
+                "GAMMA_l0p1_e4.npz",
+                "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "exact"
+              ],
+              [
+                "interference",
+                "Gamma"
+              ]
+            ]
+          }
+        },
+        "decision": {
+          "status": "feasible",
+          "lower_db": 4.5,
+          "upper_db": 4.75,
+          "floor": {
+            "lower": 5.629000348574364e-06,
+            "upper": 5.7562854437134805e-06,
+            "contract": {
+              "quantity": "outage: gain=exact, interference=Gamma",
+              "source": "provided-banks",
+              "precision_bits": 160,
+              "banks": [
+                [
+                  "SIG_24.npz",
+                  "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+                ],
+                [
+                  "GAMMA_l0p1_e4.npz",
+                  "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2"
+                ]
+              ],
+              "interval_library": "python-flint 0.9.0 / Arb-Acb",
+              "bank_precision_bits": 160,
+              "assumptions": [
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
+              ],
+              "notes": [],
+              "parameters": [
+                [
+                  "N",
+                  "24"
+                ],
+                [
+                  "m",
+                  "1"
+                ],
+                [
+                  "lam",
+                  "0.1"
+                ],
+                [
+                  "eta",
+                  "4"
+                ],
+                [
+                  "R0",
+                  "1"
+                ],
+                [
+                  "convention",
+                  "C-TX"
+                ],
+                [
+                  "user",
+                  "1"
+                ],
+                [
+                  "gain",
+                  "exact"
+                ],
+                [
+                  "interference",
+                  "Gamma"
+                ]
+              ]
+            }
+          },
+          "reason": "finite threshold bracket",
+          "undecided_points": 3,
+          "scope": "outage: gain=exact, interference=Gamma",
+          "evaluation_contract": {
+            "quantity": "outage: gain=exact, interference=Gamma",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ],
+              [
+                "GAMMA_l0p1_e4.npz",
+                "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "exact"
+              ],
+              [
+                "interference",
+                "Gamma"
+              ]
+            ]
+          },
+          "target": "0.00001"
+        },
+        "diagnostic": "falsely feasible"
+      }
+    },
+    {
+      "label": "Eq. (3) + Gamma",
+      "display": "[1.639, 1.668]",
+      "decision": "excluded",
+      "diagnostic": "masked",
+      "result": {
+        "label": "Eq. (3) + Gamma",
+        "floor": {
+          "lower": 1.6396660690695157e-05,
+          "upper": 1.667603452099015e-05,
+          "contract": {
+            "quantity": "outage: gain=Eq. (3), interference=Gamma",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ],
+              [
+                "GAMMA_l0p1_e4.npz",
+                "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "eq3"
+              ],
+              [
+                "interference",
+                "Gamma"
+              ]
+            ]
+          }
+        },
+        "decision": {
+          "status": "excluded",
+          "lower_db": null,
+          "upper_db": null,
+          "floor": {
+            "lower": 1.6396660690695157e-05,
+            "upper": 1.667603452099015e-05,
+            "contract": {
+              "quantity": "outage: gain=Eq. (3), interference=Gamma",
+              "source": "provided-banks",
+              "precision_bits": 160,
+              "banks": [
+                [
+                  "SIG_24.npz",
+                  "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+                ],
+                [
+                  "GAMMA_l0p1_e4.npz",
+                  "b6b00baada27dd820e78d921660f8599bc66717777f5a0a1a527e99a54d02ca2"
+                ]
+              ],
+              "interval_library": "python-flint 0.9.0 / Arb-Acb",
+              "bank_precision_bits": 160,
+              "assumptions": [
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
+              ],
+              "notes": [],
+              "parameters": [
+                [
+                  "N",
+                  "24"
+                ],
+                [
+                  "m",
+                  "1"
+                ],
+                [
+                  "lam",
+                  "0.1"
+                ],
+                [
+                  "eta",
+                  "4"
+                ],
+                [
+                  "R0",
+                  "1"
+                ],
+                [
+                  "convention",
+                  "C-TX"
+                ],
+                [
+                  "user",
+                  "1"
+                ],
+                [
+                  "gain",
+                  "eq3"
+                ],
+                [
+                  "interference",
+                  "Gamma"
+                ]
+              ]
+            }
+          },
+          "reason": "floor lower bound exceeds target at every SNR",
+          "undecided_points": null,
+          "scope": "outage: gain=Eq. (3), interference=Gamma",
+          "evaluation_contract": null,
+          "target": "0.00001"
+        },
+        "diagnostic": "masked"
+      }
+    },
+    {
+      "label": "Exact gain + mean",
+      "display": "{'lower': 3.716491105435498e-15, 'upper': 3.888988626422534e-15} (raw probability)",
+      "decision": "falsely feasible",
+      "diagnostic": "falsely feasible",
+      "result": {
+        "label": "Exact gain + mean",
+        "floor": {
+          "lower": 3.716491105435498e-15,
+          "upper": 3.888988626422534e-15,
+          "contract": {
+            "quantity": "outage: gain=exact, interference=mean",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "exact"
+              ],
+              [
+                "interference",
+                "mean"
+              ]
+            ]
+          }
+        },
+        "decision": {
+          "status": "feasible",
+          "lower_db": -2.5625,
+          "upper_db": -2.5,
+          "floor": {
+            "lower": 3.716491105435498e-15,
+            "upper": 3.888988626422534e-15,
+            "contract": {
+              "quantity": "outage: gain=exact, interference=mean",
+              "source": "provided-banks",
+              "precision_bits": 160,
+              "banks": [
+                [
+                  "SIG_24.npz",
+                  "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+                ]
+              ],
+              "interval_library": "python-flint 0.9.0 / Arb-Acb",
+              "bank_precision_bits": 160,
+              "assumptions": [
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
+              ],
+              "notes": [],
+              "parameters": [
+                [
+                  "N",
+                  "24"
+                ],
+                [
+                  "m",
+                  "1"
+                ],
+                [
+                  "lam",
+                  "0.1"
+                ],
+                [
+                  "eta",
+                  "4"
+                ],
+                [
+                  "R0",
+                  "1"
+                ],
+                [
+                  "convention",
+                  "C-TX"
+                ],
+                [
+                  "user",
+                  "1"
+                ],
+                [
+                  "gain",
+                  "exact"
+                ],
+                [
+                  "interference",
+                  "mean"
+                ]
+              ]
+            }
+          },
+          "reason": "finite threshold bracket",
+          "undecided_points": 0,
+          "scope": "outage: gain=exact, interference=mean",
+          "evaluation_contract": {
+            "quantity": "outage: gain=exact, interference=mean",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "exact"
+              ],
+              [
+                "interference",
+                "mean"
+              ]
+            ]
+          },
+          "target": "0.00001"
+        },
+        "diagnostic": "falsely feasible"
+      }
+    },
+    {
+      "label": "Eq. (3) + mean",
+      "display": "{'lower': 9.039202781939247e-08, 'upper': 9.116853495842469e-08} (raw probability)",
+      "decision": "falsely feasible",
+      "diagnostic": "falsely feasible",
+      "result": {
+        "label": "Eq. (3) + mean",
+        "floor": {
+          "lower": 9.039202781939247e-08,
+          "upper": 9.116853495842469e-08,
+          "contract": {
+            "quantity": "outage: gain=Eq. (3), interference=mean",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "eq3"
+              ],
+              [
+                "interference",
+                "mean"
+              ]
+            ]
+          }
+        },
+        "decision": {
+          "status": "feasible",
+          "lower_db": 0.75,
+          "upper_db": 0.8125,
+          "floor": {
+            "lower": 9.039202781939247e-08,
+            "upper": 9.116853495842469e-08,
+            "contract": {
+              "quantity": "outage: gain=Eq. (3), interference=mean",
+              "source": "provided-banks",
+              "precision_bits": 160,
+              "banks": [
+                [
+                  "SIG_24.npz",
+                  "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+                ]
+              ],
+              "interval_library": "python-flint 0.9.0 / Arb-Acb",
+              "bank_precision_bits": 160,
+              "assumptions": [
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
+              ],
+              "notes": [],
+              "parameters": [
+                [
+                  "N",
+                  "24"
+                ],
+                [
+                  "m",
+                  "1"
+                ],
+                [
+                  "lam",
+                  "0.1"
+                ],
+                [
+                  "eta",
+                  "4"
+                ],
+                [
+                  "R0",
+                  "1"
+                ],
+                [
+                  "convention",
+                  "C-TX"
+                ],
+                [
+                  "user",
+                  "1"
+                ],
+                [
+                  "gain",
+                  "eq3"
+                ],
+                [
+                  "interference",
+                  "mean"
+                ]
+              ]
+            }
+          },
+          "reason": "finite threshold bracket",
+          "undecided_points": 0,
+          "scope": "outage: gain=Eq. (3), interference=mean",
+          "evaluation_contract": {
+            "quantity": "outage: gain=Eq. (3), interference=mean",
+            "source": "provided-banks",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "SIG_24.npz",
+                "bd58bbecd43e2825db216b661eb3e7f98d9465cf0d59fdf0e5209a3f73bec28e"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "eq3"
+              ],
+              [
+                "interference",
+                "mean"
+              ]
+            ]
+          },
+          "target": "0.00001"
+        },
+        "diagnostic": "falsely feasible"
+      }
+    },
+    {
+      "label": "E F_W(d_i J_max)",
+      "display": "< 0.9784",
+      "decision": "inconclusive",
+      "diagnostic": null,
+      "result": {
+        "label": "E F_W(d_i J_max)",
+        "floor": {
+          "lower": 9.472565943846911e-06,
+          "upper": 9.783675378587589e-06,
+          "contract": {
+            "quantity": "largest-interferer bound: floor lower bound, not full PPP outage",
+            "source": "provided-certificate",
+            "precision_bits": 160,
+            "banks": [
+              [
+                "MINORANTS_N24.json",
+                "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288"
+              ]
+            ],
+            "interval_library": "python-flint 0.9.0 / Arb-Acb",
+            "bank_precision_bits": 160,
+            "assumptions": [
+              "independent amplitudes, thermal term and marked PPP",
+              "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+              "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+              "planar PPP outside R0=1; Exp(1) power marks",
+              "d1=80/3, d2=160; perfect CSI and phase alignment",
+              "numerical certificate of the model; no physical or latency guarantee"
+            ],
+            "notes": [
+              "stored endpoints at 160 bits; not recomputed"
+            ],
+            "parameters": [
+              [
+                "N",
+                "24"
+              ],
+              [
+                "m",
+                "1"
+              ],
+              [
+                "lam",
+                "0.1"
+              ],
+              [
+                "eta",
+                "4"
+              ],
+              [
+                "R0",
+                "1"
+              ],
+              [
+                "convention",
+                "C-TX"
+              ],
+              [
+                "user",
+                "1"
+              ],
+              [
+                "gain",
+                "exact"
+              ],
+              [
+                "interference",
+                "J_max"
+              ]
+            ]
+          }
+        },
+        "decision": {
+          "status": "inconclusive",
+          "lower_db": null,
+          "upper_db": null,
+          "floor": {
+            "lower": 9.472565943846911e-06,
+            "upper": 9.783675378587589e-06,
+            "contract": {
+              "quantity": "largest-interferer bound: floor lower bound, not full PPP outage",
+              "source": "provided-certificate",
+              "precision_bits": 160,
+              "banks": [
+                [
+                  "MINORANTS_N24.json",
+                  "4890a4e99d371822ede2427b248826f24b6a29b85b884be2615dc034e04b2288"
+                ]
+              ],
+              "interval_library": "python-flint 0.9.0 / Arb-Acb",
+              "bank_precision_bits": 160,
+              "assumptions": [
+                "independent amplitudes, thermal term and marked PPP",
+                "W=(sum sqrt(E F))²(10+Z)²/101, Z standard normal",
+                "powers E,F Exp(1) or Gamma(m,rate=m), covered integer m",
+                "planar PPP outside R0=1; Exp(1) power marks",
+                "d1=80/3, d2=160; perfect CSI and phase alignment",
+                "numerical certificate of the model; no physical or latency guarantee"
+              ],
+              "notes": [
+                "stored endpoints at 160 bits; not recomputed"
+              ],
+              "parameters": [
+                [
+                  "N",
+                  "24"
+                ],
+                [
+                  "m",
+                  "1"
+                ],
+                [
+                  "lam",
+                  "0.1"
+                ],
+                [
+                  "eta",
+                  "4"
+                ],
+                [
+                  "R0",
+                  "1"
+                ],
+                [
+                  "convention",
+                  "C-TX"
+                ],
+                [
+                  "user",
+                  "1"
+                ],
+                [
+                  "gain",
+                  "exact"
+                ],
+                [
+                  "interference",
+                  "J_max"
+                ]
+              ]
+            }
+          },
+          "reason": "a floor lower bound cannot certify feasibility",
+          "undecided_points": null,
+          "scope": "full PPP exclusion only",
+          "evaluation_contract": null,
+          "target": "0.00001"
+        },
+        "diagnostic": null
+      }
+    }
+  ]
+}

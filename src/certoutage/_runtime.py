@@ -1,4 +1,4 @@
-"""Adaptateurs sans chdir, sans accès à l'archive et sans modification globale permanente."""
+"""Adapters with no chdir, no access to the archive and no permanent global change."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -54,7 +54,7 @@ class Signal(OriginalSignal):
         self.thi = np.array([b for a, b in thresholds])
         self.size = len(units)
         if not all(len(v[0]) == self.size for v in self.values.values()):
-            raise ArithmeticError("Dimensions incohérentes dans la banque de signal")
+            raise ArithmeticError("Inconsistent dimensions in the signal bank")
 
 
 @lru_cache(maxsize=12)
@@ -91,9 +91,23 @@ class Environment(OriginalEnvironment):
         self.length = len(wl)
 
 
-@lru_cache(maxsize=12)
 def environment(model: Model, kind: str, numerics: Numerics) -> Environment:
-    return Environment(model, kind, numerics)
+    # The arrays depend only on (lam, eta, kind, M, precision, bank policy);
+    # N, m, the convention, the user and the gain are applied in point().
+    # The precision is part of the key: the environment is built in Arb under
+    # rt.arithmetic(numerics.precision_bits), set by the caller.
+    return _environment(model.lam, model.eta, kind, numerics.precision_bits,
+                        numerics.ppp_dft_power, numerics.bank_policy)
+
+
+@lru_cache(maxsize=12)
+def _environment(lam: str, eta: int, kind: str, bits: int, power: int,
+                 policy: str) -> Environment:
+    # Environment reads model.lam and model.eta only; the other fields keep
+    # their validated defaults and play no part.
+    if ctx.prec != bits:
+        raise ArithmeticError("The PPP environment must be built at the precision of its cache key")
+    return Environment(Model(lam=lam, eta=eta), kind, Numerics(bits, power, policy))
 
 
 class Thermal(OriginalThermal):
@@ -131,5 +145,5 @@ def thermal(N: int, m: int, chernoff: bool, bits: int) -> Grouped:
 
 def clear() -> None:
     signal.cache_clear()
-    environment.cache_clear()
+    _environment.cache_clear()
     thermal.cache_clear()

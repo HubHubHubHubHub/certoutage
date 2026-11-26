@@ -1,4 +1,4 @@
-"""Figure 1 entière, Table I et campagne Nakagami, valeurs brutes."""
+"""All of Figure 1, Table I and the Nakagami campaign, raw values."""
 import csv
 from pathlib import Path
 
@@ -8,7 +8,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def test_figure_1_eight_sizes():
-    for row in csv.DictReader((FIXTURES / "FIGURE_1.csv").open()):
+    for row in csv.DictReader((FIXTURES / "FIGURE_1.csv").open(encoding="utf-8", newline="")):
         model = Model(N=int(row["N"]), convention="C-INR")
         ppp = required_snr(model, 1, "1e-5")
         mean = required_snr(model, 1, "1e-5", interference="mean")
@@ -20,7 +20,7 @@ def test_figure_1_eight_sizes():
 
 
 def test_table_i_all_endpoints():
-    for row in csv.DictReader((FIXTURES / "TABLE_I_CERTIFICATS.csv").open()):
+    for row in csv.DictReader((FIXTURES / "TABLE_I_CERTIFICATS.csv").open(encoding="utf-8", newline="")):
         model = Model(N=int(row["N"]), m=int(row["m"]), lam=0)
         method = "eq3" if row["method"] == "gauss" else row["method"]
         for prefix in ["previous", "chosen"]:
@@ -31,7 +31,7 @@ def test_table_i_all_endpoints():
 
 
 def test_nakagami_twenty_cases():
-    for row in csv.DictReader((FIXTURES / "nakagami.csv").open()):
+    for row in csv.DictReader((FIXTURES / "nakagami.csv").open(encoding="utf-8", newline="")):
         model = Model(N=int(row["N"]), m=int(row["m"]), convention=row["convention"])
         for key, gain, kind in [("exact_PPP", "exact", "PPP"), ("exact_mean", "exact", "mean"), ("gauss_mean", "eq3", "mean")]:
             if not row[key + "_status"]:

@@ -1,4 +1,4 @@
-"""Vérifie la branche de génération, distincte des banques centrales."""
+"""Checks the generation branch, separate from the central banks."""
 from certoutage import Model, Numerics, floor, outage_enclosure, required_snr
 
 

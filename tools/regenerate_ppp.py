@@ -1,4 +1,4 @@
-"""Régénère une banque PPP/Gamma vers un NOUVEAU fichier local, sans réseau."""
+"""Regenerate a PPP/Gamma bank into a NEW local file, without network access."""
 import argparse
 import hashlib
 import json
@@ -16,16 +16,16 @@ def main() -> None:
     parser.add_argument('--lam', default='0.1')
     parser.add_argument('--eta', type=int, choices=[3, 4], default=4)
     parser.add_argument('--kind', choices=['PPP', 'GAMMA'], default='PPP')
-    parser.add_argument('--power', type=int, default=20, help='M=2**power ; archive=20')
+    parser.add_argument('--power', type=int, default=20, help='M=2**power; archive: 20')
     parser.add_argument('--bits', type=int, default=160)
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()
     model = Model(lam=args.lam, eta=args.eta)
     if float(model.lam) <= 0:
-        parser.error('lam doit être strictement positif pour la génération PPP/Gamma')
+        parser.error('lam must be strictly positive for PPP/Gamma generation')
     numerics = Numerics(precision_bits=args.bits, ppp_dft_power=args.power)
     if args.output.exists():
-        parser.error('le fichier de sortie existe déjà ; choisir un nouveau chemin')
+        parser.error('the output file already exists; choose a new path')
     start = perf_counter()
     with arithmetic(numerics.precision_bits):
         data = environment_arrays(model.lam, model.eta, args.power, args.kind)
