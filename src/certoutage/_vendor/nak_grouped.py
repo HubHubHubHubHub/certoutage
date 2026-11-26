@@ -1,4 +1,4 @@
-"""Même somme de rectangles : regrouper les indices CDF répétés, dans Arb."""
+"""Same sum of rectangles: group repeated CDF indices, in Arb."""
 from .commun import *
 class Grouped:
  def __init__(self,calc):

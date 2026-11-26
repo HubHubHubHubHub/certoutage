@@ -1,4 +1,4 @@
-"""Certificats numériques pour le modèle thermique RIS-NOMA de la Letter."""
+"""Numerical certificates for the thermal RIS-NOMA model of the Letter."""
 from .models import (Model, Numerics, SNRGrid, Contract, Enclosure, SNRDecision,
                      ComparisonRow, ThresholdDifference)
 from .api import (outage_enclosure, floor, required_snr, compare_approximations,

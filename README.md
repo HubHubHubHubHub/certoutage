@@ -71,8 +71,8 @@ The exact-gain/Gamma required-SNR interval is **[4.50, 4.75] dB**. The example
 also prints two mean-interference comparisons in raw probability units:
 
 ```text
-Exact gain + mean: [3.716491105435498e-15, 3.888988626422534e-15]; falsely feasible
-Eq. (3) + mean: [9.039202781939247e-08, 9.116853495842469e-08]; falsely feasible
+Exact gain + mean: {'lower': 3.716491105435498e-15, 'upper': 3.888988626422534e-15} (raw probability); falsely feasible
+Eq. (3) + mean: {'lower': 9.039202781939247e-08, 'upper': 9.116853495842469e-08} (raw probability); falsely feasible
 ```
 
 Use `--json` for full, unrounded results and contracts. Execution time varies.

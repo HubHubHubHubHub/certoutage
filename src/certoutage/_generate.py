@@ -1,7 +1,7 @@
-"""Inversion PPP extraite de ppp/code/champ.py, désormais fonction pure.
+"""PPP inversion extracted from ppp/code/champ.py, now a pure function.
 
-M est paramétrable ; toutes les bornes de reste utilisent le M effectivement
-choisi. Les queues et les masses résiduelles ne sont jamais renormalisées.
+M is configurable; every remainder bound uses the M actually chosen.
+Tails and residual masses are never renormalized.
 """
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ def _check_laplace(lam: str, eta: int, xlo, xhi, clo, chi) -> None:
         lap_lo = (arb_mat([wh]) * arb_mat(len(hv), 1, hv))[0, 0]
         exact = transform(arb(s), lam, eta).real
         if not (lap_lo.lower() <= exact.upper() and lap_hi.upper() >= exact.lower()):
-            raise ArithmeticError(f"Contrôle de Laplace incohérent : lam={lam}, eta={eta}, "
+            raise ArithmeticError(f"Inconsistent Laplace check: lam={lam}, eta={eta}, "
                                   f"s={s}, lower={lap_lo}, upper={lap_hi}, direct={exact}")
 
 

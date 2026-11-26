@@ -1,7 +1,7 @@
-"""Cas absent : λ=0.2, η=3, N=16, cible 0.002, deux conventions.
+"""A case absent from the Letter: λ=0.2, η=3, N=16, target 0.002, both conventions.
 
-Recoupement à 192 bits et DFT doublée ; les banques utiles restent à 160 bits.
-Cette comparaison de précisions est un recoupement, pas une preuve indépendante.
+Cross-check at 192 bits with a doubled DFT; the useful-gain banks stay at 160 bits.
+This comparison of precisions is a cross-check, not an independent proof.
 """
 from __future__ import annotations
 
@@ -49,9 +49,9 @@ def main() -> None:
         for item in case["calculations"]:
             d = item["decision"]
             print(f"  {item['precision_bits']} bits, M={item['ppp_M']}: {d['status']}, "
-                  f"seuil [{d['lower_db']}, {d['upper_db']}] dB, "
-                  f"plancher [{d['floor']['lower']}, {d['floor']['upper']}], {item['seconds']:.3f} s")
-    print(f"Temps total : {result['wall_seconds']:.3f} s.")
+                  f"threshold [{d['lower_db']}, {d['upper_db']}] dB, "
+                  f"floor [{d['floor']['lower']}, {d['floor']['upper']}], {item['seconds']:.3f} s")
+    print(f"Total time: {result['wall_seconds']:.3f} s.")
 
 
 if __name__ == "__main__":

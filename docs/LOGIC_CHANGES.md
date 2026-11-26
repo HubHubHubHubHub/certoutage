@@ -57,6 +57,24 @@ transformée, celles sur `xhi` la minorent ; la masse résiduelle à +∞
 contribue zéro. On vérifie `lap_lo.lower() <= exact.upper()` et
 `lap_hi.upper() >= exact.lower()`, comme l'archive, sans resserrer les CDF.
 
+## English text throughout (26 November 2026, unreleased)
+
+All user-facing text is now in English: exception messages, docstrings,
+the `Contract.assumptions` strings, example output, and the comments and
+docstrings of the tests. In `_vendor/`, only the nine exception messages
+added in T28b and four comments or docstrings were translated. No
+condition, operation or control flow changed. The one code-level edit
+outside string literals is in `threshold_difference`, where the label
+`"usager (user)"` became `name`.
+
+Output changes are text only. `examples/table_ii.py --json` was compared
+with the previous fixture value by value: same structure, same 30 binary64
+values (`float.hex`), same integers, booleans and `None`. Exactly eight
+distinct strings changed: the six assumptions and the two
+"(raw probability)" annotations. The regression fixture
+`tests/regression/fixtures/table_ii.json` was regenerated after this check.
+The numbers in every other regression fixture are unchanged.
+
 Les traces T28b dans `evidence/t28b/` au niveau de la mission conservent
 les contre-tests sur l'ancien code, les empreintes des sorties avant/après,
 les comparaisons des exemples aux JSON T28, et les durées des suites

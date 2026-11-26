@@ -1,4 +1,4 @@
-"""Les quatre affirmations centrales passent exclusivement par l'API publique."""
+"""The four central claims go exclusively through the public API."""
 import csv
 import json
 from pathlib import Path

@@ -1,4 +1,4 @@
-"""Figure 1 entière, Table I et campagne Nakagami, valeurs brutes."""
+"""All of Figure 1, Table I and the Nakagami campaign, raw values."""
 import csv
 from pathlib import Path
 

@@ -1,4 +1,4 @@
-"""Contre-exemples M1–M7 de l'audit Fable du 24 novembre 2026."""
+"""Counterexamples M1–M7 from the Fable audit of 24 November 2026."""
 from dataclasses import replace
 from decimal import Decimal, Inexact, Rounded, localcontext
 from fractions import Fraction
@@ -16,7 +16,7 @@ from certoutage._vendor import commun, ppp, thermal_backend
 def test_m1_rejects_fable_grid_under_low_decimal_precision():
     with localcontext() as context:
         context.prec = 3
-        with pytest.raises(ValueError, match="multiples exacts"):
+        with pytest.raises(ValueError, match="exact multiples"):
             SNRGrid(start="1.0001", stop="2.0001", step="0.5")
 
 
@@ -89,7 +89,7 @@ def test_m3_laplace_guard_rejects_inconsistent_inversion(monkeypatch):
 
 @pytest.mark.parametrize("convert", [commun.out, thermal_backend.outward])
 def test_m4_nonfinite_balls_raise_arithmetic_error(convert):
-    with pytest.raises(ArithmeticError, match="fini"):
+    with pytest.raises(ArithmeticError, match="finite"):
         convert(arb("nan"))
 
 
@@ -97,12 +97,12 @@ def test_m4_nonfinite_balls_raise_arithmetic_error(convert):
 def test_m4_inward_transport_is_rejected(monkeypatch, convert):
     original = np.nextafter
     monkeypatch.setattr(np, "nextafter", lambda value, direction: original(value, -direction))
-    with pytest.raises(ArithmeticError, match="extérieur"):
+    with pytest.raises(ArithmeticError, match="outward"):
         convert(arb(1))
 
 
 def test_m4_inconsistent_cdf_envelopes_are_rejected():
-    with pytest.raises(ArithmeticError, match="enveloppes"):
+    with pytest.raises(ArithmeticError, match="envelopes"):
         ppp.envelopes(np.array([0., .8]), np.array([0., .2]), None, None)
 
 
@@ -158,8 +158,8 @@ def test_m6_dft_endpoint_is_conservative_previous_node():
 
 
 @pytest.mark.parametrize("change,match", [
-    ({"target": "2e-5"}, "cible"),
-    ({"user": 2}, "usager"),
+    ({"target": "2e-5"}, "target"),
+    ({"user": 2}, "user"),
     ({"model": Model(convention="C-TX", lam=0)}, "convention"),
     ({"model": Model(N=20, convention="C-INR", lam=0)}, "N"),
 ])
