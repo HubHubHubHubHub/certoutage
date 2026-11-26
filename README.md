@@ -132,6 +132,7 @@ time. Higher precision does not repair an unsuitable physical model.
 |---|---|
 | `provided-banks` | Composition computed on demand from integrity-checked signal and interference banks |
 | `mixed` | Supplied useful-gain bank; PPP, Gamma or J_max distribution computed locally for the requested case |
+| `generated-banks` | Reserved for locally prepared banks; not produced by any query in this version; planned for 0.4.0 |
 | `provided-certificate` | Final J_max bounds for N=20/24 read from archived certificates, explicitly without a new integration |
 | `analytic` | An exact result such as the zero C-INR floor |
 
