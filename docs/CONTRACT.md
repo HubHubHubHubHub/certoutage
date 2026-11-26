@@ -1,112 +1,111 @@
-# Contrat de certification
+# Certification contract
 
-## Objet mathématique
+## Mathematical object
 
-Avec V_k=sqrt(E_k F_k), A_N=Σ V_k et W=A_N²(10+Z)²/101, les deux quantités
-sont P_INR(ρ)=E F_W(d_i(1+J)/ρ) et P_TX(ρ)=E F_W(d_i(J+1/ρ)).
-Toutes les indépendances du modèle de la Letter sont nécessaires. Les
-résultats des deux usagers sont marginaux ; aucune probabilité conjointe
-ni allocation optimale d'une surface partagée n'est certifiée.
+With V_k=sqrt(E_k F_k), A_N=Σ V_k and W=A_N²(10+Z)²/101, the two quantities
+are P_INR(ρ)=E F_W(d_i(1+J)/ρ) and P_TX(ρ)=E F_W(d_i(J+1/ρ)).
+Every independence assumption of the model of the Letter is needed. The
+results for the two users are marginal; no joint probability and no optimal
+allocation of a shared surface is certified.
 
-L'inversion de la transformée du gain, les restes et les rectangles
-thermiques proviennent de l'archive. Les banques utiles sont fournies à
-160 bits. Les rectangles couvrent [-12,12], avec -10 et 0 aux frontières ;
-la masse omise est majorée par 2φ(12)/12. Le zéro du facteur thermique
-n'est ni supprimé ni traité comme une probabilité ponctuelle positive.
+The inversion of the gain transform, the remainders and the thermal
+rectangles come from the archive. The useful-gain banks are provided at
+160 bits. The rectangles cover [-12, 12], with -10 and 0 on cell boundaries;
+the omitted mass is bounded above by 2φ(12)/12. The zero of the thermal
+factor is neither removed nor treated as a positive point probability.
 
-## Composition des distributions
+## Composition of distributions
 
-Pour une CDF encadrée aux nœuds x_j par L_j et U_j, deux distributions
-discrètes ordonnées stochastiquement sont construites. Les masses sont les
-différences d'UNE même enveloppe cumulative ; elles ne sont pas remplacées
-par des intervalles de masses indépendants. Le résidu inférieur est placé
-au dernier nœud fini, le supérieur à +∞. Pour tout test croissant g :
+For a CDF enclosed at the nodes x_j by L_j and U_j, two stochastically
+ordered discrete distributions are built. The masses are the differences of
+ONE cumulative envelope; they are not replaced by independent mass
+intervals. The lower residual is placed at the last finite node, the upper
+one at +∞. For every nondecreasing test function g:
 E g(X-) ≤ E g(J) ≤ E g(X+).
 
-L'API hérite sans changement des méthodes `Signal.indices`, `Signal.lookup`
-et `Environment.point` de `ppp/code/oracles.py`. Les recherches de nœuds sont
-conservatrices, les additions et produits binaires64 sont élargis par
-`nextafter`, et les masses et produits scalaires restent dans Arb. Aucune
-interpolation linéaire ni renormalisation de queue n'est utilisée.
+The API inherits, unchanged, the methods `Signal.indices`, `Signal.lookup`
+and `Environment.point` of `ppp/code/oracles.py`. Node lookups are
+conservative, binary64 additions and products are widened with `nextafter`,
+and masses and dot products stay in Arb. No linear interpolation and no
+renormalization of tails is used.
 
-Les paramètres NOMA et thermiques sont fixés. Un nouveau λ ne justifie
-pas de changer la banque de gain ; il change la distribution PPP, qui est
-recalculée avec les restes suivants.
+The NOMA and thermal parameters are fixed. A new λ does not justify
+changing the gain bank; it changes the PPP distribution, which is
+recomputed with the remainders below.
 
-## Inversion PPP à la demande
+## On-demand PPP inversion
 
-Pour η=3 ou 4, on utilise les expressions explicites de l'archive pour
-L_J(s)=exp(-2πλ ∫_1^∞ sr/(r^η+s) dr), avec branches principales.
-Soient α=2/η, β=π²λα/[2 sin(πα/2)], B=128, cB=20, K=M/2 et
-ξ=β(2πK/B)^α. Le reste de Fourier est
+For η=3 or 4, the explicit expressions of the archive are used for
+L_J(s)=exp(-2πλ ∫_1^∞ sr/(r^η+s) dr), with principal branches.
+Let α=2/η, β=π²λα/[2 sin(πα/2)], B=128, cB=20, K=M/2 and
+ξ=β(2πK/B)^α. The Fourier remainder is
 
 R=exp(πλ-ξ)/π × (1/(2K)+1/(αξ)).
 
-Avec τ=exp(-B/2+2πλ/(η-2)) et a0=1/expm1(20), le certificat aux nœuds est
+With τ=exp(-B/2+2πλ/(η-2)) and a0=1/expm1(20), the certificate at the nodes is
 S_M-a0-exp(cx)R ≤ F_J(x) ≤ S_M-a0+exp(cx)R+τa0.
-F_J(0)=0. Dans la branche DFT, l'encadrement **stocké** à B est
-F_J(B)∈[L_{M−1},1], où L est l'enveloppe inférieure resserrée sur les
-nœuds uniformes jB/M : l'indice inférieur conservateur à B vaut M−1.
-La borne analytique max(0,1−τ) est appliquée au nœud uniforme M, mais
-n'est pas reportée dans `clo[-1]` après cette sélection d'indice.
-Dans la branche R>1 sans DFT, l'encadrement stocké à B est bien
-[max(0,1−τ),1], avec transport binaire64 vers l'extérieur. Ces choix
-peuvent donner une borne stockée à B plus faible lorsque M augmente.
-Les constantes, DFT et restes sont
-calculés dans Arb/Acb. Les nœuds de composition sont ceux de l'archive,
-x_j=10^(j/2560)-1, puis B ; leurs abscisses sont encadrées.
+F_J(0)=0. In the DFT branch, the **stored** enclosure at B is
+F_J(B)∈[L_{M−1},1], where L is the lower envelope tightened on the uniform
+nodes jB/M: the conservative lower index at B is M−1.
+The analytic bound max(0,1−τ) is applied at the uniform node M, but is not
+carried over into `clo[-1]` after this index selection.
+In the R>1 branch without DFT, the stored enclosure at B is indeed
+[max(0,1−τ),1], with outward binary64 transport. These choices can give a
+weaker stored bound at B when M increases.
+The constants, the DFT and the remainders are computed in Arb/Acb. The
+composition nodes are those of the archive, x_j=10^(j/2560)-1, then B;
+their abscissas are enclosed.
 
-Le changement M=2^20 vers M configurable conserve cette preuve : ξ, K et
-l'exponentielle de discrétisation utilisent le M effectif. Il ne conserve
-pas nécessairement la largeur des certificats. Si R>1, le calcul retourne
-les bornes de CDF [0,1], avec la borne analytique de queue au dernier nœud,
-sans entreprendre une DFT inutile. C'est un certificat grossier explicite,
-pas une extrapolation vers un cas mieux conditionné.
+The change from M=2^20 to a configurable M preserves this proof: ξ, K and
+the discretization exponential use the effective M. It does not necessarily
+preserve the width of the certificates. If R>1, the calculation returns the
+CDF bounds [0,1], with the analytic tail bound at the last node, without
+starting a useless DFT. This is an explicit coarse certificate, not an
+extrapolation towards a better-conditioned case.
 
-Après génération PPP, les enveloppes discrètes sont contrôlées contre
-L_J(s) aux trois valeurs s=0,1 ; 0,5 ; 1, comme dans `champ.py` de
-l'archive. Une incohérence lève `ArithmeticError`, même sous `python -O`.
-Ce contrôle de cohérence ne remplace pas les bornes analytiques.
+After PPP generation, the discrete envelopes are checked against L_J(s) at
+the three values s=0.1, 0.5 and 1, as in `champ.py` of the archive. An
+inconsistency raises `ArithmeticError`, even under `python -O`. This
+consistency check does not replace the analytic bounds.
 
-La branche Gamma utilise la CDF Gamma régulière dans Arb et, si nécessaire,
-une série positive avec reste géométrique ou une borne exponentielle. Ses
-moments sont ceux de J. Cette intégration rigoureuse ne borne pas le biais
-de substitution PPP → Gamma.
+The Gamma branch uses the regularized Gamma CDF in Arb and, when needed, a
+positive series with a geometric remainder or an exponential bound. Its
+moments are those of J. This rigorous integration does not bound the bias
+of the PPP → Gamma substitution.
 
-## Contrats particuliers
+## Particular contracts
 
-La distribution du plus grand interférent est
+The distribution of the largest interferer is
 P(J_max≥x)=1-exp(-Λ(x)), Λ(x)=(2πλ/η)x^(-2/η)Γ(2/η,x), R0=1.
-Puisque J_max≤J, E F_W(d_i J_max) est une **floor lower bound**. L'intervalle
-retourné encadre cette borne inférieure ; son bord supérieur n'est pas une
-borne supérieure du plancher PPP. Les valeurs centrales archivées sont
-étiquetées `provided-certificate`.
-Leur `precision_bits` reste 160, même si une précision supérieure a été
-demandée : aucune nouvelle intégration n'est effectuée dans cette branche.
+Since J_max≤J, E F_W(d_i J_max) is a **floor lower bound**. The returned
+interval encloses this lower bound; its upper edge is not an upper bound on
+the PPP floor. The archived central values are labelled
+`provided-certificate`. Their `precision_bits` stays 160, even when a higher
+precision was requested: no new integration is performed in this branch.
 
-Le comparateur Chernoff est C_N(a)=inf_{s≥0} exp(sa)L(s)^N. Les banques
-encadrent le comparateur propagé dans les mêmes intégrations. La racine
-d'optimisation a été certifiée par signes ; la singularité amovible près
-de s=2 utilise une série avec reste établi. Les lower endpoints du
-comparateur ne sont pas des lower endpoints de la coupure. L'API garantit
-qu'ils ne produisent pas `excluded` pour le modèle physique.
+The Chernoff comparator is C_N(a)=inf_{s≥0} exp(sa)L(s)^N. The banks
+enclose the propagated comparator within the same integrations. The root of
+the optimization was certified by signs; the removable singularity near
+s=2 uses a series with an established remainder. The lower endpoints of the
+comparator are not lower endpoints of the outage. The API guarantees that
+they never produce `excluded` for the physical model.
 
-La récurrence de la transformée Nakagami dans l'archive utilise l'indice
-entier 2m-1 et une borne de variation explicite. Elle n'est pas une routine
-certifiée pour m réel arbitraire. Pour m=2,3 on réutilise les banques et
-leurs bornes ; la génération et la stabilité pour d'autres m ne sont pas
-revendiquées.
+The recurrence of the Nakagami transform in the archive uses the integer
+index 2m-1 and an explicit variation bound. It is not a certified routine
+for arbitrary real m. For m=2, 3 the banks and their bounds are reused;
+generation and stability for other m are not claimed.
 
-## Ce qui est une preuve et ce qui ne l'est pas
+## What is a proof and what is not
 
-La validité mathématique est conditionnelle aux preuves analytiques
-référencées dans la Letter et `notes/decisions/` de l'archive, à la validité
-d'Arb/Acb et au respect de l'arithmétique IEEE requise. La mission extrait
-et teste ce contrat ; elle ne constitue pas une preuve formelle du moteur
-ni une nouvelle démonstration indépendante de toutes les bornes de l'article.
+Mathematical validity is conditional on the analytic proofs referenced in
+the Letter and in `notes/decisions/` of the archive, on the validity of
+Arb/Acb, and on the required IEEE arithmetic being respected. The package
+extracts and tests this contract; it is neither a formal proof of the
+engine nor a new independent proof of all the bounds of the paper.
 
-Un SHA-256 vérifie l'intégrité des données par rapport à une empreinte de
-référence ; il ne prouve ni leur provenance ni leur justesse. Une régression brute
-atteste la conservation des calculs testés. Le recoupement à 192 bits et
-DFT doublée du cas nouveau apporte une vérification supplémentaire, avec
-la même banque utile à 160 bits ; il n'est pas une preuve indépendante.
+A SHA-256 digest checks the integrity of the data against a reference
+digest; it proves neither their provenance nor their correctness. A raw
+regression attests that the tested calculations are preserved. The
+cross-check of the new case at 192 bits with a doubled DFT adds a further
+check, with the same 160-bit useful-gain bank; it is not an independent
+proof.

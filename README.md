@@ -167,8 +167,7 @@ Eq. (3) + Gamma does not validate replacing PPP interference by Gamma.
 
 [Detailed API](docs/API.md) · [Mathematical contract](docs/CONTRACT.md) ·
 [Regeneration](docs/REGENERATION.md) · [Logic changes](docs/LOGIC_CHANGES.md) ·
-[Extraction inventory](docs/EXTRACTION.json). These technical documents are
-currently in French.
+[Extraction inventory](docs/EXTRACTION.md).
 
 ## Provenance
 
@@ -210,3 +209,12 @@ modifications. The [original archive notice](docs/ARCHIVE_LICENSE.txt) and
 
 Possible future extensions are RIS without thermal harvesting, Rice fading
 and 3GPP channel models. None is implemented or certified in version 0.1.0.
+
+## Support, bugs and feature requests
+
+If your work needs a feature that is not implemented yet, please
+[open a feature request](https://github.com/HubHubHubHubHub/certoutage/issues/new/choose)
+and say what it is for. If it can be done in a reasonable time, it will be
+implemented and you will be notified on the issue when it is released. Bug
+reports, questions and other feedback go to the same tracker; see
+[SUPPORT.md](SUPPORT.md).

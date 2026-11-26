@@ -1,8 +1,8 @@
-"""Copie les générateurs v7 avant exécution locale. Aucune soumission de job.
+"""Copy the v7 generators before running them locally. No job is submitted.
 
-Les sorties ne sont jamais écrites dans l'archive. Le répertoire de travail
-est nouveau. La régénération complète peut durer longtemps ; elle est séparée
-de l'API normale. Voir docs/REGENERATION.md.
+Outputs are never written into the archive. The working directory must be
+new. A full regeneration can take a long time; it is separate from the
+normal API. See docs/REGENERATION.md.
 """
 from __future__ import annotations
 import argparse
@@ -25,11 +25,11 @@ def main() -> None:
     args = p.parse_args()
     archive, work = args.archive.resolve(), args.output.resolve()
     if work == archive or archive in work.parents:
-        p.error('la sortie ne doit jamais appartenir à l’archive')
+        p.error('the output must never be inside the archive')
     if work.exists():
-        p.error('le répertoire de sortie doit être nouveau')
+        p.error('the output directory must be new')
     if args.N not in [8,12,16,20,24,32,48,64]:
-        p.error('N hors périmètre de la phase 1')
+        p.error('N outside the supported scope')
     source = archive / ('campaigns/t20/code' if args.kind == 'nakagami' else 'ppp/code')
     selected = (['commun.py','amplitude.py','kernel.py','t4_backend.py','thermal.py','grouped.py','calcul_thermique.py']
                 if args.kind == 'nakagami' else

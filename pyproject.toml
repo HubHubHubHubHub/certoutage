@@ -25,6 +25,8 @@ keywords = ["outage probability", "RIS", "NOMA", "energy harvesting",
 "Preprint" = "https://hal.science/hal-05879102"
 "Reproducibility archive" = "https://doi.org/10.5281/zenodo.24450534"
 "Repository" = "https://github.com/HubHubHubHubHub/certoutage"
+"Issues" = "https://github.com/HubHubHubHubHub/certoutage/issues"
+"Changelog" = "https://github.com/HubHubHubHubHub/certoutage/blob/main/CHANGELOG.md"
 "Software DOI" = "https://doi.org/10.5281/zenodo.24509256"
 
 [project.optional-dependencies]

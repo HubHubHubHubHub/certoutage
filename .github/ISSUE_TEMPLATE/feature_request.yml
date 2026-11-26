@@ -1,0 +1,26 @@
+name: Feature request
+description: Ask for a model, parameter or output that certoutage does not support yet.
+labels: ["feature request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. If the feature can be done in a reasonable time, it will be implemented
+        and you will be notified here when it is released.
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you need?
+      description: For instance another fading model, path-loss exponent, number of elements, interference model or output.
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: For which work?
+      description: A paper, a thesis, a design study… Knowing the use helps decide what to certify first.
+  - type: textarea
+    id: parameters
+    attributes:
+      label: Parameter values
+      description: The values or ranges you would query, if you know them.
