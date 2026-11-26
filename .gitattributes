@@ -1,0 +1,5 @@
+# The bank files and their manifest are verified byte for byte (SHA-256), and
+# Table II is checked bit for bit: no checkout may rewrite line endings
+# (e.g. core.autocrlf=true on Windows, which turned MANIFEST.json into CRLF).
+* text=auto eol=lf
+*.npz binary

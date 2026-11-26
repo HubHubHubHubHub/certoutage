@@ -9,6 +9,13 @@
   `examples/table_ii.py --json` doit redonner la Table II à l'octet
   (flottants comparés par `float.hex`, seul `wall_seconds` exclu). Aucun
   changement des calculs.
+- `.gitattributes` (`* text=auto eol=lf`, `*.npz binary`) : un clone Windows
+  (`core.autocrlf=true`) réécrivait en CRLF `data/MANIFEST.json`, dont
+  l'empreinte SHA-256 ne correspondait plus ; l'installation depuis un tel
+  clone refusait alors tout calcul (`IntegrityError`, comportement voulu).
+  Révélé par le premier passage de l'intégration continue. Les fichiers de
+  PyPI (wheel et sdist, construits avec des fins de ligne LF) n'étaient pas
+  touchés.
 
 ## 0.1.0 — 2026-11-24
 
