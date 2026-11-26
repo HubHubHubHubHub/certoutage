@@ -61,10 +61,16 @@ certoutage returns bounds that are certified for a stated model. A change
 may make a result less precise; it must never make a result less true, and
 it must never do either without saying so. In practice:
 
-- **Certifying files** are `src/certoutage/api.py`, `_runtime.py`,
-  `_generate.py`, `_banks.py` and `_vendor/`. A change to any of them is
-  declared in [docs/LOGIC_CHANGES.md](docs/LOGIC_CHANGES.md): what changes,
-  what is preserved, and how this was checked.
+- **Certifying files** are `src/certoutage/api.py`, `models.py`,
+  `_runtime.py`, `_generate.py`, `_banks.py` and `_vendor/`. `models.py`
+  holds the validation of the inputs, the check that every result is a
+  valid probability interval, and the outward display. A change to the
+  logic of any of them is declared in
+  [docs/LOGIC_CHANGES.md](docs/LOGIC_CHANGES.md): what changes, what is
+  preserved, and how this was checked. For an extracted file, the digest
+  recorded in [docs/EXTRACTION.json](docs/EXTRACTION.json)
+  (`post_release_sha256`) and its description are updated in the same
+  change; a test checks the digests.
 - **Outputs are compared before and after.** For such a change, compare the
   outputs of all regression tests before and after (through `float.hex`).
   An interval that becomes **wider** is acceptable if it is declared. An
@@ -99,10 +105,14 @@ version of python-flint is part of what a result means:
   been declared in [docs/LOGIC_CHANGES.md](docs/LOGIC_CHANGES.md) under the
   fail-closed rule above. That release changes the pin and the stored
   fixtures together.
-- **The contract names the engine that actually ran.** The field
+- **The contract names the python-flint actually imported.** The field
   `Contract.interval_library` is read from `flint.__version__` when the
   result is built, not copied from the pin. If python-flint has been
-  replaced by hand, the result says so, and the regression tests fail.
+  replaced by hand, the result says so, and
+  `test_declared_dependency_matches_the_imported_engine` fails; the
+  regression tests fail only if a bit of their output changes. The field
+  names the Python binding, not the FLINT C library it was built against:
+  the pinned wheels fix both, a build from source may not.
 - **NumPy** only carries arrays between Arb computations and is allowed a
   range (`numpy>=2.0,<3`). Continuous integration runs the suite with the
   newest NumPy in that range on every push.

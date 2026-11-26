@@ -98,6 +98,14 @@ the useful-gain bank. A provided certificate always reports
 `precision_bits=160`, with no new integration, whatever precision is
 requested in `numerics`.
 
+Every contract also carries `interval_library`, for instance
+`python-flint 0.9.0 / Arb-Acb`: the version of python-flint imported by the
+running process, read when the result is built. It names the loaded Python
+binding, not the version of the FLINT C library that binding was built
+against, and it says nothing about the origin of stored banks or
+certificates: for a `provided-certificate` or `analytic` result, no Arb
+computation takes place.
+
 ## Integrity and concurrency
 
 A SHA-256 mismatch raises `IntegrityError` before `numpy.load`.

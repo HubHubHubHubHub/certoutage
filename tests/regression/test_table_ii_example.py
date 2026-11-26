@@ -32,3 +32,21 @@ def test_table_ii_example_is_bit_identical(capsys, monkeypatch):
     assert isinstance(seconds, float) and seconds >= 0
     expected = json.loads(FIXTURE.read_text(encoding="utf-8"))
     assert _exact(produced) == _exact(expected)
+
+
+def test_table_ii_text_is_computed_and_ignores_the_decimal_context(capsys, monkeypatch):
+    """The text output prints the computed threshold, rounded outward, even under a hostile decimal context."""
+    import decimal
+
+    monkeypatch.setattr(sys, "argv", ["table_ii.py"])
+    with decimal.localcontext() as context:
+        context.prec = 1
+        for trap in (decimal.Inexact, decimal.Rounded, decimal.InvalidOperation):
+            context.traps[trap] = True
+        runpy.run_path(str(ROOT / "examples" / "table_ii.py"), run_name="__main__")
+    text = capsys.readouterr().out
+    expected = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    gamma = expected["rows"][1]["result"]["decision"]
+    assert (gamma["lower_db"], gamma["upper_db"]) == (4.5, 4.75)
+    assert "Exact gain + Gamma: required SNR (threshold) [4.50, 4.75] dB." in text
+    assert f"E F_W(d_i J_max): {expected['rows'][5]['display']}; inconclusive" in text

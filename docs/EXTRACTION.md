@@ -98,5 +98,10 @@ Unreleased (26 November 2026): the user-facing text of the destination
 files was translated into English (see [LOGIC_CHANGES.md](LOGIC_CHANGES.md)).
 The `destination_sha256` digests in `EXTRACTION.json` still describe 0.1.0
 (all 66 were checked against the 0.1.0 tag). The eight destinations whose
-bytes changed since then, for text only, carry two extra fields in their
-entries: `post_release_sha256` and `post_release_change`.
+bytes changed since then carry two extra fields in their entries:
+`post_release_sha256`, the digest of the current file, and
+`post_release_change`. Seven changed for text only; `_runtime.py` also
+carries the new cache key of the PPP/Gamma environment (see
+[LOGIC_CHANGES.md](LOGIC_CHANGES.md)). `tests/unit/test_release.py` checks
+that each recorded digest is that of the file, and that every destination
+that differs from 0.1.0 is recorded (G37).
