@@ -1,5 +1,15 @@
 # Journal des changements
 
+## En cours (non publié)
+
+- Intégration continue : `.github/workflows/tests.yml` installe le paquet
+  (non éditable) et lance la suite sous Ubuntu (Python 3.10 à 3.14), macOS et
+  Windows (Python 3.11 et 3.14).
+- Nouveau test `tests/regression/test_table_ii_example.py` : la sortie
+  `examples/table_ii.py --json` doit redonner la Table II à l'octet
+  (flottants comparés par `float.hex`, seul `wall_seconds` exclu). Aucun
+  changement des calculs.
+
 ## 0.1.0 — 2026-11-24
 
 - Première version préparée pour la publication : nom `certoutage`, banques
