@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import Decimal, InvalidOperation, ROUND_FLOOR, ROUND_CEILING, localcontext
+from decimal import Decimal, InvalidOperation
 from fractions import Fraction
 import math
 from typing import Literal
@@ -198,9 +198,17 @@ class ThresholdDifference:
         """Outward decimal display, including on fine grids."""
         if type(places) is not int or not 0 <= places <= 30:
             raise ValueError("places must be an integer between 0 and 30")
-        with localcontext() as context:
-            context.prec = 400
-            q = Decimal(1).scaleb(-places)
-            lo = Decimal.from_float(self.lower).quantize(q, rounding=ROUND_FLOOR)
-            hi = Decimal.from_float(self.upper).quantize(q, rounding=ROUND_CEILING)
-        return f"[{lo:.{places}f}, {hi:.{places}f}]"
+        # Exact rational scaling, then integer floor/ceiling, as in Enclosure.format:
+        # independent of the caller's decimal context, traps included.
+        scaled_lower = Fraction.from_float(self.lower) * 10 ** places
+        scaled_upper = Fraction.from_float(self.upper) * 10 ** places
+        lo = scaled_lower.numerator // scaled_lower.denominator
+        hi = -(-scaled_upper.numerator // scaled_upper.denominator)
+
+        def fixed(value: int, source: float) -> str:
+            # The sign follows the binary64 value, as Decimal.quantize did (-0.0 gives "-0.0…").
+            digits = str(abs(value)).zfill(places + 1)
+            body = digits[:-places] + "." + digits[-places:] if places else digits
+            return ("-" if math.copysign(1.0, source) < 0 else "") + body
+
+        return f"[{fixed(lo, self.lower)}, {fixed(hi, self.upper)}]"

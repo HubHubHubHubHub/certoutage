@@ -166,6 +166,7 @@ impossibility within the PPP model. `masked` explains why exclusion under
 Eq. (3) + Gamma does not validate replacing PPP interference by Gamma.
 
 [Detailed API](docs/API.md) · [Mathematical contract](docs/CONTRACT.md) ·
+[Register of guarantees](docs/GUARANTEES.md) ·
 [Regeneration](docs/REGENERATION.md) · [Logic changes](docs/LOGIC_CHANGES.md) ·
 [Extraction inventory](docs/EXTRACTION.md).
 

@@ -84,3 +84,11 @@ distinct strings changed: the six assumptions and the two
 The numbers in every other regression fixture are unchanged.
 The eight destination files whose bytes changed are listed in
 `EXTRACTION.json` (`post_release_sha256`).
+
+## Display of threshold differences (26 November 2026, unreleased)
+
+| Area | Change | Justification and check |
+|---|---|---|
+| `models.ThresholdDifference.format` | `Decimal.quantize` under an inherited `localcontext()` replaced by exact rational scaling and integer floor/ceiling, as in `Enclosure.format`; the sign follows the binary64 value | With `traps[Inexact]` set by the caller, the old code raised `decimal.Inexact` (no wrong value, a loud failure). Old and new outputs compared on 112,224 cases (places 0 to 30, values in ±2000 dB, multiples of 1/128, ±0.0, subnormals): identical. Test `test_display_of_threshold_differences_ignores_decimal_traps` |
+
+No certified quantity is involved: the change is in the display only.

@@ -25,6 +25,20 @@
 - Support: `SUPPORT.md`, issue forms (feature request, bug report, question)
   and a README section explaining how to ask for a missing feature. Issue
   tracker and changelog links added to the package metadata.
+- Register of guarantees `docs/GUARANTEES.md`: 34 promises, each with the
+  file that keeps it and the tests that check it, and a list of the stated
+  promises not yet checked by a test; a meta-test fails if a row cites a
+  missing test or file. New direct tests for the guarantees that had none or
+  only partial ones: no unpickling, read-only and cached banks, no network
+  access, no file written, safe outputs of the regeneration tools, guards
+  under `python -O`, no reachable `assert`, Arb context restored after an
+  exception, one lock, valid probability intervals, digests recorded in the
+  contract, comparability checks of `threshold_difference`, input bounds.
+- Fix: `ThresholdDifference.format` raised `decimal.Inexact` when the
+  caller's decimal context trapped inexact results. It now uses exact
+  rationals, like `Enclosure.format`. Output is unchanged otherwise
+  (112,224 cases compared, including -0.0 and subnormals). Found by the
+  review of the register.
 
 ## 0.1.0 — 2026-11-24
 
