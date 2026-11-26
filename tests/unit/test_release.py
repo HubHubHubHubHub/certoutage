@@ -21,16 +21,16 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_release_versions_and_dates_agree():
-    project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
-    citation = (ROOT / "CITATION.cff").read_text()
-    changelog = (ROOT / "CHANGELOG.md").read_text()
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     cff_version = re.search(r"^version: (\S+)$", citation, re.M).group(1)
     latest_release = re.search(r"^## (\d+\.\d+\.\d+) — (\d{4}-\d{2}-\d{2})$",
                                changelog, re.M)
     assert project["version"] == certoutage.__version__ == cff_version == latest_release[1]
     cff_date = re.search(r"^date-released: (\S+)$", citation, re.M).group(1)
     assert cff_date == latest_release[2]
-    codemeta = json.loads((ROOT / "codemeta.json").read_text())
+    codemeta = json.loads((ROOT / "codemeta.json").read_text(encoding="utf-8"))
     assert codemeta["version"] == codemeta["softwareVersion"] == project["version"]
     assert codemeta["dateModified"] == cff_date
     assert codemeta["license"] == project["license"]
