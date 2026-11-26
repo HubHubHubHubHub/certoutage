@@ -326,3 +326,49 @@ def test_regeneration_tools_refuse_unsafe_outputs(tmp_path):
                          capture_output=True, text=True, timeout=120)
     assert run.returncode == 2 and "must be new" in run.stderr
     assert [p.name for p in output.iterdir()] == ["keep.txt"]
+
+
+def _count_environment_builds(monkeypatch):
+    builds = []
+    original = _runtime.environment_arrays
+    monkeypatch.setattr(_runtime, "environment_arrays", lambda *args: builds.append(args) or original(*args))
+    return builds
+
+
+def test_environment_is_shared_across_n_m_convention_user_and_gain(monkeypatch):
+    # S03: one Laplace inversion per (lam, eta, kind, M, precision, policy), and sharing changes no result.
+    fast = Numerics(ppp_dft_power=12)
+    cases = [(24, 1, "C-TX", 1, "exact"), (20, 1, "C-TX", 1, "exact"), (24, 1, "C-INR", 1, "exact"),
+             (24, 2, "C-TX", 1, "exact"), (24, 1, "C-TX", 2, "exact"), (24, 1, "C-TX", 1, "eq3"),
+             (24, 1, "C-TX", 1, "chernoff")]
+
+    def query(N, m, convention, user, gain):
+        return outage_enclosure(Model(N=N, m=m, lam="0.3", convention=convention), user, 10,
+                                gain=gain, numerics=fast).as_dict()
+
+    clear_cache()
+    builds = _count_environment_builds(monkeypatch)
+    shared = [query(*case) for case in cases]
+    assert builds == [("0.3", 4, 12, "PPP")]
+    for case, result in zip(cases, shared):
+        clear_cache()
+        assert query(*case) == result
+    clear_cache()
+
+
+def test_environment_is_rebuilt_when_its_key_changes(monkeypatch):
+    clear_cache()
+    builds = _count_environment_builds(monkeypatch)
+    fast = Numerics(ppp_dft_power=12)
+    cases = [(Model(lam="0.3"), "PPP", fast), (Model(lam="0.4"), "PPP", fast), (Model(lam="0.3", eta=3), "PPP", fast),
+             (Model(lam="0.3"), "Gamma", fast), (Model(lam="0.3"), "PPP", Numerics(ppp_dft_power=13)),
+             (Model(lam="0.3"), "PPP", Numerics(precision_bits=192, ppp_dft_power=12)),
+             (Model(lam="0.1"), "PPP", fast), (Model(lam="0.1"), "PPP", replace(fast, bank_policy="fresh"))]
+    for model, interference, numerics in cases:
+        result = outage_enclosure(model, 1, 10, interference=interference, numerics=numerics)
+        assert result.contract.precision_bits == numerics.precision_bits
+    # Seven builds: the archived lam=0.1 under "auto" reads its bank instead.
+    assert len(builds) == 7
+    with _runtime.arithmetic(160), pytest.raises(ArithmeticError, match="precision of its cache key"):
+        _runtime._environment("0.35", 4, "PPP", 192, 12, "auto")   # a key not yet cached
+    clear_cache()
