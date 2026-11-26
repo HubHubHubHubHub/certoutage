@@ -572,9 +572,9 @@
     "destination_sha256": "92421bcfcbb39a8f81f7729b75cebb96eedbeac04734af80038ad752bc945995",
     "change": "pure function; configurable M; trivial bound if the Fourier remainder exceeds 1; same arrays tested at equal M; T28b: Laplace check restored, including R>1",
     "post_release_sha256": {
-      "src/certoutage/_generate.py": "237d02452c9718159e6d5b5df40c1eceb7171e5e66b14b4567f5dc8f43c1d4d5"
+      "src/certoutage/_generate.py": "c697679263e94caca9d2a1c8efc63068b87f62c28a14f4436f0ecca304c9f7bd"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
@@ -583,9 +583,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "loading constructors with integrity checks; numerical methods inherited unchanged; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "d8efa8bf60abfe4a65562c3e95725a8328d3d25f61e11be7d355eb622c25239e"
+      "src/certoutage/_runtime.py": "e30d83613cd6fe56f7c14c263dcc0f812dc12362393d500cb1aebf55ad629dcd"
     },
-    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "campaigns/t20/code/composer.py",
@@ -594,9 +594,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "selection of the Nakagami units128 grid; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "d8efa8bf60abfe4a65562c3e95725a8328d3d25f61e11be7d355eb622c25239e"
+      "src/certoutage/_runtime.py": "e30d83613cd6fe56f7c14c263dcc0f812dc12362393d500cb1aebf55ad629dcd"
     },
-    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "nakagami/code/thermal.py",
@@ -605,9 +605,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "constructor without chdir; rectangles and masses unchanged; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "d8efa8bf60abfe4a65562c3e95725a8328d3d25f61e11be7d355eb622c25239e"
+      "src/certoutage/_runtime.py": "e30d83613cd6fe56f7c14c263dcc0f812dc12362393d500cb1aebf55ad629dcd"
     },
-    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
@@ -616,9 +616,9 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "dimensioning with a configurable grid, exact decimal comparisons and new public statuses; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "99fc6bf4cf27f45f4a47dba55892db3f6c5fdf7a9c0291582093fd8154e9a297"
+      "src/certoutage/api.py": "6e94619186dbf67c7a7c80e0682e6b119c936dab621a6ffe80e5034fe8201aec"
     },
-    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/minorants.py",
@@ -627,8 +627,8 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "J_max: analytic distribution and integration for new cases; central certificates provided; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "99fc6bf4cf27f45f4a47dba55892db3f6c5fdf7a9c0291582093fd8154e9a297"
+      "src/certoutage/api.py": "6e94619186dbf67c7a7c80e0682e6b119c936dab621a6ffe80e5034fe8201aec"
     },
-    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
   }
 ]

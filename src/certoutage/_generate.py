@@ -10,11 +10,12 @@ import numpy as np
 from flint import arb, acb, arb_mat
 
 from ._vendor.commun import out, moment
-from ._vendor.ppp import transform, envelopes
+from ._vendor.ppp import envelopes
+from ._transform import transform, eta_value
 from ._vendor.thermal_backend import tighten, gamma_cdf
 
 
-def _check_laplace(lam: str, eta: int, xlo, xhi, clo, chi) -> None:
+def _check_laplace(lam: str, eta: int | str, xlo, xhi, clo, chi) -> None:
     """Archive consistency guard; the omitted mass at +infinity contributes zero."""
     wl, wh, _ = envelopes(clo, chi, xlo, xhi)
     for s in ("0.1", "0.5", "1"):
@@ -28,7 +29,8 @@ def _check_laplace(lam: str, eta: int, xlo, xhi, clo, chi) -> None:
                                   f"s={s}, lower={lap_lo}, upper={lap_hi}, direct={exact}")
 
 
-def environment_arrays(lam: str, eta: int, power: int, kind: str) -> dict:
+def environment_arrays(lam: str, eta: int | str, power: int, kind: str) -> dict:
+    ev = eta_value(eta)
     B = 128
     M = 1 << power
     K = M // 2
@@ -40,18 +42,18 @@ def environment_arrays(lam: str, eta: int, power: int, kind: str) -> dict:
     xhi = np.array([max(0.0, out(x)[1]) for x in xx])
     xlo[0] = xhi[0] = 0
     if kind == "GAMMA":
-        m1 = moment(lam, eta, 1, 1)
-        m2 = moment(lam, eta, 1, 2)
+        m1 = moment(lam, ev, 1, 1)
+        m2 = moment(lam, ev, 1, 2)
         shape, scale = m1 * m1 / m2, m2 / m1
         gcdf = np.array([out(gamma_cdf(x / scale, shape)) if j else (0.0, 0.0)
                          for j, x in enumerate(xx)]).T
         clo, chi = tighten(*gcdf)
     else:
-        alpha = arb(2) / eta
+        alpha = arb(2) / ev
         beta = arb.pi() ** 2 * arb(lam) * alpha / (2 * (arb.pi() * alpha / 2).sin())
         zeta = beta * (2 * arb.pi() * K / B) ** alpha
         freq = (arb.pi() * arb(lam) - zeta).exp() / arb.pi() * (arb(1) / (2 * K) + 1 / (alpha * zeta))
-        tail = (-arb(B) / 2 + moment(lam, eta, 1, 1)).exp()
+        tail = (-arb(B) / 2 + moment(lam, ev, 1, 1)).exp()
         # If the absolute Fourier remainder already exceeds one, avoid a
         # costly inversion and possibly overflowing binary64 transport.
         # These are still valid CDF bounds; keep the analytic tail at B.

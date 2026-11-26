@@ -222,3 +222,53 @@ new default fields to the expected model and contract parameters in memory.
 The archived fixture, every historical expected field and every float.hex
 comparison remain unchanged. This is the declared contract-schema change;
 no numerical regression expectation is weakened or replaced.
+
+
+## Real path-loss exponent (26 November 2026, unreleased)
+
+Model reads eta as an exact decimal in [2.1,8], retaining integers 3 and 4
+at those exact values and otherwise storing a plain canonical decimal
+string. Equivalent spellings share cache keys and filenames. Only canonical
+int 3/4 can reuse embedded PPP/Gamma banks; other exponents generate arrays.
+The numeric adapter leaves these two integers unchanged at every historical
+Arb arithmetic site. _vendor/, data, _banks.py and regression fixtures are
+untouched; no public exports are added.
+
+The new _transform module delegates eta=3,4 directly to the archive and
+uses the two hypergeometric identities otherwise. It calls 2F1 on z with
+abc=True, checks finiteness and relative radius against 2^(-prec/2), retries
+once at doubled precision and then uses the Pfaff series with the entire
+omitted tail enclosed by |T_N|/(1-|q|). Its branch choice uses the midpoint
+of |s|, with both identities valid on the required Re(s)>0 half-plane.
+
+Pure helpers compute R, tau and certified lambda boundary brackets for
+D_M. General-exponent PPP contracts append transform and inside/outside
+notes; the explicit-path contracts stay character-for-character unchanged.
+These criteria concern analytic node width only. The public numerical grid
+range stays 2^12 to 2^20; domain helpers also accept 2^6 to 2^11 within the
+monotone M>=42 regime, permitting a small-grid empty-window check. No
+outside-domain rejection is added. The regeneration tool accepts eta text
+and emits its canonical JSON form.
+
+A single decimal exponent guard precedes exact Fraction conversion for
+link fields, eta, SNRGrid and Enclosure.format. Nonzero adjusted exponents
+outside [-4000,4000] raise ValueError promptly; zero with any exponent stays
+zero. Rational p/q strings keep their existing path.
+
+Tests check exact explicit midpoints/radii and array bytes, all M=2^12
+frequencies against the explicit integral, M=2^16 array overlap and widths,
+and independent Acb quadrature of the bounded real integral for eight
+exponents. Nonanalytic endpoint evaluation restricts v to its nonnegative
+real integration path; analytic evaluation rejects balls touching Re(v)<=0
+for noninteger powers. Forced fallback failures and truncated Pfaff tails,
+direct DFT sums, monotonicity, domain corners, contracts and decimal input
+checks exercise the new behavior (G54–G62). Three float.hex snapshots are
+explicitly labelled non-independent; separate before/after captures and
+the existing regressions check preservation at eta=3,4. Targeted mutations
+exercise the dispatch, abc flag, argument order, remainder, normalization,
+C2 sign, exponent guard, bank naming and tail-window sign.
+
+Existing test changed: unit/test_contracts.py removes only dict(eta=3.0)
+from test_invalid_models. Accepting 3.0 as canonical int 3 is a declared
+API change, covered positively by test_eta_canonicalization and the cache
+and bank-name test. No numerical regression assertion is changed.

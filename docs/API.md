@@ -21,7 +21,23 @@ written exactly as `"inf"` or `math.inf`. g is zero or in [10⁻¹², 10¹²].
 These three fields accept `int`, `Fraction`, `Decimal`, decimal or `"p/q"`
 strings, and floats read by their shortest decimal representation. They are
 stored as reduced rational strings (`"26.5"` becomes `"53/2"`), or `"inf"`.
-R0 stays 1 and `lam` remains λ′R0²; eta remains an integer in {3, 4}.
+R0 stays 1 and `lam` remains λ′R0². `eta` accepts exact decimal strings,
+`int`, `Decimal`, and floats read by their shortest decimal spelling, in
+[2.1, 8]. Rational strings such as `"7/2"` are rejected. Values exactly 3
+or 4 are stored as those integers (`3.0`, `"3.00"` and `Decimal("3")`
+share the same model, cache key and bank); other values are canonical
+plain decimal strings (`"3.50"` becomes `"3.5"`, `5.0` becomes `"5"`).
+General exponents use the Arb 2F1 identities and generated PPP/Gamma arrays.
+PPP contracts then record the transform and whether the analytic remainder
+criteria of [D_M](CONTRACT.md#on-demand-ppp-inversion) are proved. Outside
+D_M the enclosure remains valid but may be wide. At eta=3,4 the explicit
+paths, banks and contract notes are unchanged.
+
+Before exact conversion to a fraction, nonzero decimal inputs must have
+adjusted exponent in [-4000, 4000]. This applies to link inputs, eta,
+`SNRGrid` and `Enclosure.format(scale=...)`. Zero spellings such as
+`"0e-1000000000"` pass where zero is admissible. Rational `"p/q"` strings
+retain their separate parsing path and Python's integer digit limit.
 
 `Model.from_link(*, p1="0.3", p2="0.7", theta1=1, theta2=None,
 ell1="1/8", ell2="1/64", **fields)` reads finite, strictly positive link

@@ -15,6 +15,7 @@ from .models import (Model, Numerics, SNRGrid, Scalar, Gain, Interference, Contr
 from . import _runtime as rt, _banks
 from ._vendor.commun import out
 from ._vendor.ppp import envelopes
+from ._transform import eta_value, informative
 
 DEFAULT_NUMERICS = Numerics()
 DEFAULT_GRID = SNRGrid()
@@ -58,6 +59,11 @@ def _assumptions(model: Model) -> tuple[str, ...]:
 def _contract(model: Model, gain: Gain, interference: Interference, numerics: Numerics,
               names: list[str], *, generated: bool = False, analytic: bool = False,
               notes: tuple[str, ...] = ()) -> Contract:
+    if interference == "PPP" and type(model.eta) is not int:
+        domain = "inside" if informative(model.lam, model.eta, numerics.ppp_dft_power) else "outside"
+        notes += (f"eta={model.eta}: Laplace transform by the 2F1 identities (Arb, abc=True)",
+                  f"(lam, eta, M) {domain} the informative domain D_M (e^20 R <= 1e-7, "
+                  "tau <= 1e-10); outside, the enclosure stays valid but may be wide")
     return Contract(_quantity(gain, interference),
                     "analytic" if analytic else "mixed" if generated else "provided-banks",
                     numerics.precision_bits, _banks.receipt(*names),
@@ -240,11 +246,12 @@ def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DE
         il, ih = signal.indices(yl, yh)
         gl, gh = signal.lookup(il, ih, "exact")
         gl[0] = gh[0] = arb(0)
-        alpha = arb(2) / model.eta
+        ev = eta_value(model.eta)
+        alpha = arb(2) / ev
         tails = [arb(1)]
         for x0 in grid[1:]:
             x = arb(float(x0))
-            intensity = 2 * arb.pi() * arb(model.lam) / model.eta * x ** (-alpha) * x.gamma_upper(alpha)
+            intensity = 2 * arb.pi() * arb(model.lam) / ev * x ** (-alpha) * x.gamma_upper(alpha)
             tails.append(-(-intensity).expm1())
         cdf = np.array([out(1 - q) for q in tails]).T
         cdf[:, 0] = 0

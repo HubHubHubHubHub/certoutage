@@ -146,7 +146,7 @@ digest**, not provenance or mathematical correctness. A purely analytical
 result that uses no bank does not depend on bank contents.
 
 For lambda=0.1 or 1 and eta=3 or 4, supplied PPP/Gamma banks are used. For a
-new lambda, the PPP inversion is computed on demand with Fourier, aliasing
+new lambda or eta in the technical range [2.1, 8] (unreleased 0.3.0), the PPP inversion is computed on demand with Fourier, aliasing
 and tail remainder bounds; the default is M=2^18. The useful-gain bank is
 still supplied: this is not full regeneration of the case. The contract
 records bank filenames, SHA-256 digests, parameters and precision.

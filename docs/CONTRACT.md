@@ -46,8 +46,18 @@ recomputed with the remainders below.
 
 ## On-demand PPP inversion
 
-For η=3 or 4, the explicit expressions of the archive are used for
-L_J(s)=exp(-2πλ ∫_1^∞ sr/(r^η+s) dr), with principal branches.
+The technical domain is 2.1 ≤ η ≤ 8 (provisional, unreleased 0.3.0).
+For η=3 or 4, the explicit expressions of the archive are used unchanged
+for L_J(s)=exp(-2πλ J(s)), J(s)=∫_1^∞ sr/(r^η+s) dr, with principal branches.
+Other η use the nonregularized Arb identities, on Re(s)>0, with α=2/η:
+J(s)=s/(η−2) ₂F₁(1,1−α;2−α;−s) for |s|≤1, and
+J(s)=πs^α/[η sin(πα)] − ½ ₂F₁(1,α;1+α;−1/s) otherwise.
+Both identities hold throughout this half-plane; the midpoint-based choice
+is numerical only. The exact relation a+b−c=0 is declared with `abc=True`
+(F. Johansson, “Computing hypergeometric functions rigorously”, ACM TOMS
+45(3), article 30, 2019, doi:10.1145/3328732). Nonfinite or overly wide
+2F1 values trigger one precision doubling, then a Pfaff series with a
+certified geometric remainder; failure raises `ArithmeticError`.
 Let α=2/η, β=π²λα/[2 sin(πα/2)], B=128, cB=20, K=M/2 and
 ξ=β(2πK/B)^α. The Fourier remainder is
 
@@ -66,6 +76,18 @@ weaker stored bound at B when M increases.
 The constants, the DFT and the remainders are computed in Arb/Acb. The
 composition nodes are those of the archive, x_j=10^(j/2560)-1, then B;
 their abscissas are enclosed.
+
+For ε_R=10⁻⁷ and ε_τ=10⁻¹⁰, the informative domain is
+D_M={λ_R(η,M) ≤ λ ≤ λ_τ(η)}, where R(λ_R,η,M)=ε_R exp(−20) and
+λ_τ=(B/2+log ε_τ)(η−2)/(2π). In the monotone regime M≥42,
+λ_R is bracketed by certified bisection. Internal helpers `remainders`,
+`informative` and `lambda_window` expose these bounds; the latter returns
+binary64 brackets and an explicit empty-window flag (before intersection
+with the technical λ range). The criteria exp(20)R≤ε_R and τ≤ε_τ bound only
+the **analytic** width at nodes, by 2ε_R+a0 ε_τ: they do not bound monotone
+discretization, signal-bank widths or evaluation errors. General-exponent
+PPP contracts announce inside/outside D_M. Outside D_M no new rejection or
+numerical behavior is introduced; valid certificates may be wide.
 
 The change from M=2^20 to a configurable M preserves this proof: ξ, K and
 the discretization exponential use the effective M. It does not necessarily

@@ -19,6 +19,7 @@ from ._vendor.nak_thermal import Thermal as OriginalThermal
 from ._vendor.nak_grouped import Grouped
 from ._vendor.thermal_backend import outward
 from ._generate import environment_arrays
+from ._transform import eta_value
 
 _LOCK = threading.RLock()
 
@@ -96,6 +97,11 @@ def signal(N: int, m: int, chernoff: bool, bits: int) -> Signal:
     return Signal(N, m, chernoff)
 
 
+def environment_name(lam: str, eta: int | str, kind: str) -> str:
+    """A bank filename from normalized model fields, never a manifest addition."""
+    return f"{kind}_l{str(float(lam)).replace('.', 'p')}_e{str(eta).replace('.', 'p')}.npz"
+
+
 class Environment(OriginalEnvironment):
     def __init__(self, model: Model, kind: str, numerics: Numerics):
         self.lam, self.eta, self.kind = model.lam, model.eta, kind
@@ -104,17 +110,18 @@ class Environment(OriginalEnvironment):
         if kind in ("mean", "none") or arb(model.lam).is_zero():
             # moment returns a cumulant of J (ENONCES (f)); R stays 1.
             # The interference gain g is applied only in point(), never here.
-            mean = arb(0) if kind == "none" else moment(model.lam, model.eta, 1, 1)
+            mean = arb(0) if kind == "none" else moment(model.lam, eta_value(model.eta), 1, 1)
             a, b = (0.0, 0.0) if mean.is_zero() else out(mean)
             self.xlo, self.xhi = np.array([a]), np.array([b])
             wl = wh = [arb(1)]
             self.tail = arb(0)
         else:
-            name = f"{kind}_l{str(float(model.lam)).replace('.', 'p')}_e{model.eta}.npz"
+            name = environment_name(model.lam, model.eta, kind)
             # Only exact decimal equality with the two archived intensities
             # permits reuse; a rounded binary64 filename must never select a bank.
             from decimal import Decimal
-            use_bank = Decimal(model.lam) in (Decimal("0.1"), Decimal(1))
+            use_bank = (type(model.eta) is int and model.eta in (3, 4)
+                        and Decimal(model.lam) in (Decimal("0.1"), Decimal(1)))
             if use_bank and name in _banks.manifest() and numerics.bank_policy == "auto":
                 data = _banks.arrays(name)
                 self.names = [name]
@@ -159,7 +166,7 @@ def environment(model: Model, kind: str, numerics: Numerics) -> Environment:
 
 
 @lru_cache(maxsize=12)
-def _environment(lam: str, eta: int, kind: str, bits: int, power: int,
+def _environment(lam: str, eta: int | str, kind: str, bits: int, power: int,
                  policy: str) -> Environment:
     # Environment reads model.lam and model.eta only; the other fields keep
     # their validated defaults and play no part.

@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- Free real path-loss exponent eta in [2.1, 8] (planned 0.3.0), read exactly
+  and normalized before cache/bank selection. Explicit eta=3,4 paths stay
+  bit-identical; other values use Arb 2F1 and a certified Pfaff fallback.
+- Compute and announce the joint analytic remainder domain D_M, without
+  changing valid coarse results outside it. Independent quadrature, DFT,
+  full-grid overlap and offline API checks cover the extension (G54–G62).
+- Bound decimal exponents before exact fraction conversion in model inputs,
+  SNR grids and enclosure formatting; extreme zero spellings remain valid.
+
 - Free exact link coefficients d1, d2 and interference gain g (planned 0.3.0),
   with `Model.from_link` and analytic handling of infeasible allocations.
 - Outward signal-bank scaling and direct thermal integration for arbitrary
