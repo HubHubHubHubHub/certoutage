@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "certoutage"
-version = "0.1.0"
+version = "0.2.0"
 description = "Certified outage enclosures for the thermal RIS-NOMA model"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -16,7 +16,16 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 keywords = ["outage probability", "RIS", "NOMA", "energy harvesting",
             "interval arithmetic", "Poisson point process"]
@@ -25,6 +34,8 @@ keywords = ["outage probability", "RIS", "NOMA", "energy harvesting",
 "Preprint" = "https://hal.science/hal-05879102"
 "Reproducibility archive" = "https://doi.org/10.5281/zenodo.24450534"
 "Repository" = "https://github.com/HubHubHubHubHub/certoutage"
+"Issues" = "https://github.com/HubHubHubHubHub/certoutage/issues"
+"Changelog" = "https://github.com/HubHubHubHubHub/certoutage/blob/main/CHANGELOG.md"
 "Software DOI" = "https://doi.org/10.5281/zenodo.24509256"
 
 [project.optional-dependencies]

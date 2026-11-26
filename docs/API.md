@@ -1,111 +1,120 @@
-# API publique
+# Public API
 
-Toutes les entrées publiques sont annotées. Les objets sont des dataclasses
-immuables ; `dataclasses.asdict` permet leur export JSON (remplacer ±∞ par
-une représentation textuelle pour du JSON strict en cas de censure).
+Every public entry point is type-annotated. The objects are immutable
+dataclasses; `dataclasses.asdict` gives a JSON export (replace ±∞ by a text
+representation for strict JSON when a threshold is censored).
 
-## Modèle et calcul
+## Model and calculation
 
-`Model(N=24, lam="0.1", eta=4, convention="C-TX", m=1, R0=1)` valide le
-périmètre documenté dans Scope. Les paramètres réels sont lus par leur
-représentation décimale : utiliser des chaînes pour préciser un nombre
-décimal intentionnel. Les booléens, NaN, infinis et cas non couverts sont
-rejetés. Le paramètre `m` décrit les deux puissances élémentaires, pas une
-approximation Gamma du gain total.
+`Model(N=24, lam="0.1", eta=4, convention="C-TX", m=1, R0=1)` validates the
+scope documented in the README (Scope). Real parameters are read through
+their decimal representation: use strings to state an intended decimal
+number exactly. Booleans, NaN, infinities and uncovered cases are rejected.
+The parameter `m` describes the two elementary powers, not a Gamma
+approximation of the total gain.
 
-`Numerics(precision_bits=160, ppp_dft_power=18, bank_policy="auto")` contrôle
-les calculs courants. `bank_policy="fresh"` régénère la distribution PPP ou
-Gamma ; la banque de signal reste fournie. 160 à 1024 bits et M de 2^12 à
-2^20 sont acceptés. Une grille insuffisante élargit les intervalles. Les
-choix supérieurs consomment davantage de mémoire et de temps.
+`Numerics(precision_bits=160, ppp_dft_power=18, bank_policy="auto")` controls
+the calculations of a query. `bank_policy="fresh"` regenerates the PPP or
+Gamma distribution; the signal bank is still the provided one. From 160 to
+1024 bits and M from 2^12 to 2^20 are accepted. An insufficient grid widens
+the intervals. Larger choices use more memory and time.
 
 `outage_enclosure(model, user, snr_db, *, gain="exact", interference="PPP",
-numerics=Numerics())` renvoie `Enclosure(lower, upper, contract)`. Le SNR est
-fini, en dB, dans [-1000,1000]. `floor` a les mêmes paramètres sauf `snr_db`.
-L'absence de PPP s'obtient par `lam=0` ou `interference="none"`.
+numerics=Numerics())` returns `Enclosure(lower, upper, contract)`. The SNR is
+finite, in dB, in [-1000, 1000]. `floor` takes the same parameters except
+`snr_db`. The case without PPP is obtained with `lam=0` or
+`interference="none"`.
 
-Les options `gain` sont `exact`, `eq3`, `chernoff` ; `interference` vaut
-`PPP`, `Gamma`, `mean` ou `none`. Le nom public `eq3` évite d'utiliser
-« gauss » sans préciser le comparateur. Les identifiants historiques
-internes `gauss` et `GAMMA` n'apparaissent pas comme noms de méthodes publiques.
+The `gain` options are `exact`, `eq3` and `chernoff`; `interference` is
+`PPP`, `Gamma`, `mean` or `none`. The public name `eq3` avoids saying
+"gauss" without naming the comparator. The historical internal identifiers
+`gauss` and `GAMMA` do not appear as public method names.
 
-`Enclosure.as_dict()` restitue les floats bruts. `format(scale="1e-5",
-places=4)` divise l'intervalle par l'échelle et arrondit **vers l'extérieur**
-par quotient rationnel exact des bornes binaires64 et de l'échelle décimale,
-puis plancher/plafond entiers, indépendamment du contexte `decimal`.
-Dans la Table II, Eq. (3) + Gamma est affiché à trois décimales, les deux
-premières lignes à quatre, conformément au manuscrit.
+`Enclosure.as_dict()` returns the raw floats. `format(scale="1e-5",
+places=4)` divides the interval by the scale and rounds **outward**: it
+takes the exact rational quotient of the binary64 bounds by the decimal
+scale, then an integer floor and ceiling, independently of the `decimal`
+context. In Table II, Eq. (3) + Gamma is displayed with three decimals and
+the first two rows with four, as in the manuscript.
 
-## Dimensionnement
+## Dimensioning
 
 `required_snr(model, user, target, grid=SNRGrid(), *, gain="exact",
-interference="PPP", numerics=Numerics())` accepte 0 < target < 1.
-`SNRGrid(start=-40, stop=96, step="0.0625")` est explicite ; tous ses
-paramètres sont des multiples de 1/128 dB et stop-start un multiple du pas.
-La validation est rationnelle exacte ; les valeurs stockées en binaire64
-sont représentables exactement et servent directement à la recherche.
+interference="PPP", numerics=Numerics())` accepts 0 < target < 1.
+`SNRGrid(start=-40, stop=96, step="0.0625")` is explicit; all its parameters
+are multiples of 1/128 dB, and stop-start is a multiple of the step.
+Validation is exact and rational; the values stored in binary64 are exactly
+representable and are used directly by the search.
 
-Le résultat `SNRDecision` contient :
+The result, an `SNRDecision`, contains:
 
-- `status` : `feasible`, `excluded`, `inconclusive` ;
-- `lower_db`, `upper_db` : encadrement du seuil si faisable ; -∞ à gauche
-  si le début de grille est déjà faisable, aucun bord fini inventé ;
-- `floor` : certificat de plancher ;
-- `reason` : seuil fini, censure, grille épuisée ou plancher indécidé ;
-- `undecided_points` : nombre de points entre les deux frontières finies ;
-- `scope` et `contract` : objet de la décision et provenance des requêtes
-  finies, même lorsque le plancher analytique C-INR n'utilise aucune banque.
-- `target` : cible décimale de la décision, conservée aussi pour les
-  exclusions, les recherches inconclusives et la ligne J_max.
+- `status`: `feasible`, `excluded` or `inconclusive`;
+- `lower_db`, `upper_db`: the threshold bracket when feasible; -∞ on the left
+  if the start of the grid is already feasible (no finite edge is invented);
+- `floor`: the floor certificate;
+- `reason`: finite threshold, censoring, exhausted grid or undecided floor;
+- `undecided_points`: the number of points between the two finite edges;
+- `scope` and `contract`: what the decision is about, and the provenance of
+  the finite queries, even when the analytic C-INR floor uses no bank;
+- `target`: the decimal target of the decision, kept also for exclusions,
+  inconclusive searches and the J_max row.
 
-La recherche binaire conserve les bornes par monotonie de la coupure et
-revérifie les deux points finaux. Une borne basse strictement au-dessus de
-la cible est nécessaire pour exclure. Une borne haute ≤ cible suffit pour
-certifier un point. Des valeurs de cible égales à un endpoint sont comparées
-exactement en décimal à la valeur binaire du float, sans tolérance numérique.
+The binary search keeps its bounds by monotonicity of the outage and checks
+the two final points again. Excluding requires a lower bound strictly above
+the target. An upper bound ≤ target is enough to certify a point. A target
+equal to an endpoint is compared exactly, in decimal, with the binary value
+of the float, with no numerical tolerance.
 
-Pour `gain="chernoff"`, le seuil est celui de la **règle suffisante de
-Chernoff**, et non un encadrement du seuil optimal de coupure. La borne
-inférieure du comparateur ne permet pas d'exclure le modèle physique : le
-statut reste `inconclusive` quand son plancher dépasse la cible.
+For `gain="chernoff"`, the threshold is that of the **sufficient Chernoff
+rule**, not a bracket of the optimal outage threshold. The lower bound of
+the comparator cannot exclude the physical model: the status stays
+`inconclusive` when its floor exceeds the target.
 
-`threshold_difference(a,b)` exige deux seuils faisables finis non censurés,
-de même cible, même usager et mêmes N, m, λ, η, R0 et convention.
-Les écritures décimales équivalentes sont acceptées ; le gain et le modèle
-d'interférence peuvent différer pour comparer les approximations.
-Une cible ou un paramètre de comparaison absent, notamment dans une décision
-construite à la main, est refusé avec `ValueError`.
-La fonction soustrait directement `[a.lower-b.upper, a.upper-b.lower]`. Pour l'erreur
-totale, comparer directement Eq. (3) + moyenne à exact + PPP ; ne pas
-additionner les deux intervalles qui contiennent un seuil partagé.
+`threshold_difference(a, b)` requires two finite, uncensored, feasible
+thresholds with the same target, the same user and the same N, m, λ, η, R0
+and convention. Equivalent decimal spellings are accepted; the gain and the
+interference model may differ, so that approximations can be compared.
+A missing target or comparison parameter, for instance in a decision built
+by hand, is rejected with `ValueError`. The function subtracts directly:
+`[a.lower - b.upper, a.upper - b.lower]`. For the total error, compare
+Eq. (3) + mean with exact + PPP directly; do not add two intervals that
+contain a shared threshold.
 
-## Comparaisons
+## Comparisons
 
-`compare_approximations` renvoie six `ComparisonRow`. Chaque ligne contient
-son certificat de plancher, sa décision et éventuellement `diagnostic`.
+`compare_approximations` returns six `ComparisonRow` objects. Each row holds
+its floor certificate, its decision and, possibly, a `diagnostic`.
 
-`falsely feasible` exige une exclusion PPP prouvée et un SNR fini faisable
-pour l'approximation. `masked` exige que l'exact + Gamma (ou moyenne) soit
-falsely feasible et que le remplacement du gain par Eq. (3) exclue cette
-approximation. Le diagnostic ne change pas la quantité certifiée.
+`falsely feasible` requires a proven PPP exclusion and a feasible finite SNR
+for the approximation. `masked` requires exact + Gamma (or mean) to be
+falsely feasible and the replacement of the gain by Eq. (3) to exclude that
+approximation. The diagnostic does not change the certified quantity.
 
-`largest_interferer_bound(model,user)` encadre la borne inférieure du
-plancher TX. Pour C-INR, le plancher correspondant est exactement zéro.
-Les cas centraux N=20/24, Rayleigh, λ=0,1 ou 1, η=4, usager 1 chargent leurs
-certificats finaux. Les autres cas composent à la demande la distribution
-analytique de J_max avec la banque utile.
-Un certificat fourni indique toujours `precision_bits=160`, sans nouvelle
-intégration, quelle que soit la précision demandée dans `numerics`.
+`largest_interferer_bound(model, user)` encloses the lower bound on the TX
+floor. In C-INR, the corresponding floor is exactly zero. The central cases
+N=20/24, Rayleigh, λ=0.1 or 1, η=4, user 1 load their final certificates.
+The other cases compose, on demand, the analytic distribution of J_max with
+the useful-gain bank. A provided certificate always reports
+`precision_bits=160`, with no new integration, whatever precision is
+requested in `numerics`.
 
-## Intégrité et concurrence
+Every contract also carries `interval_library`, for instance
+`python-flint 0.9.0 / Arb-Acb`: the version of python-flint imported by the
+running process, read when the result is built. It names the loaded Python
+binding, not the version of the FLINT C library that binding was built
+against, and it says nothing about the origin of stored banks or
+certificates: for a `provided-certificate` or `analytic` result, no Arb
+computation takes place.
 
-Une incohérence de SHA-256 lève `IntegrityError` avant `numpy.load`.
-`allow_pickle=False` est imposé. `clear_cache()` libère les objets de calcul
-et force la vérification lors des lectures suivantes. Modifier une banque
-sur disque ne change pas rétroactivement les tableaux déjà chargés.
+## Integrity and concurrency
 
-Le contexte global Arb est restauré après chaque appel, y compris en cas
-d'exception. Les appels de ce paquet sont sérialisés par verrou. Un autre
-logiciel modifiant `flint.ctx` en parallèle ne participe pas à ce verrou :
-utiliser des processus séparés dans cette situation. Aucun parallélisme de
-cluster n'est requis ni déclenché.
+A SHA-256 mismatch raises `IntegrityError` before `numpy.load`.
+`allow_pickle=False` is enforced. `clear_cache()` frees the calculation
+objects and forces verification on the next reads. Changing a bank on disk
+does not retroactively change arrays that are already loaded.
+
+The global Arb context is restored after each call, including when an
+exception is raised. Calls into this package are serialized by a lock. Other
+software changing `flint.ctx` in parallel does not take part in this lock:
+use separate processes in that situation. No cluster parallelism is required
+or started.

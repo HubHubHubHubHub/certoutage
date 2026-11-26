@@ -21,20 +21,61 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_release_versions_and_dates_agree():
-    project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
-    citation = (ROOT / "CITATION.cff").read_text()
-    changelog = (ROOT / "CHANGELOG.md").read_text()
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     cff_version = re.search(r"^version: (\S+)$", citation, re.M).group(1)
     latest_release = re.search(r"^## (\d+\.\d+\.\d+) — (\d{4}-\d{2}-\d{2})$",
                                changelog, re.M)
     assert project["version"] == certoutage.__version__ == cff_version == latest_release[1]
     cff_date = re.search(r"^date-released: (\S+)$", citation, re.M).group(1)
     assert cff_date == latest_release[2]
-    codemeta = json.loads((ROOT / "codemeta.json").read_text())
+    codemeta = json.loads((ROOT / "codemeta.json").read_text(encoding="utf-8"))
     assert codemeta["version"] == codemeta["softwareVersion"] == project["version"]
     assert codemeta["dateModified"] == cff_date
     assert codemeta["license"] == project["license"]
     assert set(codemeta["keywords"]) == set(project["keywords"])
+
+
+def test_readme_quotes_the_package_version():
+    """Every "version X.Y.Z" of the README is the package version, and the quoted date is the release date."""
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    quoted = re.findall(r"\b[Vv]ersion \**(\d+\.\d+\.\d+)", readme)
+    assert len(quoted) >= 3 and set(quoted) == {certoutage.__version__}
+    citation = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    released = re.search(r"^date-released: (\d{4})-(\d{2})-(\d{2})$", citation, re.M)
+    months = ["January", "February", "March", "April", "May", "June", "July",
+              "August", "September", "October", "November", "December"]
+    date = f"{int(released[3])} {months[int(released[2]) - 1]} {released[1]}"
+    assert f"Version {certoutage.__version__}, {date}." in readme
+    # The engine quoted in the README is the pinned one (dependency policy).
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    pin = next(d for d in project["dependencies"] if d.startswith("python-flint")).split("==")[1]
+    assert set(re.findall(r"python-flint (\d+\.\d+\.\d+)", readme)) == {pin}
+
+
+def test_extraction_inventory_matches_the_files():
+    """docs/EXTRACTION.json: every recorded digest is that of the file, and every changed destination is recorded."""
+    import hashlib
+
+    entries = json.loads((ROOT / "docs" / "EXTRACTION.json").read_text(encoding="utf-8"))
+
+    def digest(relative):
+        return hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+
+    seen = 0
+    for entry in entries:
+        post = entry.get("post_release_sha256", {})
+        for relative, recorded in post.items():
+            assert recorded == digest(relative), f"stale post-release digest for {relative}"
+            assert entry.get("post_release_change"), relative
+            seen += 1
+        for relative in [d.strip() for d in (entry.get("destination") or "").split(";") if d.strip()]:
+            if relative in post or not entry.get("destination_sha256"):
+                continue
+            assert digest(relative) == entry["destination_sha256"], (
+                f"{relative} differs from 0.1.0 but carries no post_release_sha256")
+    assert seen > 0
 
 
 @pytest.mark.parametrize("corrupt_name", ["MANIFEST.json", "SIG_24.npz", "PPP_l0p1_e4.npz"])
@@ -88,3 +129,30 @@ def test_corrupted_final_certificate_is_rejected_before_json_loading(tmp_path, m
             largest_interferer_bound(Model(), 1)
     finally:
         clear_cache()
+
+
+def test_contract_names_the_interval_engine_actually_imported(monkeypatch):
+    """The engine in the contract is read at run time, not copied from the pin."""
+    import flint
+    from certoutage import Contract
+
+    expected = f"python-flint {flint.__version__} / Arb-Acb"
+    assert outage_enclosure(Model(), 1, 5).contract.interval_library == expected
+    assert floor(Model(), 1).contract.interval_library == expected
+    # A different engine would be named as such, not as the pinned 0.9.0.
+    monkeypatch.setattr(flint, "__version__", "99.0.0")
+    assert Contract("q", "analytic", 160).interval_library == "python-flint 99.0.0 / Arb-Acb"
+
+
+def test_declared_dependency_matches_the_imported_engine():
+    """Dependency policy: python-flint is pinned exactly, and the pin is what runs."""
+    import flint
+
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    pins = [d for d in project["dependencies"] if d.startswith("python-flint")]
+    assert len(pins) == 1
+    match = re.fullmatch(r"python-flint==(\d+\.\d+\.\d+)", pins[0])
+    assert match, f"python-flint must be pinned exactly (CONTRIBUTING.md, Dependency policy): {pins[0]}"
+    assert flint.__version__ == match[1]
+    codemeta = json.loads((ROOT / "codemeta.json").read_text(encoding="utf-8"))
+    assert f"python-flint == {match[1]}" in codemeta["softwareRequirements"]

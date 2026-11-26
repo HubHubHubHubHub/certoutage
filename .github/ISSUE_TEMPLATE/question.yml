@@ -1,0 +1,10 @@
+name: Question or feedback
+description: A question on the package, its documentation or its contract, or feedback on how you use it.
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question or feedback
+    validations:
+      required: true

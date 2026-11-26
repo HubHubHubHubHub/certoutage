@@ -13,7 +13,7 @@ class Thermal:
         for J in range(9,14):
             step=1<<(13-J);z=self.common['z'][::step];ph=self.common['phi'][:,::step]
             left=np.abs(10+z[:-1]);right=np.abs(10+z[1:]);tmin=np.minimum(left,right);tmax=np.maximum(left,right)
-            # Les extrêmes exportés sont des dyadiques exacts ; calculs de masse dans Arb.
+            # The exported extremes are exact dyadics; mass computations are done in Arb.
             ml=[(arb(float(x))/(1<<J)).lower() for x in np.minimum(ph[0,:-1],ph[0,1:])]
             mh=[(arb(float(x))/(1<<J)).upper() for x in np.maximum(ph[1,:-1],ph[1,1:])]
             self.levels[J]=(tmin,tmax,(ml,mh));self.weights[J]=(arb_mat([ml]),arb_mat([mh]))
@@ -22,7 +22,7 @@ class Thermal:
         return outward((101*ci/((d*arb(10).log()/10).exp()*lam)).sqrt())
     def indices(self,aa,J):
         tmin,tmax,_=self.levels[J]
-        # IEEE sert seulement à choisir des indices conservateurs ; tous les produits/sommes sont Arb.
+        # IEEE arithmetic only selects conservative indices; all products/sums are in Arb.
         al=np.maximum(0,np.nextafter(aa[0]/tmax,-np.inf))
         with np.errstate(divide='ignore'):ah=np.nextafter(aa[1]/tmin,np.inf)
         il=np.minimum(M,np.floor(np.maximum(0,np.nextafter(al/self.dx,-np.inf)))).astype(np.int64)

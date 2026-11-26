@@ -1,4 +1,4 @@
-"""Chargement sans écriture et sans réseau, vérification avant désérialisation."""
+"""Loading with no writes and no network access; verification before deserialization."""
 from __future__ import annotations
 
 from functools import lru_cache
@@ -13,23 +13,23 @@ MANIFEST_SHA256 = "0397d274f08924027840943648ca0816a4403832bace47a79642dee7cc7c5
 
 
 class IntegrityError(RuntimeError):
-    """Une banque fournie ou son manifeste ne correspond pas à son empreinte."""
+    """A provided bank or its manifest does not match its digest."""
 
 
 @lru_cache(maxsize=1)
 def manifest() -> dict:
     content = files("certoutage").joinpath("data/MANIFEST.json").read_bytes()
     if sha256(content).hexdigest() != MANIFEST_SHA256:
-        raise IntegrityError("Empreinte SHA-256 incorrecte : MANIFEST.json")
+        raise IntegrityError("SHA-256 digest mismatch: MANIFEST.json")
     return json.loads(content)
 
 
 def verified_bytes(name: str) -> bytes:
     if name not in manifest():
-        raise ValueError(f"Banque non fournie : {name}")
+        raise ValueError(f"Bank not provided: {name}")
     content = files("certoutage").joinpath("data", name).read_bytes()
     if sha256(content).hexdigest() != manifest()[name]["sha256"]:
-        raise IntegrityError(f"Empreinte SHA-256 incorrecte : {name}")
+        raise IntegrityError(f"SHA-256 digest mismatch: {name}")
     return content
 
 

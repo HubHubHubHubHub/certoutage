@@ -1,33 +1,39 @@
 # certoutage
 
+[![tests](https://github.com/HubHubHubHubHub/certoutage/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/HubHubHubHubHub/certoutage/actions/workflows/tests.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24509256.svg)](https://doi.org/10.5281/zenodo.24509256)
 
 Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting
 
 `certoutage` provides deterministic, two-sided outage bounds for the Letter's
 thermal RIS-NOMA model with two users and Poisson interference. Every result
-carries an explicit mathematical and numerical contract. Version **0.1.0** is
+carries an explicit mathematical and numerical contract. Version **0.2.0** is
 available from https://github.com/HubHubHubHubHub/certoutage.
 
 ## Installation
 
-Python >= 3.10 is required; the tested environment is **Python 3.11**,
-python-flint 0.9.0 and NumPy 2.4.6 on macOS arm64. Install the supplied wheel:
+Python >= 3.10 is required. Install from PyPI:
+
+```sh
+python -m pip install certoutage
+```
+
+The test suite runs on every push on Ubuntu (Python 3.10 to 3.14), macOS
+and Windows (Python 3.11 and 3.14), with python-flint 0.9.0.
+
+The examples are in the repository and in the source distribution, not in
+the wheel. To run them, and the tests, from a clone of the repository (on
+Windows, use `.venv\Scripts\python`):
 
 ```sh
 python -m venv .venv
-.venv/bin/python -m pip install dist/certoutage-0.1.0-py3-none-any.whl
+.venv/bin/python -m pip install -e '.[test]'
 .venv/bin/python examples/table_ii.py
 .venv/bin/python examples/new_case.py
-```
-
-The examples are included in the source distribution. For development, from
-the extracted source directory:
-
-```sh
-.venv/bin/python -m pip install -e '.[test]'
 .venv/bin/python -m pytest
 ```
+
+To contribute, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 The only runtime dependencies are **python-flint 0.9.0 and NumPy**. Normal
 execution makes no network requests, does not access the original archive,
@@ -71,8 +77,8 @@ The exact-gain/Gamma required-SNR interval is **[4.50, 4.75] dB**. The example
 also prints two mean-interference comparisons in raw probability units:
 
 ```text
-Exact gain + mean: [3.716491105435498e-15, 3.888988626422534e-15]; falsely feasible
-Eq. (3) + mean: [9.039202781939247e-08, 9.116853495842469e-08]; falsely feasible
+Exact gain + mean: {'lower': 3.716491105435498e-15, 'upper': 3.888988626422534e-15} (raw probability); falsely feasible
+Eq. (3) + mean: {'lower': 9.039202781939247e-08, 'upper': 9.116853495842469e-08} (raw probability); falsely feasible
 ```
 
 Use `--json` for full, unrounded results and contracts. Execution time varies.
@@ -166,9 +172,9 @@ impossibility within the PPP model. `masked` explains why exclusion under
 Eq. (3) + Gamma does not validate replacing PPP interference by Gamma.
 
 [Detailed API](docs/API.md) · [Mathematical contract](docs/CONTRACT.md) ·
+[Register of guarantees](docs/GUARANTEES.md) ·
 [Regeneration](docs/REGENERATION.md) · [Logic changes](docs/LOGIC_CHANGES.md) ·
-[Extraction inventory](docs/EXTRACTION.json). These technical documents are
-currently in French.
+[Extraction inventory](docs/EXTRACTION.md).
 
 ## Provenance
 
@@ -191,11 +197,11 @@ See [CITATION.cff](CITATION.cff) and [codemeta.json](codemeta.json). Cite this
 extraction as:
 
 > Victor Rabiet (2026). certoutage: certified outage bounds for thermal
-> RIS-NOMA. Version 0.1.0, 24 November 2026. https://doi.org/10.5281/zenodo.24509257
+> RIS-NOMA. Version 0.2.0, 26 November 2026. https://doi.org/10.5281/zenodo.24509256
 
 Also acknowledge the original [archive](https://doi.org/10.5281/zenodo.24450534)
 and the [Letter](https://hal.science/hal-05879102). Software DOI: [10.5281/zenodo.24509256](https://doi.org/10.5281/zenodo.24509256)
-(all versions); version 0.1.0 is [10.5281/zenodo.24509257](https://doi.org/10.5281/zenodo.24509257).
+(all versions); the DOI of each version is listed on that record.
 
 ## Licenses
 
@@ -209,4 +215,17 @@ modifications. The [original archive notice](docs/ARCHIVE_LICENSE.txt) and
 ## Roadmap — not implemented
 
 Possible future extensions are RIS without thermal harvesting, Rice fading
-and 3GPP channel models. None is implemented or certified in version 0.1.0.
+and 3GPP channel models. None is implemented or certified in version 0.2.0.
+
+## Support, bugs and feature requests
+
+If your work needs a feature that is not implemented yet, please
+[open a feature request](https://github.com/HubHubHubHubHub/certoutage/issues/new/choose)
+and say what it is for. If it can be done in a reasonable time, it will be
+implemented and you will be notified on the issue when it is released. Bug
+reports, questions and other feedback go to the same tracker; see
+[SUPPORT.md](SUPPORT.md). To propose a change, see
+[CONTRIBUTING.md](CONTRIBUTING.md). Collaborations are welcome: for them, or for a
+private message, use the e-mail address given in the author's papers on
+[HAL](https://hal.science/search/index?q=authIdHal_s:victor-rabiet), for
+instance the [Letter](https://hal.science/hal-05879102).

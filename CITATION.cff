@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Please cite certoutage and acknowledge the original reproducibility archive and submitted Letter listed below."
 title: "certoutage: certified outage bounds for thermal RIS-NOMA"
 type: software
-version: 0.1.0
-date-released: 2026-11-24
+version: 0.2.0
+date-released: 2026-11-26
 authors:
   - family-names: Rabiet
     given-names: Victor
