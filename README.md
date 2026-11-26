@@ -197,11 +197,11 @@ See [CITATION.cff](CITATION.cff) and [codemeta.json](codemeta.json). Cite this
 extraction as:
 
 > Victor Rabiet (2026). certoutage: certified outage bounds for thermal
-> RIS-NOMA. Version 0.2.0, 26 November 2026. https://doi.org/10.5281/zenodo.24509256
+> RIS-NOMA. Version 0.2.0, 26 November 2026. https://doi.org/10.5281/zenodo.24563723
 
 Also acknowledge the original [archive](https://doi.org/10.5281/zenodo.24450534)
 and the [Letter](https://hal.science/hal-05879102). Software DOI: [10.5281/zenodo.24509256](https://doi.org/10.5281/zenodo.24509256)
-(all versions); the DOI of each version is listed on that record.
+(all versions); version 0.2.0 is [10.5281/zenodo.24563723](https://doi.org/10.5281/zenodo.24563723).
 
 ## Licenses
 
