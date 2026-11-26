@@ -1,5 +1,6 @@
 # certoutage
 
+[![tests](https://github.com/HubHubHubHubHub/certoutage/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/HubHubHubHubHub/certoutage/actions/workflows/tests.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24509256.svg)](https://doi.org/10.5281/zenodo.24509256)
 
 Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting
@@ -11,23 +12,28 @@ available from https://github.com/HubHubHubHubHub/certoutage.
 
 ## Installation
 
-Python >= 3.10 is required; the tested environment is **Python 3.11**,
-python-flint 0.9.0 and NumPy 2.4.6 on macOS arm64. Install the supplied wheel:
+Python >= 3.10 is required. Install from PyPI:
+
+```sh
+python -m pip install certoutage
+```
+
+The test suite runs on every push on Ubuntu (Python 3.10 to 3.14), macOS
+and Windows (Python 3.11 and 3.14), with python-flint 0.9.0.
+
+The examples are in the repository and in the source distribution, not in
+the wheel. To run them, and the tests, from a clone of the repository (on
+Windows, use `.venv\Scripts\python`):
 
 ```sh
 python -m venv .venv
-.venv/bin/python -m pip install dist/certoutage-0.1.0-py3-none-any.whl
+.venv/bin/python -m pip install -e '.[test]'
 .venv/bin/python examples/table_ii.py
 .venv/bin/python examples/new_case.py
-```
-
-The examples are included in the source distribution. For development, from
-the extracted source directory:
-
-```sh
-.venv/bin/python -m pip install -e '.[test]'
 .venv/bin/python -m pytest
 ```
+
+To contribute, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 The only runtime dependencies are **python-flint 0.9.0 and NumPy**. Normal
 execution makes no network requests, does not access the original archive,
@@ -218,7 +224,8 @@ If your work needs a feature that is not implemented yet, please
 and say what it is for. If it can be done in a reasonable time, it will be
 implemented and you will be notified on the issue when it is released. Bug
 reports, questions and other feedback go to the same tracker; see
-[SUPPORT.md](SUPPORT.md). Collaborations are welcome: for them, or for a
+[SUPPORT.md](SUPPORT.md). To propose a change, see
+[CONTRIBUTING.md](CONTRIBUTING.md). Collaborations are welcome: for them, or for a
 private message, use the e-mail address given in the author's papers on
 [HAL](https://hal.science/search/index?q=authIdHal_s:victor-rabiet), for
 instance the [Letter](https://hal.science/hal-05879102).

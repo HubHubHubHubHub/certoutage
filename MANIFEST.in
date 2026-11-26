@@ -1,4 +1,4 @@
-include LICENSE LICENSES.md CITATION.cff codemeta.json CHANGELOG.md README.md SUPPORT.md
+include LICENSE LICENSES.md CITATION.cff codemeta.json CHANGELOG.md README.md SUPPORT.md CONTRIBUTING.md
 recursive-include docs *.md *.json *.txt
 recursive-include examples *.py
 recursive-include tools *.py
