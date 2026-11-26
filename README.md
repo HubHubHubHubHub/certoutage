@@ -7,7 +7,7 @@ Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting
 
 `certoutage` provides deterministic, two-sided outage bounds for the Letter's
 thermal RIS-NOMA model with two users and Poisson interference. Every result
-carries an explicit mathematical and numerical contract. Version **0.1.0** is
+carries an explicit mathematical and numerical contract. Version **0.2.0** is
 available from https://github.com/HubHubHubHubHub/certoutage.
 
 ## Installation
@@ -197,11 +197,11 @@ See [CITATION.cff](CITATION.cff) and [codemeta.json](codemeta.json). Cite this
 extraction as:
 
 > Victor Rabiet (2026). certoutage: certified outage bounds for thermal
-> RIS-NOMA. Version 0.1.0, 24 November 2026. https://doi.org/10.5281/zenodo.24509257
+> RIS-NOMA. Version 0.2.0, 26 November 2026. https://doi.org/10.5281/zenodo.24509256
 
 Also acknowledge the original [archive](https://doi.org/10.5281/zenodo.24450534)
 and the [Letter](https://hal.science/hal-05879102). Software DOI: [10.5281/zenodo.24509256](https://doi.org/10.5281/zenodo.24509256)
-(all versions); version 0.1.0 is [10.5281/zenodo.24509257](https://doi.org/10.5281/zenodo.24509257).
+(all versions); the DOI of each version is listed on that record.
 
 ## Licenses
 
@@ -215,7 +215,7 @@ modifications. The [original archive notice](docs/ARCHIVE_LICENSE.txt) and
 ## Roadmap — not implemented
 
 Possible future extensions are RIS without thermal harvesting, Rice fading
-and 3GPP channel models. None is implemented or certified in version 0.1.0.
+and 3GPP channel models. None is implemented or certified in version 0.2.0.
 
 ## Support, bugs and feature requests
 

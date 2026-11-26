@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-11-26
+
+No change in the numerical results: every regression, Table II included,
+is identical bit for bit to 0.1.0.
 
 - Continuous integration: `.github/workflows/tests.yml` installs the package
   (non-editable) and runs the suite on Ubuntu (Python 3.10 to 3.14), macOS and
