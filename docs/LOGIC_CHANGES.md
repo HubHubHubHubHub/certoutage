@@ -92,3 +92,20 @@ The eight destination files whose bytes changed are listed in
 | `models.ThresholdDifference.format` | `Decimal.quantize` under an inherited `localcontext()` replaced by exact rational scaling and integer floor/ceiling, as in `Enclosure.format`; the sign follows the binary64 value | With `traps[Inexact]` set by the caller, the old code raised `decimal.Inexact` (no wrong value, a loud failure). Old and new outputs compared on 112,224 cases (places 0 to 30, values in ±2000 dB, multiples of 1/128, ±0.0, subnormals): identical. Test `test_display_of_threshold_differences_ignores_decimal_traps` |
 
 No certified quantity is involved: the change is in the display only.
+
+## Cache key of the PPP environment (26 November 2026, unreleased)
+
+| Area | Change | Justification and check |
+|---|---|---|
+| `_runtime.environment` | The cache key was `(model, kind, numerics)`. It is now `(lam, eta, kind, precision_bits, ppp_dft_power, bank_policy)`, through a new cached `_environment`; `environment` keeps its signature. Size of the cache unchanged (12). New guard: `_environment` raises `ArithmeticError` if the current Arb precision differs from the precision in its key | `Environment.__init__` reads only `model.lam`, `model.eta`, `kind`, `numerics.ppp_dft_power`, `numerics.bank_policy` and the Arb precision set by the caller; N, m, the convention, the user and the gain enter only through `point()`, which does not modify the object. So the key is complete and sharing an environment between models cannot change a result. Remark of the Fable audit of 24 November 2026: a sweep in N or a change of convention repeated the Laplace inversion |
+
+Preservation was checked by recording every result computed during the
+whole test suite before and after the change (5,079 calculations,
+12,535 binary64 values, compared through `float.hex`, with their
+contracts and the exceptions raised): no difference. Table II is unchanged
+bit for bit. A sweep of 16 queries at a new intensity (lam=0.3, eta=4,
+N in all certified sizes, both conventions, default numerics, M=2^18) gives
+the same 16 enclosures and contracts, with one Laplace inversion instead of
+16: 5.9 s instead of 65.6 s on the development machine. New guarantee G35,
+with two tests; each of seven mutations (one element dropped from the key,
+or the precision guard removed) makes one of them fail.

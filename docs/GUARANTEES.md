@@ -79,6 +79,12 @@ Tests are written `file::function`, relative to `tests/`.
 |---|---|---|---|
 | G34 | The version and release date agree across the package, CITATION.cff and the changelog. | `CITATION.cff`, `CHANGELOG.md` | `unit/test_release.py::test_release_versions_and_dates_agree` |
 
+## Caches
+
+| ID | Guarantee | Kept by | Tests |
+|---|---|---|---|
+| G35 | A PPP or Gamma environment is reused only for the same intensity, path-loss exponent, interference model, DFT size M, precision and bank policy; any change in one of these builds a new one, and it is built at the precision of its key, otherwise `ArithmeticError`. N, m, the convention, the user and the gain do not rebuild it, and sharing changes no result. Tested at M = 2^12 on seven sharing cases and seven key changes. | `src/certoutage/_runtime.py` | `unit/test_runtime_guarantees.py::test_environment_is_shared_across_n_m_convention_user_and_gain`, `unit/test_runtime_guarantees.py::test_environment_is_rebuilt_when_its_key_changes` |
+
 ## Stated, not yet checked by a test
 
 These promises appear in the documentation. They are believed to hold, but

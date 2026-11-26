@@ -44,6 +44,13 @@
   PyPI (`pip install certoutage`) instead of a supplied wheel, the tested
   platforms, and a continuous-integration badge. Package classifiers list
   Python 3.10 to 3.14 and Linux, macOS and Windows, as tested.
+- Performance: the PPP and Gamma environments are cached on what they depend
+  on (intensity, path-loss exponent, interference model, M, precision, bank
+  policy) instead of the whole model, so changing N, m, the convention, the
+  user or the gain no longer repeats the Laplace inversion. A sweep over the
+  eight sizes and both conventions at a new intensity takes 5.9 s instead of
+  65.6 s. Every result of the test suite is unchanged bit for bit (see
+  `docs/LOGIC_CHANGES.md`). New guarantee G35 with two tests.
 
 ## 0.1.0 — 2026-11-24
 
