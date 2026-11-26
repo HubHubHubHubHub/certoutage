@@ -15,6 +15,9 @@
   or descriptor raises `IntegrityError`, a file in place of the cache
   directory means an absent bank; a new test checks that no public query
   reaches the generated-bank store (G44).
+- Documentation: `docs/PARAMETERS.md` lists every model parameter, whether it
+  is fixed or free, which version is planned to free it, and what must hold
+  first. Nothing it plans is implemented yet.
 
 ## 0.2.0 — 2026-11-26
 

@@ -175,7 +175,8 @@ Eq. (3) + Gamma does not validate replacing PPP interference by Gamma.
 [Detailed API](docs/API.md) · [Mathematical contract](docs/CONTRACT.md) ·
 [Register of guarantees](docs/GUARANTEES.md) ·
 [Regeneration](docs/REGENERATION.md) · [Logic changes](docs/LOGIC_CHANGES.md) ·
-[Extraction inventory](docs/EXTRACTION.md).
+[Extraction inventory](docs/EXTRACTION.md) ·
+[Model parameters: fixed, free and planned](docs/PARAMETERS.md).
 
 ## Provenance
 
