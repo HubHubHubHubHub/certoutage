@@ -3,10 +3,16 @@
 ## Mathematical object
 
 With V_k=sqrt(E_k F_k), A_N=Σ V_k and W=A_N²(10+Z)²/101, the two quantities
-are P_INR(ρ)=E F_W(d_i(1+J)/ρ) and P_TX(ρ)=E F_W(d_i(J+1/ρ)).
+are P_INR(ρ)=E F_W(d_i(1+gJ)/ρ) and P_TX(ρ)=E F_W(d_i(gJ+1/ρ)).
 Every independence assumption of the model of the Letter is needed. The
 results for the two users are marginal; no joint probability and no optimal
 allocation of a shared surface is certified.
+
+For physical intensity λ′, guard radius R0 and path-gain coefficient κ,
+`lam` is λ′R0². With ρ=P/N0 and interferer power P_I independent of P,
+g_INR=P_I κ R0^(−η)/N0; with P_I=aP, g_TX=aκR0^(−η).
+The physical triple (λ′, R0, κ) is not identifiable from these probabilities:
+only λ′R0² and the corresponding interference gain enter the normalized model.
 
 The inversion of the gain transform, the remainders and the thermal
 rectangles come from the archive. The useful-gain banks are provided at
@@ -23,13 +29,18 @@ intervals. The lower residual is placed at the last finite node, the upper
 one at +∞. For every nondecreasing test function g:
 E g(X-) ≤ E g(J) ≤ E g(X+).
 
-The API inherits, unchanged, the methods `Signal.indices`, `Signal.lookup`
-and `Environment.point` of `ppp/code/oracles.py`. Node lookups are
+The API inherits, unchanged, `Signal.indices` and `Signal.lookup` from
+`ppp/code/oracles.py`, and overrides `Environment.point` to apply g and
+d_i/(80/3) with the same outward-rounding rules. Node lookups are
 conservative, binary64 additions and products are widened with `nextafter`,
 and masses and dot products stay in Arb. No linear interpolation and no
 renormalization of tails is used.
 
-The NOMA and thermal parameters are fixed. A new λ does not justify
+The thermal parameters remain fixed; d1, d2 and g are free, with the Letter's
+defaults. [`Model.from_link`](API.md#model-and-calculation) computes the link
+coefficients exactly. An infeasible allocation gives outage 1 at every SNR,
+including its limit; g=0 removes interference and gives a zero floor for a
+finite d. A new λ does not justify
 changing the gain bank; it changes the PPP distribution, which is
 recomputed with the remainders below.
 
@@ -77,7 +88,7 @@ of the PPP → Gamma substitution.
 
 The distribution of the largest interferer is
 P(J_max≥x)=1-exp(-Λ(x)), Λ(x)=(2πλ/η)x^(-2/η)Γ(2/η,x), R0=1.
-Since J_max≤J, E F_W(d_i J_max) is a **floor lower bound**. The returned
+Since J_max≤J and g≥0, E F_W(d_i g J_max) is a **floor lower bound**. The returned
 interval encloses this lower bound; its upper edge is not an upper bound on
 the PPP floor. The archived central values are labelled
 `provided-certificate`. Their `precision_bits` stays 160, even when a higher

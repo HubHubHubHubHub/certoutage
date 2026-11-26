@@ -3,7 +3,8 @@
 The fixture is the T28b output of 24/11/2026 (checked against the Letter source,
 lines 455-458), without its only run-dependent field, ``wall_seconds``.
 Floats are compared by ``float.hex``, which separates every binary64 value
-(including -0.0 from 0.0).
+(including -0.0 from 0.0). The declared link fields are added to the expected
+model and contracts in memory; the archived fixture is left unchanged.
 """
 import json
 from pathlib import Path
@@ -24,6 +25,18 @@ def _exact(value):
     return value
 
 
+def _add_default_link_contracts(value):
+    """Extend the archived schema only; keep every historical field and float."""
+    if isinstance(value, dict):
+        if "parameters" in value:
+            value["parameters"].extend([["d1", "80/3"], ["d2", "160"], ["g", "1"]])
+        for item in value.values():
+            _add_default_link_contracts(item)
+    elif isinstance(value, list):
+        for item in value:
+            _add_default_link_contracts(item)
+
+
 def test_table_ii_example_is_bit_identical(capsys, monkeypatch):
     monkeypatch.setattr(sys, "argv", ["table_ii.py", "--json"])
     runpy.run_path(str(ROOT / "examples" / "table_ii.py"), run_name="__main__")
@@ -31,6 +44,8 @@ def test_table_ii_example_is_bit_identical(capsys, monkeypatch):
     seconds = produced.pop("wall_seconds")
     assert isinstance(seconds, float) and seconds >= 0
     expected = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    expected["model"].update(d1="80/3", d2="160", g="1")
+    _add_default_link_contracts(expected)
     assert _exact(produced) == _exact(expected)
 
 

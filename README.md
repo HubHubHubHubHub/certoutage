@@ -102,12 +102,13 @@ The supported model is deliberately limited:
   the case without PPP interference. Small intensities or a coarse
   discretization can yield wide bounds and an `inconclusive` decision.
 - Thermal source `(10+Z)^2/101`, with standard normal Z; ideal alignment,
-  independent amplitudes, no direct path, and fixed NOMA and useful-link
-  parameters: p1=0.3, p2=0.7, theta=1, ell1=1/8, ell2=1/64,
-  d1=80/3 and d2=160.
-- Two power conventions: **C-INR**, E F_W(d_i(1+J)/rho), and **C-TX**,
-  E F_W(d_i(J+1/rho)). The C-INR floor is zero; the C-TX floor is evaluated
-  at 1/rho=0.
+  independent amplitudes and no direct path. Link coefficients d1 and d2
+  and interference gain g are free (unreleased), defaulting to 80/3, 160
+  and 1. [`Model.from_link`](docs/API.md#model-and-calculation) accepts powers,
+  decoding thresholds and useful path gains.
+- Two power conventions: **C-INR**, E F_W(d_i(1+gJ)/rho), and **C-TX**,
+  E F_W(d_i(gJ+1/rho)). For finite d the C-INR floor is zero; the C-TX floor
+  is evaluated at 1/rho=0. An infeasible allocation gives outage 1 at every SNR.
 - Propagated Chernoff bounds for Rayleigh N=20,24 with PPP interference,
   and also N=8,64 without PPP interference. These give **sufficient designs**,
   not impossibility proofs.

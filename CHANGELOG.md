@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Free exact link coefficients d1, d2 and interference gain g (planned 0.3.0),
+  with `Model.from_link` and analytic handling of infeasible allocations.
+- Outward signal-bank scaling and direct thermal integration for arbitrary
+  admitted links; g=0 removes interference. Letter-default bounds remain
+  bit-identical, and numerical cache keys are unchanged.
+- Contracts record canonical d1, d2 and g; `threshold_difference` checks
+  them exactly. Offline link tests and guarantees G45–G53 cover the extension.
 - Internal bank store: verified local generated banks, deterministic NPZ writes,
   atomic replacement and explicit missing-bank errors. Embedded banks always
   take precedence; public queries and numerical results are unchanged.
@@ -17,7 +24,7 @@
   reaches the generated-bank store (G44).
 - Documentation: `docs/PARAMETERS.md` lists every model parameter, whether it
   is fixed or free, which version is planned to free it, and what must hold
-  first. Nothing it plans is implemented yet.
+  first. Unreleased link coefficients and interference gain are now marked free.
 
 ## 0.2.0 — 2026-11-26
 

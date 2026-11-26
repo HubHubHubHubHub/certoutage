@@ -175,3 +175,50 @@ now means an absent bank (`BankNotAvailable`); `IsADirectoryError` raises
 `IntegrityError`; `PermissionError` still propagates. The embedded reading
 path, `verified_bytes`, `arrays`, `manifest`, `receipt` and every public
 query are unchanged; no regression fixture changes.
+
+## Link coefficients and interference gain (26 November 2026, unreleased)
+
+Model now stores exact canonical d1, d2 and g, with the Letter defaults
+80/3, 160 and 1. Model.from_link computes the perfect-SIC coefficients for
+two thresholds in Fraction; a nonpositive allocation margin gives infinite
+coefficients before division. A selected infinite d gives analytic outage
+[1,1], including the floor, before any C-INR shortcut. Chernoff retains its
+inconclusive decision rule. At g=0, finite-SNR evaluation uses the atom at
+zero without a residual tail, preserving the requested interference label.
+
+The runtime overrides Environment.point to scale x by g exactly once, then
+the bank argument by 3d/80. Rational factors are enclosed in binary64 before
+outward multiplication. The identity returns the input arrays unchanged;
+the factor 6 retains the original operations. J_max uses the combined
+factor 3dg/80, retaining products only when exact Fraction comparisons prove
+they are representable; stored certificates require d1=80/3 and g=1 in
+addition to the previous conditions. Neither the law of J nor its cumulants
+see g. The moment call is documented as a cumulant, with R fixed at 1.
+
+Direct thermal evaluation dispatches on d: 80/3 keeps the grouped path,
+160 keeps the historical user-2 path, and other admitted values use the
+same grouped rectangle loop with an outward Arb amplitude sqrt(101*d/rho)
+passed in the call. No link coefficient enters cached object state.
+Environment and thermal cache signatures and keys are unchanged, and
+_vendor/, _generate.py, _banks.py, data and fixtures are untouched.
+
+Contracts append canonical d1, d2 and g and derive assumptions from the
+model; the default assumptions tuple is unchanged. threshold_difference
+requires equal link fields, compared with Fraction (or the string inf),
+and rejects missing ones. Comparison-row labels include g when needed and
+report the infeasible C-INR limit as 1. The old numerical regressions, an independent
+before/after capture of ten cases using float.hex, and offline tests of
+exact input validation, outward products including subnormals, bank
+extension, scaling identities, user equivalence and cache reuse check the
+extension (G45–G53). Direct/bank checks assert overlap, not equal widths.
+The second cumulant and the generated Gamma CDF are checked against mean
+kappa_1 and variance kappa_2 at eta=3,4.
+Targeted mutations exercise double gain, inward scaling, missing comparison
+fields, cached d, infeasibility, zero-gain tails, stored certificates, user
+routing and the identity factor.
+
+Existing test changed: regression/test_table_ii_example.py adds the three
+new default fields to the expected model and contract parameters in memory.
+The archived fixture, every historical expected field and every float.hex
+comparison remain unchanged. This is the declared contract-schema change;
+no numerical regression expectation is weakened or replaced.

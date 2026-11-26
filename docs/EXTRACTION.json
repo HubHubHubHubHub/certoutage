@@ -583,9 +583,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "loading constructors with integrity checks; numerical methods inherited unchanged; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
+      "src/certoutage/_runtime.py": "d8efa8bf60abfe4a65562c3e95725a8328d3d25f61e11be7d355eb622c25239e"
     },
-    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
   },
   {
     "source": "campaigns/t20/code/composer.py",
@@ -594,9 +594,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "selection of the Nakagami units128 grid; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
+      "src/certoutage/_runtime.py": "d8efa8bf60abfe4a65562c3e95725a8328d3d25f61e11be7d355eb622c25239e"
     },
-    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
   },
   {
     "source": "nakagami/code/thermal.py",
@@ -605,9 +605,9 @@
     "destination_sha256": "5a672331b06911e6531217914e49fcd8b04db9006a7d8388990a0abd692d43ce",
     "change": "constructor without chdir; rectangles and masses unchanged; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/_runtime.py": "dd8dd83ca378f3d25ba80fc2a26086876e0a4f16ca0d32923070f5ddc5284021"
+      "src/certoutage/_runtime.py": "d8efa8bf60abfe4a65562c3e95725a8328d3d25f61e11be7d355eb622c25239e"
     },
-    "post_release_change": "English translation of user-facing text (unreleased, 2026-11-26); cache key of the PPP/Gamma environment and precision guard (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
   },
   {
     "source": "ppp/code/oracles.py",
@@ -616,9 +616,9 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "dimensioning with a configurable grid, exact decimal comparisons and new public statuses; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "59b1ced7dcd6c675a7a5ffa6e22bc1bd6d9c52ad0a17789120dc789e03060be2"
+      "src/certoutage/api.py": "99fc6bf4cf27f45f4a47dba55892db3f6c5fdf7a9c0291582093fd8154e9a297"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
   },
   {
     "source": "ppp/code/minorants.py",
@@ -627,8 +627,8 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "J_max: analytic distribution and integration for new cases; central certificates provided; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "59b1ced7dcd6c675a7a5ffa6e22bc1bd6d9c52ad0a17789120dc789e03060be2"
+      "src/certoutage/api.py": "99fc6bf4cf27f45f4a47dba55892db3f6c5fdf7a9c0291582093fd8154e9a297"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Post-release changes documented in docs/LOGIC_CHANGES.md, including link coefficients and interference gain (26 November 2026, unreleased)."
   }
 ]
