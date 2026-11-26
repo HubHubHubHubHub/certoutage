@@ -156,3 +156,22 @@ raised, binary64 values compared through `float.hex`): no difference on the
 bit for bit. Reading `SIG_24.npz` through `verified_bytes` costs the same as
 before within measurement noise (paired median difference below 1 µs,
 under 0.1 % of loading its arrays).
+
+Corrections after the independent review of the bank store (same day, before
+merging; `_banks.py` only, generated origin and writer only): (1) the writer
+compared nothing when a verified pair already existed under the requested
+name, so a generator changed without a new version left the old arrays in
+place silently; it now compares the stored arrays (keys, dtype, shape, bytes)
+with the requested ones and raises `IntegrityError` on any difference. A
+change of generator code under the same name and version is still not
+detected at read time, and `code_sha256` stays recorded, not checked; the
+module docstring and the threat model now say so instead of "changed
+generators". (2) Array keys containing a NUL byte were truncated by the ZIP
+writer, so a verified pair could lose or rename an array; keys are now
+restricted to `[A-Za-z0-9_]{1,64}` (all 26 keys of the embedded banks match),
+and the writer checks that its serialized bytes decode to the requested
+arrays before writing. (3) `NotADirectoryError` while reading a generated pair
+now means an absent bank (`BankNotAvailable`); `IsADirectoryError` raises
+`IntegrityError`; `PermissionError` still propagates. The embedded reading
+path, `verified_bytes`, `arrays`, `manifest`, `receipt` and every public
+query are unchanged; no regression fixture changes.

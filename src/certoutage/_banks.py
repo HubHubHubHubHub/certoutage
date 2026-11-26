@@ -1,7 +1,11 @@
 """Verified bank reads with no writes or network access.
 
 Embedded digests are pinned through the manifest. Generated descriptors detect
-corruption, truncation, interrupted writes, process races and changed generators.
+corruption, truncation, interrupted writes, process races and a changed
+generator name or version; the writer also refuses to keep a stored bank whose
+arrays differ from the ones it was asked to store. A generator whose code
+changes under the same name and version is not detected at read time; the
+optional code_sha256 is recorded in the descriptor, not checked.
 They do not defend against a local adversary rewriting both bank and descriptor.
 The reserved fetched origin will use digests pinned in code in version 0.4.0.
 Only an explicit call to the internal writer creates directories or files.
@@ -28,6 +32,7 @@ ORIGINS = ("embedded", "generated", "fetched")
 _GENERATED_NAME = re.compile(r"^[A-Z][A-Z0-9]{0,15}_[0-9a-f]{16}\.npz$")
 _FAMILY = re.compile(r"[A-Z][A-Z0-9]{0,15}")
 _SHA256 = re.compile(r"[0-9a-f]{64}")
+_ARRAY_KEY = re.compile(r"[A-Za-z0-9_]{1,64}")
 _DESCRIPTOR_FIELDS = {
     "schema", "name", "sha256", "bytes", "origin", "family", "parameters",
     "generator", "certoutage_version", "python_flint_version", "numpy_version",
@@ -133,11 +138,13 @@ def _read_generated(name: str) -> bytes:
     try:
         raw_descriptor = descriptor_path.read_bytes()
         content = bank_path.read_bytes()
-    except FileNotFoundError as error:
+    except (FileNotFoundError, NotADirectoryError) as error:
         raise BankNotAvailable(
             f"Bank {name} is not available in {directory}; "
             "prepare it first (planned for version 0.4.0)"
         ) from error
+    except IsADirectoryError as error:
+        raise IntegrityError(f"Bank or descriptor is a directory: {error.filename}") from error
     try:
         descriptor = json.loads(raw_descriptor, object_pairs_hook=_unique_object)
         _validate_descriptor(descriptor, name)
@@ -184,10 +191,9 @@ def receipt(*names: str) -> tuple[tuple[str, str], ...]:
 def _serialize_arrays(arrays: dict[str, np.ndarray]) -> bytes:
     """Write sorted NPY entries with fixed ZIP metadata and no pickle."""
     if not isinstance(arrays, dict) or any(
-        not isinstance(key, str) or not key or "/" in key or "\\" in key
-        or key in (".", "..") for key in arrays
+        not isinstance(key, str) or not _ARRAY_KEY.fullmatch(key) for key in arrays
     ):
-        raise TypeError("Bank arrays must be a dictionary with nonempty filename keys")
+        raise TypeError("Bank arrays must be a dictionary with keys matching [A-Za-z0-9_]{1,64}")
     output = BytesIO()
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_STORED) as archive:
         for key in sorted(arrays):
@@ -203,6 +209,25 @@ def _serialize_arrays(arrays: dict[str, np.ndarray]) -> bytes:
             info.internal_attr = 0
             archive.writestr(info, entry.getvalue())
     return output.getvalue()
+
+
+def _same_arrays(content: bytes, expected: dict[str, np.ndarray]) -> bool:
+    """Compare decoded NPZ arrays with expected ones: keys, dtype, shape and bytes.
+
+    Undecodable content compares unequal; the caller raises IntegrityError.
+    """
+    try:
+        with np.load(BytesIO(content), allow_pickle=False) as data:
+            if sorted(data.files) != sorted(expected):
+                return False
+            for key in data.files:
+                stored, wanted = data[key], np.asarray(expected[key])
+                if (stored.dtype != wanted.dtype or stored.shape != wanted.shape
+                        or stored.tobytes() != wanted.tobytes()):
+                    return False
+    except (ValueError, OSError, EOFError, zipfile.BadZipFile):
+        return False
+    return True
 
 
 def _replace_with_retry(source: Path, destination: Path) -> None:
@@ -240,10 +265,12 @@ def _store_generated(family: str, parameters: dict, generator: dict,
                      arrays: dict[str, np.ndarray]) -> str:
     """Explicit internal writer; the descriptor commits the bank, without a lock.
 
-    A verified existing bank is left untouched. Invalid existing pairs raise
-    IntegrityError. A missing half can be replaced by a complete new pair.
-    Deterministic generators let concurrent writers commit identical bank bytes;
-    inconsistent generator outputs are detected at the next verified read.
+    The serialized bytes must decode to the requested arrays. A verified
+    existing bank is left untouched if its arrays equal the requested ones;
+    otherwise, or if the existing pair is invalid, IntegrityError is raised.
+    A missing half can be replaced by a complete new pair. Deterministic
+    generators let concurrent writers commit identical bank bytes; inconsistent
+    generator outputs are detected at the next verified read.
     """
     import flint  # only the writer records the binding version; reads do not need it
 
@@ -251,11 +278,18 @@ def _store_generated(family: str, parameters: dict, generator: dict,
 
     name = _generated_name(family, parameters, generator)
     content = _serialize_arrays(arrays)
+    if not _same_arrays(content, arrays):
+        raise IntegrityError(f"Serialized bank does not reproduce its arrays: {name}")
     try:
-        _read_generated(name)
+        existing = _read_generated(name)
     except BankNotAvailable:
         pass
     else:
+        if not _same_arrays(existing, arrays):
+            raise IntegrityError(
+                f"Stored bank {name} holds different arrays for the same family, parameters "
+                "and generator name/version; the generator changed without a new version"
+            )
         return name
     descriptor = {
         "schema": 1, "name": name, "sha256": sha256(content).hexdigest(),

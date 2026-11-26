@@ -8,6 +8,13 @@
 - Reserve `generated-banks` in contracts and the `fetched` origin for 0.4.0.
 - Offline bank-store tests cover corruption, cache isolation, interrupted writes
   and four concurrent processes; new guarantees G38–G44.
+- Independent review of the bank store, corrected before merging: the writer
+  refuses a stored bank whose arrays differ from the requested ones under the
+  same identity, checks that its bytes decode to the requested arrays and
+  restricts array keys to `[A-Za-z0-9_]{1,64}`; a directory in place of a bank
+  or descriptor raises `IntegrityError`, a file in place of the cache
+  directory means an absent bank; a new test checks that no public query
+  reaches the generated-bank store (G44).
 
 ## 0.2.0 — 2026-11-26
 
