@@ -122,3 +122,56 @@ or the precision guard removed) makes one of them fail.
 `models.py` was not listed among the certifying files when this change
 was made; it is now (CONTRIBUTING.md). Its other change on this branch,
 `ThresholdDifference.format`, is declared above.
+
+## Bank store (26 November 2026, unreleased)
+
+`_banks` now resolves embedded and locally generated banks through one
+verified reader; `fetched` is reserved and raises `NotImplementedError`.
+Generated names identify exact parameters and generator name/version.
+Strict per-bank descriptors check this identity, SHA-256 and size before
+deserialization. An explicit internal writer emits deterministic NPZ bytes
+and replaces temporary files in order, bank then descriptor, without a
+global lock. Missing pairs raise `BankNotAvailable`; corrupt pairs raise
+`IntegrityError`. Neither becomes a fallback. No generated data or absence
+is cached in memory, so `api.clear_cache()` needs no change.
+
+Embedded reading retains the pinned manifest, priority over the user cache,
+the module-level `files` lookup at each read and the original exceptions.
+`arrays` still calls the module-level `verified_bytes`; `manifest.cache_clear`
+and `receipt` are unchanged. `models.Contract.source` gains only the reserved
+`generated-banks` literal. No public query calls the writer or produces this
+source; branch selection, existing contracts and regression fixtures are
+unchanged. Offline tests check altered banks and descriptors, read-only and
+absent caches, byte-identical serialization across timestamps, interrupted
+writes, Windows retry limits and four concurrent spawn processes. The
+embedded shadow test compares bounds with `float.hex` and the full contract.
+The existing regressions and the new store tests run normally and under
+`python -O`; targeted mutations check the new guarantees G38–G44.
+
+Preservation was checked by recording every result computed during the
+whole test suite before and after the change, in fresh non-editable
+installations (5,234 calculations, with their contracts and the exceptions
+raised, binary64 values compared through `float.hex`): no difference on the
+126 existing test cases, none of which was modified. Table II is unchanged
+bit for bit. Reading `SIG_24.npz` through `verified_bytes` costs the same as
+before within measurement noise (paired median difference below 1 µs,
+under 0.1 % of loading its arrays).
+
+Corrections after the independent review of the bank store (same day, before
+merging; `_banks.py` only, generated origin and writer only): (1) the writer
+compared nothing when a verified pair already existed under the requested
+name, so a generator changed without a new version left the old arrays in
+place silently; it now compares the stored arrays (keys, dtype, shape, bytes)
+with the requested ones and raises `IntegrityError` on any difference. A
+change of generator code under the same name and version is still not
+detected at read time, and `code_sha256` stays recorded, not checked; the
+module docstring and the threat model now say so instead of "changed
+generators". (2) Array keys containing a NUL byte were truncated by the ZIP
+writer, so a verified pair could lose or rename an array; keys are now
+restricted to `[A-Za-z0-9_]{1,64}` (all 26 keys of the embedded banks match),
+and the writer checks that its serialized bytes decode to the requested
+arrays before writing. (3) `NotADirectoryError` while reading a generated pair
+now means an absent bank (`BankNotAvailable`); `IsADirectoryError` raises
+`IntegrityError`; `PermissionError` still propagates. The embedded reading
+path, `verified_bytes`, `arrays`, `manifest`, `receipt` and every public
+query are unchanged; no regression fixture changes.
