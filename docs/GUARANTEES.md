@@ -118,7 +118,7 @@ authenticate data against an adversary who rewrites both bank and descriptor.
 They do not prove mathematical correctness. The future fetched origin will
 use digests pinned in code; it is not implemented in this version.
 
-## Link coefficients and interference gain (unreleased, 0.3.0)
+## Link coefficients and interference gain (0.3.0)
 
 | ID | Guarantee | Kept by | Tests |
 |---|---|---|---|

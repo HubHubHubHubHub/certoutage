@@ -1,4 +1,4 @@
-# Proofs for the general interface (unreleased 0.3.0)
+# Proofs for the general interface (0.3.0)
 
 **Status: provisional proof.** These proofs are stated as they are used by
 the package. They will become definitive after a formalization in Lean and

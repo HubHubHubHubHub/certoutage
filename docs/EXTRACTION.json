@@ -8,7 +8,7 @@
     "post_release_sha256": {
       "src/certoutage/_vendor/commun.py": "219b1731733ed04d92f8098730dceafd703772726883829d964b3c85b399d6b3"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text only (0.2.0, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/ppp.py",
@@ -19,7 +19,7 @@
     "post_release_sha256": {
       "src/certoutage/_vendor/ppp.py": "a178530f8d70bc64de1dc53a651a7b0e3da3fd17961be5135d642d09f68a0d88"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text only (0.2.0, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/thermal_backend.py",
@@ -30,7 +30,7 @@
     "post_release_sha256": {
       "src/certoutage/_vendor/thermal_backend.py": "5bb8e14359c81346017cddcd6de8ffb40d7bc1503503eb197ca5f23ff0feb58e"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text only (0.2.0, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
@@ -48,7 +48,7 @@
     "post_release_sha256": {
       "src/certoutage/_vendor/nak_thermal.py": "2451e233faed0fdc6c6eaa9a6bf9f7d349b94a7702317a00c362e4939a92ab49"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text only (0.2.0, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "nakagami/code/grouped.py",
@@ -59,7 +59,7 @@
     "post_release_sha256": {
       "src/certoutage/_vendor/nak_grouped.py": "a9c475dfb049980d5f3f7b86f4fdec425ee3862c520483be542555ef9f9148c3"
     },
-    "post_release_change": "English translation of user-facing text only (unreleased, 2026-11-26); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "English translation of user-facing text only (0.2.0, 2026-11-26); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "banks_text/SIG_20/exact.csv",
@@ -574,7 +574,7 @@
     "post_release_sha256": {
       "src/certoutage/_generate.py": "c697679263e94caca9d2a1c8efc63068b87f62c28a14f4436f0ecca304c9f7bd"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
@@ -585,7 +585,7 @@
     "post_release_sha256": {
       "src/certoutage/_runtime.py": "e30d83613cd6fe56f7c14c263dcc0f812dc12362393d500cb1aebf55ad629dcd"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "campaigns/t20/code/composer.py",
@@ -596,7 +596,7 @@
     "post_release_sha256": {
       "src/certoutage/_runtime.py": "e30d83613cd6fe56f7c14c263dcc0f812dc12362393d500cb1aebf55ad629dcd"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "nakagami/code/thermal.py",
@@ -607,7 +607,7 @@
     "post_release_sha256": {
       "src/certoutage/_runtime.py": "e30d83613cd6fe56f7c14c263dcc0f812dc12362393d500cb1aebf55ad629dcd"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/oracles.py",
@@ -618,7 +618,7 @@
     "post_release_sha256": {
       "src/certoutage/api.py": "618a92ff5848f153ddbbde5e564c9b835180f04709905d37056782d507ebda98"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); PPP domain notes only when an inversion contributes, and a note for the trivial regime tau*a0 >= 1, no numerical change (unreleased, 27 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); PPP domain notes only when an inversion contributes, and a note for the trivial regime tau*a0 >= 1, no numerical change (0.3.0, 27 November 2026); see docs/LOGIC_CHANGES.md"
   },
   {
     "source": "ppp/code/minorants.py",
@@ -629,6 +629,6 @@
     "post_release_sha256": {
       "src/certoutage/api.py": "618a92ff5848f153ddbbde5e564c9b835180f04709905d37056782d507ebda98"
     },
-    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (unreleased, 26 November 2026); PPP domain notes only when an inversion contributes, and a note for the trivial regime tau*a0 >= 1, no numerical change (unreleased, 27 November 2026); see docs/LOGIC_CHANGES.md"
+    "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); PPP domain notes only when an inversion contributes, and a note for the trivial regime tau*a0 >= 1, no numerical change (0.3.0, 27 November 2026); see docs/LOGIC_CHANGES.md"
   }
 ]

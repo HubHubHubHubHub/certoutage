@@ -7,7 +7,7 @@ Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting
 
 `certoutage` provides deterministic, two-sided outage bounds for the Letter's
 thermal RIS-NOMA model with two users and Poisson interference. Every result
-carries an explicit mathematical and numerical contract. Version **0.2.0** is
+carries an explicit mathematical and numerical contract. Version **0.3.0** is
 available from https://github.com/HubHubHubHubHub/certoutage.
 
 ## Installation
@@ -99,9 +99,8 @@ The supported model is deliberately limited:
   Gamma distribution of shape m and rate m.
 - A planar Poisson point process outside the disk **R0=1**, with unit-mean
   exponential marks and **lambda in [0,10]**. Lambda=0 gives the case without
-  PPP interference. The path-loss exponent is **eta in {3,4}** in 0.2.0; the
-  unreleased 0.3.0 accepts **any decimal eta in [2.1, 8]** (eta=3,4 keep the
-  archive's explicit paths and banks). Small intensities or a coarse
+  PPP interference. The path-loss exponent is **any decimal eta in [2.1, 8]**
+  (since 0.3.0; eta=3,4 keep the archive's explicit paths and banks). Small intensities or a coarse
   discretization can yield wide bounds and an `inconclusive` decision.
   Near eta=2, **large** intensities do too: the mean interference
   2*pi*lam/(eta-2) must stay well below the fixed window B=128, and for
@@ -112,7 +111,7 @@ The supported model is deliberately limited:
   `lam` (λ′R0²) and the interference gain g.
 - Thermal source `(10+Z)^2/101`, with standard normal Z; ideal alignment,
   independent amplitudes and no direct path. Link coefficients d1 and d2
-  and interference gain g are free (unreleased), defaulting to 80/3, 160
+  and interference gain g are free (since 0.3.0), defaulting to 80/3, 160
   and 1. [`Model.from_link`](docs/API.md#model-and-calculation) accepts powers,
   decoding thresholds and useful path gains.
 - Two power conventions: **C-INR**, E F_W(d_i(1+gJ)/rho), and **C-TX**,
@@ -156,7 +155,7 @@ digest**, not provenance or mathematical correctness. A purely analytical
 result that uses no bank does not depend on bank contents.
 
 For lambda=0.1 or 1 and eta=3 or 4, supplied PPP/Gamma banks are used. For a
-new lambda or eta in the technical range [2.1, 8] (unreleased 0.3.0), the PPP inversion is computed on demand with Fourier, aliasing
+new lambda or eta in the technical range [2.1, 8], the PPP inversion is computed on demand with Fourier, aliasing
 and tail remainder bounds; the default is M=2^18. The useful-gain bank is
 still supplied: this is not full regeneration of the case. The contract
 records bank filenames, SHA-256 digests, parameters and precision.
@@ -211,11 +210,11 @@ See [CITATION.cff](CITATION.cff) and [codemeta.json](codemeta.json). Cite this
 extraction as:
 
 > Victor Rabiet (2026). certoutage: certified outage bounds for thermal
-> RIS-NOMA. Version 0.2.0, 26 November 2026. https://doi.org/10.5281/zenodo.24563723
+> RIS-NOMA. Version 0.3.0, 27 November 2026. https://doi.org/10.5281/zenodo.24509256
 
 Also acknowledge the original [archive](https://doi.org/10.5281/zenodo.24450534)
 and the [Letter](https://hal.science/hal-05879102). Software DOI: [10.5281/zenodo.24509256](https://doi.org/10.5281/zenodo.24509256)
-(all versions); version 0.2.0 is [10.5281/zenodo.24563723](https://doi.org/10.5281/zenodo.24563723).
+(all versions); version 0.3.0 has its own DOI on that record.
 
 ## Licenses
 
@@ -229,7 +228,7 @@ modifications. The [original archive notice](docs/ARCHIVE_LICENSE.txt) and
 ## Roadmap — not implemented
 
 Possible future extensions are RIS without thermal harvesting, Rice fading
-and 3GPP channel models. None is implemented or certified in version 0.2.0.
+and 3GPP channel models. None is implemented or certified in version 0.3.0.
 
 ## Support, bugs and feature requests
 

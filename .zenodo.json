@@ -1,15 +1,15 @@
 {
   "upload_type": "software",
   "title": "certoutage: certified outage bounds for thermal RIS-NOMA",
-  "version": "0.2.0",
-  "publication_date": "2026-11-26",
+  "version": "0.3.0",
+  "publication_date": "2026-11-27",
   "creators": [
     {
       "name": "Rabiet, Victor",
       "orcid": "0009-0003-3678-3457"
     }
   ],
-  "description": "<p>Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting: deterministic two-sided enclosures of the outage probability (Arb interval arithmetic via python-flint), outage floor, dimensioning decisions (feasible / excluded / inconclusive), and a comparison of the usual approximations with the exact computation under Poisson interference.</p><p>Scope: Rayleigh and Nakagami (m = 2, 3) gains; N in {8, 12, 16, 20, 24, 32, 48, 64}; path-loss exponent in {3, 4}; interferer density in [0, 10]; two power conventions. Inputs outside this scope raise an explicit error.</p><p>Provenance: the results of the Letter <em>Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting</em> (submitted to IEEE Wireless Communications Letters; preprint hal-05879102) were produced by its reproducibility archive (doi:10.5281/zenodo.24450534). certoutage is a subsequent extraction (24 November 2026) that reproduces the Letter's Table II exactly.</p>",
+  "description": "<p>Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting: deterministic two-sided enclosures of the outage probability (Arb interval arithmetic via python-flint), outage floor, dimensioning decisions (feasible / excluded / inconclusive), and a comparison of the usual approximations with the exact computation under Poisson interference.</p><p>Scope: Rayleigh and Nakagami (m = 2, 3) gains; N in {8, 12, 16, 20, 24, 32, 48, 64}; free link coefficients d1, d2 and interference gain g; any decimal path-loss exponent in [2.1, 8] (3 and 4 keep the archive's explicit paths); interferer density in [0, 10], with the joint (density, exponent) domain stated in the contract; two power conventions. Inputs outside this scope raise an explicit error.</p><p>Provenance: the results of the Letter <em>Certified Outage Bounds for RIS-Assisted NOMA with Source-Side Thermal Energy Harvesting</em> (submitted to IEEE Wireless Communications Letters; preprint hal-05879102) were produced by its reproducibility archive (doi:10.5281/zenodo.24450534). certoutage is a subsequent extraction (24 November 2026) that reproduces the Letter's Table II exactly.</p>",
   "license": "bsd-3-clause",
   "notes": "Composite licensing: BSD-3-Clause AND MIT AND CC-BY-4.0. New code is BSD-3-Clause; code extracted from the reproducibility archive keeps its MIT notice; numerical banks keep CC-BY-4.0. File-by-file mapping in LICENSES.md.",
   "keywords": [

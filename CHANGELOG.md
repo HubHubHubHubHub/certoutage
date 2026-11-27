@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 — 2026-11-27
+
+General interface, part I: free link coefficients d1, d2, free interference
+gain g and any decimal path-loss exponent η in [2.1, 8]; also carries the
+verified bank store of node B. Letter-default results are unchanged: every
+regression, Table II included, is identical bit for bit to 0.2.0.
 
 - Joint (λ, η) announcement: near η = 2 the useful λ range is bounded
   above (λ_τ ≈ 6.52(η−2)), and for λ ≥ 13.37(η−2), possible only when
@@ -21,7 +26,7 @@
 - Documentation of the general interface: Scope of the README, contract and
   API updated for free d1, d2, g and real η; new example
   `examples/free_parameters.py`.
-- Free real path-loss exponent eta in [2.1, 8] (planned 0.3.0), read exactly
+- Free real path-loss exponent eta in [2.1, 8], read exactly
   and normalized before cache/bank selection. Explicit eta=3,4 paths stay
   bit-identical; other values use Arb 2F1 and a certified Pfaff fallback.
 - Compute and announce the joint analytic remainder domain D_M, without
@@ -30,7 +35,7 @@
 - Bound decimal exponents before exact fraction conversion in model inputs,
   SNR grids and enclosure formatting; extreme zero spellings remain valid.
 
-- Free exact link coefficients d1, d2 and interference gain g (planned 0.3.0),
+- Free exact link coefficients d1, d2 and interference gain g,
   with `Model.from_link` and analytic handling of infeasible allocations.
 - Outward signal-bank scaling and direct thermal integration for arbitrary
   admitted links; g=0 removes interference. Letter-default bounds remain
@@ -52,7 +57,7 @@
   reaches the generated-bank store (G44).
 - Documentation: `docs/PARAMETERS.md` lists every model parameter, whether it
   is fixed or free, which version is planned to free it, and what must hold
-  first. Unreleased link coefficients and interference gain are now marked free.
+  first.
 
 ## 0.2.0 — 2026-11-26
 

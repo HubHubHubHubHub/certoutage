@@ -48,7 +48,7 @@ recomputed with the remainders below.
 
 ## On-demand PPP inversion
 
-The accepted exponents are 2.1 ≤ η ≤ 8 (unreleased 0.3.0), with
+The accepted exponents are 2.1 ≤ η ≤ 8 (since 0.3.0), with
 0 ≤ λ ≤ 10. The provisional proofs referred to below hold for every η > 2,
 and the transform is tested by quadratures independent of its code at both
 ends of the η range (G56, G63). The **usefulness** of the result, however,

@@ -65,7 +65,7 @@ of the normal and optimized suites in a fresh environment. Run times are not
 reproducible outputs; the `target` addition is declared and checked
 separately when the JSON exports are compared.
 
-## English text throughout (26 November 2026, unreleased)
+## English text throughout (26 November 2026, 0.2.0)
 
 All user-facing text is now in English: exception messages, docstrings,
 the `Contract.assumptions` strings, example output, the comments and
@@ -88,7 +88,7 @@ The eight destination files whose bytes changed since 0.1.0 are listed in
 cache key below. `tests/unit/test_release.py` checks that each recorded
 digest is that of the file, and that every changed destination is recorded.
 
-## Display of threshold differences (26 November 2026, unreleased)
+## Display of threshold differences (26 November 2026, 0.2.0)
 
 | Area | Change | Justification and check |
 |---|---|---|
@@ -96,7 +96,7 @@ digest is that of the file, and that every changed destination is recorded.
 
 No certified quantity is involved: the change is in the display only.
 
-## Cache key of the PPP environment (26 November 2026, unreleased)
+## Cache key of the PPP environment (26 November 2026, 0.2.0)
 
 | Area | Change | Justification and check |
 |---|---|---|
@@ -113,7 +113,7 @@ the same 16 enclosures and contracts, with one Laplace inversion instead of
 with two tests; each of seven mutations (one element dropped from the key,
 or the precision guard removed) makes one of them fail.
 
-## Interval engine named at run time (26 November 2026, unreleased)
+## Interval engine named at run time (26 November 2026, 0.2.0)
 
 | Area | Change | Justification and check |
 |---|---|---|
@@ -123,7 +123,7 @@ or the precision guard removed) makes one of them fail.
 was made; it is now (CONTRIBUTING.md). Its other change on this branch,
 `ThresholdDifference.format`, is declared above.
 
-## Bank store (26 November 2026, unreleased)
+## Bank store (26 November 2026, 0.3.0)
 
 `_banks` now resolves embedded and locally generated banks through one
 verified reader; `fetched` is reserved and raises `NotImplementedError`.
@@ -176,7 +176,7 @@ now means an absent bank (`BankNotAvailable`); `IsADirectoryError` raises
 path, `verified_bytes`, `arrays`, `manifest`, `receipt` and every public
 query are unchanged; no regression fixture changes.
 
-## Link coefficients and interference gain (26 November 2026, unreleased)
+## Link coefficients and interference gain (26 November 2026, 0.3.0)
 
 Model now stores exact canonical d1, d2 and g, with the Letter defaults
 80/3, 160 and 1. Model.from_link computes the perfect-SIC coefficients for
@@ -224,7 +224,7 @@ comparison remain unchanged. This is the declared contract-schema change;
 no numerical regression expectation is weakened or replaced.
 
 
-## Real path-loss exponent (26 November 2026, unreleased)
+## Real path-loss exponent (26 November 2026, 0.3.0)
 
 Model reads eta as an exact decimal in [2.1,8], retaining integers 3 and 4
 at those exact values and otherwise storing a plain canonical decimal
@@ -273,7 +273,7 @@ from test_invalid_models. Accepting 3.0 as canonical int 3 is a declared
 API change, covered positively by test_eta_canonicalization and the cache
 and bank-name test. No numerical regression assertion is changed.
 
-## Domain notes only when a PPP inversion contributes (27 November 2026, unreleased)
+## Domain notes only when a PPP inversion contributes (27 November 2026, 0.3.0)
 
 `api._contract` attached the two general-exponent notes (2F1 transform,
 inside/outside D_M) to every PPP query with eta other than 3 or 4
@@ -300,7 +300,7 @@ propositions of `docs/PROOFS.md` instead of working labels, and attribute
 Johansson's reference to Arb's 2F1 evaluation only; no code line changes.
 `_transform.py` is not an extracted file and has no entry in EXTRACTION.json.
 
-## Note for the trivial regime τa0 ≥ 1 (27 November 2026, unreleased)
+## Note for the trivial regime τa0 ≥ 1 (27 November 2026, 0.3.0)
 
 An independent review (S19) found that, near η = 2, large intensities give
 [~0, 1] enclosures with only the generic "outside D_M ... may be wide"

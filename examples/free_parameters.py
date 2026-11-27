@@ -1,4 +1,4 @@
-"""A case with free parameters (unreleased 0.3.0): link, gain and real eta.
+"""A case with free parameters (since 0.3.0): link, gain and real eta.
 
 Powers p1=0.25, p2=0.75 with two decoding thresholds, useful path gains
 1/10 and 1/50, interference gain g=1/2, lambda=0.5 and eta=3.7, N=24
