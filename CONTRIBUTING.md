@@ -30,8 +30,6 @@ operating system and the shortest code that shows it.
 5. Contributions are accepted under the license of the file they change:
    BSD-3-Clause for new code ([LICENSE](LICENSE)); see
    [LICENSES.md](LICENSES.md) for extracted code and data.
-6. If you used AI tools to prepare the change, say which ones and for what
-   in the pull request.
 
 ## Running the tests
 

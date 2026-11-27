@@ -27,7 +27,7 @@ regression is therefore not presented as an "interface only" extraction.
 The detailed T28 evidence is kept in `evidence/` at the level of the
 extraction mission; the tests shipped with the package are self-contained.
 
-## T28b corrections after the Fable audit (24 November 2026)
+## T28b corrections after the audit of 24 November 2026
 
 | Finding | Change | Preservation and test |
 |---|---|---|
@@ -100,7 +100,7 @@ No certified quantity is involved: the change is in the display only.
 
 | Area | Change | Justification and check |
 |---|---|---|
-| `_runtime.environment` | The cache key was `(model, kind, numerics)`. It is now `(lam, eta, kind, precision_bits, ppp_dft_power, bank_policy)`, through a new cached `_environment`; `environment` keeps its signature. Size of the cache unchanged (12). New guard: `_environment` raises `ArithmeticError` if the current Arb precision differs from the precision in its key | `Environment.__init__` reads only `model.lam`, `model.eta`, `kind`, `numerics.ppp_dft_power`, `numerics.bank_policy` and the Arb precision set by the caller; N, m, the convention, the user and the gain enter only through `point()`, which does not modify the object. So the key is complete and sharing an environment between models cannot change a result. Remark of the Fable audit of 24 November 2026: a sweep in N or a change of convention repeated the Laplace inversion |
+| `_runtime.environment` | The cache key was `(model, kind, numerics)`. It is now `(lam, eta, kind, precision_bits, ppp_dft_power, bank_policy)`, through a new cached `_environment`; `environment` keeps its signature. Size of the cache unchanged (12). New guard: `_environment` raises `ArithmeticError` if the current Arb precision differs from the precision in its key | `Environment.__init__` reads only `model.lam`, `model.eta`, `kind`, `numerics.ppp_dft_power`, `numerics.bank_policy` and the Arb precision set by the caller; N, m, the convention, the user and the gain enter only through `point()`, which does not modify the object. So the key is complete and sharing an environment between models cannot change a result. Remark of the audit of 24 November 2026: a sweep in N or a change of convention repeated the Laplace inversion |
 
 Preservation was checked by recording every result computed during the
 whole test suite before and after the change (5,079 calculations,
