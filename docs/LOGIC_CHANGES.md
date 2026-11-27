@@ -341,8 +341,11 @@ three signal arrays. Gain files at N=12,20,24,48 and every signal file matched
 the original uncompressed file hashes; the four six-array gain files differ
 from their ten-array originals as expected. Signal arrays also matched the
 package banks. The comparator accepted all references and detected a
-single-ulp change. Ten targeted generator mutations were detected. No
-cluster replay was performed; local costs are recorded in REGENERATION.md.
+single-ulp change. Ten targeted generator mutations were detected. A second
+replay of the eight sizes on Linux (one core per size, Python 3.12.3,
+python-flint 0.9.0, NumPy 2.5.3), with the final code including the thermal
+correction below, gave the same result for every array and file. Costs are
+recorded in REGENERATION.md.
 
 
 ## Thermal cell containing −κ (27 November 2026, unreleased)

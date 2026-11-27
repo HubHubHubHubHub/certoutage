@@ -119,7 +119,14 @@ Signal arrays also matched the package banks. Measured gain times ranged
 from 13.5 to 60.4 seconds, signal times from 8.1 to
 25.6 minutes, and process peak RSS from 0.30 to 0.46 GiB.
 N=24 was started separately; a pool of three single-thread processes handled
-the other seven sizes, initially overlapping the N=24 run. These are elapsed local measurements, not cluster
-benchmarks. In particular, almost every grouped N=8 point and every grouped
-N=12 point needs J=13, while those for N>=20 stop at J=9. No cluster replay
-was performed.
+the other seven sizes, initially overlapping the N=24 run. In particular,
+almost every grouped N=8 point and every grouped N=12 point needs J=13, while
+those for N>=20 stop at J=9.
+
+A second replay ran on a Linux compute node (Python 3.12.3, python-flint
+0.9.0, NumPy 2.5.3), one single-core task per size, with the thermal-cell
+correction in place (default kappa=10). It gave the same result: every
+array identical, and the same file-level matches. Gain generation took 23 to
+24 seconds per size; signal generation 15 to 16 minutes at N=8 and 12,
+9 minutes at N=16, and 6 to 7 minutes at N=20 to 64; peak resident memory
+was 0.43 to 0.45 GiB per task. Timings depend on the machine and its load.
