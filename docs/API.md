@@ -32,7 +32,9 @@ General exponents use the Arb 2F1 identities and generated PPP/Gamma arrays
 contract records the transform and whether the analytic remainder criteria
 of [D_M](CONTRACT.md#on-demand-ppp-inversion) are proved; results with
 lam=0 or g=0, infeasible allocations and analytic floors carry no such note.
-Outside D_M the enclosure remains valid but may be wide. At eta=3,4 the
+Outside D_M the enclosure remains valid but may be wide; a third note
+flags the trivial regime λ ≥ 13.37(η−2) (tau*a0 >= 1), where it carries no
+information. At eta=3,4 the
 explicit paths, banks and contract notes are unchanged.
 
 Before exact conversion to a fraction, nonzero decimal inputs must have

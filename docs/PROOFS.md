@@ -366,6 +366,21 @@ the width of the useful-gain banks, nor evaluation errors. With
 Outside D_M the certificate remains valid; it may be wide. When λ = 0 or
 g = 0 no inversion contributes, and the domain does not apply.
 
+**Proposition 4.7 (trivial regime).** The aliasing term satisfies τa_0 ≥ 1
+if and only if μ_J = 2πλ/(η − 2) ≥ B/2 + log expm1(cB), that is, for B = 128
+and cB = 20, λ ≥ λ_triv(η) = (64 + log expm1(20))(η − 2)/(2π)
+≈ 13.369(η − 2). Then every interior node of the certificate of § 3 has
+width at least 1, and the lower bound at B, max(0, 1 − τ), is 0.
+
+*Proof.* τa_0 = exp(−B/2 + μ_J)/expm1(cB); take logarithms. The width at an
+interior node is 2e^(cx)R + τa_0 ≥ τa_0, and τ ≥ expm1(20) > 1. ∎
+
+Below λ_triv the term τa_0 still adds to the width: it is at most
+1.7·10⁻¹⁰ for λ ≤ 1.5λ_τ, about 2·10⁻³ at 1.9λ_τ, and λ_triv ≈ 2.05λ_τ.
+Since λ_triv ≥ 10 exactly when η ≥ 2.748, the trivial regime meets the
+accepted λ ∈ [0, 10] only for η < 2.748. The remedy would be a window B
+adapted to μ_J; the package keeps B = 128.
+
 ## 5. Cumulants of J and the Gamma comparator
 
 For |t| < 1,
@@ -402,7 +417,8 @@ numerical test checks finitely many cases; it does not replace the proof.
 
 | Statement | Test |
 |---|---|
-| Propositions 4.1–4.5 | `test_real_eta.py::test_remainders_e6_and_monotonicities`, `::test_lambda_window_certifies_boundaries_and_empty_case` (they call the package's `remainders`, `informative` and `lambda_window`) |
+| Propositions 4.1–4.5 | `test_real_eta.py::test_remainders_e6_and_monotonicities`, `::test_lambda_window_certifies_boundaries_and_empty_case`, `::test_lambda_window_near_two` (they call the package's `remainders`, `informative` and `lambda_window`) |
+| Proposition 4.7 | `test_real_eta.py::test_trivial_regime_above_the_aliasing_threshold`: the threshold in closed form against `aliasing_exceeds_one` on both sides (η = 2.1, 2.5, 2.747, 2.748, 3, 3.5), and the enclosures just below and above it |
 | Propositions 1.2, 1.6, 1.7 | `test_link_parameters.py::test_signal_lookup_extends_with_zero_and_one`, `::test_zero_gain_is_exactly_no_interference`, `::test_inr_scaling_overlaps_with_nondyadic_ratio`, `::test_tx_gain_folding_overlaps`, `::test_tx_link_scaling_alone_is_not_an_identity` |
 | Proposition 1.3 | `test_link_parameters.py::test_from_link_two_thresholds_and_exact_context`, `::test_infeasible_allocation_precedes_division` |
 | § 5 (first two cumulants) | `test_proofs.py::test_statement_c_and_cumulants`, against the extracted `moment` |

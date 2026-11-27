@@ -103,6 +103,11 @@ The supported model is deliberately limited:
   unreleased 0.3.0 accepts **any decimal eta in [2.1, 8]** (eta=3,4 keep the
   archive's explicit paths and banks). Small intensities or a coarse
   discretization can yield wide bounds and an `inconclusive` decision.
+  Near eta=2, **large** intensities do too: the mean interference
+  2*pi*lam/(eta-2) must stay well below the fixed window B=128, and for
+  lam >= 13.37*(eta-2) (only possible when eta < 2.748) the enclosure is
+  trivial, with a contract note saying so. The joint (lam, eta) domain is
+  tabulated in [CONTRACT.md](docs/CONTRACT.md#on-demand-ppp-inversion).
   R0 stays the unit of length: a physical guard radius enters through
   `lam` (λ′R0²) and the interference gain g.
 - Thermal source `(10+Z)^2/101`, with standard normal Z; ideal alignment,

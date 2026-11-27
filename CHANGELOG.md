@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Joint (λ, η) announcement: near η = 2 the useful λ range is bounded
+  above (λ_τ ≈ 6.52(η−2)), and for λ ≥ 13.37(η−2), possible only when
+  η < 2.748, the enclosure is trivial. CONTRACT.md tabulates the domain, a
+  third contract note flags the trivial regime (PROOFS.md, Proposition 4.7;
+  G65). No numerical result changes.
 - `docs/PROOFS.md`: provisional proofs of the statements the 0.3.0 contract
   cannot refer to the Letter for (link and gain scaling, the two 2F1
   identities, the Fourier bound, R and τ for every η > 2, the domain D_M,

@@ -15,7 +15,7 @@ from .models import (Model, Numerics, SNRGrid, Scalar, Gain, Interference, Contr
 from . import _runtime as rt, _banks
 from ._vendor.commun import out
 from ._vendor.ppp import envelopes
-from ._transform import eta_value, informative
+from ._transform import aliasing_exceeds_one, eta_value, informative
 
 DEFAULT_NUMERICS = Numerics()
 DEFAULT_GRID = SNRGrid()
@@ -63,10 +63,15 @@ def _contract(model: Model, gain: Gain, interference: Interference, numerics: Nu
     # when no inversion contributes (analytic results, lam=0, g=0).
     ppp_used = not analytic and Decimal(model.lam) != 0 and model.g != "0"
     if interference == "PPP" and type(model.eta) is not int and ppp_used:
-        domain = "inside" if informative(model.lam, model.eta, numerics.ppp_dft_power) else "outside"
+        power = numerics.ppp_dft_power
+        domain = "inside" if informative(model.lam, model.eta, power) else "outside"
         notes += (f"eta={model.eta}: Laplace transform by the 2F1 identities (Arb, abc=True)",
                   f"(lam, eta, M) {domain} the informative domain D_M (e^20 R <= 1e-7, "
                   "tau <= 1e-10); outside, the enclosure stays valid but may be wide")
+        if aliasing_exceeds_one(model.lam, model.eta, power):
+            notes += ("tau*a0 >= 1 (mean interference 2*pi*lam/(eta-2) >= 64 + log(expm1(20)), "
+                      "about 84, too large for B=128): every inner node of the interference "
+                      "CDF carries an error of at least 1; expect a trivial enclosure",)
     return Contract(_quantity(gain, interference),
                     "analytic" if analytic else "mixed" if generated else "provided-banks",
                     numerics.precision_bits, _banks.receipt(*names),

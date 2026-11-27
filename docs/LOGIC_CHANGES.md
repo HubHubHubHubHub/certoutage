@@ -299,3 +299,17 @@ In the same change, the docstrings of `_transform.py` refer to the
 propositions of `docs/PROOFS.md` instead of working labels, and attribute
 Johansson's reference to Arb's 2F1 evaluation only; no code line changes.
 `_transform.py` is not an extracted file and has no entry in EXTRACTION.json.
+
+## Note for the trivial regime τa0 ≥ 1 (27 November 2026, unreleased)
+
+An independent review (S19) found that, near η = 2, large intensities give
+[~0, 1] enclosures with only the generic "outside D_M ... may be wide"
+note. New helper `_transform.aliasing_exceeds_one(lam, eta, power)` proves
+τ ≥ expm1(20), i.e. τa0 ≥ 1 (PROOFS.md, Proposition 4.7); uncertainty
+returns False. `api._contract` appends a third note exactly when it holds,
+on the results that already carry the two general-exponent notes. Bounds,
+sources, digests, parameters, assumptions and the two existing notes are
+unchanged. No existing test is changed; new tests
+`unit/test_real_eta.py::test_trivial_regime_above_the_aliasing_threshold`
+and `::test_lambda_window_near_two`. A before/after capture of the suite
+is compared by `float.hex` (session S19b).

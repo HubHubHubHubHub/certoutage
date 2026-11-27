@@ -445,6 +445,60 @@ def test_lambda_window_certifies_boundaries_and_empty_case():
             tf.lambda_window(4, 5)
 
 
+def test_lambda_window_near_two():
+    # D8: the window at the lower end of the accepted eta range (S19b).
+    with rt.arithmetic(160):
+        r0 = arb("1e-7") * (-arb(20)).exp()
+        for eta, power in [("2.1", 18), ("2.1", 12), ("2.2", 18)]:
+            window = tf.lambda_window(eta, power)
+            assert not window.empty
+            left, right = window.lambda_R
+            assert tf.remainders(arb(left), eta, power)[0] > r0
+            assert tf.remainders(arb(right), eta, power)[0] < r0
+            assert tf.informative(arb(right), eta, power)
+            assert not tf.informative(arb(left), eta, power)
+            exact_tau = (arb(64) + arb("1e-10").log()) * (arb(eta) - 2) / (2 * arb.pi())
+            assert arb(window.lambda_tau[0]) <= exact_tau <= arb(window.lambda_tau[1])
+            print("S19b window", eta, power, window.lambda_R, window.lambda_tau)
+        window = tf.lambda_window("2.1", 18)
+        assert 0.0015 < window.lambda_R[0] <= window.lambda_R[1] < 0.0017
+        assert window.lambda_tau[0] == pytest.approx(0.6521, rel=1e-3)
+        assert tf.informative("0.1", "2.1", 18)
+        assert not tf.informative("0.7", "2.1", 18)
+
+
+def test_trivial_regime_above_the_aliasing_threshold():
+    # tau*a0 >= 1 iff lam >= (64 + log expm1(20))(eta-2)/(2 pi), about
+    # 13.37(eta-2) (PROOFS.md, Proposition 4.7; S19b).
+    with rt.arithmetic(160):
+        threshold = (arb(64) + arb(20).expm1().log()) * (arb("2.1") - 2) / (2 * arb.pi())
+        assert arb("1.33") < threshold < arb("1.34")
+        for lam, eta, expected in [("1.33", "2.1", False), ("1.34", "2.1", True),
+                                   ("10", "2.5", True), ("10", "2.747", True),
+                                   ("10", "2.748", False), ("10", 3, False), ("10", "3.5", False)]:
+            assert tf.aliasing_exceeds_one(lam, eta, 12) is expected
+            assert tf.aliasing_exceeds_one(lam, eta, 18) is expected
+    numerics = Numerics(ppp_dft_power=12)
+
+    def trivial(result):
+        return any("tau*a0 >= 1" in n for n in result.contract.notes)
+
+    below = outage_enclosure(Model(lam="1.33", eta="2.1"), 1, 20, numerics=numerics)
+    above = outage_enclosure(Model(lam="1.34", eta="2.1"), 1, 20, numerics=numerics)
+    weak = outage_enclosure(Model(lam="2", eta="2.1", g="1/100"), 1, 20, numerics=numerics)
+    assert not trivial(below) and trivial(above) and trivial(weak)
+    # Just below, the width is about tau*a0 = 0.65; above, the bound is trivial,
+    # even with a weak interference gain.
+    assert 0.3 < below.lower < 0.4 and below.upper == 1
+    assert above.lower < 1e-20 and above.upper == 1
+    assert weak.lower < 1e-20 and weak.upper == 1
+    for result in (below, above, weak):
+        assert any("outside the informative domain D_M" in n for n in result.contract.notes)
+    # No note where no inversion contributes, nor on the explicit eta=3 path.
+    assert not trivial(outage_enclosure(Model(lam="2", eta="2.1", g=0), 1, 20, numerics=numerics))
+    assert not trivial(outage_enclosure(Model(lam="10", eta=3), 1, 20, numerics=numerics))
+
+
 def test_threshold_difference_uses_exact_eta():
     result = outage_enclosure(Model(eta="3.5"), 1, 20, interference="none")
     first = SNRDecision("feasible", 10.0, 11.0, result, "test", 0, "test", target="0.1")

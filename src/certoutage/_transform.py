@@ -145,6 +145,18 @@ def informative(lam, eta, power: int, eps_R=1e-7, eps_tau=1e-10) -> bool:
     return bool(arb(20).exp() * freq <= er and tail <= et)
 
 
+def aliasing_exceeds_one(lam, eta, power: int) -> bool:
+    """Prove tau*a0 >= 1, with a0 = 1/expm1(20); uncertainty returns False.
+
+    The aliasing term tau*a0 is added at every inner node of the generated
+    CDF, so when it reaches 1 each node carries an error of at least 1.
+    This holds iff 2*pi*lam/(eta-2) >= 64 + log(expm1(20)), about
+    lam >= 13.37*(eta-2) (PROOFS.md, Proposition 4.7).
+    """
+    _, tail = remainders(lam, eta, power)
+    return bool(tail >= arb(20).expm1())
+
+
 @dataclass(frozen=True)
 class LambdaWindow:
     """Outward binary64 brackets of both boundaries; empty is certified.

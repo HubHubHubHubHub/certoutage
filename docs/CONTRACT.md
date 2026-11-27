@@ -48,10 +48,29 @@ recomputed with the remainders below.
 
 ## On-demand PPP inversion
 
-The technical domain is 2.1 ≤ η ≤ 8 (unreleased 0.3.0). The provisional
-proofs referred to below hold for every η > 2; the technical domain is the
-range over which the package is tested, including by quadratures
-independent of the transform code at both ends (G56, G63).
+The accepted exponents are 2.1 ≤ η ≤ 8 (unreleased 0.3.0), with
+0 ≤ λ ≤ 10. The provisional proofs referred to below hold for every η > 2,
+and the transform is tested by quadratures independent of its code at both
+ends of the η range (G56, G63). The **usefulness** of the result, however,
+depends on λ and η jointly: the mean interference μ_J=2πλ/(η−2) must stay
+well inside the fixed window B=128. Near η=2 the informative domain D_M
+below closes from above at λ_τ ≈ 6.52(η−2), and at λ ≥ λ_triv ≈ 13.37(η−2)
+the enclosure is trivial (PROOFS.md, Proposition 4.7):
+
+| η | λ_R (M=2^18) | λ_τ | λ_triv |
+|---|---|---|---|
+| 2.1 | 0.0016 | 0.652 | 1.337 |
+| 2.2 | 0.0024 | 1.304 | 2.674 |
+| 2.5 | 0.0069 | 3.261 | 6.685 |
+| 3 | 0.024 | 6.521 | 13.37 (> 10) |
+| 3.534 to 8 | 0.063 to 1.27 | ≥ 10 | > 10 |
+
+So, for η < 2.748, part of the accepted λ range gives [0, 1]-like
+enclosures, which are valid but carry no information (third contract
+note below; G65). An end-to-end Monte Carlo comparison kept outside the
+repository (48 cases, 0 disagreement) covers η from 2.10 to 7.95; below
+η=2.5 it reaches λ from 0.004 to 1.86λ_τ (μ_J up to 76), that is, the upper
+side of D_M up to just below λ_triv.
 For η=3 or 4, the explicit expressions of the archive are used unchanged
 for L_J(s)=exp(-2πλ J(s)), J(s)=∫_1^∞ sr/(r^η+s) dr, with principal branches.
 Other η use the nonregularized Arb identities, on Re(s)>0, with α=2/η:
@@ -103,7 +122,11 @@ interference), infeasible allocations and analytic floors carry no such
 note. Outside D_M no new rejection or numerical behavior is introduced;
 valid certificates may be wide. "Outside" says only that the two analytic
 criteria are not proved; it does not mean that the final enclosure is wide
-(at small λ in particular, it can be narrow).
+(at small λ in particular, it can be narrow). When moreover τa0 ≥ 1
+(λ ≥ λ_triv), a third note says so: every interior node of the
+interference CDF then carries an error of at least 1, and the enclosure
+should be expected to be trivial. Below λ_triv the term τa0 still widens the
+enclosure (about 0.65 at η=2.1, λ=1.33).
 
 The change from M=2^20 to a configurable M preserves this proof: ξ, K and
 the discretization exponential use the effective M. It does not necessarily
