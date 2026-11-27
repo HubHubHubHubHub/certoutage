@@ -80,14 +80,21 @@ def _gain_kernel(N, power):
                 exact_lo=exact[0], exact_hi=exact[1], gauss_lo=gauss[0], gauss_hi=gauss[1])
 
 
-def gain_arrays(N, *, power=19, bits=160) -> dict:
-    """Return six gain arrays for 8 <= N <= 64; ``power`` is private to tests."""
+def gain_arrays(N, *, m=1, power=19, bits=160) -> dict:
+    """Return gain arrays for integer m in {1,2,3}, 8 <= N <= 64.
+
+    ``power`` is private to tests. The m=1 kernel retains its original order;
+    m=2,3 use the integer recurrence and include a scalar int64 m.
+    """
+    m = _nakagami_m(m)
     N = _integer(N, "N", 8, 64)
     power = _integer(power, "power", 10, 19)
     # Local import avoids a cycle with the runtime's thermal adapter.
     from ._runtime import arithmetic
     with arithmetic(bits):
-        return _gain_kernel(N, power)
+        if m == 1:
+            return _gain_kernel(N, power)
+        return _nakagami_gain_kernel(N, m, power)
 
 
 def _check_kappa(kappa):
@@ -272,3 +279,146 @@ def signal_arrays(gain, common, *, bits=160, kappa=Fraction(10)):
     from ._runtime import arithmetic
     with arithmetic(bits):
         return finish_signal([signal_points(gain, common, range(_SIGNAL_SIZE), bits=bits, kappa=kappa)])
+
+
+def _nakagami_m(m):
+    try:
+        return _integer(m, "m", 1, 3)
+    except ValueError as error:
+        raise ValueError("m must be an exact integer in {1, 2, 3}; other m are not supported "
+                         "because the transform recurrence uses the integer index 2m-1") from error
+
+
+def _nakagami_gain_kernel(N, m, power):
+    """Inversion kernel; the caller owns the Arb context."""
+    from ._nakagami import L, mu, variation
+    N = _integer(N, "N", 1)
+    power = _integer(power, "power", 0)
+    M = 1 << power
+    if M % 2 != 0:
+        raise ValueError("The Fourier remainder requires an even M")
+    if M < N:
+        raise ValueError("The Fourier remainder requires M >= N")
+    B = gain_period(N)
+    c = arb(20) / B
+    coeff = [None] * M
+    for j in range(M // 2 + 1):
+        s = acb(c, 2 * arb.pi() * j / B)
+        v = L(s, m) ** N / s
+        if j == 0 or j == M // 2:
+            coeff[j] = acb(v.real)
+        else:
+            coeff[j] = v
+            coeff[M - j] = v.conjugate()
+    ft = acb.dft(coeff, inverse=True)
+    del coeff
+    tail = (-arb(B)).exp() * L(-1, m).real ** N
+    alias = tail / arb(20).expm1()
+    a0 = 1 / arb(20).expm1()
+    freq = 2 / (arb.pi() * N) * ((variation(m) + c) * B / (arb.pi() * M)) ** N
+    exact = np.empty((2, M + 1))
+    gauss = np.empty_like(exact)
+    mean = N * mu(m)
+    sd = (N * (1 - mu(m) ** 2)).sqrt()
+    for j in range(M):
+        ex = (arb(20) * j / M).exp()
+        value = ft[j].real * ex * M / B - a0
+        exact[:, j] = out(value + arb(0, (freq * ex).upper()) + arb(0).union(alias))
+        x = arb(j) * B / M
+        gauss[:, j] = out(normal((x - mean) / sd) - normal((-x - mean) / sd))
+    exact[:, 0] = 0
+    exact[:, -1] = (out(1 - tail)[0], 1)
+    x = arb(B)
+    gauss[:, -1] = out(normal((x - mean) / sd) - normal((-x - mean) / sd))
+    gauss[:, 0] = 0
+    for values in (exact, gauss):
+        values[0], values[1] = tighten(*values)
+    return dict(N=np.array(N, dtype=np.int64), m=np.array(m, dtype=np.int64),
+                B=np.array(B, dtype=np.int64),
+                exact_lo=exact[0], exact_hi=exact[1], gauss_lo=gauss[0], gauss_hi=gauss[1])
+
+
+def _grouped_signal_point(calc, grouped, db, relative, absolute):
+    """Always group rectangles; the stopping bounds do not alter the result."""
+    aa = _signal_amplitude(db, calc.kappa)
+    for J in range(9, 14):
+        il, ih = calc.indices(aa, J)
+        outcome = {}
+        for method, (lv, hv) in calc.arb_values.items():
+            lo = grouped.dot(il, lv, grouped.prefix[J][0])
+            hi = grouped.dot(ih, hv, grouped.prefix[J][1]) + arb(float(calc.common["outside"]))
+            outcome[method] = (max(0., out(lo)[0]), min(1., out(hi)[1]))
+        if all(arb(b) - arb(a) <= max(arb(relative) * arb(a), arb(absolute))
+               for a, b in outcome.values()):
+            break
+    return outcome, J
+
+
+def _part_indices(indices, size):
+    result = np.array([_integer(i, "index", 0, size - 1) for i in indices], dtype=np.int64)
+    if len(np.unique(result)) != len(result):
+        raise ValueError("Signal indices must be disjoint")
+    return result
+
+
+def nakagami_signal_points(gain, common, indices, *, bits=160, kappa=Fraction(10)):
+    """Raw bounds on the 1025-node grid (-4096+8*j)/128 dB, with levels."""
+    m = _nakagami_m(np.asarray(gain.get("m")).item())
+    if m == 1:
+        raise ValueError("Nakagami signal generation requires m=2 or 3; use signal_points for m=1")
+    _integer(np.asarray(gain["N"]).item(), "N", 8, 64)
+    indices = _part_indices(indices, 1025)
+    from ._runtime import arithmetic
+    with arithmetic(bits):
+        calc = _SignalThermal(gain, common, kappa)
+        grouped = Grouped(calc)
+        result = dict(indices=indices, exact=np.empty((2, len(indices))),
+                      gauss=np.empty((2, len(indices))), levels=np.empty(len(indices), dtype=np.int8))
+        for k, j in enumerate(indices):
+            values, J = _grouped_signal_point(calc, grouped, (-4096 + 8 * int(j)) / 128, '.008', '1e-9')
+            for method in ("exact", "gauss"):
+                result[method][:, k] = values[method]
+            result["levels"][k] = J
+        return result
+
+
+def _merge_signal_parts(parts, size, methods):
+    seen = np.zeros(size, dtype=bool)
+    result = {name: np.empty((2, size)) for name in methods}
+    result["levels"] = np.empty(size, dtype=np.int8)
+    for part in parts:
+        indices = np.asarray(part["indices"])
+        if (indices.ndim != 1 or indices.dtype.kind not in "iu"
+                or np.any(indices < 0) or np.any(indices >= size)
+                or len(np.unique(indices)) != len(indices) or np.any(seen[indices])):
+            raise ValueError("Signal parts must have disjoint indices inside the grid")
+        for name in (*methods, "levels"):
+            values = np.asarray(part[name])
+            shape = (len(indices),) if name == "levels" else (2, len(indices))
+            if values.shape != shape or not np.all(np.isfinite(values)):
+                raise ValueError("Invalid signal part dimensions or non-finite values")
+            if name == "levels" and (values.dtype != np.int8 or np.any(values < 9) or np.any(values > 13)):
+                raise ValueError("Signal levels must be int8 in [9, 13]")
+            result[name][..., indices] = values
+        seen[indices] = True
+    if not np.all(seen):
+        raise ValueError("Signal parts must cover the whole grid without holes")
+    for name in methods:
+        lo, hi = result[name]
+        if not np.all((0 <= lo) & (lo <= hi) & (hi <= 1)):
+            raise ArithmeticError("Inconsistent signal bounds: require 0 <= lower <= upper <= 1")
+    return result
+
+
+def nakagami_finish_signal(parts, *, _size=1025):
+    """Merge complete disjoint parts, without final tightening or saved levels."""
+    size = _integer(_size, "size", 1, 1025)
+    result = _merge_signal_parts(parts, size, ("exact", "gauss"))
+    return dict(units128=np.arange(-4096, -4096 + 8 * size, 8, dtype=np.int64),
+                exact=result["exact"], gauss=result["gauss"])
+
+
+def nakagami_signal_arrays(gain, common, *, bits=160, kappa=Fraction(10)):
+    """Return units128, exact and gauss, in the historical insertion order."""
+    return nakagami_finish_signal([nakagami_signal_points(
+        gain, common, range(1025), bits=bits, kappa=kappa)])
