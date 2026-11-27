@@ -313,3 +313,33 @@ unchanged. No existing test is changed; new tests
 `unit/test_real_eta.py::test_trivial_regime_above_the_aliasing_threshold`
 and `::test_lambda_window_near_two`. A before/after capture of the suite
 is compared by `float.hex` (session S19b).
+
+
+## Ported gain and signal generators (27 November 2026, unreleased)
+
+`_generate_gain.py` ports the Rayleigh inversion and the signal-bank point
+loop with their original arithmetic order. It imports the existing Laplace
+transform, outward transport and tightening, and reuses the grouped prefix
+construction and dot product, with the signal generator's own 0.004/2e-10
+stopping rule and 40 dB dispatch. The generated gain bank has only `exact`
+and `gauss`; `gamma` and `gg` are not ported. Those arrays in the embedded
+N=8 and N=64 gain banks are inherited and unused. Explicit ValueError guards
+require M even and M >= N; the period uses isqrt(N-1)+1 for exact ceil(sqrt(N)).
+Entries own a restoring Arb context through a local runtime import, avoiding
+an import cycle. Signal partitions are explicit, with complete disjoint
+coverage required before final monotone tightening. No public API, bank,
+fixture, cache behavior or vendor source changes.
+
+Local comparisons against disposable historical copies at M=2^12 and 2^14
+agree byte for byte on the six common arrays at N=8,12,24,64, including both
+historical evaluation orders. Sixty-five raw signal points agree with the
+historical loop and the embedded N=8 bank. Independent Bessel-density
+quadrature includes an explicit bound near the nonanalytic origin and on
+the infinite tail. A complete eight-size local replay (Python 3.12.3,
+python-flint 0.9.0, NumPy 2.5.3) matched all six common gain arrays and all
+three signal arrays. Gain files at N=12,20,24,48 and every signal file matched
+the original uncompressed file hashes; the four six-array gain files differ
+from their ten-array originals as expected. Signal arrays also matched the
+package banks. The comparator accepted all references and detected a
+single-ulp change. Ten targeted generator mutations were detected. No
+cluster replay was performed; local costs are recorded in REGENERATION.md.

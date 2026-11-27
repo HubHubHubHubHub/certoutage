@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Pure internal Rayleigh gain and signal generators, explicit signal parts and
+  merge, local generation and archive comparison tools. No public API extension.
+- Independent transform integrals, embedded-bank overlap and signal byte checks;
+  explicit Fourier remainder guards and restored arithmetic context.
+
 ## 0.3.0 — 2026-11-27
 
 General interface, part I: free link coefficients d1, d2, free interference

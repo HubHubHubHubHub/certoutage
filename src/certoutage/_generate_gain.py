@@ -1,0 +1,212 @@
+"""Pure Rayleigh gain and signal generators, with the archive evaluation order.
+
+Only the callers write banks. ``power`` is a private reduced-grid test parameter;
+production gain banks use 19. No new public model sizes are enabled here.
+"""
+from __future__ import annotations
+
+import math
+from numbers import Integral
+
+import numpy as np
+from flint import acb, arb, arb_mat
+
+from ._vendor.commun import out
+from ._vendor.thermal_backend import L, normal, outward, tighten
+from ._vendor.nak_grouped import Grouped
+
+_SIGNAL_SIZE = 20481
+
+
+def _integer(value, name, lower, upper=None):
+    if (isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral)
+            or value < lower or (upper is not None and value > upper)):
+        domain = f"[{lower}, {upper}]" if upper is not None else f">= {lower}"
+        raise ValueError(f"{name} must be an integer in {domain}; booleans are not accepted")
+    return int(value)
+
+
+def gain_period(N):
+    """Exact period N + 16 ceil(sqrt(N)) + 40 for every integer N >= 1."""
+    N = _integer(N, "N", 1)
+    return N + 16 * (math.isqrt(N - 1) + 1) + 40
+
+
+def _gain_kernel(N, power):
+    """Inversion kernel; the caller owns the Arb context."""
+    N = _integer(N, "N", 1)
+    power = _integer(power, "power", 0)
+    M = 1 << power
+    if M % 2 != 0:
+        raise ValueError("The Fourier remainder requires an even M")
+    if M < N:
+        raise ValueError("The Fourier remainder requires M >= N")
+    B = gain_period(N)
+    c = arb(20) / B
+    coeff = [None] * M
+    for j in range(M // 2 + 1):
+        s = acb(c, 2 * arb.pi() * j / B)
+        v = L(s) ** N / s
+        if j == 0 or j == M // 2:
+            coeff[j] = acb(v.real)
+        else:
+            coeff[j] = v
+            coeff[M - j] = v.conjugate()
+    ft = acb.dft(coeff, inverse=True)
+    del coeff
+    tail = (-arb(B)).exp() * L(-1).real ** N
+    alias = tail / arb(20).expm1()
+    a0 = 1 / arb(20).expm1()
+    freq = 2 / (arb.pi() * N) * ((2 * arb.pi() + c) * B / (arb.pi() * M)) ** N
+    exact = np.empty((2, M + 1))
+    gauss = np.empty_like(exact)
+    mu = arb.pi() / 4
+    sd = (N * (1 - mu * mu)).sqrt()
+    for j in range(M):
+        ex = (arb(20) * j / M).exp()
+        value = ft[j].real * ex * M / B - a0
+        exact[:, j] = out(value + arb(0, (freq * ex).upper()) + arb(0).union(alias))
+        x = arb(j) * B / M
+        gauss[:, j] = out(normal((x - N * mu) / sd) - normal((-x - N * mu) / sd))
+    exact[:, 0] = 0
+    exact[:, -1] = (out(1 - tail)[0], 1)
+    x = arb(B)
+    gauss[:, -1] = out(normal((x - N * mu) / sd) - normal((-x - N * mu) / sd))
+    gauss[:, 0] = 0
+    for values in (exact, gauss):
+        values[0], values[1] = tighten(*values)
+    return dict(N=np.array(N, dtype=np.int64), B=np.array(B, dtype=np.int64),
+                exact_lo=exact[0], exact_hi=exact[1], gauss_lo=gauss[0], gauss_hi=gauss[1])
+
+
+def gain_arrays(N, *, power=19, bits=160) -> dict:
+    """Return six gain arrays for 8 <= N <= 64; ``power`` is private to tests."""
+    N = _integer(N, "N", 8, 64)
+    power = _integer(power, "power", 10, 19)
+    # Local import avoids a cycle with the runtime's thermal adapter.
+    from ._runtime import arithmetic
+    with arithmetic(bits):
+        return _gain_kernel(N, power)
+
+
+def _signal_amplitude(db):
+    d = arb(str(db))
+    ci = arb(10) / 3
+    lam = arb(1) / 8
+    return outward((101 * ci / ((d * arb(10).log() / 10).exp() * lam)).sqrt())
+
+
+class _SignalThermal:
+    """In-memory thermal rectangles; never invoke a file-reading constructor."""
+
+    def __init__(self, gain, common):
+        self.M = len(gain["exact_lo"]) - 1
+        self.dx = int(gain["B"]) / self.M
+        self.common = common
+        self.arb_values = {
+            name: ([arb(float(x)) for x in gain[name + "_lo"]],
+                   [arb(float(x)) for x in gain[name + "_hi"]])
+            for name in ("exact", "gauss")}
+        self.levels, self.weights = {}, {}
+        for J in range(9, 14):
+            step = 1 << (13 - J)
+            z, ph = common["z"][::step], common["phi"][:, ::step]
+            left, right = np.abs(10 + z[:-1]), np.abs(10 + z[1:])
+            ml = [(arb(float(x)) / (1 << J)).lower() for x in np.minimum(ph[0, :-1], ph[0, 1:])]
+            mh = [(arb(float(x)) / (1 << J)).upper() for x in np.maximum(ph[1, :-1], ph[1, 1:])]
+            self.levels[J] = (np.minimum(left, right), np.maximum(left, right), (ml, mh))
+            self.weights[J] = arb_mat([ml]), arb_mat([mh])
+
+    def indices(self, aa, J):
+        tmin, tmax, _ = self.levels[J]
+        al = np.maximum(0, np.nextafter(aa[0] / tmax, -np.inf))
+        with np.errstate(divide="ignore"):
+            ah = np.nextafter(aa[1] / tmin, np.inf)
+        il = np.minimum(self.M, np.floor(np.maximum(0, np.nextafter(al / self.dx, -np.inf)))).astype(np.int64)
+        ih = np.minimum(self.M, np.ceil(np.maximum(0, np.nextafter(ah / self.dx, np.inf)))).astype(np.int64)
+        return il, ih
+
+
+def _signal_point(calc, grouped, db):
+    aa = _signal_amplitude(db)
+    for J in range(9, 14):
+        il, ih = calc.indices(aa, J)
+        outcome = {}
+        for method, (lv, hv) in calc.arb_values.items():
+            if db >= 40:
+                lo = grouped.dot(il, lv, grouped.prefix[J][0])
+                hi = grouped.dot(ih, hv, grouped.prefix[J][1])
+            else:
+                wl, wh = calc.weights[J]
+                length = len(il)
+                lo = (wl * arb_mat(length, 1, [lv[int(i)] for i in il]))[0, 0]
+                hi = (wh * arb_mat(length, 1, [hv[int(i)] for i in ih]))[0, 0]
+            hi = hi + arb(float(calc.common["outside"]))
+            outcome[method] = (max(0.0, out(lo)[0]), min(1.0, out(hi)[1]))
+        if all(arb(float(b)) - arb(float(a)) <= max(arb('.004') * arb(float(a)), arb('2e-10'))
+               for a, b in outcome.values()):
+            break
+    return outcome, J
+
+
+def signal_points(gain, common, indices, *, bits=160):
+    """Return raw exact/gauss bounds and int8 levels at distinct grid indices.
+
+    A part contains ``indices`` (int64), ``exact``, ``gauss`` (2 by count),
+    and ``levels``. Bounds have not undergone the final monotone tightening.
+    The caller must merge explicit parts covering the whole grid.
+    """
+    indices = np.array([_integer(i, "index", 0, _SIGNAL_SIZE - 1) for i in indices], dtype=np.int64)
+    if len(np.unique(indices)) != len(indices):
+        raise ValueError("Signal indices must be disjoint")
+    from ._runtime import arithmetic
+    with arithmetic(bits):
+        calc = _SignalThermal(gain, common)
+        grouped = Grouped(calc)
+        result = dict(indices=indices, exact=np.empty((2, len(indices))),
+                      gauss=np.empty((2, len(indices))), levels=np.empty(len(indices), dtype=np.int8))
+        for k, j in enumerate(indices):
+            values, J = _signal_point(calc, grouped, (int(j) - 8192) / 128)
+            for method in ("exact", "gauss"):
+                result[method][:, k] = values[method]
+            result["levels"][k] = J
+        return result
+
+
+def finish_signal(parts, *, _size=_SIGNAL_SIZE):
+    """Merge disjoint full coverage, then tighten; ``_size`` is private to tests."""
+    _size = _integer(_size, "size", 1, _SIGNAL_SIZE)
+    seen = np.zeros(_size, dtype=bool)
+    result = dict(exact=np.empty((2, _size)), gauss=np.empty((2, _size)),
+                  levels=np.empty(_size, dtype=np.int8))
+    for part in parts:
+        indices = np.asarray(part["indices"])
+        if (indices.ndim != 1 or indices.dtype.kind not in "iu"
+                or np.any(indices < 0) or np.any(indices >= _size)
+                or len(np.unique(indices)) != len(indices) or np.any(seen[indices])):
+            raise ValueError("Signal parts must have disjoint indices inside the grid")
+        for name in ("exact", "gauss", "levels"):
+            values = np.asarray(part[name])
+            shape = (len(indices),) if name == "levels" else (2, len(indices))
+            if values.shape != shape or not np.all(np.isfinite(values)):
+                raise ValueError("Invalid signal part dimensions or non-finite values")
+            if name == "levels" and (values.dtype != np.int8 or np.any(values < 9) or np.any(values > 13)):
+                raise ValueError("Signal levels must be int8 in [9, 13]")
+            result[name][..., indices] = values
+        seen[indices] = True
+    if not np.all(seen):
+        raise ValueError("Signal parts must cover the whole grid without holes")
+    for name in ("exact", "gauss"):
+        a = result[name]
+        a[0] = np.maximum.accumulate(a[0, ::-1])[::-1]
+        a[1] = np.minimum.accumulate(a[1])
+        if not np.all(a[0] <= a[1]):
+            raise ArithmeticError("Inconsistent signal bounds: lower bound above upper bound")
+    return result
+
+
+def signal_arrays(gain, common, *, bits=160):
+    """Return a complete signal bank, in exact, gauss, levels insertion order."""
+    from ._runtime import arithmetic
+    with arithmetic(bits):
+        return finish_signal([signal_points(gain, common, range(_SIGNAL_SIZE), bits=bits)])

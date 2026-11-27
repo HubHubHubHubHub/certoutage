@@ -60,7 +60,7 @@ may make a result less precise; it must never make a result less true, and
 it must never do either without saying so. In practice:
 
 - **Certifying files** are `src/certoutage/api.py`, `models.py`,
-  `_runtime.py`, `_generate.py`, `_banks.py` and `_vendor/`. `models.py`
+  `_runtime.py`, `_generate.py`, `_generate_gain.py`, `_banks.py` and `_vendor/`. `models.py`
   holds the validation of the inputs, the check that every result is a
   valid probability interval, and the outward display. A change to the
   logic of any of them is declared in
