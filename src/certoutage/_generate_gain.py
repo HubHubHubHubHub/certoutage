@@ -6,6 +6,7 @@ production gain banks use 19. No new public model sizes are enabled here.
 from __future__ import annotations
 
 import math
+from fractions import Fraction
 from numbers import Integral
 
 import numpy as np
@@ -89,17 +90,80 @@ def gain_arrays(N, *, power=19, bits=160) -> dict:
         return _gain_kernel(N, power)
 
 
-def _signal_amplitude(db):
+def _check_kappa(kappa):
+    if not isinstance(kappa, Fraction) or kappa < 0:
+        raise ValueError("kappa must be an exact nonnegative Fraction")
+    return kappa
+
+
+def thermal_levels(z, phi, J, kappa=Fraction(10)):
+    """Thermal extrema and unchanged density masses on a selected 2**(-J) grid.
+
+    Input nodes are the common bank subsampled for J. Every endpoint absolute
+    value is exact before directed binary64 rounding. A closed cell containing
+    -kappa has minimum zero, including when -kappa is itself a grid node.
+    The caller owns the Arb context used for the density masses.
+    """
+    kappa = _check_kappa(kappa)
+    J = _integer(J, "J", 9, 13)
+    z, phi = np.asarray(z), np.asarray(phi)
+    if (z.ndim != 1 or len(z) < 2 or phi.shape != (2, len(z))
+            or not np.all(np.isfinite(z)) or not np.all(np.isfinite(phi))):
+        raise ValueError("Invalid common thermal grid")
+    # On this path every node is n/8192, |n|<=98304. If kappa has a
+    # denominator dividing 8192 and the numerator of the sum fits in 53
+    # bits, IEEE addition is exact. Multiplication by 8192 is exact here.
+    short_dyadic = (8192 % kappa.denominator == 0
+                    and abs(kappa.numerator * (8192 // kappa.denominator)) + 98304 <= 2**53)
+    if (short_dyadic and np.all(np.abs(z) <= 12)
+            and np.all(z * 8192 == np.rint(z * 8192))):
+        signed = float(kappa) + z
+        lower = upper = np.abs(signed)
+        crosses = (signed[:-1] <= 0) & (signed[1:] >= 0)
+    else:
+        signed = [kappa + Fraction(float(x)) for x in z]
+        lower, upper = np.empty(len(z)), np.empty(len(z))
+        for i, value in enumerate(signed):
+            lower[i], upper[i] = _absolute_outward(abs(value))
+        crosses = np.array([a <= 0 <= b for a, b in zip(signed[:-1], signed[1:])])
+    tmin = np.minimum(lower[:-1], lower[1:])
+    tmax = np.maximum(upper[:-1], upper[1:])
+    tmin[crosses] = 0.0
+    ml = [(arb(float(x)) / (1 << J)).lower() for x in np.minimum(phi[0, :-1], phi[0, 1:])]
+    mh = [(arb(float(x)) / (1 << J)).upper() for x in np.maximum(phi[1, :-1], phi[1, 1:])]
+    return tmin, tmax, (ml, mh)
+
+
+def _absolute_outward(value):
+    """Directed conversion of a nonnegative exact rational, keeping exact floats."""
+    try:
+        rounded = float(value)
+    except OverflowError:
+        return np.finfo(np.float64).max, np.inf
+    represented = Fraction(rounded)
+    if represented == value:
+        return rounded, rounded
+    else:
+        lower = np.nextafter(rounded, -np.inf) if represented > value else rounded
+        upper = np.nextafter(rounded, np.inf) if represented < value else rounded
+        return lower, upper
+
+
+def _signal_amplitude(db, kappa=Fraction(10)):
+    kappa = _check_kappa(kappa)
+    square = 1 + kappa * kappa
+    normalization = square.numerator if square.denominator == 1 else arb(square.numerator) / square.denominator
     d = arb(str(db))
     ci = arb(10) / 3
     lam = arb(1) / 8
-    return outward((101 * ci / ((d * arb(10).log() / 10).exp() * lam)).sqrt())
+    return outward((normalization * ci / ((d * arb(10).log() / 10).exp() * lam)).sqrt())
 
 
 class _SignalThermal:
     """In-memory thermal rectangles; never invoke a file-reading constructor."""
 
-    def __init__(self, gain, common):
+    def __init__(self, gain, common, kappa=Fraction(10)):
+        self.kappa = _check_kappa(kappa)
         self.M = len(gain["exact_lo"]) - 1
         self.dx = int(gain["B"]) / self.M
         self.common = common
@@ -111,10 +175,8 @@ class _SignalThermal:
         for J in range(9, 14):
             step = 1 << (13 - J)
             z, ph = common["z"][::step], common["phi"][:, ::step]
-            left, right = np.abs(10 + z[:-1]), np.abs(10 + z[1:])
-            ml = [(arb(float(x)) / (1 << J)).lower() for x in np.minimum(ph[0, :-1], ph[0, 1:])]
-            mh = [(arb(float(x)) / (1 << J)).upper() for x in np.maximum(ph[1, :-1], ph[1, 1:])]
-            self.levels[J] = (np.minimum(left, right), np.maximum(left, right), (ml, mh))
+            self.levels[J] = thermal_levels(z, ph, J, self.kappa)
+            ml, mh = self.levels[J][2]
             self.weights[J] = arb_mat([ml]), arb_mat([mh])
 
     def indices(self, aa, J):
@@ -128,7 +190,7 @@ class _SignalThermal:
 
 
 def _signal_point(calc, grouped, db):
-    aa = _signal_amplitude(db)
+    aa = _signal_amplitude(db, calc.kappa)
     for J in range(9, 14):
         il, ih = calc.indices(aa, J)
         outcome = {}
@@ -149,7 +211,7 @@ def _signal_point(calc, grouped, db):
     return outcome, J
 
 
-def signal_points(gain, common, indices, *, bits=160):
+def signal_points(gain, common, indices, *, bits=160, kappa=Fraction(10)):
     """Return raw exact/gauss bounds and int8 levels at distinct grid indices.
 
     A part contains ``indices`` (int64), ``exact``, ``gauss`` (2 by count),
@@ -161,7 +223,7 @@ def signal_points(gain, common, indices, *, bits=160):
         raise ValueError("Signal indices must be disjoint")
     from ._runtime import arithmetic
     with arithmetic(bits):
-        calc = _SignalThermal(gain, common)
+        calc = _SignalThermal(gain, common, kappa)
         grouped = Grouped(calc)
         result = dict(indices=indices, exact=np.empty((2, len(indices))),
                       gauss=np.empty((2, len(indices))), levels=np.empty(len(indices), dtype=np.int8))
@@ -205,8 +267,8 @@ def finish_signal(parts, *, _size=_SIGNAL_SIZE):
     return result
 
 
-def signal_arrays(gain, common, *, bits=160):
+def signal_arrays(gain, common, *, bits=160, kappa=Fraction(10)):
     """Return a complete signal bank, in exact, gauss, levels insertion order."""
     from ._runtime import arithmetic
     with arithmetic(bits):
-        return finish_signal([signal_points(gain, common, range(_SIGNAL_SIZE), bits=bits)])
+        return finish_signal([signal_points(gain, common, range(_SIGNAL_SIZE), bits=bits, kappa=kappa)])

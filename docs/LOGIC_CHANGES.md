@@ -343,3 +343,38 @@ from their ten-array originals as expected. Signal arrays also matched the
 package banks. The comparator accepted all references and detected a
 single-ulp change. Ten targeted generator mutations were detected. No
 cluster replay was performed; local costs are recorded in REGENERATION.md.
+
+
+## Thermal cell containing −κ (27 November 2026, unreleased)
+
+`thermal_levels` sets the minimum of |kappa+z| to zero on every closed cell
+containing -kappa. Other extrema come from exact rational endpoint values,
+rounded downward for minima and upward for maxima. A proved binary64 fast
+path keeps the historical arithmetic for short dyadic shifts and the common
+grid: sums have denominator dividing 8192 and at most 53 significant bits.
+Masses and their Arb operation order are unchanged. Internal signal entries
+accept only a nonnegative Fraction, default 10; normalization is the integer
+101 at that default, otherwise the exact 1+kappa^2 (an integer when possible,
+Arb numerator/denominator otherwise). No new public API parameter is exposed.
+
+The runtime thermal adapter now calls this helper at Fraction(10), while its
+point amplitude retains 101. Both file-reading vendor constructors are off
+all runtime/generator paths: the runtime constructor fully replaces its
+parent and never calls super().__init__; the new generator owns in-memory
+rectangles. Vendor files remain unchanged. Tests replace both vendor
+constructors by failures to check that they are unreachable, verify all
+default grid extrema and masses byte for byte at J=9 through 13, and bound
+non-dyadic extrema independently with Fraction on the full J=9 grid and a
+sample at J=13. Closed-cell checks cover both neighbors when the shift is a
+node. For kappa=5/2, as for 10, the old minimum was already zero at that node;
+7/3 and 1/3 exhibit the positive old minimum inside a crossing cell.
+
+
+Two further mutations, restoring the positive crossing-cell minimum and
+rounding minima to nearest, were detected. Ten public-query captures retain
+identical float.hex bounds before the port, after the port and after this
+correction. A search at kappa=7/3 over 386 grid points from 0 to 96 dB found
+no disjoint numerical witness between the old and new output intervals;
+this is not an exhaustive search. The independent exact cell-extrema checks
+remain the direct test of the correction. Monte Carlo at nondefault shifts
+is outside this change.

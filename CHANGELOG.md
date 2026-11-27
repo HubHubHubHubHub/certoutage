@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Correct thermal cell minima for exact internal shifts kappa: closed cells
+  containing -kappa have minimum zero, with outward rational endpoint bounds.
+  Default kappa=10 preserves historical bytes; public model parameters stay unchanged.
+
 - Pure internal Rayleigh gain and signal generators, explicit signal parts and
   merge, local generation and archive comparison tools. No public API extension.
 - Independent transform integrals, embedded-bank overlap and signal byte checks;

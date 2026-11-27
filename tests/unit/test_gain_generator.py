@@ -356,3 +356,94 @@ def test_gain_cdf_order(N):
         assert np.all((0 <= lo) & (lo <= hi) & (hi <= 1))
         assert np.all(np.diff(lo) >= 0) and np.all(np.diff(hi) >= 0)
         assert lo[0] == hi[0] == 0 and hi[-1] == 1
+
+
+def _historical_levels(z, phi, J, kappa):
+    left, right = np.abs(float(kappa)+z[:-1]), np.abs(float(kappa)+z[1:])
+    ml = [(arb(float(x))/(1<<J)).lower() for x in np.minimum(phi[0,:-1],phi[0,1:])]
+    mh = [(arb(float(x))/(1<<J)).upper() for x in np.maximum(phi[1,:-1],phi[1,1:])]
+    return np.minimum(left,right), np.maximum(left,right), (ml,mh)
+
+
+def _same_levels(actual, expected):
+    for i in (0,1):
+        assert actual[i].dtype == expected[i].dtype
+        assert actual[i].tobytes() == expected[i].tobytes()
+    for a,b in zip(actual[2], expected[2]):
+        assert [(x.mid(),x.rad()) for x in a] == [(x.mid(),x.rad()) for x in b]
+
+
+def test_thermal_default_preserves_bytes(banks):
+    common = banks["commun.npz"]
+    with rt.arithmetic(160):
+        runtime = rt.Thermal(8,1,False)
+        for J in range(9,14):
+            step = 1 << (13-J)
+            z,phi = common["z"][::step],common["phi"][:,::step]
+            expected = _historical_levels(z,phi,J,Fraction(10))
+            _same_levels(gen.thermal_levels(z,phi,J,Fraction(10)),expected)
+            _same_levels(runtime.levels[J],expected)
+
+
+@pytest.mark.parametrize("kappa", [Fraction(7,3),Fraction(5,2),Fraction(1,3)])
+def test_thermal_cells_enclose_exact_extrema(banks,kappa):
+    common = banks["commun.npz"]
+    with rt.arithmetic(160):
+        for J in (9,13):
+            step=1 << (13-J)
+            z,phi=common["z"][::step],common["phi"][:,::step]
+            lo,hi,masses=gen.thermal_levels(z,phi,J,kappa)
+            crossing=np.flatnonzero((z[:-1]<=-float(kappa)) & (z[1:]>=-float(kappa)))
+            selected=range(len(lo)) if J==9 else sorted(set(range(0,len(lo),197)) | set(crossing))
+            for i in selected:
+                left,right=kappa+Fraction(float(z[i])), kappa+Fraction(float(z[i+1]))
+                minimum=0 if left<=0<=right else min(abs(left),abs(right))
+                maximum=max(abs(left),abs(right))
+                assert Fraction(float(lo[i])) <= minimum <= maximum <= Fraction(float(hi[i]))
+                if left<=0<=right:
+                    assert lo[i] == 0
+                    if left<0<right:
+                        assert min(abs(float(kappa)+z[i]),abs(float(kappa)+z[i+1])) > 0
+            old=_historical_levels(z,phi,J,kappa)
+            for actual,expected in zip(masses,old[2]):
+                assert [(x.mid(),x.rad()) for x in actual] == [(x.mid(),x.rad()) for x in expected]
+
+
+@pytest.mark.parametrize("kappa", [Fraction(12),Fraction(25,2),Fraction(20)])
+def test_thermal_outside_shift_preserves_bytes(banks,kappa):
+    common=banks["commun.npz"]
+    with rt.arithmetic(160):
+        for J in range(9,14):
+            step=1 << (13-J)
+            z,phi=common["z"][::step],common["phi"][:,::step]
+            _same_levels(gen.thermal_levels(z,phi,J,kappa),_historical_levels(z,phi,J,kappa))
+
+
+def test_thermal_amplitude_default_bytes():
+    with rt.arithmetic(160):
+        for j in np.linspace(0,20480,23,dtype=int):
+            db=(int(j)-8192)/128
+            expected=thermal_backend.Thermal.amplitude(None,db,1)
+            actual=gen._signal_amplitude(db,Fraction(10))
+            assert np.asarray(actual).tobytes()==np.asarray(expected).tobytes()
+        for kappa in (Fraction(0),Fraction(1,3),Fraction(7,3),Fraction(25,2)):
+            lo,hi=gen._signal_amplitude(0,kappa)
+            square=(1+kappa*kappa)*Fraction(80,3)
+            assert Fraction(float(lo))**2 <= square <= Fraction(float(hi))**2
+
+
+@pytest.mark.parametrize("kappa", [10,10.0,"10",True,Fraction(-1)])
+def test_kappa_requires_exact_nonnegative_fraction(banks,kappa):
+    common=banks["commun.npz"]
+    with pytest.raises(ValueError,match="Fraction"):
+        gen.thermal_levels(common["z"][::16],common["phi"][:,::16],9,kappa)
+    with pytest.raises(ValueError,match="Fraction"):
+        gen.signal_points(banks["m1_N8.npz"],common,[],kappa=kappa)
+
+
+def test_absolute_rounding_keeps_exact_values_and_bounds():
+    for q in (Fraction(0),Fraction(1,3),Fraction(7,3),Fraction(1,2**1100),Fraction(10)**400):
+        lo,hi=gen._absolute_outward(q)
+        assert Fraction(float(lo))<=q
+        assert math.isinf(hi) or q<=Fraction(float(hi))
+    assert gen._absolute_outward(Fraction(5,2))==(2.5,2.5)

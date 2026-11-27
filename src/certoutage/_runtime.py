@@ -19,6 +19,7 @@ from ._vendor.nak_thermal import Thermal as OriginalThermal
 from ._vendor.nak_grouped import Grouped
 from ._vendor.thermal_backend import outward
 from ._generate import environment_arrays
+from ._generate_gain import thermal_levels
 from ._transform import eta_value
 
 _LOCK = threading.RLock()
@@ -196,10 +197,8 @@ class Thermal(OriginalThermal):
         for J in range(9, 14):
             step = 1 << (13 - J)
             z, ph = self.common["z"][::step], self.common["phi"][:, ::step]
-            left, right = np.abs(10 + z[:-1]), np.abs(10 + z[1:])
-            ml = [(arb(float(x)) / (1 << J)).lower() for x in np.minimum(ph[0, :-1], ph[0, 1:])]
-            mh = [(arb(float(x)) / (1 << J)).upper() for x in np.maximum(ph[1, :-1], ph[1, 1:])]
-            self.levels[J] = (np.minimum(left, right), np.maximum(left, right), (ml, mh))
+            self.levels[J] = thermal_levels(z, ph, J, Fraction(10))
+            ml, mh = self.levels[J][2]
             self.weights[J] = arb_mat([ml]), arb_mat([mh])
 
 
