@@ -71,18 +71,87 @@ def compare(archive, generated, *, packaged=None, m=1):
     return dict(ok=all(row["ok"] for row in rows.values()), banks=rows)
 
 
+
+def _chernoff_data(path):
+    with np.load(path, allow_pickle=False) as stream:
+        data = {name: stream[name] for name in stream.files}
+    # The central historical generator named these two arrays lower/upper.
+    if "lower" in data and "upper" in data:
+        data["chernoff_lo"] = data.pop("lower")
+        data["chernoff_hi"] = data.pop("upper")
+    return data
+
+
+def compare_chernoff_bank(actual_path, reference_path, *, mode="overlap"):
+    """Compare every node, recording bytes and endpoint-relative differences.
+
+    Refinement levels are compared byte for byte but need not agree in overlap
+    mode: they describe the chosen quadrature, not the comparator's domain.
+    Relative differences exclude endpoints at or below 1e-300.
+    """
+    if mode not in ("bytes", "overlap"):
+        raise ValueError("mode must be bytes or overlap")
+    actual, reference = _chernoff_data(actual_path), _chernoff_data(reference_path)
+    arrays = {}
+    for name, ref in reference.items():
+        a = actual.get(name)
+        valid = a is not None and a.dtype == ref.dtype and a.shape == ref.shape and np.all(np.isfinite(a))
+        arrays[name] = dict(status="identical" if valid and a.tobytes() == ref.tobytes() else "different",
+                            compatible=bool(valid))
+    compatible = all(row["compatible"] for row in arrays.values())
+    overlap = {}
+    if compatible:
+        pairs = [("chernoff", actual["chernoff"], reference["chernoff"])] if "chernoff" in reference else [
+            ("chernoff", np.array([actual["chernoff_lo"], actual["chernoff_hi"]]),
+             np.array([reference["chernoff_lo"], reference["chernoff_hi"]]))]
+        for method, a, b in pairs:
+            valid_bounds = (a.ndim == b.ndim == 2 and a.shape[0] == b.shape[0] == 2
+                            and np.all((0 <= a[0]) & (a[0] <= a[1]) & (a[1] <= 1))
+                            and np.all((0 <= b[0]) & (b[0] <= b[1]) & (b[1] <= 1)))
+            shared = np.maximum(a[0], b[0]) <= np.minimum(a[1], b[1])
+            mask = (a > 1e-300) & (b > 1e-300)
+            relative = float(np.max(np.abs(a[mask]-b[mask])/np.abs(b[mask]))) if np.any(mask) else 0.
+            overlap[method] = dict(nodes=int(a.shape[1]), disjoint=int(np.count_nonzero(~shared)),
+                                   overlap=bool(valid_bounds and np.all(shared)),
+                                   max_relative_difference=relative)
+    equal = all(row["status"] == "identical" for row in arrays.values())
+    domain_equal = all(arrays[name]["status"] == "identical" for name in ("N", "B", "stride") if name in arrays)
+    ok = compatible and domain_equal and bool(overlap) and all(row["overlap"] for row in overlap.values())
+    if mode == "bytes":
+        ok = ok and equal
+    return dict(ok=bool(ok), arrays_identical=equal, arrays=arrays, overlap=overlap,
+                file_identical=sha256(actual_path.read_bytes()).digest() == sha256(reference_path.read_bytes()).digest())
+
+
+def compare_chernoff(generated, references, *, mode="overlap"):
+    rows = {}
+    for path in sorted(generated.glob("*.npz")):
+        if re.fullmatch(r"(?:C_N|SIG_C_)\d+\.npz", path.name) and (references/path.name).is_file():
+            rows[path.name] = compare_chernoff_bank(path, references/path.name, mode=mode)
+    if not rows:
+        raise ValueError("No matching Chernoff references; no overlap claim can be made")
+    return dict(ok=all(row["ok"] for row in rows.values()), banks=rows)
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--chernoff", action="store_true")
+    parser.add_argument("--mode", choices=("bytes", "overlap"), default="overlap")
     parser.add_argument("--m", type=int, choices=(1, 2, 3), default=1)
     parser.add_argument("--archive", type=Path, required=True)
     parser.add_argument("--generated", type=Path, required=True)
     parser.add_argument("--json", type=Path, help="JSON destination (default: generated/comparison.json)")
     parser.add_argument("--packaged", type=Path, help="also compare signal arrays with a package data directory")
     args = parser.parse_args()
-    result = compare(args.archive, args.generated, packaged=args.packaged, m=args.m)
+    if args.chernoff:
+        if args.packaged is None:
+            parser.error("--chernoff requires --packaged as the reference directory")
+        result = compare_chernoff(args.generated, args.packaged, mode=args.mode)
+    else:
+        result = compare(args.archive, args.generated, packaged=args.packaged, m=args.m)
     for name, row in result["banks"].items():
         print(name, " ".join(f"{key}={value['status']}" for key, value in row["arrays"].items()),
-              f"file={row['original_file']} expected={row['expected_original_file']}")
+              (f"overlap={row['overlap']}" if args.chernoff else
+               f"file={row['original_file']} expected={row['expected_original_file']}"))
     (args.json or args.generated / "comparison.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     return 0 if result["ok"] else 1
 

@@ -233,3 +233,175 @@ def test_nakagami_finish_guards_and_no_tightening():
 def test_nakagami_domain(m):
     with pytest.raises(ValueError,match='integer'):
         gen.gain_arrays(8,m=m,power=10)
+
+
+from certoutage import _chernoff as ch
+from certoutage._vendor.nak_grouped import Grouped
+
+
+@pytest.mark.parametrize('N', [8, 64])
+def test_chernoff_values_and_signs(banks, N):
+    reference = banks[f'C_N{N}.npz']
+    B, M = int(reference['B']), len(reference['chernoff_lo'])-1
+    # Common stride-eight nodes: tiny a, the t=2 series, near the mean,
+    # the endpoints, and the constant-one regime are all included.
+    end = int(N*math.pi/4*M/B)//8
+    nodes = sorted(set([0,1,2, end, end+1, M//8] + np.linspace(3,end-1,26,dtype=int).tolist()))
+    near_two = False
+    with rt.arithmetic(160):
+        for k in nodes:
+            j = 8*k
+            a = arb(j)*B/M
+            value, root = ch.chernoff_value(a, N)
+            ref = arb(float(reference['chernoff_lo'][j])).union(arb(float(reference['chernoff_hi'][j])))
+            assert value.overlaps(ref)
+            if root:
+                ml,mh=ch.moments(root['s_lower']),ch.moments(root['s_upper'])
+                assert ml[1]/ml[0]>a/N and mh[1]/mh[0]<a/N
+                near_two |= abs(root['s_lower']-2)<.8
+        assert near_two
+        for a in (arb('0.01'),N*arb('.4'),N*arb('.7')):
+            expected,_=ch.chernoff_value(a,N)
+            try:
+                result,root=ch.chernoff_value(a,N,_guess=lambda *args:0.)
+            except ArithmeticError:
+                continue
+            assert result.overlaps(expected)
+            assert root is not None
+            assert ch.moments(root['s_lower'])[1]/ch.moments(root['s_lower'])[0]>a/N
+            assert ch.moments(root['s_upper'])[1]/ch.moments(root['s_upper'])[0]<a/N
+
+
+@pytest.mark.parametrize('N',[9,21,63])
+def test_chernoff_new_sizes(N):
+    with rt.arithmetic(160):
+        for a in [0]+[N*arb(j)/12 for j in range(1,11)]:
+            value,_=ch.chernoff_value(a,N)
+            assert value.is_finite() and value>=0 and value<=1
+
+
+def test_chernoff_mean_guard(monkeypatch):
+    # An exact stand-in for the mean tests equality, not merely a nearby float.
+    # The optimizer must never run at or above this boundary.
+    monkeypatch.setattr(ch,'mu',lambda m:arb(1))
+    def refuse(*args):raise AssertionError('Root search reached the mean')
+    with rt.arithmetic(160):
+        assert ch.chernoff_value(8,8,_guess=refuse)==(arb(1),None)
+        assert ch.chernoff_value(9,8,_guess=refuse)==(arb(1),None)
+        assert ch.chernoff_value(0,8,_guess=refuse)==(arb(0),None)
+
+
+@pytest.fixture(scope='module')
+def chernoff_full():
+    # Measured below ten seconds for N=8 on the local reference machine.
+    return ch.chernoff_arrays(8)
+
+
+def test_chernoff_full_bank_overlap(banks, chernoff_full):
+    actual,ref=chernoff_full,banks['C_N8.npz']
+    assert list(actual)==['chernoff_lo','chernoff_hi','B','N','stride']
+    assert actual.diagnostics['roots']==4289  # historical C_N8.json
+    assert np.all(np.maximum(actual['chernoff_lo'],ref['chernoff_lo'])<=
+                  np.minimum(actual['chernoff_hi'],ref['chernoff_hi']))
+    for name in ('chernoff_lo','chernoff_hi'):
+        a,b=actual[name],ref[name];mask=(a>1e-300)&(b>1e-300)
+        assert np.max(np.abs(a[mask]-b[mask])/b[mask])<=1e-8
+
+
+def test_chernoff_signal_always_grouped(banks, monkeypatch):
+    calls=[]
+    original=Grouped.dot
+    def record(self,*args):
+        calls.append(1)
+        return original(self,*args)
+    monkeypatch.setattr(Grouped,'dot',record)
+    indices=[0,1800,2048,2300,3328,5120]
+    raw=gen.chernoff_signal_points(banks['C_N64.npz'],banks['commun.npz'],indices)
+    assert len(calls)>=2*len(indices)
+    assert raw['chernoff'].shape==(2,len(indices))
+    assert np.all(raw['chernoff'][0]<=raw['chernoff'][1])
+    assert np.all((9<=raw['levels'])&(raw['levels']<=13))
+
+
+def test_chernoff_finish_envelope_and_guards():
+    raw=dict(chernoff=np.array([[.8,.7,.75,.2],[.9,.8,.85,.4]]),levels=np.full(4,9,dtype=np.int8))
+    parts=_parts(raw,[[2,0],[3,1]],methods=('chernoff',))
+    result=gen.chernoff_finish_signal(parts,_size=4)
+    assert list(result)==['chernoff','levels']
+    # Coarse lower=[.8,.75,.75,.2], upper=[.9,.8,.8,.4].
+    assert result['chernoff'][0].tolist()==[.8,.75,.75,.75,.75,.75,.75,.75,.75,.2,.2,.2,.2]
+    assert result['chernoff'][1].tolist()==[.9,.9,.9,.9,.8,.8,.8,.8,.8,.8,.8,.8,.4]
+    assert np.array_equal(result['levels'],[9]*4)
+    for bad in ([parts[0]],parts+[parts[0]],_parts(raw,[[0,0,1,2,3]],('chernoff',))):
+        with pytest.raises(ValueError):gen.chernoff_finish_signal(bad,_size=4)
+    raw['chernoff'][0,0]=1
+    with pytest.raises(ArithmeticError):gen.chernoff_finish_signal(_parts(raw,[[0,1,2,3]],('chernoff',)),_size=4)
+
+
+def _tool(name):
+    import importlib.util
+    spec=importlib.util.spec_from_file_location(name,Path(__file__).resolve().parents[2]/'tools'/f'{name}.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module
+
+
+def test_chernoff_comparator_self_and_one_ulp(tmp_path,banks):
+    tool=_tool('compare_gain_banks')
+    source=tmp_path/'C_N8.npz';changed=tmp_path/'changed.npz'
+    data={k:v.copy() for k,v in banks['C_N8.npz'].items()}
+    np.savez(source,**data)
+    assert tool.compare_chernoff_bank(source,source,mode='bytes')['ok']
+    assert tool.compare_chernoff_bank(source,source,mode='overlap')['ok']
+    data['chernoff_hi'][50000]=np.nextafter(data['chernoff_hi'][50000],np.inf)
+    np.savez(changed,**data)
+    assert not tool.compare_chernoff_bank(changed,source,mode='bytes')['ok']
+    # A degenerate interval shifted by one ulp is disjoint; a general interval
+    # shifted by one ulp may still overlap and must not be rejected for that.
+    data=dict(chernoff=np.array([[.25],[.25]]),levels=np.array([9],dtype=np.int8))
+    np.savez(source,**data)
+    data['chernoff']=np.nextafter(data['chernoff'],np.inf);np.savez(changed,**data)
+    assert not tool.compare_chernoff_bank(changed,source,mode='overlap')['ok']
+
+
+def test_chernoff_contains_known_optimum():
+    with rt.arithmetic(256):
+        # At t=2, L=1/3 and M1/L=2/5 (the independent density moments).
+        # Thus a=2N/5 has its exact minimizer at 2; no root solver is needed.
+        a=arb(16)/5
+        exact=(2*a).exp()/arb(3)**8
+        value,root=ch.chernoff_value(a,8,_guess=lambda *args:2.)
+        assert root['s_lower']<2<root['s_upper']
+        assert value.contains(exact)
+
+
+def test_comparator_entries_pure_and_restore_context(monkeypatch,tmp_path,banks):
+    monkeypatch.chdir(tmp_path)
+    cache=Path.home()/'.cache/certoutage'
+    before=sorted(cache.rglob('*')) if cache.exists() else None
+    saved=ctx.prec,ctx.threads
+    def fail(*args,**kwargs):raise ArithmeticError('Forced comparator failure')
+    try:
+        ctx.prec,ctx.threads=83,2
+        for m in (2,3):
+            gen.gain_arrays(8,m=m,power=10)
+            assert (ctx.prec,ctx.threads)==(83,2)
+        ch.chernoff_arrays(9,power=10)
+        assert (ctx.prec,ctx.threads)==(83,2)
+        gen.nakagami_signal_points(banks['m2_N8.npz'],banks['commun.npz'],[640])
+        assert (ctx.prec,ctx.threads)==(83,2)
+        gen.chernoff_signal_points(banks['C_N64.npz'],banks['commun.npz'],[2048])
+        assert (ctx.prec,ctx.threads)==(83,2)
+        with pytest.raises(ArithmeticError):ch.chernoff_arrays(8,power=10,_guess=fail)
+        assert (ctx.prec,ctx.threads)==(83,2)
+        monkeypatch.setattr(nak,'L',fail)
+        with pytest.raises(ArithmeticError):gen.gain_arrays(8,m=2,power=10)
+        assert (ctx.prec,ctx.threads)==(83,2)
+        monkeypatch.setattr(gen,'_grouped_signal_point',fail)
+        for fun,bank in ((gen.nakagami_signal_points,banks['m2_N8.npz']),
+                         (gen.chernoff_signal_points,banks['C_N64.npz'])):
+            with pytest.raises(ArithmeticError):fun(bank,banks['commun.npz'],[0])
+            assert (ctx.prec,ctx.threads)==(83,2)
+    finally:
+        ctx.prec,ctx.threads=saved
+    assert list(tmp_path.iterdir())==[]
+    assert (sorted(cache.rglob('*')) if cache.exists() else None)==before

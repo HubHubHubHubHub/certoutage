@@ -422,3 +422,64 @@ def nakagami_signal_arrays(gain, common, *, bits=160, kappa=Fraction(10)):
     """Return units128, exact and gauss, in the historical insertion order."""
     return nakagami_finish_signal([nakagami_signal_points(
         gain, common, range(1025), bits=bits, kappa=kappa)])
+
+
+class _ChernoffThermal(_SignalThermal):
+    """In-memory Rayleigh thermal adapter requiring only the Chernoff bank."""
+
+    def __init__(self, cbank, common, kappa=Fraction(10)):
+        _integer(np.asarray(cbank["N"]).item(), "N", 8, 64)
+        self.kappa = _check_kappa(kappa)
+        self.M = len(cbank["chernoff_lo"]) - 1
+        self.dx = int(cbank["B"]) / self.M
+        self.common = common
+        self.arb_values = {"chernoff": (
+            [arb(float(x)) for x in cbank["chernoff_lo"]],
+            [arb(float(x)) for x in cbank["chernoff_hi"]])}
+        self.levels, self.weights = {}, {}
+        for J in range(9, 14):
+            step = 1 << (13-J)
+            z, ph = common["z"][::step], common["phi"][:, ::step]
+            self.levels[J] = thermal_levels(z, ph, J, self.kappa)
+            ml, mh = self.levels[J][2]
+            self.weights[J] = arb_mat([ml]), arb_mat([mh])
+
+
+def _chernoff_signal_point(calc, grouped, db):
+    return _grouped_signal_point(calc, grouped, db, '.004', '2e-10')
+
+
+def chernoff_signal_points(cbank, common, indices, *, bits=160, kappa=Fraction(10)):
+    """Raw comparator bounds at indices 0..5120, on (j-2048)/32 dB."""
+    indices = _part_indices(indices, 5121)
+    from ._runtime import arithmetic
+    with arithmetic(bits):
+        calc = _ChernoffThermal(cbank, common, kappa)
+        grouped = Grouped(calc)
+        result = dict(indices=indices, chernoff=np.empty((2, len(indices))),
+                      levels=np.empty(len(indices), dtype=np.int8))
+        for k, j in enumerate(indices):
+            values, J = _chernoff_signal_point(calc, grouped, (int(j)-2048)/32)
+            result["chernoff"][:, k] = values["chernoff"]
+            result["levels"][k] = J
+        return result
+
+
+def chernoff_finish_signal(parts, *, _size=5121):
+    """Merge complete disjoint parts, tighten, then envelope at 1/128 dB."""
+    size = _integer(_size, "size", 1, 5121)
+    result = _merge_signal_parts(parts, size, ("chernoff",))
+    thermal = result["chernoff"]
+    thermal[0] = np.maximum.accumulate(thermal[0, ::-1])[::-1]
+    thermal[1] = np.minimum.accumulate(thermal[1])
+    if not np.all(thermal[0] <= thermal[1]):
+        raise ArithmeticError("Inconsistent Chernoff signal bounds: lower above upper")
+    fine = np.arange(4*(size-1)+1)
+    envelope = np.array([thermal[0, (fine + 3)//4], thermal[1, fine//4]])
+    return dict(chernoff=envelope, levels=result["levels"])
+
+
+def chernoff_signal_arrays(cbank, common, *, bits=160, kappa=Fraction(10)):
+    """Return propagated Chernoff bounds and the 5121 raw refinement levels."""
+    return chernoff_finish_signal([chernoff_signal_points(
+        cbank, common, range(5121), bits=bits, kappa=kappa)])

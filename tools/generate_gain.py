@@ -16,7 +16,9 @@ import numpy as np
 
 from certoutage import _banks
 from certoutage._generate_gain import (gain_arrays, signal_arrays, signal_points, finish_signal,
-    nakagami_signal_arrays, nakagami_signal_points, nakagami_finish_signal)
+    nakagami_signal_arrays, nakagami_signal_points, nakagami_finish_signal,
+    chernoff_signal_arrays, chernoff_signal_points, chernoff_finish_signal)
+from certoutage._chernoff import chernoff_arrays
 
 
 def _write(path, arrays, seconds, *, compressed=False, extra=None):
@@ -38,6 +40,7 @@ def _write(path, arrays, seconds, *, compressed=False, extra=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--N", type=int, required=True)
+    parser.add_argument("--chernoff", action="store_true", help="generate the Rayleigh Chernoff comparator")
     parser.add_argument("--m", type=int, choices=(1, 2, 3), default=1)
     parser.add_argument("--output", type=Path, required=True)
     mode = parser.add_mutually_exclusive_group()
@@ -52,6 +55,12 @@ def main():
     points_fn = signal_points if args.m == 1 else nakagami_signal_points
     arrays_fn = signal_arrays if args.m == 1 else nakagami_signal_arrays
     finish_fn = finish_signal if args.m == 1 else nakagami_finish_signal
+    if args.chernoff:
+        if args.m != 1:
+            parser.error("Chernoff is defined only for Rayleigh m=1")
+        size, stem = 5121, f"SIG_C_{args.N}"
+        points_fn, arrays_fn, finish_fn = chernoff_signal_points, chernoff_signal_arrays, chernoff_finish_signal
+    methods = ("chernoff",) if args.chernoff else ("exact", "gauss")
     indices = None
     if args.points is not None:
         try:
@@ -73,14 +82,18 @@ def main():
                     parser.error("all parts must have the requested N")
                 if args.m != 1 and ("m" not in data or int(data["m"]) != args.m):
                     parser.error("all parts must have the requested m")
-                parts.append({name: data[name] for name in ("indices", "exact", "gauss", "levels")})
+                parts.append({name: data[name] for name in ("indices", *methods, "levels")})
         signal = finish_fn(parts)
         _write(args.output / (stem + ".npz"), signal, time.perf_counter() - started, compressed=args.m != 1)
         return
     started = time.perf_counter()
-    gain = gain_arrays(args.N) if args.m == 1 else gain_arrays(args.N, m=args.m)
+    gain = (chernoff_arrays(args.N) if args.chernoff else
+            gain_arrays(args.N) if args.m == 1 else gain_arrays(args.N, m=args.m))
     gain_name = f"N{args.N}.npz" if args.m == 1 else f"m{args.m}_N{args.N}.npz"
-    _write(args.output / gain_name, gain, time.perf_counter() - started)
+    if args.chernoff:
+        gain_name = f"C_N{args.N}.npz"
+    _write(args.output / gain_name, gain, time.perf_counter() - started,
+           extra=getattr(gain, "diagnostics", None))
     if args.signal or indices is not None:
         started = time.perf_counter()
         common = _banks.arrays("commun.npz")
