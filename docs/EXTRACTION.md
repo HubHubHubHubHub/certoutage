@@ -94,14 +94,17 @@ function renamed `verified_bytes`. No numerical calculation changed. The
 licence split was checked in the archive: see [LICENSES.md](../LICENSES.md).
 The destination digests include these changes.
 
-Unreleased (26 November 2026): the user-facing text of the destination
+0.2.0 (26 November 2026): the user-facing text of the destination
 files was translated into English (see [LOGIC_CHANGES.md](LOGIC_CHANGES.md)).
 The `destination_sha256` digests in `EXTRACTION.json` still describe 0.1.0
 (all 66 were checked against the 0.1.0 tag). The eight destinations whose
 bytes changed since then carry two extra fields in their entries:
 `post_release_sha256`, the digest of the current file, and
-`post_release_change`. Seven changed for text only; `_runtime.py` also
-carries the new cache key of the PPP/Gamma environment (see
+`post_release_change`. In 0.2.0, seven changed for text only, and
+`_runtime.py` also carries the new cache key of the PPP/Gamma environment.
+In 0.3.0, `_generate.py`, `_runtime.py` and `api.py` also carry the link
+coefficients, the real path-loss exponent and the PPP domain notes; the five
+`_vendor/` files are unchanged since 0.2.0 (see
 [LOGIC_CHANGES.md](LOGIC_CHANGES.md)). `tests/unit/test_release.py` checks
 that each recorded digest is that of the file, and that every destination
 that differs from 0.1.0 is recorded (G37).

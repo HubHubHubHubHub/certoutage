@@ -7,7 +7,7 @@ Certified outage bounds for RIS-NOMA with source-side thermal energy harvesting
 
 `certoutage` provides deterministic, two-sided outage bounds for the Letter's
 thermal RIS-NOMA model with two users and Poisson interference. Every result
-carries an explicit mathematical and numerical contract. Version **0.2.0** is
+carries an explicit mathematical and numerical contract. Version **0.3.0** is
 available from https://github.com/HubHubHubHubHub/certoutage.
 
 ## Installation
@@ -98,29 +98,39 @@ The supported model is deliberately limited:
   Rayleigh (`m=1`) or Nakagami **m=2,3**, with elementary powers following a
   Gamma distribution of shape m and rate m.
 - A planar Poisson point process outside the disk **R0=1**, with unit-mean
-  exponential marks, **eta in {3,4}** and **lambda in [0,10]**. Lambda=0 gives
-  the case without PPP interference. Small intensities or a coarse
+  exponential marks and **lambda in [0,10]**. Lambda=0 gives the case without
+  PPP interference. The path-loss exponent is **any decimal eta in [2.1, 8]**
+  (since 0.3.0; eta=3,4 keep the archive's explicit paths and banks). Small intensities or a coarse
   discretization can yield wide bounds and an `inconclusive` decision.
+  Near eta=2, **large** intensities do too: the mean interference
+  2*pi*lam/(eta-2) must stay well below the fixed window B=128, and for
+  lam >= 13.37*(eta-2) (only possible when eta < 2.748) the enclosure is
+  trivial, with a contract note saying so. The joint (lam, eta) domain is
+  tabulated in [CONTRACT.md](docs/CONTRACT.md#on-demand-ppp-inversion).
+  R0 stays the unit of length: a physical guard radius enters through
+  `lam` (λ′R0²) and the interference gain g.
 - Thermal source `(10+Z)^2/101`, with standard normal Z; ideal alignment,
-  independent amplitudes, no direct path, and fixed NOMA and useful-link
-  parameters: p1=0.3, p2=0.7, theta=1, ell1=1/8, ell2=1/64,
-  d1=80/3 and d2=160.
-- Two power conventions: **C-INR**, E F_W(d_i(1+J)/rho), and **C-TX**,
-  E F_W(d_i(J+1/rho)). The C-INR floor is zero; the C-TX floor is evaluated
-  at 1/rho=0.
+  independent amplitudes and no direct path. Link coefficients d1 and d2
+  and interference gain g are free (since 0.3.0), defaulting to 80/3, 160
+  and 1. [`Model.from_link`](docs/API.md#model-and-calculation) accepts powers,
+  decoding thresholds and useful path gains.
+- Two power conventions: **C-INR**, E F_W(d_i(1+gJ)/rho), and **C-TX**,
+  E F_W(d_i(gJ+1/rho)). For finite d the C-INR floor is zero; the C-TX floor
+  is evaluated at 1/rho=0. An infeasible allocation gives outage 1 at every SNR.
 - Propagated Chernoff bounds for Rayleigh N=20,24 with PPP interference,
   and also N=8,64 without PPP interference. These give **sufficient designs**,
   not impossibility proofs.
 
-Arbitrary N, arbitrary real m, other eta, variable R0, Rice fading, 3GPP
-channels, correlation, phase errors and RIS without thermal harvesting are
-not implemented. Unsupported inputs raise an explicit error (`ValueError`
+Arbitrary N, arbitrary real m, eta outside [2.1, 8], other thermal
+parameters, Rice fading, 3GPP channels, correlation, phase errors and RIS
+without thermal harvesting are not implemented. Unsupported inputs raise an explicit error (`ValueError`
 for unsupported model parameters). This is **not `inconclusive`** and no
 unsupported value is rounded to a supported case.
 
 Certificates are **two-sided bounds for the specified model**, conditional
 on its mathematical assumptions, the Arb/Acb arithmetic engine, the archive's
-analytical bounds and bank integrity. They do not guarantee physical-model
+analytical bounds, the [provisional proofs](docs/PROOFS.md) of the general
+interface (free links and real eta) and bank integrity. They do not guarantee physical-model
 validity, packet latency, a universal relative width or a maximum computation
 time. Higher precision does not repair an unsuitable physical model.
 
@@ -145,7 +155,7 @@ digest**, not provenance or mathematical correctness. A purely analytical
 result that uses no bank does not depend on bank contents.
 
 For lambda=0.1 or 1 and eta=3 or 4, supplied PPP/Gamma banks are used. For a
-new lambda, the PPP inversion is computed on demand with Fourier, aliasing
+new lambda or eta in the technical range [2.1, 8], the PPP inversion is computed on demand with Fourier, aliasing
 and tail remainder bounds; the default is M=2^18. The useful-gain bank is
 still supplied: this is not full regeneration of the case. The contract
 records bank filenames, SHA-256 digests, parameters and precision.
@@ -173,9 +183,11 @@ impossibility within the PPP model. `masked` explains why exclusion under
 Eq. (3) + Gamma does not validate replacing PPP interference by Gamma.
 
 [Detailed API](docs/API.md) · [Mathematical contract](docs/CONTRACT.md) ·
+[Proofs for the general interface](docs/PROOFS.md) ·
 [Register of guarantees](docs/GUARANTEES.md) ·
 [Regeneration](docs/REGENERATION.md) · [Logic changes](docs/LOGIC_CHANGES.md) ·
-[Extraction inventory](docs/EXTRACTION.md).
+[Extraction inventory](docs/EXTRACTION.md) ·
+[Model parameters: fixed, free and planned](docs/PARAMETERS.md).
 
 ## Provenance
 
@@ -198,11 +210,11 @@ See [CITATION.cff](CITATION.cff) and [codemeta.json](codemeta.json). Cite this
 extraction as:
 
 > Victor Rabiet (2026). certoutage: certified outage bounds for thermal
-> RIS-NOMA. Version 0.2.0, 26 November 2026. https://doi.org/10.5281/zenodo.24563723
+> RIS-NOMA. Version 0.3.0, 27 November 2026. https://doi.org/10.5281/zenodo.24509256
 
 Also acknowledge the original [archive](https://doi.org/10.5281/zenodo.24450534)
 and the [Letter](https://hal.science/hal-05879102). Software DOI: [10.5281/zenodo.24509256](https://doi.org/10.5281/zenodo.24509256)
-(all versions); version 0.2.0 is [10.5281/zenodo.24563723](https://doi.org/10.5281/zenodo.24563723).
+(all versions); version 0.3.0 has its own DOI on that record.
 
 ## Licenses
 
@@ -216,7 +228,7 @@ modifications. The [original archive notice](docs/ARCHIVE_LICENSE.txt) and
 ## Roadmap — not implemented
 
 Possible future extensions are RIS without thermal harvesting, Rice fading
-and 3GPP channel models. None is implemented or certified in version 0.2.0.
+and 3GPP channel models. None is implemented or certified in version 0.3.0.
 
 ## Support, bugs and feature requests
 

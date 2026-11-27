@@ -1,4 +1,4 @@
-"""Counterexamples M1–M7 from the Fable audit of 24 November 2026."""
+"""Counterexamples M1–M7 from the audit of 24 November 2026."""
 from dataclasses import replace
 from decimal import Decimal, Inexact, Rounded, localcontext
 from fractions import Fraction
@@ -13,7 +13,7 @@ from certoutage import _generate, _runtime
 from certoutage._vendor import commun, ppp, thermal_backend
 
 
-def test_m1_rejects_fable_grid_under_low_decimal_precision():
+def test_m1_rejects_inexact_grid_under_low_decimal_precision():
     with localcontext() as context:
         context.prec = 3
         with pytest.raises(ValueError, match="exact multiples"):
@@ -38,7 +38,7 @@ def test_m1_exact_grid_is_used_with_decimal_rounding_trapped():
     ("0.4" + "9" * 450, "[1.0000, 1.0001]"),
     ("0.5" + "0" * 449 + "1", "[0.9999, 1.0000]"),
 ])
-def test_m2_fable_quotients_round_outwards(scale, expected):
+def test_m2_long_quotients_round_outwards(scale, expected):
     enclosure = replace(floor(Model(convention="C-INR"), 1), lower=.5, upper=.5)
     assert enclosure.format(scale=scale) == expected
     with localcontext() as context:

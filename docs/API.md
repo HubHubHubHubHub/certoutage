@@ -6,12 +6,61 @@ representation for strict JSON when a threshold is censored).
 
 ## Model and calculation
 
-`Model(N=24, lam="0.1", eta=4, convention="C-TX", m=1, R0=1)` validates the
+`Model(N=24, lam="0.1", eta=4, convention="C-TX", m=1, R0=1,
+d1="80/3", d2=160, g=1)` validates the
 scope documented in the README (Scope). Real parameters are read through
 their decimal representation: use strings to state an intended decimal
-number exactly. Booleans, NaN, infinities and uncovered cases are rejected.
+number exactly. Booleans, NaN, infinities (except d1/d2 as below) and
+uncovered cases are rejected.
 The parameter `m` describes the two elementary powers, not a Gamma
 approximation of the total gain.
+
+`user=1` selects d1 and `user=2` selects d2; no other physics depends on
+the user index. d1 and d2 lie in [10⁻¹², 10¹²], or are positive infinity
+written exactly as `"inf"` or `math.inf`. g is zero or in [10⁻¹², 10¹²].
+These three fields accept `int`, `Fraction`, `Decimal`, decimal or `"p/q"`
+strings, and floats read by their shortest decimal representation. They are
+stored as reduced rational strings (`"26.5"` becomes `"53/2"`), or `"inf"`.
+R0 stays 1 and `lam` remains λ′R0². `eta` accepts exact decimal strings,
+`int`, `Decimal`, and floats read by their shortest decimal spelling, in
+[2.1, 8]. Rational strings such as `"7/2"` are rejected. Values exactly 3
+or 4 are stored as those integers (`3.0`, `"3.00"` and `Decimal("3")`
+share the same model, cache key and bank); other values are canonical
+plain decimal strings (`"3.50"` becomes `"3.5"`, `5.0` becomes `"5"`).
+General exponents use the Arb 2F1 identities and generated PPP/Gamma arrays
+(provisional proofs in [PROOFS.md](PROOFS.md)). When a PPP inversion contributes, the
+contract records the transform and whether the analytic remainder criteria
+of [D_M](CONTRACT.md#on-demand-ppp-inversion) are proved; results with
+lam=0 or g=0, infeasible allocations and analytic floors carry no such note.
+Outside D_M the enclosure remains valid but may be wide; a third note
+flags the trivial regime λ ≥ 13.37(η−2) (tau*a0 >= 1), where it carries no
+information. At eta=3,4 the
+explicit paths, banks and contract notes are unchanged.
+
+Before exact conversion to a fraction, nonzero decimal inputs must have
+adjusted exponent in [-4000, 4000]. This applies to link inputs, eta,
+`SNRGrid` and `Enclosure.format(scale=...)`. Zero spellings such as
+`"0e-1000000000"` pass where zero is admissible. Rational `"p/q"` strings
+retain their separate parsing path and Python's integer digit limit.
+
+`Model.from_link(*, p1="0.3", p2="0.7", theta1=1, theta2=None,
+ell1="1/8", ell2="1/64", **fields)` reads finite, strictly positive link
+inputs in the same exact way. `theta2=None` uses theta1. It computes
+c2=theta2/(p2-theta2*p1), c1=max(theta1/p1,c2), then d1=c1/ell1 and
+d2=c2/ell2, entirely with `Fraction`. Other Model fields may be passed;
+supplying d1 or d2 raises `TypeError`. A derived d outside its domain raises
+`ValueError` naming the coefficient. The defaults give exactly `Model()`.
+
+If p2-theta2*p1≤0, both coefficients become `"inf"` before any division.
+For a selected infinite d, outage, floor and largest-interferer queries
+return the analytic interval [1,1], with an infeasible-allocation note;
+`required_snr` returns `excluded` (`inconclusive` for Chernoff). This rule
+also holds in C-INR and at g=0.
+
+Finite d rescales the argument of the existing signal bank outward.
+Below its range the lower bound is 0; above it the upper bound is 1.
+No new signal bank is generated. The narrower m=2,3 bank range may give
+wide intervals and `inconclusive` decisions after rescaling.
 
 `Numerics(precision_bits=160, ppp_dft_power=18, bank_policy="auto")` controls
 the calculations of a query. `bank_policy="fresh"` regenerates the PPP or
@@ -23,7 +72,9 @@ the intervals. Larger choices use more memory and time.
 numerics=Numerics())` returns `Enclosure(lower, upper, contract)`. The SNR is
 finite, in dB, in [-1000, 1000]. `floor` takes the same parameters except
 `snr_db`. The case without PPP is obtained with `lam=0` or
-`interference="none"`.
+`interference="none"`, or with `g=0`. At g=0 the requested interference
+label is retained, a note records the absent contribution, and the floor
+and largest-interferer bound are analytically [0,0] for finite d.
 
 The `gain` options are `exact`, `eq3` and `chernoff`; `interference` is
 `PPP`, `Gamma`, `mean` or `none`. The public name `eq3` avoids saying
@@ -71,8 +122,10 @@ the comparator cannot exclude the physical model: the status stays
 `inconclusive` when its floor exceeds the target.
 
 `threshold_difference(a, b)` requires two finite, uncensored, feasible
-thresholds with the same target, the same user and the same N, m, λ, η, R0
-and convention. Equivalent decimal spellings are accepted; the gain and the
+thresholds with the same target, the same user and the same N, m, λ, η, R0,
+convention, d1, d2 and g. Equivalent rational spellings of the link fields
+are compared exactly (`"0.25"` equals `"1/4"`); equivalent decimal spellings
+of the other fields are accepted. The gain comparator and the
 interference model may differ, so that approximations can be compared.
 A missing target or comparison parameter, for instance in a decision built
 by hand, is rejected with `ValueError`. The function subtracts directly:
@@ -91,12 +144,18 @@ falsely feasible and the replacement of the gain by Eq. (3) to exclude that
 approximation. The diagnostic does not change the certified quantity.
 
 `largest_interferer_bound(model, user)` encloses the lower bound on the TX
-floor. In C-INR, the corresponding floor is exactly zero. The central cases
-N=20/24, Rayleigh, λ=0.1 or 1, η=4, user 1 load their final certificates.
+floor, E F_W(d_i g J_max). In C-INR, the corresponding floor is exactly zero
+for finite d. The central cases N=20/24, Rayleigh, λ=0.1 or 1, η=4, user 1,
+d1=80/3 and g=1 load their final certificates.
 The other cases compose, on demand, the analytic distribution of J_max with
 the useful-gain bank. A provided certificate always reports
 `precision_bits=160`, with no new integration, whatever precision is
 requested in `numerics`.
+
+`Contract.parameters` ends with d1, d2 and g in that order, in canonical
+form. Its assumptions record the actual link coefficients and interference
+gain, including infeasible allocations. At the Letter's defaults the
+assumptions and numerical bounds are unchanged.
 
 Every contract also carries `interval_library`, for instance
 `python-flint 0.9.0 / Arb-Acb`: the version of python-flint imported by the

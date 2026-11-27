@@ -28,28 +28,75 @@ def decimal(value: Scalar, name: str) -> Decimal:
     return result
 
 
+def _bounded(dec: Decimal, name: str) -> Decimal:
+    """Bound decimal exponents before any potentially large exact conversion."""
+    if dec.is_zero():
+        return Decimal(0)
+    if not -4000 <= dec.adjusted() <= 4000:
+        raise ValueError(f"{name}: decimal adjusted exponent must lie in [-4000, 4000]")
+    return dec
+
+
+def _fraction(value: Scalar | Fraction, name: str) -> Fraction:
+    """Read exact rationals; floats denote their shortest decimal spelling."""
+    if isinstance(value, bool) or not isinstance(value, (str, int, float, Decimal, Fraction)):
+        raise ValueError(f"{name}: a finite real number is required, not {value!r}")
+    try:
+        if isinstance(value, (float, Decimal)) or (isinstance(value, str) and "/" not in value):
+            return Fraction(_bounded(decimal(value, name), name))
+        return Fraction(value)
+    except (InvalidOperation, ValueError, TypeError, ZeroDivisionError, OverflowError) as exc:
+        raise ValueError(f"{name}: invalid finite rational number ({value!r})") from exc
+
+
+def _coefficient(value: Scalar | Fraction, name: str, *, gain: bool = False) -> str:
+    if not gain and ((isinstance(value, str) and value == "inf") or
+                     (isinstance(value, float) and value == math.inf)):
+        return "inf"
+    rational = _fraction(value, name)
+    if (gain and rational == 0) or Fraction(1, 10**12) <= rational <= 10**12:
+        return str(rational)
+    domain = "0 or [1e-12, 1e12]" if gain else "[1e-12, 1e12] or +infinity"
+    raise ValueError(f"{name} must lie in {domain}")
+
+
 @dataclass(frozen=True)
 class Model:
-    """The model of the Letter. N is the number of RIS elements PER user.
+    """Thermal RIS model, with the Letter's link coefficients as defaults.
 
+    N is the number of RIS elements PER user. user selects d1 or d2.
     m=1: Rayleigh; m=2 or 3: Nakagami with unit mean power.
-    lam=0 gives the case without PPP. R0=1 and the other constants are fixed.
+    lam is the normalized intensity lambda' * R0**2; R0 stays fixed at 1.
+    d1, d2 and g are canonical exact rational strings. Finite d lies in
+    [1e-12, 1e12]; d="inf" denotes infeasible allocation. g is zero or in
+    [1e-12, 1e12]. lam=0 or g=0 removes interference. Thermal constants stay
+    fixed. from_link computes d1 and d2 from powers, thresholds and gains.
+    eta is an exact decimal in [2.1, 8], stored as int 3 or 4 at those
+    values and otherwise as a decimal string without trailing zeros.
     """
 
     N: int = 24
     lam: Scalar = "0.1"
-    eta: int = 4
+    eta: int | Scalar = 4
     convention: Literal["C-TX", "C-INR"] = "C-TX"
     m: int = 1
     R0: Scalar = 1
+    d1: Scalar | Fraction = "80/3"
+    d2: Scalar | Fraction = 160
+    g: Scalar | Fraction = 1
 
     def __post_init__(self) -> None:
         if type(self.N) is not int or self.N not in SIZES:
             raise ValueError(f"N must be one of the certified sizes {SIZES}")
         if type(self.m) is not int or self.m not in (1, 2, 3):
             raise ValueError("m must be 1 (Rayleigh), 2 or 3 (covered Nakagami)")
-        if type(self.eta) is not int or self.eta not in (3, 4):
-            raise ValueError("eta must be 3 or 4: only these transforms are implemented")
+        eta = _bounded(decimal(self.eta, "eta"), "eta")
+        if not Decimal("2.1") <= eta <= 8:
+            raise ValueError("eta must lie in [2.1, 8] in this release")
+        spelling = format(eta, "f")
+        canonical_eta = int(eta) if eta in (3, 4) else (
+            spelling.rstrip("0").rstrip(".") if "." in spelling else spelling)
+        object.__setattr__(self, "eta", canonical_eta)
         if self.convention not in ("C-TX", "C-INR"):
             raise ValueError("convention must be 'C-TX' or 'C-INR'")
         lam = decimal(self.lam, "lam")
@@ -59,6 +106,37 @@ class Model:
             raise ValueError("R0=1 is fixed by the normalization of the Letter")
         object.__setattr__(self, "lam", str(lam))
         object.__setattr__(self, "R0", 1)
+        for name in ("d1", "d2", "g"):
+            object.__setattr__(self, name, _coefficient(getattr(self, name), name, gain=name == "g"))
+
+    @classmethod
+    def from_link(cls, *, p1: Scalar | Fraction = "0.3", p2: Scalar | Fraction = "0.7",
+                  theta1: Scalar | Fraction = 1, theta2: Scalar | Fraction | None = None,
+                  ell1: Scalar | Fraction = "1/8", ell2: Scalar | Fraction = "1/64",
+                  **fields) -> Model:
+        """Compute the perfect-SIC link exactly, with one threshold per user.
+
+        All link inputs must be finite and strictly positive. theta2=None
+        uses theta1. If p2-theta2*p1 <= 0, both coefficients are "inf".
+        Other Model fields may be supplied, except d1 and d2.
+        """
+        if "d1" in fields or "d2" in fields:
+            raise TypeError("from_link computes d1 and d2; do not supply them in fields")
+        values = {}
+        for name, value in (("p1", p1), ("p2", p2), ("theta1", theta1),
+                            ("theta2", theta1 if theta2 is None else theta2),
+                            ("ell1", ell1), ("ell2", ell2)):
+            values[name] = _fraction(value, name)
+            if values[name] <= 0:
+                raise ValueError(f"{name} must be finite and strictly positive")
+        margin = values["p2"] - values["theta2"] * values["p1"]
+        if margin <= 0:
+            return cls(d1="inf", d2="inf", **fields)
+        c2 = values["theta2"] / margin
+        c1 = max(values["theta1"] / values["p1"], c2)
+        d1 = _coefficient(c1 / values["ell1"], "d1 derived from c1/ell1")
+        d2 = _coefficient(c2 / values["ell2"], "d2 derived from c2/ell2")
+        return cls(d1=d1, d2=d2, **fields)
 
 
 @dataclass(frozen=True)
@@ -87,7 +165,7 @@ class SNRGrid:
     step: Scalar = "0.0625"
 
     def __post_init__(self) -> None:
-        a, b, h = (Fraction(decimal(x, n)) for x, n in
+        a, b, h = (Fraction(_bounded(decimal(x, n), n)) for x, n in
                    ((self.start, "start"), (self.stop, "stop"), (self.step, "step")))
         if not -1000 <= a < b <= 1000 or h <= 0 or h > b - a:
             raise ValueError("grid: -1000 <= start < stop <= 1000 and 0 < step <= stop-start")
@@ -146,7 +224,7 @@ class Enclosure:
 
     def format(self, *, scale: Scalar = 1, places: int = 4) -> str:
         """Outward decimal display of the interval divided by scale."""
-        s = decimal(scale, "scale")
+        s = _bounded(decimal(scale, "scale"), "scale")
         if s <= 0 or type(places) is not int or not 0 <= places <= 30:
             raise ValueError("scale must be positive and places an integer between 0 and 30")
         # Exact rational division, followed by integer floor/ceiling: no

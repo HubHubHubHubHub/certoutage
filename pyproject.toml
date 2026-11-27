@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "certoutage"
-version = "0.2.0"
+version = "0.3.0"
 description = "Certified outage enclosures for the thermal RIS-NOMA model"
 readme = "README.md"
 requires-python = ">=3.10"

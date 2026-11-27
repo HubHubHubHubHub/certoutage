@@ -27,7 +27,7 @@ regression is therefore not presented as an "interface only" extraction.
 The detailed T28 evidence is kept in `evidence/` at the level of the
 extraction mission; the tests shipped with the package are self-contained.
 
-## T28b corrections after the Fable audit (24 November 2026)
+## T28b corrections after the audit of 24 November 2026
 
 | Finding | Change | Preservation and test |
 |---|---|---|
@@ -65,7 +65,7 @@ of the normal and optimized suites in a fresh environment. Run times are not
 reproducible outputs; the `target` addition is declared and checked
 separately when the JSON exports are compared.
 
-## English text throughout (26 November 2026, unreleased)
+## English text throughout (26 November 2026, 0.2.0)
 
 All user-facing text is now in English: exception messages, docstrings,
 the `Contract.assumptions` strings, example output, the comments and
@@ -88,7 +88,7 @@ The eight destination files whose bytes changed since 0.1.0 are listed in
 cache key below. `tests/unit/test_release.py` checks that each recorded
 digest is that of the file, and that every changed destination is recorded.
 
-## Display of threshold differences (26 November 2026, unreleased)
+## Display of threshold differences (26 November 2026, 0.2.0)
 
 | Area | Change | Justification and check |
 |---|---|---|
@@ -96,11 +96,11 @@ digest is that of the file, and that every changed destination is recorded.
 
 No certified quantity is involved: the change is in the display only.
 
-## Cache key of the PPP environment (26 November 2026, unreleased)
+## Cache key of the PPP environment (26 November 2026, 0.2.0)
 
 | Area | Change | Justification and check |
 |---|---|---|
-| `_runtime.environment` | The cache key was `(model, kind, numerics)`. It is now `(lam, eta, kind, precision_bits, ppp_dft_power, bank_policy)`, through a new cached `_environment`; `environment` keeps its signature. Size of the cache unchanged (12). New guard: `_environment` raises `ArithmeticError` if the current Arb precision differs from the precision in its key | `Environment.__init__` reads only `model.lam`, `model.eta`, `kind`, `numerics.ppp_dft_power`, `numerics.bank_policy` and the Arb precision set by the caller; N, m, the convention, the user and the gain enter only through `point()`, which does not modify the object. So the key is complete and sharing an environment between models cannot change a result. Remark of the Fable audit of 24 November 2026: a sweep in N or a change of convention repeated the Laplace inversion |
+| `_runtime.environment` | The cache key was `(model, kind, numerics)`. It is now `(lam, eta, kind, precision_bits, ppp_dft_power, bank_policy)`, through a new cached `_environment`; `environment` keeps its signature. Size of the cache unchanged (12). New guard: `_environment` raises `ArithmeticError` if the current Arb precision differs from the precision in its key | `Environment.__init__` reads only `model.lam`, `model.eta`, `kind`, `numerics.ppp_dft_power`, `numerics.bank_policy` and the Arb precision set by the caller; N, m, the convention, the user and the gain enter only through `point()`, which does not modify the object. So the key is complete and sharing an environment between models cannot change a result. Remark of the audit of 24 November 2026: a sweep in N or a change of convention repeated the Laplace inversion |
 
 Preservation was checked by recording every result computed during the
 whole test suite before and after the change (5,079 calculations,
@@ -113,7 +113,7 @@ the same 16 enclosures and contracts, with one Laplace inversion instead of
 with two tests; each of seven mutations (one element dropped from the key,
 or the precision guard removed) makes one of them fail.
 
-## Interval engine named at run time (26 November 2026, unreleased)
+## Interval engine named at run time (26 November 2026, 0.2.0)
 
 | Area | Change | Justification and check |
 |---|---|---|
@@ -123,7 +123,7 @@ or the precision guard removed) makes one of them fail.
 was made; it is now (CONTRIBUTING.md). Its other change on this branch,
 `ThresholdDifference.format`, is declared above.
 
-## Bank store (26 November 2026, unreleased)
+## Bank store (26 November 2026, 0.3.0)
 
 `_banks` now resolves embedded and locally generated banks through one
 verified reader; `fetched` is reserved and raises `NotImplementedError`.
@@ -175,3 +175,141 @@ now means an absent bank (`BankNotAvailable`); `IsADirectoryError` raises
 `IntegrityError`; `PermissionError` still propagates. The embedded reading
 path, `verified_bytes`, `arrays`, `manifest`, `receipt` and every public
 query are unchanged; no regression fixture changes.
+
+## Link coefficients and interference gain (26 November 2026, 0.3.0)
+
+Model now stores exact canonical d1, d2 and g, with the Letter defaults
+80/3, 160 and 1. Model.from_link computes the perfect-SIC coefficients for
+two thresholds in Fraction; a nonpositive allocation margin gives infinite
+coefficients before division. A selected infinite d gives analytic outage
+[1,1], including the floor, before any C-INR shortcut. Chernoff retains its
+inconclusive decision rule. At g=0, finite-SNR evaluation uses the atom at
+zero without a residual tail, preserving the requested interference label.
+
+The runtime overrides Environment.point to scale x by g exactly once, then
+the bank argument by 3d/80. Rational factors are enclosed in binary64 before
+outward multiplication. The identity returns the input arrays unchanged;
+the factor 6 retains the original operations. J_max uses the combined
+factor 3dg/80, retaining products only when exact Fraction comparisons prove
+they are representable; stored certificates require d1=80/3 and g=1 in
+addition to the previous conditions. Neither the law of J nor its cumulants
+see g. The moment call is documented as a cumulant, with R fixed at 1.
+
+Direct thermal evaluation dispatches on d: 80/3 keeps the grouped path,
+160 keeps the historical user-2 path, and other admitted values use the
+same grouped rectangle loop with an outward Arb amplitude sqrt(101*d/rho)
+passed in the call. No link coefficient enters cached object state.
+Environment and thermal cache signatures and keys are unchanged, and
+_vendor/, _generate.py, _banks.py, data and fixtures are untouched.
+
+Contracts append canonical d1, d2 and g and derive assumptions from the
+model; the default assumptions tuple is unchanged. threshold_difference
+requires equal link fields, compared with Fraction (or the string inf),
+and rejects missing ones. Comparison-row labels include g when needed and
+report the infeasible C-INR limit as 1. The old numerical regressions, an independent
+before/after capture of ten cases using float.hex, and offline tests of
+exact input validation, outward products including subnormals, bank
+extension, scaling identities, user equivalence and cache reuse check the
+extension (G45–G53). Direct/bank checks assert overlap, not equal widths.
+The second cumulant and the generated Gamma CDF are checked against mean
+kappa_1 and variance kappa_2 at eta=3,4.
+Targeted mutations exercise double gain, inward scaling, missing comparison
+fields, cached d, infeasibility, zero-gain tails, stored certificates, user
+routing and the identity factor.
+
+Existing test changed: regression/test_table_ii_example.py adds the three
+new default fields to the expected model and contract parameters in memory.
+The archived fixture, every historical expected field and every float.hex
+comparison remain unchanged. This is the declared contract-schema change;
+no numerical regression expectation is weakened or replaced.
+
+
+## Real path-loss exponent (26 November 2026, 0.3.0)
+
+Model reads eta as an exact decimal in [2.1,8], retaining integers 3 and 4
+at those exact values and otherwise storing a plain canonical decimal
+string. Equivalent spellings share cache keys and filenames. Only canonical
+int 3/4 can reuse embedded PPP/Gamma banks; other exponents generate arrays.
+The numeric adapter leaves these two integers unchanged at every historical
+Arb arithmetic site. _vendor/, data, _banks.py and regression fixtures are
+untouched; no public exports are added.
+
+The new _transform module delegates eta=3,4 directly to the archive and
+uses the two hypergeometric identities otherwise. It calls 2F1 on z with
+abc=True, checks finiteness and relative radius against 2^(-prec/2), retries
+once at doubled precision and then uses the Pfaff series with the entire
+omitted tail enclosed by |T_N|/(1-|q|). Its branch choice uses the midpoint
+of |s|, with both identities valid on the required Re(s)>0 half-plane.
+
+Pure helpers compute R, tau and certified lambda boundary brackets for
+D_M. General-exponent PPP contracts append transform and inside/outside
+notes; the explicit-path contracts stay character-for-character unchanged.
+These criteria concern analytic node width only. The public numerical grid
+range stays 2^12 to 2^20; domain helpers also accept 2^6 to 2^11 within the
+monotone M>=42 regime, permitting a small-grid empty-window check. No
+outside-domain rejection is added. The regeneration tool accepts eta text
+and emits its canonical JSON form.
+
+A single decimal exponent guard precedes exact Fraction conversion for
+link fields, eta, SNRGrid and Enclosure.format. Nonzero adjusted exponents
+outside [-4000,4000] raise ValueError promptly; zero with any exponent stays
+zero. Rational p/q strings keep their existing path.
+
+Tests check exact explicit midpoints/radii and array bytes, all M=2^12
+frequencies against the explicit integral, M=2^16 array overlap and widths,
+and independent Acb quadrature of the bounded real integral for eight
+exponents. Nonanalytic endpoint evaluation restricts v to its nonnegative
+real integration path; analytic evaluation rejects balls touching Re(v)<=0
+for noninteger powers. Forced fallback failures and truncated Pfaff tails,
+direct DFT sums, monotonicity, domain corners, contracts and decimal input
+checks exercise the new behavior (G54–G62). Three float.hex snapshots are
+explicitly labelled non-independent; separate before/after captures and
+the existing regressions check preservation at eta=3,4. Targeted mutations
+exercise the dispatch, abc flag, argument order, remainder, normalization,
+C2 sign, exponent guard, bank naming and tail-window sign.
+
+Existing test changed: unit/test_contracts.py removes only dict(eta=3.0)
+from test_invalid_models. Accepting 3.0 as canonical int 3 is a declared
+API change, covered positively by test_eta_canonicalization and the cache
+and bank-name test. No numerical regression assertion is changed.
+
+## Domain notes only when a PPP inversion contributes (27 November 2026, 0.3.0)
+
+`api._contract` attached the two general-exponent notes (2F1 transform,
+inside/outside D_M) to every PPP query with eta other than 3 or 4
+(noninteger, or an integer from 5 to 8). They were
+misleading when no inversion takes place: lam=0 (the environment is the
+exact point mass at 0), g=0 (the environment is `none`), an infeasible
+allocation (analytic [1,1]) and analytic floors (C-INR, or no PPP). The notes
+are now added only for a nonanalytic result with lam≠0 and g≠0. Bounds,
+sources, digests, parameters and assumptions are unchanged; only the `notes`
+of these contracts lose the two entries. The explicit eta=3,4 contracts are
+unchanged.
+
+Existing test changed: `unit/test_real_eta.py::test_real_eta_all_natures`
+expected the notes on the analytic C-INR floor; it now expects them exactly
+when the source is not `analytic`. New test:
+`::test_domain_notes_only_when_a_ppp_inversion_contributes`. No numerical
+regression assertion is changed. A capture of every result of the suite
+before and after (6,155 calculations, compared by `float.hex`) differs only
+in these notes: in the declared test and in the three λ=0 PPP corners of
+`::test_technical_domain_corners`, whose assertions do not read notes.
+
+In the same change, the docstrings of `_transform.py` refer to the
+propositions of `docs/PROOFS.md` instead of working labels, and attribute
+Johansson's reference to Arb's 2F1 evaluation only; no code line changes.
+`_transform.py` is not an extracted file and has no entry in EXTRACTION.json.
+
+## Note for the trivial regime τa0 ≥ 1 (27 November 2026, 0.3.0)
+
+An independent review (S19) found that, near η = 2, large intensities give
+[~0, 1] enclosures with only the generic "outside D_M ... may be wide"
+note. New helper `_transform.aliasing_exceeds_one(lam, eta, power)` proves
+τ ≥ expm1(20), i.e. τa0 ≥ 1 (PROOFS.md, Proposition 4.7); uncertainty
+returns False. `api._contract` appends a third note exactly when it holds,
+on the results that already carry the two general-exponent notes. Bounds,
+sources, digests, parameters, assumptions and the two existing notes are
+unchanged. No existing test is changed; new tests
+`unit/test_real_eta.py::test_trivial_regime_above_the_aliasing_threshold`
+and `::test_lambda_window_near_two`. A before/after capture of the suite
+is compared by `float.hex` (session S19b).

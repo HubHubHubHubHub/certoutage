@@ -11,7 +11,7 @@ from certoutage import (Model, Numerics, SNRGrid, floor, outage_enclosure, requi
 
 
 @pytest.mark.parametrize("kwargs", [dict(N=0), dict(N=21), dict(N=True), dict(m=1.5),
-    dict(eta=2), dict(eta=3.0), dict(lam=-1), dict(lam="nan"), dict(lam=True),
+    dict(eta=2), dict(lam=-1), dict(lam="nan"), dict(lam=True),
     dict(lam=11), dict(R0=2), dict(convention="TX")])
 def test_invalid_models(kwargs):
     with pytest.raises(ValueError):

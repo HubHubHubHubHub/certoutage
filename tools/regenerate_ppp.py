@@ -14,7 +14,7 @@ from certoutage._runtime import arithmetic
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--lam', default='0.1')
-    parser.add_argument('--eta', type=int, choices=[3, 4], default=4)
+    parser.add_argument('--eta', default='4')
     parser.add_argument('--kind', choices=['PPP', 'GAMMA'], default='PPP')
     parser.add_argument('--power', type=int, default=20, help='M=2**power; archive: 20')
     parser.add_argument('--bits', type=int, default=160)

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from functools import lru_cache
+from fractions import Fraction
 import threading
 
 import numpy as np
@@ -12,12 +13,46 @@ from . import _banks
 from .models import Model, Numerics
 from ._vendor.commun import out, moment
 from ._vendor.oracles import Signal as OriginalSignal, Environment as OriginalEnvironment
+from ._vendor.oracles import down, up
 from ._vendor.ppp import envelopes
 from ._vendor.nak_thermal import Thermal as OriginalThermal
 from ._vendor.nak_grouped import Grouped
+from ._vendor.thermal_backend import outward
 from ._generate import environment_arrays
+from ._transform import eta_value
 
 _LOCK = threading.RLock()
+
+
+def scale_outward(yl: np.ndarray, yh: np.ndarray,
+                  factor: Fraction) -> tuple[np.ndarray, np.ndarray]:
+    """Enclose nonnegative binary64 arguments times an exact rational factor.
+
+    The identity returns the original arrays. Exactly representable factors
+    retain the historical down(yl*f), up(yh*f) operations, including f=6.
+    """
+    if factor == 1:
+        return yl, yh
+    if factor == 0:
+        return np.zeros_like(yl), np.zeros_like(yh)
+    f = float(factor)
+    represented = Fraction(f)
+    flo = np.nextafter(f, -np.inf) if represented > factor else f
+    fhi = np.nextafter(f, np.inf) if represented < factor else f
+    with np.errstate(over="ignore", under="ignore"):
+        return down(yl * flo), up(yh * fhi)
+
+
+def scale_grid_outward(grid: np.ndarray, factor: Fraction) -> tuple[np.ndarray, np.ndarray]:
+    """Keep exact grid products unchanged; otherwise transport outward."""
+    if factor == 1:
+        return grid, grid
+    with np.errstate(over="ignore", under="ignore"):
+        products = grid * float(factor)
+    if all(np.isfinite(product) and Fraction(float(product)) == Fraction(float(x)) * factor
+           for x, product in zip(grid, products)):
+        return products, products
+    return scale_outward(grid, grid, factor)
 
 
 @contextmanager
@@ -62,23 +97,31 @@ def signal(N: int, m: int, chernoff: bool, bits: int) -> Signal:
     return Signal(N, m, chernoff)
 
 
+def environment_name(lam: str, eta: int | str, kind: str) -> str:
+    """A bank filename from normalized model fields, never a manifest addition."""
+    return f"{kind}_l{str(float(lam)).replace('.', 'p')}_e{str(eta).replace('.', 'p')}.npz"
+
+
 class Environment(OriginalEnvironment):
     def __init__(self, model: Model, kind: str, numerics: Numerics):
         self.lam, self.eta, self.kind = model.lam, model.eta, kind
         self.names: list[str] = []
         self.generated = False
         if kind in ("mean", "none") or arb(model.lam).is_zero():
-            mean = arb(0) if kind == "none" else moment(model.lam, model.eta, 1, 1)
+            # moment returns a cumulant of J (ENONCES (f)); R stays 1.
+            # The interference gain g is applied only in point(), never here.
+            mean = arb(0) if kind == "none" else moment(model.lam, eta_value(model.eta), 1, 1)
             a, b = (0.0, 0.0) if mean.is_zero() else out(mean)
             self.xlo, self.xhi = np.array([a]), np.array([b])
             wl = wh = [arb(1)]
             self.tail = arb(0)
         else:
-            name = f"{kind}_l{str(float(model.lam)).replace('.', 'p')}_e{model.eta}.npz"
+            name = environment_name(model.lam, model.eta, kind)
             # Only exact decimal equality with the two archived intensities
             # permits reuse; a rounded binary64 filename must never select a bank.
             from decimal import Decimal
-            use_bank = Decimal(model.lam) in (Decimal("0.1"), Decimal(1))
+            use_bank = (type(model.eta) is int and model.eta in (3, 4)
+                        and Decimal(model.lam) in (Decimal("0.1"), Decimal(1)))
             if use_bank and name in _banks.manifest() and numerics.bank_policy == "auto":
                 data = _banks.arrays(name)
                 self.names = [name]
@@ -89,6 +132,28 @@ class Environment(OriginalEnvironment):
             wl, wh, self.tail = envelopes(data["clo"], data["chi"], self.xlo, self.xhi)
         self.wl, self.wh = arb_mat([wl]), arb_mat([wh])
         self.length = len(wl)
+
+    def point(self, signal, units, convention, d: Fraction, g: Fraction, method="exact"):
+        """Compose J with the signal CDF, scaling g and d exactly once."""
+        if units is None:
+            if convention == "C-INR":
+                return dict(lower=0.0, upper=0.0)
+            nlo = nhi = 0.0
+        else:
+            nlo, nhi = out((-arb(units) * arb(10).log() / 1280).exp())
+        xlo, xhi = scale_outward(self.xlo, self.xhi, g)
+        if convention == "C-INR":
+            yl = down(down(xlo + 1) * nlo)
+            yh = up(up(xhi + 1) * nhi)
+        else:
+            yl = down(xlo + nlo)
+            yh = up(xhi + nhi)
+        yl, yh = scale_outward(yl, yh, 3 * d / 80)
+        il, ih = signal.indices(yl, yh)
+        low, high = signal.lookup(il, ih, method)
+        lo = (self.wl * arb_mat(self.length, 1, low))[0, 0]
+        hi = (self.wh * arb_mat(self.length, 1, high))[0, 0] + self.tail
+        return dict(lower=max(0.0, out(lo)[0]), upper=min(1.0, out(hi)[1]))
 
 
 def environment(model: Model, kind: str, numerics: Numerics) -> Environment:
@@ -101,7 +166,7 @@ def environment(model: Model, kind: str, numerics: Numerics) -> Environment:
 
 
 @lru_cache(maxsize=12)
-def _environment(lam: str, eta: int, kind: str, bits: int, power: int,
+def _environment(lam: str, eta: int | str, kind: str, bits: int, power: int,
                  policy: str) -> Environment:
     # Environment reads model.lam and model.eta only; the other fields keep
     # their validated defaults and play no part.
@@ -141,6 +206,31 @@ class Thermal(OriginalThermal):
 @lru_cache(maxsize=1)
 def thermal(N: int, m: int, chernoff: bool, bits: int) -> Grouped:
     return Grouped(Thermal(N, m, chernoff))
+
+
+def thermal_point(calc: Grouped, db: str, d: Fraction, methods=None, goal=.008):
+    """Grouped thermal rectangles with a per-call, outward link amplitude."""
+    rho = (arb(db) * arb(10).log() / 10).exp()
+    aa = outward((101 * (arb(d.numerator) / d.denominator) / rho).sqrt())
+    return _thermal_point_amplitude(calc, aa, methods, goal)
+
+
+def _thermal_point_amplitude(grouped: Grouped, aa, methods, goal):
+    """The Grouped.point loop, with an amplitude passed instead of cached."""
+    calc = grouped.calc
+    for J in range(9, 14):
+        il, ih = calc.indices(aa, J)
+        outcome = {}
+        for method, (lv, hv) in calc.arb_values.items():
+            if methods is not None and method not in methods:
+                continue
+            lo = grouped.dot(il, lv, grouped.prefix[J][0])
+            hi = grouped.dot(ih, hv, grouped.prefix[J][1]) + arb(float(calc.common["outside"]))
+            outcome[method] = (max(0., out(lo)[0]), min(1., out(hi)[1]))
+        if all(arb(float(b)) - arb(float(a)) <= arb(str(goal)) * arb(float(a))
+               for a, b in outcome.values()):
+            break
+    return outcome, J
 
 
 def clear() -> None:

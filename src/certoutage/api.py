@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from decimal import Decimal
+from fractions import Fraction
 import json
 import math
 
@@ -14,6 +15,7 @@ from .models import (Model, Numerics, SNRGrid, Scalar, Gain, Interference, Contr
 from . import _runtime as rt, _banks
 from ._vendor.commun import out
 from ._vendor.ppp import envelopes
+from ._transform import aliasing_exceeds_one, eta_value, informative
 
 DEFAULT_NUMERICS = Numerics()
 DEFAULT_GRID = SNRGrid()
@@ -32,7 +34,7 @@ def _validate(model: Model, user: int, gain: Gain, interference: Interference,
     if interference not in _KINDS:
         raise ValueError("interference must be 'PPP', 'Gamma', 'mean' or 'none'")
     if gain == "chernoff":
-        no_ppp = Decimal(model.lam) == 0 or interference == "none"
+        no_ppp = Decimal(model.lam) == 0 or interference == "none" or model.g == "0"
         supported = model.m == 1 and (model.N in (20, 24) or (no_ppp and model.N in (8, 64)))
         if not supported:
             raise ValueError("Chernoff is provided for Rayleigh N=20, 24, and for N=8, 64 without PPP")
@@ -44,49 +46,82 @@ def _quantity(gain: Gain, interference: Interference) -> str:
     return f"outage: gain={'exact' if gain == 'exact' else 'Eq. (3)'}, interference={interference}"
 
 
-def _contract(gain: Gain, interference: Interference, numerics: Numerics,
+def _assumptions(model: Model) -> tuple[str, ...]:
+    assumptions = list(Contract.assumptions)
+    if model.g != "1":
+        assumptions[3] += f"; interference gain g={model.g}"
+    if (model.d1, model.d2) != ("80/3", "160"):
+        infeasible = " (infeasible power allocation)" if "inf" in (model.d1, model.d2) else ""
+        assumptions[4] = f"d1={model.d1}, d2={model.d2}{infeasible}; perfect CSI and phase alignment"
+    return tuple(assumptions)
+
+
+def _contract(model: Model, gain: Gain, interference: Interference, numerics: Numerics,
               names: list[str], *, generated: bool = False, analytic: bool = False,
               notes: tuple[str, ...] = ()) -> Contract:
+    # The transform and D_M notes describe a PPP inversion: they are omitted
+    # when no inversion contributes (analytic results, lam=0, g=0).
+    ppp_used = not analytic and Decimal(model.lam) != 0 and model.g != "0"
+    if interference == "PPP" and type(model.eta) is not int and ppp_used:
+        power = numerics.ppp_dft_power
+        domain = "inside" if informative(model.lam, model.eta, power) else "outside"
+        notes += (f"eta={model.eta}: Laplace transform by the 2F1 identities (Arb, abc=True)",
+                  f"(lam, eta, M) {domain} the informative domain D_M (e^20 R <= 1e-7, "
+                  "tau <= 1e-10); outside, the enclosure stays valid but may be wide")
+        if aliasing_exceeds_one(model.lam, model.eta, power):
+            notes += ("tau*a0 >= 1 (mean interference 2*pi*lam/(eta-2) >= 64 + log(expm1(20)), "
+                      "about 84, too large for B=128): every inner node of the interference "
+                      "CDF carries an error of at least 1; expect a trivial enclosure",)
     return Contract(_quantity(gain, interference),
                     "analytic" if analytic else "mixed" if generated else "provided-banks",
-                    numerics.precision_bits, _banks.receipt(*names), notes=notes)
+                    numerics.precision_bits, _banks.receipt(*names),
+                    assumptions=_assumptions(model), notes=notes)
 
 
 def _evaluate(model: Model, user: int, db: Decimal | None, gain: Gain,
               interference: Interference, numerics: Numerics) -> Enclosure:
     method, kind = _METHODS[gain], _KINDS[interference]
-    no_ppp = Decimal(model.lam) == 0 or interference == "none"
+    d = model.d1 if user == 1 else model.d2
+    no_ppp = Decimal(model.lam) == 0 or interference == "none" or model.g == "0"
+    link_notes = ("g=0: no interference contribution",) if model.g == "0" else ()
     parameters = _parameters(model, user, gain, interference)
+    if d == "inf":
+        contract = _contract(model, gain, interference, numerics, [], analytic=True,
+                             notes=("infeasible power allocation: outage is 1 at every SNR",) + link_notes)
+        return Enclosure(1.0, 1.0, replace(contract, parameters=parameters))
     if db is None and (model.convention == "C-INR" or no_ppp):
-        return Enclosure(0.0, 0.0, replace(_contract(gain, interference, numerics, [], analytic=True), parameters=parameters))
+        return Enclosure(0.0, 0.0, replace(_contract(model, gain, interference, numerics, [],
+                                                  analytic=True, notes=link_notes), parameters=parameters))
     direct = no_ppp and ((model.m == 1 and model.N in (8, 64)) or
                         (model.m in (2, 3) and model.N == 8))
     if direct:
         calc = rt.thermal(model.N, model.m, gain == "chernoff", numerics.precision_bits)
-        if user == 1:
+        if d == "80/3":
             values, level = calc.point(str(db), methods=[method])
-        else:
+        elif d == "160":
             values, level = calc.calc.point(str(db), user=2, methods=[method])
+        else:
+            values, level = rt.thermal_point(calc, str(db), Fraction(d), methods=[method])
         lo, hi = values[method]
-        contract = _contract(gain, interference, numerics, calc.calc.names,
-                             notes=(f"thermal rectangles J={level}, goal=0.008; Table I backend",))
+        contract = _contract(model, gain, interference, numerics, calc.calc.names,
+                             notes=(f"thermal rectangles J={level}, goal=0.008; Table I backend",) + link_notes)
     else:
         signal = rt.signal(model.N, model.m, gain == "chernoff", numerics.precision_bits)
-        env = rt.environment(model, kind, numerics)
+        env = rt.environment(model, "none" if model.g == "0" else kind, numerics)
         units = None if db is None else arb(str(db)) * 128
-        result = env.point(signal, units, model.convention, user, method)
+        result = env.point(signal, units, model.convention, Fraction(d), Fraction(model.g), method)
         lo, hi = result["lower"], result["upper"]
         notes = ((f"PPP generated with B=128, cB=20, M={1 << numerics.ppp_dft_power}; explicit Fourier and tail remainders",)
                  if kind == "PPP" else ("Gamma CDF generated using Arb, moment matching; no PPP error bound",)) if env.generated else ()
-        contract = _contract(gain, interference, numerics, signal.names + env.names,
-                             generated=env.generated, notes=notes)
+        contract = _contract(model, gain, interference, numerics, signal.names + env.names,
+                             generated=env.generated, notes=notes + link_notes)
     return Enclosure(float(lo), float(hi), replace(contract, parameters=parameters))
 
 
 def _parameters(model: Model, user: int, gain: str, interference: str) -> tuple[tuple[str, str], ...]:
     return tuple((k, str(v)) for k, v in dict(N=model.N, m=model.m, lam=model.lam,
                  eta=model.eta, R0=model.R0, convention=model.convention, user=user,
-                 gain=gain, interference=interference).items())
+                 gain=gain, interference=interference, d1=model.d1, d2=model.d2, g=model.g).items())
 
 
 def outage_enclosure(model: Model, user: int, snr_db: Scalar, *, gain: Gain = "exact",
@@ -107,7 +142,7 @@ def outage_enclosure(model: Model, user: int, snr_db: Scalar, *, gain: Gain = "e
 
 def floor(model: Model, user: int, *, gain: Gain = "exact",
           interference: Interference = "PPP", numerics: Numerics = DEFAULT_NUMERICS) -> Enclosure:
-    """Certified floor at infinite SNR. C-INR: exactly zero."""
+    """Certified floor at infinite SNR. C-INR: zero for a feasible link."""
     _validate(model, user, gain, interference, numerics)
     with rt.arithmetic(numerics.precision_bits):
         return _evaluate(model, user, None, gain, interference, numerics)
@@ -180,37 +215,51 @@ def required_snr(model: Model, user: int, target: Scalar, grid: SNRGrid = DEFAUL
 
 
 def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DEFAULT_NUMERICS) -> Enclosure:
-    """Encloses E F_W(d_i J_max) in C-TX, a lower bound on the PPP floor.
+    """Encloses E F_W(d_i g J_max) in C-TX, a lower bound on the PPP floor.
 
     An upper bound below the target proves no PPP feasibility.
     The central cases use the provided, integrity-checked certificates.
-    In C-INR, returns the infinite-SNR limit of the comparator: zero.
+    In C-INR, returns the infinite-SNR limit: zero for a feasible link.
     """
     _validate(model, user, "exact", "PPP", numerics)
+    d = model.d1 if user == 1 else model.d2
+    assumptions = _assumptions(model)
     quantity = "largest-interferer bound: floor lower bound, not full PPP outage"
-    if model.convention == "C-INR":
-        quantity = "C-INR largest-interferer floor: lim E F_W(d_i(1+J_max)/rho) = 0"
+    if model.convention == "C-INR" and d != "inf":
+        argument = "J_max" if model.g == "1" else "g J_max"
+        quantity = f"C-INR largest-interferer floor: lim E F_W(d_i(1+{argument})/rho) = 0"
     parameters = _parameters(model, user, "exact", "J_max")
-    if model.convention == "C-INR" or Decimal(model.lam) == 0:
-        return Enclosure(0.0, 0.0, Contract(quantity, "analytic", numerics.precision_bits, parameters=parameters))
+    if d == "inf":
+        return Enclosure(1.0, 1.0, Contract(quantity, "analytic", numerics.precision_bits,
+                         assumptions=assumptions, parameters=parameters,
+                         notes=("infeasible power allocation: outage is 1 at every SNR",)))
+    if model.convention == "C-INR" or Decimal(model.lam) == 0 or model.g == "0":
+        notes = ("g=0: no interference contribution",) if model.g == "0" else ()
+        return Enclosure(0.0, 0.0, Contract(quantity, "analytic", numerics.precision_bits,
+                         assumptions=assumptions, parameters=parameters, notes=notes))
     name = f"MINORANTS_N{model.N}.json"
-    if model.m == 1 and model.N in (20, 24) and model.eta == 4 and user == 1 and Decimal(model.lam) in (Decimal("0.1"), Decimal(1)):
+    if (model.m == 1 and model.N in (20, 24) and model.eta == 4 and user == 1
+            and Decimal(model.lam) in (Decimal("0.1"), Decimal(1))
+            and model.d1 == "80/3" and model.g == "1"):
         data = json.loads(_banks.verified_bytes(name))
         row = next(r for r in data["results"] if r["kind"] == "largest_jump" and Decimal(r["lam"]) == Decimal(model.lam))
         return Enclosure(row["integrated_lower"], row["integrated_upper"],
                          Contract(quantity, "provided-certificate", 160,
-                                  _banks.receipt(name), notes=("stored endpoints at 160 bits; not recomputed",), parameters=parameters))
+                                  _banks.receipt(name), assumptions=assumptions,
+                                  notes=("stored endpoints at 160 bits; not recomputed",), parameters=parameters))
     with rt.arithmetic(numerics.precision_bits):
         signal = rt.signal(model.N, model.m, False, numerics.precision_bits)
         grid = np.arange(128 * 64 + 1, dtype=float) / 64
-        il, ih = signal.indices(grid if user == 1 else grid * 6, grid if user == 1 else grid * 6)
+        yl, yh = rt.scale_grid_outward(grid, 3 * Fraction(d) * Fraction(model.g) / 80)
+        il, ih = signal.indices(yl, yh)
         gl, gh = signal.lookup(il, ih, "exact")
         gl[0] = gh[0] = arb(0)
-        alpha = arb(2) / model.eta
+        ev = eta_value(model.eta)
+        alpha = arb(2) / ev
         tails = [arb(1)]
         for x0 in grid[1:]:
             x = arb(float(x0))
-            intensity = 2 * arb.pi() * arb(model.lam) / model.eta * x ** (-alpha) * x.gamma_upper(alpha)
+            intensity = 2 * arb.pi() * arb(model.lam) / ev * x ** (-alpha) * x.gamma_upper(alpha)
             tails.append(-(-intensity).expm1())
         cdf = np.array([out(1 - q) for q in tails]).T
         cdf[:, 0] = 0
@@ -219,7 +268,8 @@ def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DE
         hi = (arb_mat([wh]) * arb_mat(len(gh), 1, gh))[0, 0] + missing
         return Enclosure(max(0.0, float(out(lo)[0])), min(1.0, float(out(hi)[1])),
                          Contract(quantity, "mixed", numerics.precision_bits,
-                                  _banks.receipt(*signal.names), notes=("J_max distribution calculated on demand",), parameters=parameters))
+                                  _banks.receipt(*signal.names), assumptions=assumptions,
+                                  notes=("J_max distribution calculated on demand",), parameters=parameters))
 
 
 def compare_approximations(model: Model, user: int, target: Scalar, *,
@@ -251,7 +301,11 @@ def compare_approximations(model: Model, user: int, target: Scalar, *,
                            "largest-interferer floor lower bound exceeds target" if excluded else
                            "a floor lower bound cannot certify feasibility", None, "full PPP exclusion only",
                            target=str(decimal(target, "target")))
-    label = "E F_W(d_i J_max)" if model.convention == "C-TX" else "C-INR largest-interferer floor (limit = 0)"
+    if model.convention == "C-TX":
+        label = "E F_W(d_i J_max)" if model.g == "1" else "E F_W(d_i g J_max)"
+    else:
+        limit = 1 if (model.d1 if user == 1 else model.d2) == "inf" else 0
+        label = f"C-INR largest-interferer floor (limit = {limit})"
     rows.append(ComparisonRow(label, bound, decision))
     return tuple(rows)
 
@@ -266,12 +320,16 @@ def threshold_difference(a: SNRDecision, b: SNRDecision) -> ThresholdDifference:
     if Decimal(a.target) != Decimal(b.target):
         raise ValueError("Both decisions must refer to the same target")
     left, right = dict(a.contract.parameters), dict(b.contract.parameters)
-    for name in ("user", "convention", "N", "m", "lam", "eta", "R0"):
+    for name in ("user", "convention", "N", "m", "lam", "eta", "R0", "d1", "d2", "g"):
         label = name
         if name not in left or name not in right:
             raise ValueError(f"Parameter {label} missing: the decisions are not comparable")
-        equal = (left[name] == right[name] if name == "convention"
-                 else Decimal(left[name]) == Decimal(right[name]))
+        if name in ("d1", "d2", "g"):
+            equal = (left[name] == right[name] if "inf" in (left[name], right[name])
+                     else Fraction(left[name]) == Fraction(right[name]))
+        else:
+            equal = (left[name] == right[name] if name == "convention"
+                     else Decimal(left[name]) == Decimal(right[name]))
         if not equal:
             raise ValueError(f"Both decisions must have the same parameter {label}")
     return ThresholdDifference(a.lower_db - b.upper_db, a.upper_db - b.lower_db)

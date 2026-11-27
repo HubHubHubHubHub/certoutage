@@ -1,7 +1,47 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 — 2026-11-27
 
+General interface, part I: free link coefficients d1, d2, free interference
+gain g and any decimal path-loss exponent η in [2.1, 8]; also carries the
+verified bank store of node B. Letter-default results are unchanged: every
+regression, Table II included, is identical bit for bit to 0.2.0.
+
+- Joint (λ, η) announcement: near η = 2 the useful λ range is bounded
+  above (λ_τ ≈ 6.52(η−2)), and for λ ≥ 13.37(η−2), possible only when
+  η < 2.748, the enclosure is trivial. CONTRACT.md tabulates the domain, a
+  third contract note flags the trivial regime (PROOFS.md, Proposition 4.7;
+  G65). No numerical result changes.
+- `docs/PROOFS.md`: provisional proofs of the statements the 0.3.0 contract
+  cannot refer to the Letter for (link and gain scaling, the two 2F1
+  identities, the Fourier bound, R and τ for every η > 2, the domain D_M,
+  the cumulants of J). § 6 of PROOFS.md says which statements have a test
+  with reference values from outside the package, which only sample tests,
+  and which none (G63). New checks: the Fourier majorant, the remainder on a
+  distribution with explicit CDF, the DFT identification at the nodes, the
+  derivatives of the remainder, and the transform near η = 2.
+- PPP transform and D_M notes now appear only when a PPP inversion
+  contributes: they are no longer attached to λ=0, g=0, infeasible or analytic
+  results. No numerical result changes.
+- Documentation of the general interface: Scope of the README, contract and
+  API updated for free d1, d2, g and real η; new example
+  `examples/free_parameters.py`.
+- Free real path-loss exponent eta in [2.1, 8], read exactly
+  and normalized before cache/bank selection. Explicit eta=3,4 paths stay
+  bit-identical; other values use Arb 2F1 and a certified Pfaff fallback.
+- Compute and announce the joint analytic remainder domain D_M, without
+  changing valid coarse results outside it. Independent quadrature, DFT,
+  full-grid overlap and offline API checks cover the extension (G54–G62).
+- Bound decimal exponents before exact fraction conversion in model inputs,
+  SNR grids and enclosure formatting; extreme zero spellings remain valid.
+
+- Free exact link coefficients d1, d2 and interference gain g,
+  with `Model.from_link` and analytic handling of infeasible allocations.
+- Outward signal-bank scaling and direct thermal integration for arbitrary
+  admitted links; g=0 removes interference. Letter-default bounds remain
+  bit-identical, and numerical cache keys are unchanged.
+- Contracts record canonical d1, d2 and g; `threshold_difference` checks
+  them exactly. Offline link tests and guarantees G45–G53 cover the extension.
 - Internal bank store: verified local generated banks, deterministic NPZ writes,
   atomic replacement and explicit missing-bank errors. Embedded banks always
   take precedence; public queries and numerical results are unchanged.
@@ -15,6 +55,9 @@
   or descriptor raises `IntegrityError`, a file in place of the cache
   directory means an absent bank; a new test checks that no public query
   reaches the generated-bank store (G44).
+- Documentation: `docs/PARAMETERS.md` lists every model parameter, whether it
+  is fixed or free, which version is planned to free it, and what must hold
+  first.
 
 ## 0.2.0 — 2026-11-26
 
