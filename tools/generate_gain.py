@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Rayleigh gain and optional signal banks in a new or empty directory."""
+"""Generate gain and optional signal banks in a new or empty directory."""
 from __future__ import annotations
 
 import argparse

@@ -381,3 +381,76 @@ no disjoint numerical witness between the old and new output intervals;
 this is not an exhaustive search. The independent exact cell-extrema checks
 remain the direct test of the correction. Monte Carlo at nondefault shifts
 is outside this change.
+
+
+## Ported integer Nakagami generation (27 November 2026, unreleased)
+
+The new pure `_nakagami` kernel and the separate m=2,3 path in
+`_generate_gain` preserve the operations of the historical T20 amplitude
+inversion. In particular, they retain the integer recurrence at index 2m-1,
+`variation(m)`, `mu(m)**2`, and the original NPZ key order. The Rayleigh
+kernel, thermal levels and signal point loop are unchanged. The Nakagami
+thermal path always groups rectangles, on 1025 nodes from -32 to 32 dB,
+using the historical 0.008 relative or 1e-9 absolute stopping criterion.
+It stores raw bounds, without final tightening or saved levels. Merged
+matrices retain the historical Fortran memory order: this affects NPZ
+serialization but not C-order array bytes. The prescribed compressed
+container matches the original Linux hash or the archived recompression
+hash on the local platform. The comparator accepts either authenticated
+container and records both identities separately. The thermal
+cell correction at kappa=10 changes no historical bytes.
+
+Twelve isolated historical inversions at M=2^12 or 2^14, for m=2,3 and
+N=8,21,64, matched all seven arrays, including scalar m. Thermal checks
+matched 68 raw points per m. Independent Acb density integrals include
+explicit bounds at the logarithmic origin and at infinity, using extra
+precision for large-argument Bessel cancellation. The forward derivative
+at zero uses E[V^2]=1 to bound its remainder. Independent critical-point
+brackets check the variation majorant for m=1,2,3; complex density integrals
+also check the frequency bound. Full-size replay results and costs are in
+REGENERATION.md.
+
+
+## Ported Rayleigh Chernoff generation (27 November 2026, unreleased)
+
+`_chernoff` replaces only the noncertifying initial root guess: binary64
+bisection and `math.lgamma` need no optional optimizer. The Arb moments,
+near-t=2 series and remainder, sign checks, nine possible bracket widths,
+and exponential endpoints retain the historical operations. Uncertified
+signs raise ArithmeticError, including under optimized Python. Moment
+coefficients are constructed at the caller's precision. The private
+`_guess` hook exists solely for historical controls; it cannot bypass signs.
+The dictionary returned by `chernoff_arrays` contains only the five bank
+arrays; root count and maximum bracket width are in its separate
+`diagnostics` attribute.
+
+The initial guess can change bank bytes, so the default comparison is
+nodewise interval overlap, with endpoint-relative differences recorded.
+Injecting the historical optimizer on the same platform matches an isolated
+historical replay byte for byte. On the local platform, that historical
+replay itself differs by a few last-bit values from the shipped gain banks;
+this is distinct from a change to the certifying formula. The full-size
+Linux results are recorded in REGENERATION.md. The comparator accepts the
+references themselves and detects one-ulp byte changes and disjoint
+one-ulp intervals. A known exact minimizer at t=2 independently checks the
+orientation of both exponential bounds.
+
+The Chernoff thermal path always groups at 1/32 dB, with the 0.004 or 2e-10
+criterion. Explicit merging rejects missing or repeated indices and invalid
+bounds, applies the historical monotone accumulations, then takes the lower
+endpoint from the right and upper endpoint from the left at 1/128 dB.
+This remains a propagated comparator, never a two-sided outage certificate.
+
+
+## Complete generation scope (27 November 2026, unreleased)
+
+`generation_scope` accepts exact/eq3 for integer m=1,2,3 and integer N=8..64,
+and Chernoff for m=1 only. Booleans, nonintegers, other m/N, and unported
+gamma/gg gain names raise ValueError. Its descriptor lists banks, generating
+functions, arguments, shared inputs and every calculation path. The
+current Chernoff runtime adapters also load ordinary Rayleigh banks, and
+J_max needs the exact signal bank; these dependencies are included rather
+than left implicit. The J_max distribution depends on lambda and eta,
+not N or m; the latter enter through SIG. Central MINORANTS certificates
+are optional previously computed results, not a prerequisite for a new N.
+The public API, its validation and its cache/bank access remain unchanged.

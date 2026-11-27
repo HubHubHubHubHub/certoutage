@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Pure integer Nakagami m=2,3 gain and thermal generators, preserving the
+  historical operation order; independent transform and variation checks.
+- Rayleigh Chernoff generation without SciPy, with Arb-certified root signs,
+  explicit signal parts and directed envelopes; byte and overlap comparators.
+- Complete internal generation scope for integer N=8..64 and explicit refusals,
+  including the exact signal dependency for J_max. The public API is unchanged.
+
 - Correct thermal cell minima for exact internal shifts kappa: closed cells
   containing -kappa have minimum zero, with outward rational endpoint bounds.
   Default kappa=10 preserves historical bytes; public model parameters stay unchanged.

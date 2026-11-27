@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare gain/signal banks with the lossless v7 array and file digests.
+"""Compare gain/signal banks with v7 digests or nodewise Chernoff overlap.
 
 A different gain file is expected for N=8,16,32,64 when only the six common
 arrays are present. Compressed reference containers are recognized separately.
@@ -50,11 +50,15 @@ def compare(archive, generated, *, packaged=None, m=1):
         original_equal = digest == ref["original_sha256"]
         compressed_equal = digest == ref.get("compressed_sha256")
         reference_itself = path.resolve() == (archive / "campaigns" / campaign / ref["file"]).resolve()
+        compressed_signal = m != 1 and not is_gain
         row = dict(arrays=arrays, sha256=digest,
                    original_file="identical" if original_equal else "different",
-                   expected_original_file="different" if six_only else "identical",
+                   expected_original_file=("platform-dependent" if compressed_signal else
+                                           "different" if six_only else "identical"),
+                   expected_container="original or archived recompression" if compressed_signal else "original",
                    compressed_reference=compressed_equal,
-                   file_ok=(not original_equal if six_only else original_equal or (reference_itself and compressed_equal)))
+                   file_ok=(original_equal or compressed_equal if compressed_signal else
+                            not original_equal if six_only else original_equal or (reference_itself and compressed_equal)))
         if packaged is not None and not is_gain:
             with np.load(packaged / path.name, allow_pickle=False) as data:
                 row["packaged_arrays"] = {

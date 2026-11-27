@@ -1,4 +1,4 @@
-"""Pure Rayleigh gain and signal generators, with the archive evaluation order.
+"""Pure gain and signal generators, with the archive evaluation order.
 
 Only the callers write banks. ``power`` is a private reduced-grid test parameter;
 production gain banks use 19. No new public model sizes are enabled here.
@@ -415,7 +415,7 @@ def nakagami_finish_signal(parts, *, _size=1025):
     size = _integer(_size, "size", 1, 1025)
     result = _merge_signal_parts(parts, size, ("exact", "gauss"))
     return dict(units128=np.arange(-4096, -4096 + 8 * size, 8, dtype=np.int64),
-                exact=result["exact"], gauss=result["gauss"])
+                exact=np.asfortranarray(result["exact"]), gauss=np.asfortranarray(result["gauss"]))
 
 
 def nakagami_signal_arrays(gain, common, *, bits=160, kappa=Fraction(10)):
@@ -483,3 +483,48 @@ def chernoff_signal_arrays(cbank, common, *, bits=160, kappa=Fraction(10)):
     """Return propagated Chernoff bounds and the 5121 raw refinement levels."""
     return chernoff_finish_signal([chernoff_signal_points(
         cbank, common, range(5121), bits=bits, kappa=kappa)])
+
+
+def generation_scope(gain, m, N):
+    """Describe the complete bank dependency closure, or reject the case.
+
+    This is a generator contract, not an extension of Model or the public API.
+    ``banks`` is in dependency order. ``requires`` maps array arguments to
+    logical bank names; commun.npz is the existing shared thermal input.
+
+    J_max depends on N and m only through the exact SIG bank. Its distribution
+    is computed on demand; the central MINORANTS certificates are reusable
+    cached results, not a necessary bank for a new N. Current runtime adapters
+    load the ordinary Rayleigh banks alongside Chernoff, so that dependency
+    and the exact SIG needed by J_max are included explicitly.
+    """
+    m = _nakagami_m(m)
+    try:
+        N = _integer(N, "N", 8, 64)
+    except ValueError as error:
+        raise ValueError("N must be an integer in [8, 64], without booleans; "
+                         "this is the announced generation domain for 0.4.0") from error
+    if not isinstance(gain, str) or gain not in ("exact", "eq3", "chernoff"):
+        raise ValueError("gain must be exact, eq3 or chernoff; gamma, gg and other names are not ported")
+    if gain == "chernoff" and m != 1:
+        raise ValueError("Chernoff generation is defined only for Rayleigh m=1, with integer N in [8, 64]")
+    amplitude = f"m{m}_N{N}.npz"
+    sig = f"SIG_{N}.npz" if m == 1 else f"SIG_m{m}_N{N}.npz"
+    signal_function = "signal_arrays" if m == 1 else "nakagami_signal_arrays"
+    banks = [dict(name=amplitude, function="certoutage._generate_gain.gain_arrays",
+                  parameters=dict(N=N, m=m), requires={}),
+             dict(name=sig, function=f"certoutage._generate_gain.{signal_function}",
+                  parameters={}, requires=dict(gain=amplitude, common="commun.npz"))]
+    direct, interference = [amplitude], [sig]
+    if gain == "chernoff":
+        cbank, csig = f"C_N{N}.npz", f"SIG_C_{N}.npz"
+        banks += [dict(name=cbank, function="certoutage._chernoff.chernoff_arrays",
+                       parameters=dict(N=N), requires={}),
+                  dict(name=csig, function="certoutage._generate_gain.chernoff_signal_arrays",
+                       parameters={}, requires=dict(cbank=cbank, common="commun.npz"))]
+        direct.append(cbank)
+        interference.append(csig)
+    return dict(gain=gain, m=m, N=N, banks=banks, shared_inputs=["commun.npz"],
+                paths=dict(direct=direct, with_interference=interference, largest_interferer=[sig]),
+                largest_interferer="supported by construction from the exact SIG bank; "
+                                   "central certificates are optional cached results")

@@ -405,3 +405,108 @@ def test_comparator_entries_pure_and_restore_context(monkeypatch,tmp_path,banks)
         ctx.prec,ctx.threads=saved
     assert list(tmp_path.iterdir())==[]
     assert (sorted(cache.rglob('*')) if cache.exists() else None)==before
+
+
+def test_generation_scope_cartesian():
+    import itertools
+    gains=('exact','eq3','chernoff','gamma','gg','x')
+    ms=(0,1,2,3,4,2.5,True)
+    ns=(7,8,21,64,65,True,8.0)
+    for gain,m,N in itertools.product(gains,ms,ns):
+        accepted=(type(m) is int and m in (1,2,3) and type(N) is int and 8<=N<=64
+                  and gain in ('exact','eq3','chernoff') and (gain!='chernoff' or m==1))
+        if not accepted:
+            with pytest.raises(ValueError):gen.generation_scope(gain,m,N)
+            if type(m) is not int or m not in (1,2,3):
+                with pytest.raises(ValueError):gen.gain_arrays(8,m=m,power=10)
+            if type(N) is not int or not 8<=N<=64:
+                with pytest.raises(ValueError):gen.gain_arrays(N,power=10)
+                with pytest.raises(ValueError):ch.chernoff_arrays(N,power=10)
+                with pytest.raises(ValueError):ch.chernoff_value(0,N)
+            continue
+        scope=gen.generation_scope(gain,m,N)
+        names={b['name'] for b in scope['banks']}
+        expected={f'm{m}_N{N}.npz', f'SIG_{N}.npz' if m==1 else f'SIG_m{m}_N{N}.npz'}
+        if gain=='chernoff':expected|={f'C_N{N}.npz',f'SIG_C_{N}.npz'}
+        assert names==expected
+        assert scope['shared_inputs']==['commun.npz']
+        available=set(scope['shared_inputs'])
+        for bank in scope['banks']:
+            assert set(bank['requires'].values())<=available
+            available.add(bank['name'])
+        for path in scope['paths'].values():assert set(path)<=names
+        assert scope['paths']['largest_interferer']==[f'SIG_{N}.npz' if m==1 else f'SIG_m{m}_N{N}.npz']
+
+
+@pytest.mark.parametrize('gain,m,N',[('exact',1,9),('eq3',2,21),('exact',3,63),('chernoff',1,21)])
+def test_scope_named_functions_accept(gain,m,N,banks,monkeypatch):
+    import importlib
+    # Exercise each named array entry with a reduced DFT and an explicit
+    # one-node private merge size. The thermal computation itself is real.
+    original_nak=gen.nakagami_signal_points
+    original_c=gen.chernoff_signal_points
+    original_s=gen.signal_points
+    original_nf,original_cf,original_sf=gen.nakagami_finish_signal,gen.chernoff_finish_signal,gen.finish_signal
+    monkeypatch.setattr(gen,'nakagami_signal_points',lambda g,c,i,**kw:original_nak(g,c,[0],**kw))
+    monkeypatch.setattr(gen,'chernoff_signal_points',lambda g,c,i,**kw:original_c(g,c,[0],**kw))
+    monkeypatch.setattr(gen,'signal_points',lambda g,c,i,**kw:original_s(g,c,[0],**kw))
+    monkeypatch.setattr(gen,'nakagami_finish_signal',lambda p:original_nf(p,_size=1))
+    monkeypatch.setattr(gen,'chernoff_finish_signal',lambda p:original_cf(p,_size=1))
+    monkeypatch.setattr(gen,'finish_signal',lambda p:original_sf(p,_size=1))
+    arrays={'commun.npz':banks['commun.npz']}
+    for bank in gen.generation_scope(gain,m,N)['banks']:
+        module,name=bank['function'].rsplit('.',1)
+        function=getattr(importlib.import_module(module),name)
+        kw=dict(bank['parameters'],**{key:arrays[value] for key,value in bank['requires'].items()})
+        if not bank['requires']:kw['power']=10
+        arrays[bank['name']]=function(**kw)
+        assert arrays[bank['name']]
+
+
+def test_rayleigh_reduced_historical_digest():
+    # Historical T20 t4_backend.worker, with only M changed to 2**12.
+    expected = {'B': 'a3fd08764e225228ee3e534d14ba14b56418d9f2c40c4b529cc9df6acafaff13',
+     'N': '6cc16abd70eefb90dc0ba0d14fb088630873b2c6ad943f7442356735984c35a3',
+     'exact_hi': 'e3c14f19a822cc02ac526112e8f2ad9b6726d65e537657da800008de43a6c327',
+     'exact_lo': '419a552fc7df6eac3f270afae95f144efd5e593483b33592edf4889eda3dd0ed',
+     'gauss_hi': '9b3ee53540fa233a13ad28559236b091ec6bb19067481a80c01ef64ecced437f',
+     'gauss_lo': '0d968556703d30a5ccbcc921dd44ffdcf25f8f47f05f8a13abc920565127eb78'}
+    actual = gen.gain_arrays(8, power=12)
+    assert {k: sha256(v.tobytes()).hexdigest() for k, v in actual.items()} == expected
+
+
+def test_nakagami_signal_container_matches_archive(banks,tmp_path):
+    import json
+    tool=_tool('compare_gain_banks')
+    ref=banks['SIG_m2_N8.npz'];size=len(ref['units128'])
+    part=dict(indices=np.arange(size,dtype=np.int64),exact=ref['exact'],gauss=ref['gauss'],
+              levels=np.full(size,9,dtype=np.int8))
+    result=gen.nakagami_finish_signal([part])
+    assert result['exact'].flags.f_contiguous and result['gauss'].flags.f_contiguous
+    output=tmp_path/'output';output.mkdir()
+    filename='SIG_m2_N8.npz'
+    np.savez_compressed(output/filename,**result)
+    # Serialize the archived arrays independently with this platform's zlib.
+    # Raw NPY layout must agree even when the DEFLATE stream changes by platform.
+    reference_file=tmp_path/'reference.npz'
+    np.savez_compressed(reference_file,**ref)
+    reference_bytes=reference_file.read_bytes()
+    assert (output/filename).read_bytes()==reference_bytes
+    archive=tmp_path/'archive';(archive/'campaigns/t20').mkdir(parents=True)
+    # Accept either authenticated archive container, never just matching values.
+    # Fortran layout is part of the serialized NPY payload.
+    entry=dict(file='banques/'+filename,
+               original_sha256='e075d80c62227a434e86a56ba5f3b7af0597573e6957245f02f51df4aaadf57b',
+               compressed_sha256=sha256(reference_bytes).hexdigest(),
+               arrays={k:dict(dtype=str(v.dtype),shape=list(v.shape),sha256=sha256(v.tobytes()).hexdigest()) for k,v in ref.items()})
+    (archive/'campaigns/t20/COMPRESSION_LOSSLESS.json').write_text(json.dumps([entry]))
+    assert tool.compare(archive,output,m=2)['ok']
+    # Exercise original-container acceptance separately, using the independently
+    # written reference above as the original in this synthetic manifest.
+    entry['original_sha256']=sha256(reference_bytes).hexdigest()
+    entry['compressed_sha256']='0'*64
+    (archive/'campaigns/t20/COMPRESSION_LOSSLESS.json').write_text(json.dumps([entry]))
+    assert tool.compare(archive,output,m=2)['ok']
+    result['exact'][1,512]=np.nextafter(result['exact'][1,512],np.inf)
+    np.savez_compressed(output/filename,**result)
+    assert not tool.compare(archive,output,m=2)['ok']
