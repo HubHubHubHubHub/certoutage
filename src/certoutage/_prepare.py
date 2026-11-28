@@ -1,4 +1,4 @@
-"""Explicit, offline preparation and logical identities for useful-gain banks."""
+"""Explicit preparation and logical identities for useful-gain banks."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -36,17 +36,18 @@ class PreparedBank:
 
     ``seconds`` is measured elapsed time. ``estimated_seconds`` is a lower /
     upper estimate on one CPU core, nonzero only for a missing bank in a plan.
+    Entries returned by fetch_banks have estimated_seconds=None.
     Missing entries have no digest or size; their stored name is unknown until
     their input digests are available. A plan performs no calculation or write.
     """
 
     logical: str
     stored_name: str | None
-    origin: Literal["embedded", "cached", "generated", "missing"]
+    origin: Literal["embedded", "cached", "generated", "fetched", "missing"]
     sha256: str | None
     bytes: int | None
     seconds: float = 0.0
-    estimated_seconds: tuple[float, float] = (0.0, 0.0)
+    estimated_seconds: tuple[float, float] | None = (0.0, 0.0)
 
 
 @lru_cache(maxsize=1)
@@ -95,7 +96,11 @@ def _stored_name(logical: str) -> str:
 
 def _metadata(name: str) -> dict:
     if _banks._is_embedded(name):
-        return dict(_banks.manifest()[name], name=name, origin="embedded")
+        origin = "embedded"
+        if not _banks._package_available(name):
+            _banks._read_fetched(name)
+            origin = "fetched"
+        return dict(_banks.manifest()[name], name=name, origin=origin)
     stored = name if _banks._GENERATED_NAME.fullmatch(name) else _stored_name(name)
     return _banks._generated_descriptor(stored)
 
@@ -135,6 +140,8 @@ def _entry(logical: str) -> PreparedBank:
     try:
         meta = _metadata(logical)
     except _banks.BankNotAvailable:
+        if _banks._is_embedded(logical):
+            return PreparedBank(logical, logical, "missing", None, None)
         try:
             stored = _stored_name(logical)
         except _banks.BankNotAvailable:
@@ -142,7 +149,7 @@ def _entry(logical: str) -> PreparedBank:
         return PreparedBank(logical, stored, "missing", None, None,
                             estimated_seconds=_estimate(logical))
     return PreparedBank(logical, meta["name"],
-                        "embedded" if meta["origin"] == "embedded" else "cached",
+                        meta["origin"] if meta["origin"] in ("embedded", "fetched") else "cached",
                         meta["sha256"], meta["bytes"])
 
 
@@ -156,7 +163,7 @@ def _plan(model: Model, gain: Gain) -> tuple[PreparedBank, ...]:
         if logical in selected:
             return
         entry = _entry(logical)
-        if entry.origin == "missing":
+        if entry.origin == "missing" and not _banks._is_embedded(logical):
             for dependency in specs[logical]["requires"].values():
                 visit(dependency)
         if target or entry.origin == "missing":
@@ -181,14 +188,21 @@ def _require_ready(model: Model, gain: Gain, interference: str = "PPP", *, large
         lower = sum(row.estimated_seconds[0] for row in plan)
         upper = sum(row.estimated_seconds[1] for row in plan)
         call = f'certoutage.prepare(Model(N={model.N}, m={model.m}), gain="{gain}")'
+        from ._fetch import _download_bytes
+        megabytes = _download_bytes(model.N) / 1_000_000
         raise _banks.BankNotAvailable(
-            f"Banks not ready: {', '.join(missing)}. Call {call}. "
+            f"Banks not ready: {', '.join(missing)}. "
+            f"Call certoutage.fetch_banks({model.N}) (about {megabytes:.2f} MB download), "
+            f"or {call}. "
             f"Estimated preparation: {lower:g}--{upper:g} seconds on one CPU core; "
             "local machines may take 1.3--1.7 times longer.")
 
 
-def prepare(model: Model, *, gain: Gain = "exact", dry_run: bool = False) -> tuple[PreparedBank, ...]:
-    """Explicitly prepare missing useful-gain banks, offline, at 160 bits.
+def prepare(model: Model, *, gain: Gain = "exact", dry_run: bool = False,
+            fetch: bool = False) -> tuple[PreparedBank, ...]:
+    """Explicitly prepare missing useful-gain banks at 160 bits.
+
+    With fetch=True, first call fetch_banks(model.N); dry runs never fetch.
 
     Reuse verified embedded/cached banks. Return the read set and missing
     dependencies, in generation_scope order. With dry_run=True return an
@@ -201,6 +215,11 @@ def prepare(model: Model, *, gain: Gain = "exact", dry_run: bool = False) -> tup
     _validate(model, 1, gain, "PPP", DEFAULT_NUMERICS)
     if type(dry_run) is not bool:
         raise TypeError("dry_run must be a boolean")
+    if type(fetch) is not bool:
+        raise TypeError("fetch must be a boolean")
+    if fetch and not dry_run:
+        from ._fetch import fetch_banks
+        fetch_banks(model.N)
     plan = _plan(model, gain)
     if dry_run:
         return plan
@@ -210,6 +229,8 @@ def prepare(model: Model, *, gain: Gain = "exact", dry_run: bool = False) -> tup
             started = perf_counter()
             entry = _entry(planned.logical)
             if entry.origin == "missing":
+                if _banks._is_embedded(entry.logical):
+                    _banks._read_fetched(entry.logical)
                 bank, _, _ = _spec(entry.logical)
                 arguments = dict(bank["parameters"], bits=160)
                 arguments.update({key: _banks.arrays(name) for key, name in bank["requires"].items()})
@@ -233,7 +254,7 @@ def _generated_provenance(names: list[str]) -> tuple[bool, tuple[str, ...]]:
     notes = []
     for name in dict.fromkeys(names):
         meta = _metadata(name)
-        if meta["origin"] == "embedded":
+        if meta["origin"] in ("embedded", "fetched"):
             continue
         p = meta["parameters"]
         notes.append(

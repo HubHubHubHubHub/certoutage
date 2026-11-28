@@ -1,0 +1,4581 @@
+{
+ "archives": [
+  {
+   "N": 8,
+   "banks": [
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 720,
+     "descriptor_sha256": "00ed2df1cb6ac44faaf4a8504f801bfcaa282b8d842082577e8985eb91534e5b",
+     "family": "SIGC",
+     "logical": "SIG_C_8.npz",
+     "m": 1,
+     "sha256": "3601c2d719dbc6b5d580e618c9994f08ce46a9c24813e93c77f4d6da6cad4689",
+     "stored_name": "SIGC_bdd8a16be6d49dd7.npz"
+    }
+   ],
+   "bytes": 46760,
+   "file": "certoutage-banks-N08.tar.xz",
+   "sha256": "054c2c021840dc58e652cb85ef521409cb9fd4350a7733a720d5d60e1b07c1c4",
+   "uncompressed_tar_bytes": 337920
+  },
+  {
+   "N": 9,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 548,
+     "descriptor_sha256": "3b384cd5fc8cb5a827e3bb0997ad0ebde68730bf15121b5ef5a8e6e32b8728c7",
+     "family": "CHERNOFF",
+     "logical": "C_N9.npz",
+     "m": 1,
+     "sha256": "bae7899ec6c3beb3028148aa40959a6114b10e12307ee3d226eec17d0d9067f6",
+     "stored_name": "CHERNOFF_0b0a1ad86d0ad08b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 532,
+     "descriptor_sha256": "adae3ad661adc6a178bf27d8ea040577fedbb4e1e3af54b30b402b118202d033",
+     "family": "GAIN",
+     "logical": "m2_N9.npz",
+     "m": 2,
+     "sha256": "048dc2baa2e5241156666289c9ccd4de98fc1de9b02fec9795f7b4b5049f2c2b",
+     "stored_name": "GAIN_156c52425f741922.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 532,
+     "descriptor_sha256": "75d93597e3a3a82bf46111ba641e2cb7d77361b15e3fd345e312fe4711cb93e1",
+     "family": "GAIN",
+     "logical": "m3_N9.npz",
+     "m": 3,
+     "sha256": "7b33d6ea0530b9480cd4570cd476739b06b80e08d50c7c1c6a8f53423daf5ca6",
+     "stored_name": "GAIN_2dbc480871ba6855.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 532,
+     "descriptor_sha256": "8a26b543e28d3ff5d4dc85702cc178c9e5c5165e641b8b6312e33e731be1f686",
+     "family": "GAIN",
+     "logical": "m1_N9.npz",
+     "m": 1,
+     "sha256": "1f6a27c7c87236a5dee386ea8baf39893f9dbcd9930964734640608f723e8fcf",
+     "stored_name": "GAIN_d8467d0845c502ea.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 720,
+     "descriptor_sha256": "844fd54f9ee13f63c61e3989f1810c0771c5e6082510b600703f055394c5723d",
+     "family": "SIGC",
+     "logical": "SIG_C_9.npz",
+     "m": 1,
+     "sha256": "bbcdea352c5f0d59e2afe0675a4cf216b8df2265e6e662d1e9001ead2343d492",
+     "stored_name": "SIGC_b58dcb318b88dd14.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 703,
+     "descriptor_sha256": "6a17caced73c6e6dcb835088c1fff4d71c809e115d046ec99691219701df2424",
+     "family": "SIG",
+     "logical": "SIG_9.npz",
+     "m": 1,
+     "sha256": "21eae940d8a89a67e986bd2d944520c5a730df62de20aa11cc393dcde0fdce97",
+     "stored_name": "SIG_562615eda1bf7982.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 715,
+     "descriptor_sha256": "e88bf655a3e76922975a3765251be95fe3dfe453800ef8817cbcf470e963a6d1",
+     "family": "SIG",
+     "logical": "SIG_m3_N9.npz",
+     "m": 3,
+     "sha256": "7373108b83a93c067160c723a8168d6f8a412506f9c47782cd6be9f30d694f4d",
+     "stored_name": "SIG_9357d2e5681fc757.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 715,
+     "descriptor_sha256": "8fcfdec3eef3c760ef857634f945d1d4a7e9b8d5df506c823a6fa709d5d704d5",
+     "family": "SIG",
+     "logical": "SIG_m2_N9.npz",
+     "m": 2,
+     "sha256": "e02ee4f3612ac5e628db74304d3aa34d45e22d26c540e2938fb15365b575cd99",
+     "stored_name": "SIG_f82867233aa14878.npz"
+    }
+   ],
+   "bytes": 4068608,
+   "file": "certoutage-banks-N09.tar.xz",
+   "sha256": "3db55b676bd6a652a54d11d3efb045a5e8d6fd4ebcacd531268112d4c93c2f7e",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 10,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "bf0d54a30ad1a745553b8826620ecb8625bcdb9ddde47037a42dff34e197cc9a",
+     "family": "CHERNOFF",
+     "logical": "C_N10.npz",
+     "m": 1,
+     "sha256": "29c786f8875ad8ed3e612e0c4be68fdd6346b4b960f11bc71dd786f8ab10eaa0",
+     "stored_name": "CHERNOFF_2ad3a33b73f0071a.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0927fc257638934d50b13a1479e9bee9b3956d7bf8e60305939910e6ff6ba94c",
+     "family": "GAIN",
+     "logical": "m2_N10.npz",
+     "m": 2,
+     "sha256": "fad140caed6b5d37bef85e8f01387e1e33c6131b08ad1c4560d7762977409e68",
+     "stored_name": "GAIN_09120928e25a044b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "d45b95af7739066b116e01afa523aa14b63ccb90ddc025d9dad291d2aa4bf4b8",
+     "family": "GAIN",
+     "logical": "m3_N10.npz",
+     "m": 3,
+     "sha256": "3341f0bdeb4f1e7dca0a3e4e10a6a8eb619bf2bfb3cc5c64136c0412a70012de",
+     "stored_name": "GAIN_1aa83702abc3d4ca.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "1f8a99edfce438e6456fd16ce1830665b20bfe53edb05651f77aeed522965a9e",
+     "family": "GAIN",
+     "logical": "m1_N10.npz",
+     "m": 1,
+     "sha256": "d6a281bbdd88eab9dc883df41a87b2da900eabb1eda473f2a14cb65865eeb302",
+     "stored_name": "GAIN_87b0bd246368e641.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "e527a4d27362c01ba704489693cc32abd7cedd417e6e21aa418707c6c3004179",
+     "family": "SIGC",
+     "logical": "SIG_C_10.npz",
+     "m": 1,
+     "sha256": "805f7fde6818ffb02f2616916fa0f911ef984e92a9e781d4c3c3308a7ae957c2",
+     "stored_name": "SIGC_19d11a3f0358b23e.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2782e4d3419bd4f9103fbc9564d1310d532ff8e7ede198129b209855a749bafd",
+     "family": "SIG",
+     "logical": "SIG_m3_N10.npz",
+     "m": 3,
+     "sha256": "a69657c969e6aafac037e37340a1c42eddac6aee474b859e9206f8f8ba1ffb13",
+     "stored_name": "SIG_21e6b16e89b0f9d2.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "840805d6b1627dc826a688fc4e58aeb29506d76cd98451f92fe640f90a567e89",
+     "family": "SIG",
+     "logical": "SIG_m2_N10.npz",
+     "m": 2,
+     "sha256": "9cc59136accdbdf67aea84ea22cbdaffdcce8fc4e3e9f225f4b5c88ee011cf5f",
+     "stored_name": "SIG_2c7d73f262a580f5.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "d2acc887e18f83ccd5bad205c46e6ff922e1040685f7150d2c0043fb5dacef2e",
+     "family": "SIG",
+     "logical": "SIG_10.npz",
+     "m": 1,
+     "sha256": "e6a267422f9beb26f2b4e64322322c85974a6af025077887d8011886e51b569c",
+     "stored_name": "SIG_5a211fa4b52e2904.npz"
+    }
+   ],
+   "bytes": 3819148,
+   "file": "certoutage-banks-N10.tar.xz",
+   "sha256": "7766ed129aec2e4d4e7d91e758e16ce949614d5490366a3dd12ee2be824b6c59",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 11,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "8c160702aee01d29c5c1457f75c07e20872cca66e7c8a04b9f83f9e5191f5c02",
+     "family": "CHERNOFF",
+     "logical": "C_N11.npz",
+     "m": 1,
+     "sha256": "3a606edc098060210a4f753320fd01e4084c231729785a3fdfa58f93832bfcdc",
+     "stored_name": "CHERNOFF_7355c5e1607ee808.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "a31c31dcd2b7c8165d303ad44151634483341fac173147dc5a33cd83570f6c48",
+     "family": "GAIN",
+     "logical": "m3_N11.npz",
+     "m": 3,
+     "sha256": "d5ea672e477219927077d8da6c394a22f3022a48972bcd9187c5099fe71034db",
+     "stored_name": "GAIN_84dd2406352243b9.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b043b3dc79b4d034e01ac702fe07d170eb2066f40adf177f247b7ffb90d31356",
+     "family": "GAIN",
+     "logical": "m2_N11.npz",
+     "m": 2,
+     "sha256": "0a0657277beaf2e30a6cba03d86e99ee2505d099889378efd66cb3d1c0538f95",
+     "stored_name": "GAIN_987f31b33853e6b0.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "de9e57098919a3afa9d1790ec69cb74e7a095850e98a9ae983be12eb63735bb2",
+     "family": "GAIN",
+     "logical": "m1_N11.npz",
+     "m": 1,
+     "sha256": "0280e5cbbbc7e995c90e5366acaeac7b9f623cd24b9dada7cf95a65a80bb771e",
+     "stored_name": "GAIN_f3fd3d20fa7d3f23.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "e83f8af01fef2741f2ca8efbf35d05f96c4d755065a2e41ba40ea5d3ef5f3f7a",
+     "family": "SIGC",
+     "logical": "SIG_C_11.npz",
+     "m": 1,
+     "sha256": "cada0ca42dd608e3e53a30495ce8b3c5e196d6596aeb774f5e526c286a2a0ecf",
+     "stored_name": "SIGC_2037beb8d3d2ce8d.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "2f176c71c4583689cc5e52a1703e2d973643b3408422bed5e1a1d423ed608d89",
+     "family": "SIG",
+     "logical": "SIG_11.npz",
+     "m": 1,
+     "sha256": "5bc1e4de14b9512791606c993ea42f819efc82b856cacdace16536a94a753676",
+     "stored_name": "SIG_1648660edae8e9c3.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "1e315b67603aa14f5c75deb3afe6c923bd3a252275e84e3a5bbdfdc5b4067024",
+     "family": "SIG",
+     "logical": "SIG_m3_N11.npz",
+     "m": 3,
+     "sha256": "e197d1f71829492ceb6679a214b0f5cfcfc7e5ceba845595df81b819cdb5a6eb",
+     "stored_name": "SIG_36c721536c58c0cc.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "10fb184b11cff34411d1e2fe13ed33ef835a19ab51763d1698555d81a163de94",
+     "family": "SIG",
+     "logical": "SIG_m2_N11.npz",
+     "m": 2,
+     "sha256": "67f0f0b4e4a90077c212125066bd40ef3200dfefd42c3a2575fd41f7ee8c7c41",
+     "stored_name": "SIG_b5fbe9b717363f8a.npz"
+    }
+   ],
+   "bytes": 4038128,
+   "file": "certoutage-banks-N11.tar.xz",
+   "sha256": "1b1773b8de03b2890b2f9bbf3b1b36e194915458b81dffb7de7b1498b38248fa",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 12,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "cfa6d9d5a42f39d592be121f9bd322bf96412cd34683787f7022ec2a789b02b2",
+     "family": "CHERNOFF",
+     "logical": "C_N12.npz",
+     "m": 1,
+     "sha256": "5ecd332fa00c73f2d38b05fc13c97e065d93226b15a21bd9fa9727e5cbd356df",
+     "stored_name": "CHERNOFF_25471198e4f04a7c.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "e35b787e5b0af2fdc4953c503bae926c2e8ee43eeca20304c819de55abf7af98",
+     "family": "SIGC",
+     "logical": "SIG_C_12.npz",
+     "m": 1,
+     "sha256": "a154ff7c7abf54d0e3189d6405b6e91b07901349b921042691cc2f6549125f3f",
+     "stored_name": "SIGC_19fbec5f37ad8eee.npz"
+    }
+   ],
+   "bytes": 103844,
+   "file": "certoutage-banks-N12.tar.xz",
+   "sha256": "4ca859daec5b661e5ad246f795c4c550e7e3b11e58563cd294e0acac0c8b2e34",
+   "uncompressed_tar_bytes": 8734720
+  },
+  {
+   "N": 13,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "bc0a36137f52b324c9ea19ed7065ee5421fe4c325379712cd3c3d692147e93c5",
+     "family": "CHERNOFF",
+     "logical": "C_N13.npz",
+     "m": 1,
+     "sha256": "08e740250dbfad8463802526a5aac34b72c24163f72c67af1f4aa7604d6bec5c",
+     "stored_name": "CHERNOFF_d4c3847ef9655261.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "2b2ee7cb1ce2ceeb6b7bdaf73c580f8e6e44316d5841a1bc0b8fe8b844970140",
+     "family": "GAIN",
+     "logical": "m2_N13.npz",
+     "m": 2,
+     "sha256": "86d74d9c9680528e311aad71139b132c0153f11a06a40c45bc66a50f72e93b81",
+     "stored_name": "GAIN_7d2820cc017bf8c6.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "e8235ebcf089eef4883be5365d69473419a6966c9d078f4573c724f876e8d277",
+     "family": "GAIN",
+     "logical": "m3_N13.npz",
+     "m": 3,
+     "sha256": "685a4b675f9421d13fae954dc06992507d15d2a6bfa0feff00f4d9884634428b",
+     "stored_name": "GAIN_995f2f1142f91eaf.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0d5e1887fb63256fe18b61a54a35076a68e4fb2e3fb51342174827f9f21b33f5",
+     "family": "GAIN",
+     "logical": "m1_N13.npz",
+     "m": 1,
+     "sha256": "2bfd18bf1d4df5683c43dcf12f3156daa3a5f42b1e2f4a94881ef16196fece98",
+     "stored_name": "GAIN_9a4e02a631501d20.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "2696bd7875c1ffb45bd0eade50cf06844515fc371003be56bae3e3d6d1259da3",
+     "family": "SIGC",
+     "logical": "SIG_C_13.npz",
+     "m": 1,
+     "sha256": "fc4f9b5899ec7e82cef90ece655289a96efd04688739d3db4d240bd757d3f9ae",
+     "stored_name": "SIGC_caaa50b7a3f4ac43.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "865fa3e77c2540bf6fe5e168cdabea30436ec86cb2a1afccdf08c1ada1cad349",
+     "family": "SIG",
+     "logical": "SIG_m2_N13.npz",
+     "m": 2,
+     "sha256": "51f21f6505b53ccb35e0f3e0076aac8991718c0b858bf071213698b21a1b111c",
+     "stored_name": "SIG_1ccbaf0d1013315d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "db3814fda2f52948a7ce42f0759cf9e96b464508dcd5fa05e132b1ff65ae0fb7",
+     "family": "SIG",
+     "logical": "SIG_m3_N13.npz",
+     "m": 3,
+     "sha256": "326c81774e0edd7b99c0102125f59294aafab3b37cfbda6cfbb06a1f1f241b91",
+     "stored_name": "SIG_53ebf59a9b81fe68.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "ac32cc54b981888df049755613c5c9815a555efa678d530fadac59ff9a654cc1",
+     "family": "SIG",
+     "logical": "SIG_13.npz",
+     "m": 1,
+     "sha256": "f37d8617b45e1c4d11b33145a0d553c4941ec2baa42fbc40e3354cd7e05b72b4",
+     "stored_name": "SIG_eb8f58db40d7fd4d.npz"
+    }
+   ],
+   "bytes": 4474420,
+   "file": "certoutage-banks-N13.tar.xz",
+   "sha256": "48bdb97c1ca6e30bf1e656599db43c419a3a3ef9eda2f5205838fab7e7755a37",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 14,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "b28b0d1b033bce96383b9efaa330719135c7502ae1aef07be94308f3d2e94e10",
+     "family": "CHERNOFF",
+     "logical": "C_N14.npz",
+     "m": 1,
+     "sha256": "4556f1eae9e3b4d6cb4305aa23750401d43f0a948f91a6a6bd6be55172558f90",
+     "stored_name": "CHERNOFF_37aa1d4245ea7b44.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "465da6e401c9981eef2a82c620ecf15907d4476e781e3e3b4dcb5a323ffb7e5b",
+     "family": "GAIN",
+     "logical": "m2_N14.npz",
+     "m": 2,
+     "sha256": "94dc6e9452445be2dfd386469c220dc45792f3c16d2aba65296292b7e70aef89",
+     "stored_name": "GAIN_449f94a78eb527c6.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "d5863246fccb9737c79bdea3f54e70e2cdfb1fd14e29f0446bbc200257b9c073",
+     "family": "GAIN",
+     "logical": "m1_N14.npz",
+     "m": 1,
+     "sha256": "f232d1b33e9a662120d525f43defa5f74b6775dac32d1db6f100c4ddb99cf58f",
+     "stored_name": "GAIN_69386ffcbeac900b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "4550a4601a2699fc2769295d427c5296e3c43eea21855defff4ac7a86a43b39a",
+     "family": "GAIN",
+     "logical": "m3_N14.npz",
+     "m": 3,
+     "sha256": "ee6b27bbf9a7c619d7107d54a09e18c1cbd8dcf87c3b88a81e2dd4b6cb592b8b",
+     "stored_name": "GAIN_f3f8f21461020c32.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "af7c034a43aa1887a83a77288b21812e345e1ae313a6e585d8c4853a983d7c9b",
+     "family": "SIGC",
+     "logical": "SIG_C_14.npz",
+     "m": 1,
+     "sha256": "03054ecf340ee8e300287c468147adba7327f4ccbb0a90e6337eda9ebfeac202",
+     "stored_name": "SIGC_5ec10001853de4fb.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "6aaed4c6e286cf208d55ee530b6372d5db6265171d4118f4e478217c30586d39",
+     "family": "SIG",
+     "logical": "SIG_14.npz",
+     "m": 1,
+     "sha256": "e9e1dedc640d2fe7f219aa4d7d0c3aa1d4b51ec9cc2f4800d27c2dc4165a4717",
+     "stored_name": "SIG_2a33917c0c41b3d1.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "8bf8fb84ed16d75cf1d8e805cfdab4b73b3d898ca7d93dffc11faa24eb612b19",
+     "family": "SIG",
+     "logical": "SIG_m3_N14.npz",
+     "m": 3,
+     "sha256": "f6240bbfdd737843ae8ae81bc4c2f417f3b81665d88cd0c1f241104236497162",
+     "stored_name": "SIG_3a6178c44443b6b5.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "04ca4cffd9cc6f3a489ae4c5c131a8d207c610fcfa5b4e5962e03d4b2ac6a77e",
+     "family": "SIG",
+     "logical": "SIG_m2_N14.npz",
+     "m": 2,
+     "sha256": "649c8200938635cf1232931ff7814cab14cd0737f07a13c0044e9a46d5e3f370",
+     "stored_name": "SIG_3e5b318b583851ce.npz"
+    }
+   ],
+   "bytes": 4590236,
+   "file": "certoutage-banks-N14.tar.xz",
+   "sha256": "53fc998bb0f74c43ec2010649a579a9a72b5cec7eef22707b074b4bf9e847199",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 15,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "f5f6ecc5d5660af07de17f41d1c242791783948d661ad7d2a0f502668e5d4c08",
+     "family": "CHERNOFF",
+     "logical": "C_N15.npz",
+     "m": 1,
+     "sha256": "01b2e1433b2f286002b08b76fe1f0d09121879df19e414206bf95e50a8eb9280",
+     "stored_name": "CHERNOFF_e9786fef4cca8e1f.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "c5a03680e6601b19ce2032ae8216c5bd930c802d6bb239127cd21e348ab6e857",
+     "family": "GAIN",
+     "logical": "m3_N15.npz",
+     "m": 3,
+     "sha256": "1ee423311015fa24440df498f65a2a05ee306daa72325e2a79ac229e5f76dc2d",
+     "stored_name": "GAIN_3869452adf744d69.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b3a60bfd1773692b666b746f74429ee2a0be107db927ee9c81b9ecf69188e85c",
+     "family": "GAIN",
+     "logical": "m2_N15.npz",
+     "m": 2,
+     "sha256": "6f501e83ebfbe9b6e4a4046ab01ff2df3af065fdedb583c0ba74ba8e435a9d6c",
+     "stored_name": "GAIN_a046d9974bf43148.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "11f9d738888accc739cccdd91a21cfa751b3510db57864d7e4e03568c06bc7d5",
+     "family": "GAIN",
+     "logical": "m1_N15.npz",
+     "m": 1,
+     "sha256": "99acbe3f8fa119238637f238f7256bcde6a9214576d6fa29a80f4b4dd21d60f9",
+     "stored_name": "GAIN_a24d370bf09b47e5.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "aa678c696d849e24754ca4680cc5c0b9541e0e77842e3882bf57f65a5abba588",
+     "family": "SIGC",
+     "logical": "SIG_C_15.npz",
+     "m": 1,
+     "sha256": "b3c79004f0ccf1ce71e94d049a5c79ff0cad53278cbb55dbcd3b36c2fbc08c38",
+     "stored_name": "SIGC_9ead38050821d428.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b46cfaa12fcfcfed0f7231457415bb4317eb849fff866bb5b6497cd7b29fe53e",
+     "family": "SIG",
+     "logical": "SIG_m2_N15.npz",
+     "m": 2,
+     "sha256": "3e8db778abcd03b5fb04026868ac0d6b70c76933ecd184cb177c7330621ea822",
+     "stored_name": "SIG_1441ba330a7279aa.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "3b894fdc44f04f57af95c9a61cb6c5de4b6742ce18d45115d96724c96b810ae4",
+     "family": "SIG",
+     "logical": "SIG_m3_N15.npz",
+     "m": 3,
+     "sha256": "1864577334e3551730a9e9785455a04ca1b03c14c895041bce74d8af28d4c5da",
+     "stored_name": "SIG_58c658123dcb4027.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "e95314a3cb4104c07098e0614001a4e1f836b0887e4c9e19ab90bbc70c0b850d",
+     "family": "SIG",
+     "logical": "SIG_15.npz",
+     "m": 1,
+     "sha256": "225f9108d9bff0c1b6458e41635381a26dd23def586bcfd6bca726b1d9203863",
+     "stored_name": "SIG_b2a39aae77e87a96.npz"
+    }
+   ],
+   "bytes": 4720408,
+   "file": "certoutage-banks-N15.tar.xz",
+   "sha256": "8cbdbf1c8edc7c05f541939653369c25ba550923aa68c1821235721f2c79cacd",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 16,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "5b3513d9086b6bed23d69cb73388582f689dd1e45bc0a8f9acf749c10d819cd1",
+     "family": "CHERNOFF",
+     "logical": "C_N16.npz",
+     "m": 1,
+     "sha256": "52adc6c07d1ef237b61265faf2f4bd51dfe6dc0bad926ed9be626b939c68951f",
+     "stored_name": "CHERNOFF_a226cd9b440299f4.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "11d80f12737613d2805ddbbd46ef19121ac2189d2e1edcbddbdbcef3aabb3c54",
+     "family": "SIGC",
+     "logical": "SIG_C_16.npz",
+     "m": 1,
+     "sha256": "7fbb1eb65cf31db09b1c19287a5669804f8d4d793c76f8b29969a0b697bc26ff",
+     "stored_name": "SIGC_e251247072c894c9.npz"
+    }
+   ],
+   "bytes": 121360,
+   "file": "certoutage-banks-N16.tar.xz",
+   "sha256": "22f352a5dd11e4780c53d4bbf170902ed7b81f4a561af7681be69e40ce9be42d",
+   "uncompressed_tar_bytes": 8734720
+  },
+  {
+   "N": 17,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "1b09f7622fe1a3fd60421ffe3c4158344382a15019cb938d99c970ab2cf1549f",
+     "family": "CHERNOFF",
+     "logical": "C_N17.npz",
+     "m": 1,
+     "sha256": "7ced0341eab4e00de9419beb93e166af6a082fac916560d8ede821741a36a0a1",
+     "stored_name": "CHERNOFF_df9df9bec3c4da3b.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "7852fa170d90613f5927f4782c349c083bdd4bdc80c7c71e29167882061d18b7",
+     "family": "GAIN",
+     "logical": "m1_N17.npz",
+     "m": 1,
+     "sha256": "f8ed312e95b59962cfd99cab92e649e64d5f3b155c1bb2df7fd5491aa88b1c5e",
+     "stored_name": "GAIN_2ee13429f96a15cb.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "41ef76f2870c4c8b796840ea1cebe8ca753caa9b3fb0be7982f892b94868fe37",
+     "family": "GAIN",
+     "logical": "m3_N17.npz",
+     "m": 3,
+     "sha256": "c8e9e2f814b295ae7bb5a237727aca44922c90dcea8898a256bf5d72c225fe66",
+     "stored_name": "GAIN_71dba10046222ff2.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3aeaed27dc035f4dadec14331b91b926f5b4388ed35210f195f9afd426ba8025",
+     "family": "GAIN",
+     "logical": "m2_N17.npz",
+     "m": 2,
+     "sha256": "a354b79c0f182462f1ffbe9fd5b9e7183688e7424bb6857a729393b017fe5191",
+     "stored_name": "GAIN_8025c67f468c2f59.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "7f99e77769c17954c5f54a92331765bf066716877ece487c5f791fadf97b4afd",
+     "family": "SIGC",
+     "logical": "SIG_C_17.npz",
+     "m": 1,
+     "sha256": "309c9f0b534a1b011460979c3a78194070524ab2cea448ac89b174e3b4746844",
+     "stored_name": "SIGC_968f60fcb4bd1e5c.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "9d7414121000f1adae4d8937449f2abe16cbce52ce2bc2342a8622d1d7691bfa",
+     "family": "SIG",
+     "logical": "SIG_17.npz",
+     "m": 1,
+     "sha256": "46c30d88ded6b1ec062f3ec03098b7de20458f28f8f7c88580a9414b8284596b",
+     "stored_name": "SIG_460110bc95b411e6.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b6214f9e1f02a43c9c1b109a395edd47c444144513f4ad98ecca4088e6345632",
+     "family": "SIG",
+     "logical": "SIG_m3_N17.npz",
+     "m": 3,
+     "sha256": "cfb59d80fb8ec1717e53fb96ef46560cb6974c6a2d42c16e427020fe1c21bba1",
+     "stored_name": "SIG_72c551e672685079.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "769bb6bb7bc245c637f26f009730ba97bb2778fc1df57a3bf2add50d0bd6ac69",
+     "family": "SIG",
+     "logical": "SIG_m2_N17.npz",
+     "m": 2,
+     "sha256": "6e584fcac474b76e8c08f1614a12c71e4339b3f2bea18978406109411764850d",
+     "stored_name": "SIG_c509bab042411e7c.npz"
+    }
+   ],
+   "bytes": 4504192,
+   "file": "certoutage-banks-N17.tar.xz",
+   "sha256": "5eccaab991f1f9dc4f1e23f40e9f1099b807fe2e6711575f678f331868382982",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 18,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "d6fa45698b0b52d0396df61bfef78df0fcca3d0c2b0aecf60b4a1892a39f24bc",
+     "family": "CHERNOFF",
+     "logical": "C_N18.npz",
+     "m": 1,
+     "sha256": "f92efac26276660fb0aa2628a7901bae64ba20e5cb862e967f64260a3d1c08cc",
+     "stored_name": "CHERNOFF_9559fc8c9dd823d0.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "4c97fce5c183d145538ee8d359058e866843bf94a37cd8c236acc29f6e8145ac",
+     "family": "GAIN",
+     "logical": "m1_N18.npz",
+     "m": 1,
+     "sha256": "a1af9fc6f6465c1c78980608921e8b08e710f4d09acaeddf5c58b1a1ee3c4179",
+     "stored_name": "GAIN_ae89219f1767e6e4.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "9ecde53302e10ced4de726271da1610269181db44fcf0dcd520e4642937d151b",
+     "family": "GAIN",
+     "logical": "m3_N18.npz",
+     "m": 3,
+     "sha256": "90a903b1259b00e2d7deb029808eac9c47095eccba56198e451f208e15e0c005",
+     "stored_name": "GAIN_c321fa8d8d98a736.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "e4115dccb3be86550ec8934380782f5d4532937ce94bbbc74e0e22f50fc01871",
+     "family": "GAIN",
+     "logical": "m2_N18.npz",
+     "m": 2,
+     "sha256": "36784bc5ee4a1aeeef955d63959574519cd296fd08ce80a19f7de79ff36564e8",
+     "stored_name": "GAIN_c35f909e2763bfa3.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "3dbdda812b59a05e2b702d4f1cf3ff383f32363428ac8e4eaab4f630b9aaf897",
+     "family": "SIGC",
+     "logical": "SIG_C_18.npz",
+     "m": 1,
+     "sha256": "b0fc7664c00c4501133e84ed297b333125a552c38c599cc740216f74f778c042",
+     "stored_name": "SIGC_acf8e3a13c358909.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "cc63b9a7dc9fd755438917d3e39f29bcc05763dae5057c3233c24ffc8bafb312",
+     "family": "SIG",
+     "logical": "SIG_18.npz",
+     "m": 1,
+     "sha256": "30aa29c31714df7ce1f862c038701fdef326848ac155087f599f8d110e48a90d",
+     "stored_name": "SIG_33142f57fca1569a.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "1ad43cd0d6bdefbc7d391582db418edff3543d027e7d839be72661ba551c66ff",
+     "family": "SIG",
+     "logical": "SIG_m2_N18.npz",
+     "m": 2,
+     "sha256": "6f9cc75dc13447b818f19479ceac951ba07a3983a0972650db8ace0f85dc5fda",
+     "stored_name": "SIG_5fc64932dcd875ae.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "4d18f9bb5bf4775dcae8d4edb9ac6a418781862d09c6e93a3ccbca8ce352c774",
+     "family": "SIG",
+     "logical": "SIG_m3_N18.npz",
+     "m": 3,
+     "sha256": "021c97a37523e7660ab06521b6c1429895b1c3648b32aa0c829cc15f7e07777c",
+     "stored_name": "SIG_c050d1c2267fbcad.npz"
+    }
+   ],
+   "bytes": 4699464,
+   "file": "certoutage-banks-N18.tar.xz",
+   "sha256": "6e5952816125926b5c551d987ffde73e69d4cd389f52958d0e332d04c5243814",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 19,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "c38f554c0de30d38ba1ccd65de964174ef740d59391465f41e48671a2451aa1e",
+     "family": "CHERNOFF",
+     "logical": "C_N19.npz",
+     "m": 1,
+     "sha256": "65a430b665653bcc30df5c66c12d3e89f14d69932edfd487d993a4158d386782",
+     "stored_name": "CHERNOFF_6c114c9bf78a10ca.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "049f87d1f62f10ca076f3d3285445244b6fef9a5db789d9e1cbb1093c1741738",
+     "family": "GAIN",
+     "logical": "m3_N19.npz",
+     "m": 3,
+     "sha256": "3a615714e811b638e1d08d5d33ef02ce9bb80d2c0ddf91bd8678d467b56723f8",
+     "stored_name": "GAIN_02cad1b0b34158fd.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b0446efe1fcebc7faace28a8b4a0af07e6914a4c902cb88b543b7bec41353445",
+     "family": "GAIN",
+     "logical": "m1_N19.npz",
+     "m": 1,
+     "sha256": "82ee83f2e78d4fc5f0bdf84e029ab6362205680a03485619a11f7f3b4ea828a2",
+     "stored_name": "GAIN_5e3ac851b58c458a.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "36fdcbb3a272d351f83781f0b95195db97bb232dd15e53ad6e20f9e34932a2c0",
+     "family": "GAIN",
+     "logical": "m2_N19.npz",
+     "m": 2,
+     "sha256": "a93b23d3d0d2208e77d37019f8a538e300cb6fb1579dd5d9e7baa5fd8e264e4f",
+     "stored_name": "GAIN_c739ef0bcacbc974.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "7eeffaeccd26b9aa25a52d109058f1b6d1ad99ac99b25537d76fa64999a4b05a",
+     "family": "SIGC",
+     "logical": "SIG_C_19.npz",
+     "m": 1,
+     "sha256": "2177a28a1d57077d1c53992c1ff31bb2105b51702a8e449645dc0b7a237d9d3f",
+     "stored_name": "SIGC_3a1e33d49487119c.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "18f240b62145f2001c4171c395b22ece9b7d7a5a50c94b43f98aec0e85686df0",
+     "family": "SIG",
+     "logical": "SIG_19.npz",
+     "m": 1,
+     "sha256": "084338115c22bcd3c1376c56fba4c302e0ea18ddef58c197c004252fe1689e4d",
+     "stored_name": "SIG_18a64a4f69f11e8f.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "824df6a1361fab0414ffd66630b594c8745712baf12b909ad5eee7d687cb76dc",
+     "family": "SIG",
+     "logical": "SIG_m3_N19.npz",
+     "m": 3,
+     "sha256": "0ed597e70720ac8436f295da433f274d4251daea95ec2b0c5978f7db2cdf42b0",
+     "stored_name": "SIG_f4703e52bca44637.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b6c5a0ac1972cc74b97f21927b5b7c4ac87e157d754aea6c71a721c357f20ce9",
+     "family": "SIG",
+     "logical": "SIG_m2_N19.npz",
+     "m": 2,
+     "sha256": "344a5d0613dfe605d821460d35f0299ab2273df3be0a1e8f097ce100eeded507",
+     "stored_name": "SIG_fa2c91a525846cca.npz"
+    }
+   ],
+   "bytes": 4787032,
+   "file": "certoutage-banks-N19.tar.xz",
+   "sha256": "c5f93232b023f812a51525d0316fb4a4b8a0cc1b1935d4a9fa1bb601a85b1517",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 21,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "4f0dc32a5252e01e7340b36193678867705ddbe700b20fa19393b6172785a6e0",
+     "family": "CHERNOFF",
+     "logical": "C_N21.npz",
+     "m": 1,
+     "sha256": "71d1726d9ecf26e1996711f1c32ed7aff0cd0663e0d166f9fc41ed21835d07ad",
+     "stored_name": "CHERNOFF_bfd76626a3b89c75.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f929ca4d1ce9860c232b014b98199360148e39f871b0800c41ed1a6159495e85",
+     "family": "GAIN",
+     "logical": "m3_N21.npz",
+     "m": 3,
+     "sha256": "49ba3ced77c35fca4c722882ccc8f3b8dca45fe98370ad2bf46b79fc7f2a490b",
+     "stored_name": "GAIN_13b12f1b9244fd2f.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f383e7854f81f8d752b9e6e70ec8b4032a3e7437388c89fef6f19c44cee458d2",
+     "family": "GAIN",
+     "logical": "m2_N21.npz",
+     "m": 2,
+     "sha256": "ab4abdb8f6b1403bade27f9a112074ecc52dc7a54f9770b340357527e7eb5c4f",
+     "stored_name": "GAIN_b8b96e319b310d5e.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "03397b39df3ca7fb4b3ef2f3b76c2702d9b2d7b83b947e35f426b0d5a78eedb7",
+     "family": "GAIN",
+     "logical": "m1_N21.npz",
+     "m": 1,
+     "sha256": "dec684ce5c194b6d080c36212c3f315aa60b6ff1414bead18603f5ba39b80b5d",
+     "stored_name": "GAIN_d2ea4d43a937d434.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "e51e729dffc20adb79c0c4917602cab9cd56a8e3231baaa07589e040c5439fad",
+     "family": "SIGC",
+     "logical": "SIG_C_21.npz",
+     "m": 1,
+     "sha256": "d68c6f75b1f2550c51b9920af0dea68ab708707e39d2d0abbd276f1b4d2c8e83",
+     "stored_name": "SIGC_fb33f99078c97da2.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "895056652e9a275f33417dd5287f60750e8dd6f6dceba3b46a826d2744f1e65e",
+     "family": "SIG",
+     "logical": "SIG_21.npz",
+     "m": 1,
+     "sha256": "44809cb47a8ea04ca02ffee6891c6e92aa0dfca2eff0dfbdc72fe19ff600d9f1",
+     "stored_name": "SIG_0ae89722abf64a2d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "49760877779d1c23102b3c5315816c1ededda381934b06aa0a4f75dcbc130e15",
+     "family": "SIG",
+     "logical": "SIG_m2_N21.npz",
+     "m": 2,
+     "sha256": "4d6d4964e564bbf31209d5a06b7aa7cb64b53dc9f9e38c4c7f4818027601adde",
+     "stored_name": "SIG_281e37fcc4935c34.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "90197e1b6046b64e4313911368c30974ea53a2589450148f49efaa6bc09e4245",
+     "family": "SIG",
+     "logical": "SIG_m3_N21.npz",
+     "m": 3,
+     "sha256": "b2e2a1a2c27d401c11fb3bcf893536de511433d68a001a5157cf38b4951f4aa5",
+     "stored_name": "SIG_e48e5897fa07eaca.npz"
+    }
+   ],
+   "bytes": 5055152,
+   "file": "certoutage-banks-N21.tar.xz",
+   "sha256": "af00f534dc4208daf8142ed3dbc610aa567c6d1d8d6fb1f7856f26a934095700",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 22,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "ea980c039b63a4c6339315895d363d1d1fe4b6ef0acd490359bbbf3ff18fa8b3",
+     "family": "CHERNOFF",
+     "logical": "C_N22.npz",
+     "m": 1,
+     "sha256": "f027aaa67c244dfad66ced67b8e625fbfe42f13f3a6cd723aae9157770ddedc0",
+     "stored_name": "CHERNOFF_a2f85e3edf5e60d7.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "43ffc803a4be7a5ac4e51cc99a1fca0354bddde8e678a70c11ff6477ee736608",
+     "family": "GAIN",
+     "logical": "m1_N22.npz",
+     "m": 1,
+     "sha256": "49edadfc889e956b81d7e97f62e2375dd6a9a38ee1ea11526ef742161ea7f63a",
+     "stored_name": "GAIN_30cde71fcb165783.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3dab8e230675b99ff786895b5df791279b6b3ef7496d2f2ed396a5308a110f04",
+     "family": "GAIN",
+     "logical": "m3_N22.npz",
+     "m": 3,
+     "sha256": "e6a1a6adad89c0f6337a9d4798fe44ca3e4ceb70a082128645cf7f9e970e1f24",
+     "stored_name": "GAIN_49c70bda9596fa39.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "170e5cb854efd852c764851d9c6153cd21bd36ffd84f7e0987099d8e1840261d",
+     "family": "GAIN",
+     "logical": "m2_N22.npz",
+     "m": 2,
+     "sha256": "6596081e86bff7dd5af5143140635417971df5913b7e179c795ff52942e01657",
+     "stored_name": "GAIN_9d422f27f95127a9.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "1abeb831da54a751649f43ddffe95647d9ee5fd497a6eeae7808ccf0ee5e677d",
+     "family": "SIGC",
+     "logical": "SIG_C_22.npz",
+     "m": 1,
+     "sha256": "ad06ac37613070cccb2df77b887e00e172947252104b68037e61f74b4f061400",
+     "stored_name": "SIGC_c561a9c1a0cc2290.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "29735e712cf32708389b2cd72512d4a89dfb2b903c3d449fa850a45af6372d7d",
+     "family": "SIG",
+     "logical": "SIG_m2_N22.npz",
+     "m": 2,
+     "sha256": "1cd755058c7f07a1bd04701e5c743dd568a7c8814edaeaeff59870b3444e70c4",
+     "stored_name": "SIG_3f945329c0b690c7.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "f632e48acad60a5653ad1bccbb3452e581ba2a7944fd39e9e50182216e56b17e",
+     "family": "SIG",
+     "logical": "SIG_22.npz",
+     "m": 1,
+     "sha256": "1db7f919786991348c2832e0c012651f4aae05015f72c52dbaca42fbf4b5bcd6",
+     "stored_name": "SIG_ac43079a9d1a5ed3.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "f07ef3fd563c38a9781df94eeca93313aee42cc6cb7f566577d540bbff664452",
+     "family": "SIG",
+     "logical": "SIG_m3_N22.npz",
+     "m": 3,
+     "sha256": "8ea2f200122870c50ccf075d90a2f4d3f7f5cdc6762fbd0f0c95c5ee7c06336f",
+     "stored_name": "SIG_f069fe35e7009010.npz"
+    }
+   ],
+   "bytes": 5143188,
+   "file": "certoutage-banks-N22.tar.xz",
+   "sha256": "90606b0f8f0bb537f5a624102d4063fe4d0af464f3641e81bca2bc894e16b37b",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 23,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "af68914a4973301aa31d97169679f81689282197c9e2dd53e67c12553c101d08",
+     "family": "CHERNOFF",
+     "logical": "C_N23.npz",
+     "m": 1,
+     "sha256": "5c6f029038fc154670ee7d676f6b84466f8657f07bd065b3c76a9bf9807ae6c8",
+     "stored_name": "CHERNOFF_9ecfa8e202f7e900.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f13badb6162a99752a7ad2a2548821410c406d65baee71c8e47aaaa7e5a04d18",
+     "family": "GAIN",
+     "logical": "m2_N23.npz",
+     "m": 2,
+     "sha256": "8a27ed4d234b716f7f21053f26ceafd52c8fdb14b5970b4cd8799c8c63d9c709",
+     "stored_name": "GAIN_38a788f6c2cbf02b.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "65ef75736f13ac6bb0b33d16419a5c7ccd17ee8e9c5e86b7a6b3441f999b0577",
+     "family": "GAIN",
+     "logical": "m1_N23.npz",
+     "m": 1,
+     "sha256": "131538c40be4b14050e40f378a42ac2a1c2788592e68fb04eb55f84a4ef3f854",
+     "stored_name": "GAIN_ce89ecf37068cc40.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "aa69470f744a45811eb6f3ba25a9e594851c4c14eab03974c9368e9d8e4e5559",
+     "family": "GAIN",
+     "logical": "m3_N23.npz",
+     "m": 3,
+     "sha256": "e022f55fa0f09f2cff89b80be599fd2402ff88e67fc8b0d305a54a2a8ac4b215",
+     "stored_name": "GAIN_f353274acfd9528b.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "6dc4bb0507e34593250636f05ed9c6a5b53b3b875b97b2baed20db2d4bfccfb9",
+     "family": "SIGC",
+     "logical": "SIG_C_23.npz",
+     "m": 1,
+     "sha256": "f212630049959ea238532ead2afecf788fc27fc867f4a3aa5edc815a63a5028b",
+     "stored_name": "SIGC_16ea32a6a9e43777.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b3b04a9d71460be09dfccb970b0ce2f140d8892add6764c9494026f958e658f1",
+     "family": "SIG",
+     "logical": "SIG_m3_N23.npz",
+     "m": 3,
+     "sha256": "f89302e4147ee7f907eb1d7563a6cbc7ed277d7fc5ab19abe28d02a2696d2015",
+     "stored_name": "SIG_4087ce86573b31bc.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "35d4107766c95c512bc8aa6ec60003a2183c45b0055c4026aaba5c671fb6891d",
+     "family": "SIG",
+     "logical": "SIG_m2_N23.npz",
+     "m": 2,
+     "sha256": "2eec1663e216743bd14dc76574dafdc9cf60e9b558cb4cc76346384bb0eca0c5",
+     "stored_name": "SIG_5b7ba2a2690ee891.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "2d66ac4d3f73eb381a2e0fe1de8403ccdbf97fce55a24c6e81d43101581ebbdb",
+     "family": "SIG",
+     "logical": "SIG_23.npz",
+     "m": 1,
+     "sha256": "470eac546ef15294a7ee7816b1c060d442ae5dfa6adbf0c9e3388122192ca9d1",
+     "stored_name": "SIG_fa1c47cb3098718f.npz"
+    }
+   ],
+   "bytes": 5277372,
+   "file": "certoutage-banks-N23.tar.xz",
+   "sha256": "afc3de4a46be883bdf44eea93962129c5d1605b6c5c7981cf52719dd154ae7d6",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 25,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "2af080e4a761602656384081561299c91f9da4a89a55da8ddc3abf691712ffbe",
+     "family": "CHERNOFF",
+     "logical": "C_N25.npz",
+     "m": 1,
+     "sha256": "e9cb0986177a16133d541dced69b10495e2122024b59e48f47876d87baa129ea",
+     "stored_name": "CHERNOFF_9f312775a6c4b570.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "bbe2e8b53f18a356b5d74efaea14e87b1468ff2e47ee47556ba193247aff437b",
+     "family": "GAIN",
+     "logical": "m1_N25.npz",
+     "m": 1,
+     "sha256": "60de32beb1aaffe6ac7a15a5b9083fb9323bd310f98ef98bad1e050f70e4bb92",
+     "stored_name": "GAIN_b2c7f55c30600ea6.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "df5ee4a95d4f120a002e965222701bea3e4fafdb3f98790fe2de113823810c56",
+     "family": "GAIN",
+     "logical": "m2_N25.npz",
+     "m": 2,
+     "sha256": "caf4e27edd84400dc0a437ef78dfb18bbad7583cada259740eaabda307ea7dfd",
+     "stored_name": "GAIN_cf19bd7a01fcf032.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "97a3a7a0c0e0fedecdb4c3c4d3dae96f4925e00ba5e3b288145b44430742ca01",
+     "family": "GAIN",
+     "logical": "m3_N25.npz",
+     "m": 3,
+     "sha256": "fa731bb5b672f629bcc75ae1be30e8d0d4ac74507a9d36c3b2a6295dd0ab63a0",
+     "stored_name": "GAIN_da2152c2fb154663.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "a3cb492587acc0d9dc03f1cead253f99286e515f468b9a77c41717eef5c2a265",
+     "family": "SIGC",
+     "logical": "SIG_C_25.npz",
+     "m": 1,
+     "sha256": "ac48e8ac2b558d0a16583cae844146de8f1ee7e90cd0b7f0f52812a2b0058b15",
+     "stored_name": "SIGC_25edcb3272a4908d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "4c84b57f7798279766fe168331fd2f046b6d990564d4d43b9891e844c27b0789",
+     "family": "SIG",
+     "logical": "SIG_m3_N25.npz",
+     "m": 3,
+     "sha256": "7e377fbe07bdd5914e4a7c406f93c5fc978018dc761e565ebc5bd915e7d6cbcd",
+     "stored_name": "SIG_54c92ff57c5aed44.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "758f02d124d7f57c3cb03a5addf7a082cf9cdc6a3d54a591e64ebab20823ecfd",
+     "family": "SIG",
+     "logical": "SIG_25.npz",
+     "m": 1,
+     "sha256": "f8ce4881ec943608794f94ad650ee1b633f0388cd23031f78a4aeeb623e8a4f1",
+     "stored_name": "SIG_6aeb7f4f420eca5b.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2fb8cb7659349b1f0736dc750bfb6eb71a4a0198339bee9afbaa2ac77ee32bab",
+     "family": "SIG",
+     "logical": "SIG_m2_N25.npz",
+     "m": 2,
+     "sha256": "5321b8415e52bb9db988eba4e563ff66d88fb724ab64bf92f04bde93b2eceb08",
+     "stored_name": "SIG_e03d559ae5afc120.npz"
+    }
+   ],
+   "bytes": 5462348,
+   "file": "certoutage-banks-N25.tar.xz",
+   "sha256": "08183a5b2d0b6c9505a5622c63778196bb8fb3fe299b62b30196439cb3fa1ae5",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 26,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "0d69ffd4d532ab60443a9d901cc865adb690124af6873ae9cbe6493593a830ca",
+     "family": "CHERNOFF",
+     "logical": "C_N26.npz",
+     "m": 1,
+     "sha256": "0da4b426870cd4009ccb7a36963c5c0aeec649fe54c0aae11ceab2cca78e4af0",
+     "stored_name": "CHERNOFF_0a0c0d704293cb7e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "1393a5b9e949a1e0e97444e540a6aa05f62e4b602159f72789daadb7ff9ce50d",
+     "family": "GAIN",
+     "logical": "m2_N26.npz",
+     "m": 2,
+     "sha256": "653325a984e70aa2431596744401bf6d7c28bd554a6e103dad4d5e64410658ac",
+     "stored_name": "GAIN_2c7ccdacb2e142bd.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "88e5fd4d581b8e501c78dabcaa30ec901372fda39f8cce415cec70809807b4e7",
+     "family": "GAIN",
+     "logical": "m1_N26.npz",
+     "m": 1,
+     "sha256": "133fc0eaf7a9c18f00e77b04e8798e07132017ac0f506e462d5d234fbb989586",
+     "stored_name": "GAIN_c5503aa6a4631a3e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f7be0123223d51694edf8fd402c68540256b6be9c20227d4338d718d19092ac7",
+     "family": "GAIN",
+     "logical": "m3_N26.npz",
+     "m": 3,
+     "sha256": "5eedd63d0486b69b13d84e8744dfb5cb1e5c21d769997d8c52670b9376633ccd",
+     "stored_name": "GAIN_f74b223512e10377.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "5ec58b45f513fc55ed93ed514e75e3982130be90400f72ae3283ea88acd963d3",
+     "family": "SIGC",
+     "logical": "SIG_C_26.npz",
+     "m": 1,
+     "sha256": "4044a3d88dbde27474e5e0915c4bb294c7c41ca5c48304cb749311f387f2163c",
+     "stored_name": "SIGC_b827d0b51a4f0dd9.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "f15962ae2d2c58ccf1cf8e71f0c7dbcd8c011a51b2592484ecf25ff76d40c553",
+     "family": "SIG",
+     "logical": "SIG_m3_N26.npz",
+     "m": 3,
+     "sha256": "cb14e9e3c841f02f0da2ea06a4adbddb3042a13f121673b6aa8ff73db17e2827",
+     "stored_name": "SIG_93aad46c075719a6.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "55ce6b8a0947e9398acc375a86b48c9f5ef25621d8bb430fdd0dec19c407235f",
+     "family": "SIG",
+     "logical": "SIG_26.npz",
+     "m": 1,
+     "sha256": "9772d3b918905c5dc925fd4270b52ea0644500954eb0143cd1d2ca7a425b441b",
+     "stored_name": "SIG_c1c89aabc9aefd8e.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "6061cf9b08dd63058ec303cab7eb2ee5693d8cef17cb88136dccf8ab8f4d0dbd",
+     "family": "SIG",
+     "logical": "SIG_m2_N26.npz",
+     "m": 2,
+     "sha256": "ce852b9efc8ccd7b7f5b4b163bc6b050b9a804a9444bdccb8a282d58e31865f4",
+     "stored_name": "SIG_ff99e1f917c646e5.npz"
+    }
+   ],
+   "bytes": 5143016,
+   "file": "certoutage-banks-N26.tar.xz",
+   "sha256": "1b214524063d919c6d137acaf126ffca82459c053b1518733fae13802eefafff",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 27,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "f28558faa5c7b4d1e26d54c743b97fdb8e378201a37a9b8b325a54987121d42f",
+     "family": "CHERNOFF",
+     "logical": "C_N27.npz",
+     "m": 1,
+     "sha256": "e7a618034e2361fc7658087032da207632f2eb200338efee7bfb00d1c6af1d1a",
+     "stored_name": "CHERNOFF_dc3b7c501b6d2c58.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "fc76f5bb546eede5428912709131c567626577345f7228af966709da9116f52a",
+     "family": "GAIN",
+     "logical": "m2_N27.npz",
+     "m": 2,
+     "sha256": "f7a3a3e714d58b177146016bee0f6311ed876f03136699b42690699ad2eb8586",
+     "stored_name": "GAIN_38710bcbe3cdf87c.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "a1c1aaa6fd03c5ef975fd9c6fc1e218c014ae4384f1db18fcc6694ce2aac441e",
+     "family": "GAIN",
+     "logical": "m1_N27.npz",
+     "m": 1,
+     "sha256": "2f8b2763b44f04bd8233f107f5778e1654889f4f7dec91b1cd1656f0beaf686c",
+     "stored_name": "GAIN_7479c9f97bad6fc3.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "dcfd41fc29c397fe76702479fdc6a8f46863e9858cb1f8fee0a7472799e15c65",
+     "family": "GAIN",
+     "logical": "m3_N27.npz",
+     "m": 3,
+     "sha256": "ced6742e0ad1f420df501c768730e0745943f2202bfac8f419850481918a3151",
+     "stored_name": "GAIN_d33b0aa72e575c66.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "de38ad4a7bc489239ec8c6e9c2cefbb74c2f67bcb4e0ca91000a3cd9ed63dd81",
+     "family": "SIGC",
+     "logical": "SIG_C_27.npz",
+     "m": 1,
+     "sha256": "6332191d848adc8bcd5d6882b3591b60ccdf75673be1beacbccfe75a8f94d797",
+     "stored_name": "SIGC_470083a18292d8a7.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "5623ac7af0399dcadb843041b31cd590651f06c0d3830c95258f237a3c0ce3a5",
+     "family": "SIG",
+     "logical": "SIG_m3_N27.npz",
+     "m": 3,
+     "sha256": "9db67ae54e113ccd19abc4c868844bd2ca3687b08f3e0c7cca77bbbd818d03f0",
+     "stored_name": "SIG_3684949dd3052ada.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "587fb88ca25e1275b6f26505e4f23b5429860d4f12566b5e48b53bb593b99de9",
+     "family": "SIG",
+     "logical": "SIG_m2_N27.npz",
+     "m": 2,
+     "sha256": "cd4adfd9cf8829c309d227301fc4842c4dca47ab5f136b81d11165e23ecffbc4",
+     "stored_name": "SIG_3ca1623a6be17f8d.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "159092dbf4adb64f7892a6bf73e3c0fb33d3805e9f1e7e31a3bf4fde7760d35b",
+     "family": "SIG",
+     "logical": "SIG_27.npz",
+     "m": 1,
+     "sha256": "8359c09352d9612d6c1398f59bc9437c49bf405bc672472142605040e02eaf69",
+     "stored_name": "SIG_4585f17b6bfe769f.npz"
+    }
+   ],
+   "bytes": 5272892,
+   "file": "certoutage-banks-N27.tar.xz",
+   "sha256": "24039eb156a34f8ef66fb6cec34f261757348699f0e9d9da033643be4ac6b41d",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 28,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "b006913155721173ccc54304e7c08ff50214476bf5edaca766a267b7f85fa879",
+     "family": "CHERNOFF",
+     "logical": "C_N28.npz",
+     "m": 1,
+     "sha256": "eeaa62afdf959d24e4b241908297c0eb633991c49eb12fd146b7f84043971aad",
+     "stored_name": "CHERNOFF_c8a7fed51cbea97e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "a6fad7e9a1eb1c22df8f9abd54a4ec18c2737c06bcc06d91d4e647714269727b",
+     "family": "GAIN",
+     "logical": "m2_N28.npz",
+     "m": 2,
+     "sha256": "40c1c0794dc26154df3e2d889052c93522db51a9315b91900aa86c2fd39f76f8",
+     "stored_name": "GAIN_c320b2d9009a1c47.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "84a231291381012933efd87b2044676db6b3f80a400d0aaa01cdedb4e69f3d87",
+     "family": "GAIN",
+     "logical": "m1_N28.npz",
+     "m": 1,
+     "sha256": "6b35b6db8ce8903d93b91ea404584e02b7fe157cdd8355533247cba21f309721",
+     "stored_name": "GAIN_e3eabbe83de9a5a2.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "9cf24e33c4517401a6e8b61430cbf7e49c0d88c94156aee1474a281199f08114",
+     "family": "GAIN",
+     "logical": "m3_N28.npz",
+     "m": 3,
+     "sha256": "9d4964e6df09bb6c903431d8fd850b236b10789dc24bd410bb7ac29983244184",
+     "stored_name": "GAIN_e93e31342d4ef491.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "fbe4d8078837d6e785305668c4cf97fff78e1405bed937bfc68a0df3fe334ca6",
+     "family": "SIGC",
+     "logical": "SIG_C_28.npz",
+     "m": 1,
+     "sha256": "7cb75f0b17fba1f71bc7e27048d601a2ade1ab581dd8c2e7cb1ca0aa7ef0d9d4",
+     "stored_name": "SIGC_31f9cc2a523b38d7.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2fae52453fc67ef67338a83ba8b824b9e62b937c9b3530966519816068b1d27b",
+     "family": "SIG",
+     "logical": "SIG_m3_N28.npz",
+     "m": 3,
+     "sha256": "4d117842da4b7004fbe1a99b743104efa72bf445364beb1751eb72563f1ac14a",
+     "stored_name": "SIG_4e6e7909ffcbb97c.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "06cbf23f4cbf48f5d80cbfeadff94616a38fede745737aab30105a36a483891c",
+     "family": "SIG",
+     "logical": "SIG_m2_N28.npz",
+     "m": 2,
+     "sha256": "bb566b04bcf3fd3d7ece099944b9a4f661e86fc30856673162b0a7738960799d",
+     "stored_name": "SIG_d4bf6f9d4fcdfa03.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "48f2de922f309bd23d8711705acab39db4c5c74f03a715355adab8db929ecc55",
+     "family": "SIG",
+     "logical": "SIG_28.npz",
+     "m": 1,
+     "sha256": "b26f0c09f89c1c7c5dacb97d5a1c24a2d05f9bfc9e6efd3bc741ade63141e841",
+     "stored_name": "SIG_f31da1338046633f.npz"
+    }
+   ],
+   "bytes": 5346056,
+   "file": "certoutage-banks-N28.tar.xz",
+   "sha256": "23cc5b6b5e785c099df3f14ec9ec55486b8b155b0e53653da6edec864993ab6a",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 29,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "f1715abd214a5a2319390d21078a96e161a4752a091328ff3d5e4109098ed965",
+     "family": "CHERNOFF",
+     "logical": "C_N29.npz",
+     "m": 1,
+     "sha256": "106e1338bd64c4b1bffdb641c216bc9e5121273ff7ef1e43be8ecdcefc57c0a2",
+     "stored_name": "CHERNOFF_8c58004956b4fa94.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "e25ca091f885404c5965a45a69899a3bdb88ccaf77fcea677c993dc4f3920c73",
+     "family": "GAIN",
+     "logical": "m1_N29.npz",
+     "m": 1,
+     "sha256": "c2e5b1cdf9b06130c652bd14c7e47a496afbeb0d3671d09734753601b0c71c3e",
+     "stored_name": "GAIN_2eac9efa81caa60d.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "24e28b3b372432761a4bd909a3d9774796b6f93a6e051b052606e9b033761ea7",
+     "family": "GAIN",
+     "logical": "m2_N29.npz",
+     "m": 2,
+     "sha256": "253b47395bb17bf5ec6283cea789e3f3e379f40c2f9f7d9f8f7e16652033de39",
+     "stored_name": "GAIN_3b598226e03e71d3.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3c8e3e63e73492adf198cd0c7d27707d13c73fe077efb8c654bab400aa5f9b4c",
+     "family": "GAIN",
+     "logical": "m3_N29.npz",
+     "m": 3,
+     "sha256": "452d6d45fcfd4a2bc0c50f0fd0ea99f72199854545994732f5fbd44cb687228c",
+     "stored_name": "GAIN_da3316e8978a4d39.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "b7f598c2730866b3218496fee31c0b96bc4525f2cf7c09d50caaae4aaf5a5830",
+     "family": "SIGC",
+     "logical": "SIG_C_29.npz",
+     "m": 1,
+     "sha256": "8edc57969c970452263562200151459356cd372710d43e1aba4e1ad2be5222d0",
+     "stored_name": "SIGC_3145d4c2bcb8ddeb.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "f45c0852938c44495924f0d2c52cf2bba9e604623ec4e10b28cd5701e5cf21bc",
+     "family": "SIG",
+     "logical": "SIG_m2_N29.npz",
+     "m": 2,
+     "sha256": "93a467786443c30e634417196f6b2d69318d2505d50c7374c13ec1e545568f89",
+     "stored_name": "SIG_1032227f32cc02e5.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "db6d7147755a48cc7ac1b9d0ced66537838972b53830633d2a932e4d80db29da",
+     "family": "SIG",
+     "logical": "SIG_m3_N29.npz",
+     "m": 3,
+     "sha256": "39180ea5dd07c6eeabf464b668eacb3914dde001e692ef6a2141ec3a38eec2da",
+     "stored_name": "SIG_3a6aa061b2270f2e.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "67a237f60858f9287206ed9f4796dee36825def0acb7a0f4f419ecc693935e91",
+     "family": "SIG",
+     "logical": "SIG_29.npz",
+     "m": 1,
+     "sha256": "f99a388663b980d4bfc821e3506f35155fa4fbc8390ee5bc07a994677a4ba743",
+     "stored_name": "SIG_983f93450a1cc273.npz"
+    }
+   ],
+   "bytes": 5531448,
+   "file": "certoutage-banks-N29.tar.xz",
+   "sha256": "7a1a5b415d963973d0d2922cc7f797ec8035d674e04b1f749af825eda47095fa",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 30,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "5a9a590f4434a42846c9ac286b864912367b77e275788598e0314d599d7df86a",
+     "family": "CHERNOFF",
+     "logical": "C_N30.npz",
+     "m": 1,
+     "sha256": "1c63af658da92e45c86de28987785bebdb20c8ee3a35d315f5def5911d8130d2",
+     "stored_name": "CHERNOFF_aac8ad2ee958a06c.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "53360911033fedb095aa1265fa48512b63dee88aa6d086b7a1d347692091c869",
+     "family": "GAIN",
+     "logical": "m2_N30.npz",
+     "m": 2,
+     "sha256": "5d43b5c7396111c0b086c85bfad94387b88fd0bf9754ff3c95300d33ebfbcf72",
+     "stored_name": "GAIN_09837c0b209b4d1d.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "790d5644d8dc36204b4cc522b14f35dd42de1c4afe3a297148006d07e5d3ecf8",
+     "family": "GAIN",
+     "logical": "m3_N30.npz",
+     "m": 3,
+     "sha256": "c69ccb821b8b06520215d5f06a40b42a346f5591e8caf465aa332ca707c2b273",
+     "stored_name": "GAIN_3e2e41134f630745.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3f3176321e78dff24fb0c8372a4fece1d5c782b1ff0c16a285d716d6b486d006",
+     "family": "GAIN",
+     "logical": "m1_N30.npz",
+     "m": 1,
+     "sha256": "58b2e6fffd32d5e165d0449088cb5298607c1e2142e99eba2fc6872d6f01b998",
+     "stored_name": "GAIN_cfa2fbe63c57b470.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "88079d0406db1e02cdabc83d2118e0396137aee1fed775afa76e09996464b4e8",
+     "family": "SIGC",
+     "logical": "SIG_C_30.npz",
+     "m": 1,
+     "sha256": "28b134a02fc342cd89c2bf0cbe928b5246a57eddd765ab2b30c8322a5a867df2",
+     "stored_name": "SIGC_234f500550334b1a.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "ce4f807e5ec604393537b19025527ce0ad12dc4f3200f694666ffb149bc1c074",
+     "family": "SIG",
+     "logical": "SIG_m3_N30.npz",
+     "m": 3,
+     "sha256": "42809b2a459e1813a3e17d2a314a8fdec6c0a4b4746057f51c911f7a354e0da4",
+     "stored_name": "SIG_6da94eca459745ad.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "1cbc4e05083df040b85ab41db48f21d94818c329940aeedc18f782f4d83d979f",
+     "family": "SIG",
+     "logical": "SIG_30.npz",
+     "m": 1,
+     "sha256": "096f6215104d5ae45ad1e9b427b77b3f4113d5d02377e062986e8fe47c9104a2",
+     "stored_name": "SIG_a5b89fa662745348.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "0474f160e2a251f5c219d0137db9496ba01e00b6275b78e83a7d2cafe226036b",
+     "family": "SIG",
+     "logical": "SIG_m2_N30.npz",
+     "m": 2,
+     "sha256": "da5c6cf48a993c15130c0684836d212bf42ec4a60c1b6a32c88e28d3eefb31c4",
+     "stored_name": "SIG_c4b4f5a9b8e6866b.npz"
+    }
+   ],
+   "bytes": 5520680,
+   "file": "certoutage-banks-N30.tar.xz",
+   "sha256": "0d9d9c163cead2495af3d621e900346601f1527446e3d2841f4d167807268ecc",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 31,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "f1182ea947e79760e6b8d5ae95fe861539e4b24a88f94b5646ff95f6e3f3b108",
+     "family": "CHERNOFF",
+     "logical": "C_N31.npz",
+     "m": 1,
+     "sha256": "16a47837d6e22ce281df08be25ee40ce39c88a4e752ceaf56474be9200374e50",
+     "stored_name": "CHERNOFF_296f51320cc1b4c9.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b374ecc9bc0495215a07ce1b8354122ef03386e27b2c8fbe16542742034fe063",
+     "family": "GAIN",
+     "logical": "m2_N31.npz",
+     "m": 2,
+     "sha256": "2338b84b22f329134e747f8925f7613a9dd00731fdd196de27c3356bce5b382d",
+     "stored_name": "GAIN_0cd41cca265ea491.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "6714d168133fd4a62d310573cb1d81ceac11f0a618989309d4b02b92aaa08a73",
+     "family": "GAIN",
+     "logical": "m1_N31.npz",
+     "m": 1,
+     "sha256": "b9d5e721cb55fc1b31cdc4b029482a7a5ddd66abb2f658c0ea11dfd8a0b8e904",
+     "stored_name": "GAIN_84fd8da45e5efe60.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "98a43231c6527618fca15ac2118d8d451fbcf49087da18008103d1fe1809b92b",
+     "family": "GAIN",
+     "logical": "m3_N31.npz",
+     "m": 3,
+     "sha256": "6301f529fa66b6bcd8bfb5a433f4905065d6492ff37b73e03962e2fb69ee8553",
+     "stored_name": "GAIN_fc1b93c84d133290.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "c48574e5a43a27d93d5bc3cdd6e069cafd664fabf4e49aebda883cec99a934b1",
+     "family": "SIGC",
+     "logical": "SIG_C_31.npz",
+     "m": 1,
+     "sha256": "897ebea294ccd23c565d82c54dabff748f649818df4ccc53bcdabfdf4f419bb6",
+     "stored_name": "SIGC_e6263aa6ee4ca586.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "06e0b1ec6f3b10494237e99f45dd1ea000681ef0b02b715d48ac82f6aacbf225",
+     "family": "SIG",
+     "logical": "SIG_31.npz",
+     "m": 1,
+     "sha256": "39a69e0578356e08259b9745029f097cbbe00f1f83c9ad0cb59fd05d456e51cb",
+     "stored_name": "SIG_113ca7fe565e16aa.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "18c4402216591012dad225c53ad9fffc765e79b411a6e7a7186bbde36b551139",
+     "family": "SIG",
+     "logical": "SIG_m3_N31.npz",
+     "m": 3,
+     "sha256": "931ce4ecd954e8cf6aa12235371f67709258af351ab640f63c1e87b0c57dfee5",
+     "stored_name": "SIG_1d4124be47573912.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "a541cf4986be9fcffc5a9cbd1573ebd5e32a5f1ed3261f786ab63809c3df789b",
+     "family": "SIG",
+     "logical": "SIG_m2_N31.npz",
+     "m": 2,
+     "sha256": "e7fcc7a6d207b7ba5eee602dac42fa1b6d5c932156dc726db00fcbf137d96c0d",
+     "stored_name": "SIG_81a3bbbf2acd248e.npz"
+    }
+   ],
+   "bytes": 5697924,
+   "file": "certoutage-banks-N31.tar.xz",
+   "sha256": "7acabc99e936ebe458918ba232380a369b05fac3860c6313eacb165a428e0cf6",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 32,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "da389c120198186a8bfcfec8db28fa8b2cc8377b24ab98d09001fe0f9257ac1c",
+     "family": "CHERNOFF",
+     "logical": "C_N32.npz",
+     "m": 1,
+     "sha256": "28015b76480df0704c145f628bd36f5bd81355f87dae981f4d98fe019f996035",
+     "stored_name": "CHERNOFF_924441ea09542ed2.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "4a9d925017068bcd10a43001be434686a581f3c8386a4f6cda41c6f994769eed",
+     "family": "SIGC",
+     "logical": "SIG_C_32.npz",
+     "m": 1,
+     "sha256": "7e5fc58e9508071f815618cd1f8818809ab830c697b4cd5e6ca3b98d6aba8c21",
+     "stored_name": "SIGC_9bf70426f4f772e6.npz"
+    }
+   ],
+   "bytes": 155068,
+   "file": "certoutage-banks-N32.tar.xz",
+   "sha256": "b56f1ecb23b4571c77057befc0b613dc69b23ce8829e0c660e5c7c81a52a647d",
+   "uncompressed_tar_bytes": 8734720
+  },
+  {
+   "N": 33,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "d828011a5d17232520e7ef276944c051955a70bc9e409becf3a6e2cf94980301",
+     "family": "CHERNOFF",
+     "logical": "C_N33.npz",
+     "m": 1,
+     "sha256": "b9ba7f6e506e70af00ccb0e61de97cf0fe69c2c62dde184c31a8984ee4de8ee6",
+     "stored_name": "CHERNOFF_a680c041e5da9569.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "78d40d8e1628400f5d61d66fc8877c999d4a8315861f305d5a6660cee3a787c6",
+     "family": "GAIN",
+     "logical": "m1_N33.npz",
+     "m": 1,
+     "sha256": "264360e2fd1f6428af3339b7bf89dc947c314c95a3892f3a8ea84e206ec7dfa5",
+     "stored_name": "GAIN_445f7adc8d118b53.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "c2cca9fa4737fe1c1552f76ea691c5710d564864d8057c7de1755f4271cd300d",
+     "family": "GAIN",
+     "logical": "m2_N33.npz",
+     "m": 2,
+     "sha256": "72036807b2b34c58f2325c647fb4e2bea58b7b88765541e58fefa160e367225b",
+     "stored_name": "GAIN_c66fb07cc278891a.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "edb0e7df70652487a017ca9baf7481c600d881fb183492cc3e5ab961ecf82bb0",
+     "family": "GAIN",
+     "logical": "m3_N33.npz",
+     "m": 3,
+     "sha256": "2d4848c75dd25c11f67fa0fca6009a22b4ade8120eafc72e4dc1519c7a2f617b",
+     "stored_name": "GAIN_e9af84811eb37dd3.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "7d2a726aceffeca3e9a26108ac310c1d7f4fed00ef60ebc314f4795ed2f6c35c",
+     "family": "SIGC",
+     "logical": "SIG_C_33.npz",
+     "m": 1,
+     "sha256": "604fa19ea8a8960d1963d0c09aec63a191a362057117382783d2ac908296950e",
+     "stored_name": "SIGC_c58f8059259d298c.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "fba2bf859da702900b78affeed4ab9eb5103d07429b284306aee234dfb8f9477",
+     "family": "SIG",
+     "logical": "SIG_33.npz",
+     "m": 1,
+     "sha256": "163460e52de533c8bbb30750755edf3a4f204869904505b82260e5c90910d757",
+     "stored_name": "SIG_1570ca6bb23a3f1e.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "01a54b5cdff4bd24dada514b330ca9e02f54759198c494bf45b70cbea6ea4348",
+     "family": "SIG",
+     "logical": "SIG_m3_N33.npz",
+     "m": 3,
+     "sha256": "7f770609bb9b1c7dc4b00979300ddb14ed9f1736b10c6e6d09b511f3520e49c9",
+     "stored_name": "SIG_52cd01c3309c13d6.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "8686aee51eaef6c1a30a9b4cdd6aa546cddc67dfa926e146a15170f57ff4d1b9",
+     "family": "SIG",
+     "logical": "SIG_m2_N33.npz",
+     "m": 2,
+     "sha256": "07a709dfded8b8c4fa6dcdb3c3d8421d235ada9578b10cf885d15b4b442a9c59",
+     "stored_name": "SIG_6ab2862ac038663c.npz"
+    }
+   ],
+   "bytes": 5833972,
+   "file": "certoutage-banks-N33.tar.xz",
+   "sha256": "80fc9f38b03a878ec69b434a67c4635f954af886442c54fc5ee7504bbf74d637",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 34,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "1eeb282157d2f96e9b3e77518c2031224c0dd659337d0dc5528be827dbd18b90",
+     "family": "CHERNOFF",
+     "logical": "C_N34.npz",
+     "m": 1,
+     "sha256": "c3efc24d49938b24ceef3bc58f0f9988e7a629dfba73a5f0501abc7b9e2cdd04",
+     "stored_name": "CHERNOFF_a3ad615e96876c0b.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "359edd3f6797b01130acde6845f4de6754ac00d4f3bc926b8e6e2bebae4235a3",
+     "family": "GAIN",
+     "logical": "m1_N34.npz",
+     "m": 1,
+     "sha256": "1a5807ee6770154c0ee80eb25462fbc9909bf8baa9f980f2aa02e1d67861e6a6",
+     "stored_name": "GAIN_57745dda19582791.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5430f9d83c1c0942fb663e7d215f2356e7d9a241f2501078c67d7a1870626060",
+     "family": "GAIN",
+     "logical": "m3_N34.npz",
+     "m": 3,
+     "sha256": "4f4f4a25debb4c7d07d832d62434b3843b3cbd6a41bbb3748280093154eb33eb",
+     "stored_name": "GAIN_6aada3bc66d6d33e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f0e13deeb286706fd84be73d34f9be61f39dc0772b2ae94d0d723029430325e1",
+     "family": "GAIN",
+     "logical": "m2_N34.npz",
+     "m": 2,
+     "sha256": "1878a7a4f02beccfde47d02596fa00118ac3d915f5a59d85e93e9707b429c3bf",
+     "stored_name": "GAIN_83d55be7a98e7009.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "295a3c1be1563d8e192dad4d44d85d266d95c591ff10db95867f816f22a6dc85",
+     "family": "SIGC",
+     "logical": "SIG_C_34.npz",
+     "m": 1,
+     "sha256": "369c0b4c2431fd66a8a542003209d4618c9cef94ac2cdf30e9538890ba39ea9f",
+     "stored_name": "SIGC_2b0dedf1b91301e5.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "d7aa194c1860117fb7d94c6f50c71a71a72ca2c1912b2780a8e788265b684d0d",
+     "family": "SIG",
+     "logical": "SIG_m3_N34.npz",
+     "m": 3,
+     "sha256": "c32f4f59644c17a7f5eecb249a445475438c68c74530a1ce19b65133ebbb8b30",
+     "stored_name": "SIG_1d470f2e2507952d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "f7d3efc3411bc7cef795b98319324a8c8b207fb2eb8e3bb3ffe33eae2d4e7bad",
+     "family": "SIG",
+     "logical": "SIG_m2_N34.npz",
+     "m": 2,
+     "sha256": "d2bef4a264a09e93673949c4340367d0688674f36c2e07d34e072bf08292142e",
+     "stored_name": "SIG_a7ea9c3673bb03cd.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "950f6ef94fb5261d9b75b13f76af5e58a006949762dad384ca34e706882c07ca",
+     "family": "SIG",
+     "logical": "SIG_34.npz",
+     "m": 1,
+     "sha256": "bdbdea20dbd80500b79824a774817895eb585476b3a07e2682c8056c7dce17d7",
+     "stored_name": "SIG_bf438aa6143c30a1.npz"
+    }
+   ],
+   "bytes": 5900236,
+   "file": "certoutage-banks-N34.tar.xz",
+   "sha256": "2dd11d85f2bf5d10917a3899a0923e924d2a3e677fac8b9127b4f44920714268",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 35,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "457da5370e5696606c0bf191f9291659e44d4a1d5adf9e949e948e776d7bde61",
+     "family": "CHERNOFF",
+     "logical": "C_N35.npz",
+     "m": 1,
+     "sha256": "69dfbbb85c798325c74d09e4d19a5ad0ca62db15ff3a6b209bbaf71bef13afc4",
+     "stored_name": "CHERNOFF_a2f9442e6dbc28df.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0ec3db313b753ef92692491f91ae386f0f40206d34e8d89236912d6ff2e22b37",
+     "family": "GAIN",
+     "logical": "m1_N35.npz",
+     "m": 1,
+     "sha256": "e8a9bdd1d2e42c1098baffabd111d661171a3e748b6c17a0db1953e1e26ca2ce",
+     "stored_name": "GAIN_8ead56653748eda1.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "990e40b3db000a32bee40070628964c4b88d836344543eb5e570d360d0761877",
+     "family": "GAIN",
+     "logical": "m2_N35.npz",
+     "m": 2,
+     "sha256": "417cb4d21e1c15bb2213fbcb641fc8e12d371e08906fc482d11a0030a24542dd",
+     "stored_name": "GAIN_aec84b07cbb9a2bd.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3c35cee87893ec7078061ee75519173155726e5e57c4a6f6f1e65bd7f1667c5f",
+     "family": "GAIN",
+     "logical": "m3_N35.npz",
+     "m": 3,
+     "sha256": "65c38f3316e748b39bd2b374ebcca0dc670b7786a45daf185b6d00e653f26976",
+     "stored_name": "GAIN_fff1994a1685e816.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "03ffb19573309dfeb0c790016ea5dd74edc4b9c111a3b3ba04e1bb4ab9e1b700",
+     "family": "SIGC",
+     "logical": "SIG_C_35.npz",
+     "m": 1,
+     "sha256": "9e03bb97d803750a391239b6a1722a5bbd2280d7af2008b4463e0a3aeeeda725",
+     "stored_name": "SIGC_06559bbe850c5a47.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "117afbc52e12be18e727979b1dc5c5b39ef915b5efdb0b6c1a7593cdb9f9187e",
+     "family": "SIG",
+     "logical": "SIG_m3_N35.npz",
+     "m": 3,
+     "sha256": "aab883df089d614a76a4f05a11b44b381bb606af2f0dfb737f9b9e83ecb0ff74",
+     "stored_name": "SIG_7b8374182cb82c39.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "6f46663373b47fb5b0c15fddbc79c6c0ec538e55909cda41541accce662e4b55",
+     "family": "SIG",
+     "logical": "SIG_35.npz",
+     "m": 1,
+     "sha256": "a81b190d8e437d683efc852e136b8f837517cd2adba657eaceaa4c6c9100099a",
+     "stored_name": "SIG_a15a11cf7e51d82f.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "c83706ba19b1293099fbbe14e02c94adb9186231d2b33525f693d45bfc0bdda2",
+     "family": "SIG",
+     "logical": "SIG_m2_N35.npz",
+     "m": 2,
+     "sha256": "523cb25782f8374a93b8e7cacd40eace4e6a1b2975d00d0512a85d1f89a4bfae",
+     "stored_name": "SIG_ac622670d5dc46f7.npz"
+    }
+   ],
+   "bytes": 5967236,
+   "file": "certoutage-banks-N35.tar.xz",
+   "sha256": "82f9dd2118fb28346efa165df042af73c3d31694893d039c59f8f25b625c5876",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 36,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "935521490e6a33f97c2dd01a1401839e28799380f4306e45af382b3281f66019",
+     "family": "CHERNOFF",
+     "logical": "C_N36.npz",
+     "m": 1,
+     "sha256": "7d1b6829a43c25f33f37dfee2aabeda2eb628272971c2f409365f20df89abb6c",
+     "stored_name": "CHERNOFF_cb0991199e1d3ca6.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "523ccf7a69cb79f6032579a383bff34861497a56c8c31105f1b227fa5de24503",
+     "family": "GAIN",
+     "logical": "m2_N36.npz",
+     "m": 2,
+     "sha256": "6cfb0eb44c5f8e993d0e0d1a38339345f4b44a568eda9611c3eb6d382c4d94d2",
+     "stored_name": "GAIN_5b997670e6358e1b.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "69a86696e33f1b814169f0cc2faa1a9b9f0a2969de84796805dd0a9aa060a874",
+     "family": "GAIN",
+     "logical": "m1_N36.npz",
+     "m": 1,
+     "sha256": "77b85d3089653712c233f79e64331daa17febd67b47a1202caac03ff5612702a",
+     "stored_name": "GAIN_c21cfec6be21aff8.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3bcf94eae4852710496b3426795a53af598de587516a57db1776f7eb75b4d0b2",
+     "family": "GAIN",
+     "logical": "m3_N36.npz",
+     "m": 3,
+     "sha256": "c24df5f9b455f1d4e4f006ab72e23f0e74cc2be2b3c9dac3d90425b0a09128d0",
+     "stored_name": "GAIN_d6433545e5ffecda.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "c93ff39d81bddc981ebd40b7691403ba00f8962420efce8a3f45d9ce99afe2ea",
+     "family": "SIGC",
+     "logical": "SIG_C_36.npz",
+     "m": 1,
+     "sha256": "437f6d7d8719164541569ce50b3aec62b5dcf4964221cbf9a2b69f4572a3696a",
+     "stored_name": "SIGC_7e3026d07020ec1e.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "cb525f647e3827c26a38f142b48de3725684ea77112285c4b3d56722d41daf12",
+     "family": "SIG",
+     "logical": "SIG_m2_N36.npz",
+     "m": 2,
+     "sha256": "31954fe2ba35902e988ceb798f544c739ecbee7938436d33b48234f5461130a6",
+     "stored_name": "SIG_68e9ab2462dfd06e.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "0ad09ea13195a1e58744bc9df0b6871f4a8bbd8a5112fdbc74bf4041f8d652a0",
+     "family": "SIG",
+     "logical": "SIG_36.npz",
+     "m": 1,
+     "sha256": "78cd911d8433e4db419af67bba1c469f4df56c348de3c43fa468592762716019",
+     "stored_name": "SIG_cb9d958968e06abb.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "5bf9650d9cf8d9deb7c830e0d0634123c98b392e7c08bb01ced3ba801b200e08",
+     "family": "SIG",
+     "logical": "SIG_m3_N36.npz",
+     "m": 3,
+     "sha256": "9a9b0b82af10c6ebc65594aba12496d9c3ef013b93e3eac3ba32a7028c1c9693",
+     "stored_name": "SIG_d952dd8332b04095.npz"
+    }
+   ],
+   "bytes": 6011032,
+   "file": "certoutage-banks-N36.tar.xz",
+   "sha256": "1a80e794aab919ff401b3bb1d76720f1ae5118fd138de3aab37381a3cd662fb8",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 37,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "c24c12b100088d9e52f1419ea580a3bc8da4531b86b54f79d68eb8e3b628a78a",
+     "family": "CHERNOFF",
+     "logical": "C_N37.npz",
+     "m": 1,
+     "sha256": "48b4ff43c42eb605ce7834e1190fa785f53baa6d1dafb5c00200f4a0cb80d19d",
+     "stored_name": "CHERNOFF_e363694f4420f4b3.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "e8c08385ca7e5f23cdb296876ed83d96b7dfd7340c87b4dbf7b777d18fe84dda",
+     "family": "GAIN",
+     "logical": "m1_N37.npz",
+     "m": 1,
+     "sha256": "418d667ac1f68acd35c318135a9c29138b38960541dca80cd7b65266cb4571e0",
+     "stored_name": "GAIN_142f431adc716c60.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "631235d819c13d774bfc1aa064a729f882d9f1bb2a2582aa14c77ca47c469682",
+     "family": "GAIN",
+     "logical": "m3_N37.npz",
+     "m": 3,
+     "sha256": "e2ee225e6afd21a52e0e375c57dc59d560fe29949433cd9878ec593b7c21b806",
+     "stored_name": "GAIN_6455fcce6f7ea24e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3902b05f7f25f31d166c7cd510e197181bc453216cd1aedf552fc9082990b425",
+     "family": "GAIN",
+     "logical": "m2_N37.npz",
+     "m": 2,
+     "sha256": "f67b62fb84e2cf13c4fdf3aeab61233edda395c57075dc5da8fb037f4c36d8a2",
+     "stored_name": "GAIN_d5d3feb4fa752a71.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "b17abe20d1570e67ffb096be5795698d2ec19740c45b81a9788f55aaf8469cfa",
+     "family": "SIGC",
+     "logical": "SIG_C_37.npz",
+     "m": 1,
+     "sha256": "04876995c08ee512ca671c5260c4231070b6d1c3a9e0415e87fb71ddd58da802",
+     "stored_name": "SIGC_0ba70296488df306.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "74d889a37edd15cbc72c093247277dbdb49b2ad7e6befcc97fc1c4239ef99ad3",
+     "family": "SIG",
+     "logical": "SIG_37.npz",
+     "m": 1,
+     "sha256": "7f1dc5061b72f39c125ceb70e7c8f65fb1843a0305326c9a3aa7497094c75739",
+     "stored_name": "SIG_73a4cf4ceec71f6d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "e9ea7cc5cc5b452b0a83ff396a9d3c12cd9e9d569c33478886c91b11377eb866",
+     "family": "SIG",
+     "logical": "SIG_m2_N37.npz",
+     "m": 2,
+     "sha256": "9494ca1dfaf91d6a61324807dd2ee97ffff331016ce5d72371c80c04b6014df0",
+     "stored_name": "SIG_792b7fff8a6e91d1.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "739195afda5ae0e5ae88dc02f7a90f17d762352ed8c4ab1e8fb6bcdd68d80973",
+     "family": "SIG",
+     "logical": "SIG_m3_N37.npz",
+     "m": 3,
+     "sha256": "a8b3a58fd08b0e43c71ba60f65310a723318c64371df02beb6c0316e863b9c40",
+     "stored_name": "SIG_9c3c782af738cb65.npz"
+    }
+   ],
+   "bytes": 5716904,
+   "file": "certoutage-banks-N37.tar.xz",
+   "sha256": "3364f9d43fc949ae9c15a76e862d399bf156c79acfcc46f3ed98d32ebd9748ee",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 38,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "8fefcb36e54c40a6906d66fc9ec1dc052b256092a2fa49b91bfd45474d371a54",
+     "family": "CHERNOFF",
+     "logical": "C_N38.npz",
+     "m": 1,
+     "sha256": "39aa3246e7a3b735d73271d2733a5bcdc0e3c2e50869e0861f9990b698392cf8",
+     "stored_name": "CHERNOFF_5af95775050efb47.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "bc42131b8e1b8e610e3003b14a85e16f0dc92b862d0fea00f60965e39194810c",
+     "family": "GAIN",
+     "logical": "m3_N38.npz",
+     "m": 3,
+     "sha256": "9e72718cf2de69834a1a63f6c4d2c8b6c24ed43b6816d1f26e4938c8f59a8b2f",
+     "stored_name": "GAIN_5e67ebfa755ec618.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "54f25d5b6e4715ad44a8959e1512a1d608f80f2bbc765eae80d8e180f434d45a",
+     "family": "GAIN",
+     "logical": "m1_N38.npz",
+     "m": 1,
+     "sha256": "73b79d01754f5fd10eaa56b5ba10d4d738d5375b574a8e899f6ca7c5bc8dc385",
+     "stored_name": "GAIN_7215bf07214a8d8a.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "45c067a54e6ff1614a4408d8b39b2a47d1f2bdffbd322a886e8cc85ca3ae2c4c",
+     "family": "GAIN",
+     "logical": "m2_N38.npz",
+     "m": 2,
+     "sha256": "edb5b38f7b4133715da27e4d07b3cf31287f0beca34cb6ad1c77e33ab830a13e",
+     "stored_name": "GAIN_aa4d75cd912b5ffe.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "a8a6c03378a6161a9afe18de463a422d524d71e444a0c2f5cfe490d4ba408d0b",
+     "family": "SIGC",
+     "logical": "SIG_C_38.npz",
+     "m": 1,
+     "sha256": "093cf580538fb2d96aa30625fa51dbd49d261312ed9e7c7abd6c77130fd08498",
+     "stored_name": "SIGC_6bed8c07be985797.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "8783465e4e5fd3cc07116af215cdb1434af90dc0792cf2b52f0f48e2ba4cacc5",
+     "family": "SIG",
+     "logical": "SIG_m2_N38.npz",
+     "m": 2,
+     "sha256": "2d910a1a492c534919c04d58c5be302bab91b73208e57516cfcdd93de084f198",
+     "stored_name": "SIG_03696ba7a0a0f64d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "6b52bf0234693d31605fc52f1f24ed9f6df8b0c95a3cdda66d6caa179b487881",
+     "family": "SIG",
+     "logical": "SIG_m3_N38.npz",
+     "m": 3,
+     "sha256": "a442b373b12e37d2f26bb6065eef7f727d8976639ef1d8d8a24afe8858da8700",
+     "stored_name": "SIG_06a46929fbc4c37d.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "c3aeffc57923d3b8fe6f3842182f019f561d14567a04a559ae763020bd814364",
+     "family": "SIG",
+     "logical": "SIG_38.npz",
+     "m": 1,
+     "sha256": "154a5eabe21b6bea34ff5c81ecce449c86ec03d595956a3e02fc67df67822772",
+     "stored_name": "SIG_bee21cac061dff77.npz"
+    }
+   ],
+   "bytes": 5687080,
+   "file": "certoutage-banks-N38.tar.xz",
+   "sha256": "0aec9f8c4c598c937a7fc475b3c414159f97f21385cf2ad7ac45065485f7de0a",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 39,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "42f27aca20adac9b03b911e990c6f0ca54bf096888589a035cc112d3240f43ce",
+     "family": "CHERNOFF",
+     "logical": "C_N39.npz",
+     "m": 1,
+     "sha256": "f601a38e97319069063538ef9b4822296bf231adfaec6c67b00c322cb65745d6",
+     "stored_name": "CHERNOFF_95b00692b6bc879e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "8c4978f873b462e9780fd656a3c9d115b43c5abbb317aa397dce5e6ad8790b42",
+     "family": "GAIN",
+     "logical": "m2_N39.npz",
+     "m": 2,
+     "sha256": "779f94e633fc6bc0eb4e034eda0ff54c4a9a14ee8c1db906486159a849d71335",
+     "stored_name": "GAIN_17ab2f1350740432.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b896c856490a826135f304a28bcc5cc4f36607a3cca9225ca6ba2149da421234",
+     "family": "GAIN",
+     "logical": "m3_N39.npz",
+     "m": 3,
+     "sha256": "7ad2324c94240697576cdb89c585e4b734825db13e6a5fc00a749aee0ac04c2a",
+     "stored_name": "GAIN_2768b1b1a7e68bbc.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "725ddce9f75e01af68551bedc48ffcee5ed3af990c90adf87cb1a3ccf20374ec",
+     "family": "GAIN",
+     "logical": "m1_N39.npz",
+     "m": 1,
+     "sha256": "02231e6a16b5f939942d23a571e9981c900bd11bb6ca3ff8338eff335484036c",
+     "stored_name": "GAIN_5d1127c6f6bb6bef.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "45eaec9f424ba6bdc3abd7c390b5af7b151eb1d702a2a9c6ccd124d12b4cb331",
+     "family": "SIGC",
+     "logical": "SIG_C_39.npz",
+     "m": 1,
+     "sha256": "5faa31e95a99f306b6ca69decdd6ff60c94ffb61843d73af661608e8873419e7",
+     "stored_name": "SIGC_a3642961efede833.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "cb059c3df367d74bf5ab0b396f3d7d00ca279709008b2dd76454ad36eee212de",
+     "family": "SIG",
+     "logical": "SIG_39.npz",
+     "m": 1,
+     "sha256": "639417856d32cb5f896b2e53e98eb20e5a46cfc85ac76b83986026232c390db0",
+     "stored_name": "SIG_29af5e345cac4d3e.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "ca3ca5e485980ec23e3bd29567f200a5e86a0cd1e4e17df7dc0075ee4ddf7896",
+     "family": "SIG",
+     "logical": "SIG_m3_N39.npz",
+     "m": 3,
+     "sha256": "145fa493905d82f2d09e74641a31901f9faa23c262921d0aef8377c48343baae",
+     "stored_name": "SIG_7ca560b927007596.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "7b51076f55e95f6f6247dd21cb3bdaf22b807ca9dc7d4aceb85d0a8b2c6797b0",
+     "family": "SIG",
+     "logical": "SIG_m2_N39.npz",
+     "m": 2,
+     "sha256": "c08658aece0421665b050b13c02ba4a7b6fe88f9225965fc53ffa946727c90c7",
+     "stored_name": "SIG_9dde904c861a0a43.npz"
+    }
+   ],
+   "bytes": 5906232,
+   "file": "certoutage-banks-N39.tar.xz",
+   "sha256": "c156679241c70d7fd4ea36b2911098efd4b0bde2d5c05937ef6e91d099b7aa88",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 40,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "b28028e27d6a3f659f3f75cde58c78064477b930c93d4fde27c9d4fe3fc59ccc",
+     "family": "CHERNOFF",
+     "logical": "C_N40.npz",
+     "m": 1,
+     "sha256": "3d753b77d64e9ff077c6b0e8a793038cea4ba24bb1024906899e50cf638ccc2b",
+     "stored_name": "CHERNOFF_62bb50141a9a7e55.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "170f921f2f18466a232328694ca895a9c769acab4576b90b4c702cdbb9d6ef24",
+     "family": "GAIN",
+     "logical": "m1_N40.npz",
+     "m": 1,
+     "sha256": "c0358f5b0e7d921d3b3c944a1f8590a5e84969e7db5eb34c85d798244aa9e5d3",
+     "stored_name": "GAIN_174c1f58f5151572.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "64ea87969d88e972362ecbc83bc2b9c71d605abb6983b3ed91b010c9da390d40",
+     "family": "GAIN",
+     "logical": "m3_N40.npz",
+     "m": 3,
+     "sha256": "41c40c7bb77f0ead26bedccc143e64b9408a1363c9fc4b27e13f1811b4e34291",
+     "stored_name": "GAIN_47b189df1add6d0e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "1f397501de91c31319113d6f3462c948fa4610e932811f68a3aaf8fcfcdacafb",
+     "family": "GAIN",
+     "logical": "m2_N40.npz",
+     "m": 2,
+     "sha256": "878f0ce925e1ecd8112a2f62b3c24e6defbae1b4a1f347e477add85305554029",
+     "stored_name": "GAIN_694620d139f19de3.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "913d4498d19f5bf209086f52e1e5f87ffe9755c9e0ba46cf47990e0a3d28f0ca",
+     "family": "SIGC",
+     "logical": "SIG_C_40.npz",
+     "m": 1,
+     "sha256": "3a014e3b50643fb0b3eb03cff8aec1b8b352bd80ff619d290680a068c83ef81c",
+     "stored_name": "SIGC_e4461386f2200719.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "bc148ed22b939022207d5873752b3866ae4fb6240c93035a77249473ec102f0b",
+     "family": "SIG",
+     "logical": "SIG_m3_N40.npz",
+     "m": 3,
+     "sha256": "4c4ead543de491f0d6af794e46d69b985e1d15b8665d1222b3b470b57e53a303",
+     "stored_name": "SIG_1c042e5135c4dfd5.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "1481410bb909a411d70294a2d20ba326c1bc7293926d33cb06ec1f6f18bdfeca",
+     "family": "SIG",
+     "logical": "SIG_40.npz",
+     "m": 1,
+     "sha256": "5a7aeda508c017be52f3483962be95055262700bcbb580ded4fec8c05904181c",
+     "stored_name": "SIG_5325230b312a524f.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "4991c883accb7f8fa36dd8b640dac23e4f1e034425c4ea84147c2922273c9e42",
+     "family": "SIG",
+     "logical": "SIG_m2_N40.npz",
+     "m": 2,
+     "sha256": "afc0670d1c36ca670997c8d33efdebae5ec26db75496d57784357321a962180c",
+     "stored_name": "SIG_963b98ce61ba68f9.npz"
+    }
+   ],
+   "bytes": 5840716,
+   "file": "certoutage-banks-N40.tar.xz",
+   "sha256": "0412fea6fc900eb124a18fad0d876017c5588c07d50572a54a29761d5644d4a5",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 41,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "61dd96ae26951547472b780ee6e212f446a179d6dd254759f7083202da96e93a",
+     "family": "CHERNOFF",
+     "logical": "C_N41.npz",
+     "m": 1,
+     "sha256": "a9ebe226f1a502c3b0767e46843b188ba568e8a061f24b5aae9c264a45274934",
+     "stored_name": "CHERNOFF_3752106a5a765c75.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "de38e98501e7e43dc93fb4c72dc6bd19e62708aa7300fcee2440b94cb3010a98",
+     "family": "GAIN",
+     "logical": "m1_N41.npz",
+     "m": 1,
+     "sha256": "906dd45e0fd73860b8f912fb4c5135ee5f2e685f748178a97533436938d7383b",
+     "stored_name": "GAIN_0bcce2947adc7488.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "eb22d7b666de2149abd029c2df6c847f854c74c62f9d71937a8767703fb7893a",
+     "family": "GAIN",
+     "logical": "m3_N41.npz",
+     "m": 3,
+     "sha256": "c308a8b658e2553042c07d77771bab4eb09ff5a6d36dd2ea6667e507849a2a86",
+     "stored_name": "GAIN_53634d5966e8f1cf.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "88448162d6c05520c84cb2fb3b68220dacefe308b23351ae9c29fdf24c02dba1",
+     "family": "GAIN",
+     "logical": "m2_N41.npz",
+     "m": 2,
+     "sha256": "4a95eb6a42e2b72e966d96116222d4296f7dd693329418114be3f2f4989b9f5a",
+     "stored_name": "GAIN_dd733e383991366b.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "a04fbd19421cda0be98cbe563f9ea7d3d770d56c842d69c6806f06ad807cd591",
+     "family": "SIGC",
+     "logical": "SIG_C_41.npz",
+     "m": 1,
+     "sha256": "0a5e142dc5916725e1959a93ff0b8e777ae6b8cb91182713bb685ea364db78e5",
+     "stored_name": "SIGC_a2f6739b69ab1bd5.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2d439c9c08312c2f3120d9d53ff57cb70793935c402fcddcde14e7ba4a99ed7c",
+     "family": "SIG",
+     "logical": "SIG_m2_N41.npz",
+     "m": 2,
+     "sha256": "e9e6acda7cfcdb156e2117a84d4fd57abbc0eeabc902fbf867868e781e59459f",
+     "stored_name": "SIG_0302974b18c7e804.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "116788254c45a5190e4087fc69c0148ded7d5ebe40ff19f4ee58e7de54061b6a",
+     "family": "SIG",
+     "logical": "SIG_m3_N41.npz",
+     "m": 3,
+     "sha256": "687ab668e25ae064f4d7ee0b815c7273b3cc04c80124ce5cd0a3d4c0c2c126b1",
+     "stored_name": "SIG_09f80d9e4fb9bd04.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "558ff29c3ab97f0c1e0a02368025a5fd4ba623eb03d293e4c9e7c47879158aad",
+     "family": "SIG",
+     "logical": "SIG_41.npz",
+     "m": 1,
+     "sha256": "710c6753b883f8cb49cd1f16aefc12b3a739dc4a903fc6570e43ef2425fb2699",
+     "stored_name": "SIG_ea4de7bed809e061.npz"
+    }
+   ],
+   "bytes": 5958528,
+   "file": "certoutage-banks-N41.tar.xz",
+   "sha256": "edbb37bd662eb228b8fc90049b280da4a15b595823d3f712699cbd9869ec36b9",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 42,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "4da537d83310aa2c98cf31619665e07537bd22a3c24e9b12350d3f7ecd704e8c",
+     "family": "CHERNOFF",
+     "logical": "C_N42.npz",
+     "m": 1,
+     "sha256": "e9cd941f9dc01fd41a90ebca980f2d239b852b12e3abfdb6a9bcd12d662cd0a0",
+     "stored_name": "CHERNOFF_4387fcb64d285a9d.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3a13d580e21980bdeebfc407d4762d80ce53a63be19f93381fa862d0261fecc8",
+     "family": "GAIN",
+     "logical": "m1_N42.npz",
+     "m": 1,
+     "sha256": "c1086b52d55ed58eeea4a53cc22fecd4346a4c5455dca962923539e5e33c0190",
+     "stored_name": "GAIN_3351b3913f1ca89b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5e1a8dbb3d6fbd719829873f7e30ffa39e9fc4dce39e5ce6cd32e4825714c7ed",
+     "family": "GAIN",
+     "logical": "m2_N42.npz",
+     "m": 2,
+     "sha256": "c46cc1c26ce2abe303420c84846407c4ed92ce22c679cdb27985118f82ed798a",
+     "stored_name": "GAIN_52d558a9bd06b07d.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "fcab0f865e649df556cf76fe93e4953dd30c51f60601c078883eca3f96ab9ea7",
+     "family": "GAIN",
+     "logical": "m3_N42.npz",
+     "m": 3,
+     "sha256": "3f14bf5003071d599d481e73a5ec0df991d8255e449d9d24c37e5b0040c7d3c0",
+     "stored_name": "GAIN_73e4966e3e41d6b2.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "f0560e3d2e00a7fa6fcf4a235436c823c62d408e67164e794543fd12c3cc1a1a",
+     "family": "SIGC",
+     "logical": "SIG_C_42.npz",
+     "m": 1,
+     "sha256": "050380d166a25a6c1c5143d29e5d93911a4b4a6b0fa1a18e848864f661678e68",
+     "stored_name": "SIGC_76e792c5592f396f.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "32949ef4b3bf0fd5aca7a9abdef82a9b308da7ddf1bcaa9594da1b9397b4eb71",
+     "family": "SIG",
+     "logical": "SIG_42.npz",
+     "m": 1,
+     "sha256": "fe10d9e1aafb7b18c9680062ffe72b00cd4d0e2c6007ea2aa6fc486ee419ef0f",
+     "stored_name": "SIG_ad2252899a799260.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "a8693c7c213e64ca99c6062198a661a7f5151236c915463572f2224970085409",
+     "family": "SIG",
+     "logical": "SIG_m2_N42.npz",
+     "m": 2,
+     "sha256": "4372cd10c082bd1a599229ebb18083cfa239d85357930ed3fb047ae7c39e4533",
+     "stored_name": "SIG_aeea94aea70ba74a.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "361836128aa3311e9335f5a4bc9576bb6e6e2ef2d64685c4541e4126a5935170",
+     "family": "SIG",
+     "logical": "SIG_m3_N42.npz",
+     "m": 3,
+     "sha256": "40fec69b2679c7976afa13e52777581d41af4c0137d2a0ebc58b5bbacb6d01c3",
+     "stored_name": "SIG_f617f71b3d307548.npz"
+    }
+   ],
+   "bytes": 6064588,
+   "file": "certoutage-banks-N42.tar.xz",
+   "sha256": "aacadd406b0aaa69f58799976ddc87dc5b6f43cf058d427219b77d1a6ebb51c0",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 43,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "a69c3c93d3a1efd5901634d6a7bf61024a8bd2a320f92a69e362f00ec1e10f9a",
+     "family": "CHERNOFF",
+     "logical": "C_N43.npz",
+     "m": 1,
+     "sha256": "da06f500a8b9237555ba0bfb60c4f4cc999643db25c36f8a9333da570ea3c8d7",
+     "stored_name": "CHERNOFF_0b5720f3a83f003e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f0cc6fcfc358814df2b18e479550129099fed54fead2d9721cf33f6684d54c6b",
+     "family": "GAIN",
+     "logical": "m3_N43.npz",
+     "m": 3,
+     "sha256": "a25512b1f2e3df9bd2ea0530c7f96b1ba226560579494a2a0b6820d6522ef422",
+     "stored_name": "GAIN_126b1c0a90640147.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0b53f3553bac122afc3d5b6c9c910ff2a1d8c20b5e67d603ce1b05b7c412ca89",
+     "family": "GAIN",
+     "logical": "m2_N43.npz",
+     "m": 2,
+     "sha256": "dd556c53cc384c42b31a5533765934b08a233494bd4e30937f721e872050892f",
+     "stored_name": "GAIN_4d6531c7a2db02b3.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0bd5f2a933bd4bf4225416492715a73c1642e97c050e67d545b3ee1b32576173",
+     "family": "GAIN",
+     "logical": "m1_N43.npz",
+     "m": 1,
+     "sha256": "ce1663cec275e9f65099d50b38b5bdd778e84bfbcd4ec16700823c8f055e816f",
+     "stored_name": "GAIN_c9a2ad1e17d53a9d.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "abe975229b6f5d058c48da7532cc1a7093a9225904641796cc63e6d1add9d1b1",
+     "family": "SIGC",
+     "logical": "SIG_C_43.npz",
+     "m": 1,
+     "sha256": "c44eb6dff875a2686b899a0f65c9741fdaab02a570960e767afb59c4ac3a8d0b",
+     "stored_name": "SIGC_b6bd001fcc1f9cff.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "698535e0683a2e91977b13a4e5a891ebf87d93bc375169f60b65b11d31d9d46b",
+     "family": "SIG",
+     "logical": "SIG_m3_N43.npz",
+     "m": 3,
+     "sha256": "6a58bb1ad1d6aaba3ca3816e9dfd9448d1df12313d2da36d13aefc204e1074cf",
+     "stored_name": "SIG_346c68465f156b8d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "8043ed10ccf4882c29f5c440e62fc837eeff660d321fc7a5d13dc6582d3eb831",
+     "family": "SIG",
+     "logical": "SIG_m2_N43.npz",
+     "m": 2,
+     "sha256": "af26ee1a658e359913ffb6edf3b8fb85b67e435390d8bf076cae46969da0d605",
+     "stored_name": "SIG_3ef8e4c0c6f4decb.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "a517c0b8bb42725bba88f7cf7d46839c346f05dc2c74d62d5158af4c73caf502",
+     "family": "SIG",
+     "logical": "SIG_43.npz",
+     "m": 1,
+     "sha256": "00d6ea5c336e02f93a5cb54345b8f6e3a7ce33fbdbc25838abb4d307c12ac23b",
+     "stored_name": "SIG_b283355b30058f29.npz"
+    }
+   ],
+   "bytes": 6106816,
+   "file": "certoutage-banks-N43.tar.xz",
+   "sha256": "384d3856b5744f27bc5cbf6d0e1032e9e34e3681eaf68f80e41f1020a0a5b72b",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 44,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "449c71b14048fc9b080de708f4fc67478eea7bcdfa2907993df6ad9fcd78a32c",
+     "family": "CHERNOFF",
+     "logical": "C_N44.npz",
+     "m": 1,
+     "sha256": "2235a5ba29912b89a4b8e06fca13ce267517e73ce961d5ffef5f682b4d715aac",
+     "stored_name": "CHERNOFF_058b0020411a319e.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "2bbbb446215e1270f5162fadcd92fe79efb628d074c9ca754e6416814ed27ff4",
+     "family": "GAIN",
+     "logical": "m1_N44.npz",
+     "m": 1,
+     "sha256": "6326ba64e14b1e8c12ac58130ca7deb2d31b0c83ebe5bf237b2ef841b2a0ac4a",
+     "stored_name": "GAIN_7af6eec4d81c7aab.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "66cfc8d41f32e113a1c6ee6c81f6667cd38397af34af1005efab39b33443e7c6",
+     "family": "GAIN",
+     "logical": "m3_N44.npz",
+     "m": 3,
+     "sha256": "1e208d4225e6c6bb31e6d0c74194ff41a604e9aa45473ba68307facc3e4d3610",
+     "stored_name": "GAIN_96058cbe0daba39b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "29d5c0ff307e5d516b59a7d612e8d7e5bc5a244eb9c7dd2861ca8795034a58b7",
+     "family": "GAIN",
+     "logical": "m2_N44.npz",
+     "m": 2,
+     "sha256": "37386d90253a3ee7d665417addecba5285fb2adde5f1fa2663a4f632cd0f42d1",
+     "stored_name": "GAIN_a15c061a37d8941d.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "32d7f4e0b315aa3b671a907bda10811a7a5c9302879f84ee9e15ce40d7aa5dd3",
+     "family": "SIGC",
+     "logical": "SIG_C_44.npz",
+     "m": 1,
+     "sha256": "273b80bc658182c3b8b53e408cbf379970691b43824e3325b7bf254b00ed9027",
+     "stored_name": "SIGC_c2a9e4da224a7ae1.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "f92fc77699e8553b25b2b96023ba8c9229265c9802dd398b3704b533ece294d6",
+     "family": "SIG",
+     "logical": "SIG_44.npz",
+     "m": 1,
+     "sha256": "05c947725b4493a401457b9518453f1d8520a188829c433f342d159a2daa6baa",
+     "stored_name": "SIG_3dde9f8b362b5776.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b4817d40ca60129cb35b4851c862776f2f4434787e19a5d9d1901d48ee19f8a2",
+     "family": "SIG",
+     "logical": "SIG_m2_N44.npz",
+     "m": 2,
+     "sha256": "4762a1a5a92e26065472cee43d9279e9260b20294d15ea3db374e43264805c1d",
+     "stored_name": "SIG_6d89061d85f7df8f.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "e1846430ac88c064041a0d2e71fc9d13983c9b1a5651bb6ad9a3ea0c1172f11a",
+     "family": "SIG",
+     "logical": "SIG_m3_N44.npz",
+     "m": 3,
+     "sha256": "b1413ecb340f00591586e03384acac4a78ad00c08c2e7a0d1f0b815ea03eb4a0",
+     "stored_name": "SIG_f2230ef3b830daaf.npz"
+    }
+   ],
+   "bytes": 6199680,
+   "file": "certoutage-banks-N44.tar.xz",
+   "sha256": "79fdbe21e14858f58bea40e5edf022f67b82bce494cb1ad6e020debfaedce47c",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 45,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "a1eb4bbafae594ab384320b6dc37a216cce4e1c90dd8eaf2baabc7b2804fa3d5",
+     "family": "CHERNOFF",
+     "logical": "C_N45.npz",
+     "m": 1,
+     "sha256": "d84105eaad91a47cf4d0561e2bbb6a3c54d042bbad185b619ab55038ddd1e27f",
+     "stored_name": "CHERNOFF_69761c6fac50ed61.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "ddc1cbf755d62a79102b14d391d0aa11c04388e1fcf5a36ed6afd28ce14cff6d",
+     "family": "GAIN",
+     "logical": "m3_N45.npz",
+     "m": 3,
+     "sha256": "801d1adabff0b047ad60f7208f668b6b61537fb5020437e3e408fc94d41a8703",
+     "stored_name": "GAIN_2f580e7f7dbadda2.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "056d8eb131b99426c9405695c7b269f20f96e30afe19c2ede929fe68e8677f71",
+     "family": "GAIN",
+     "logical": "m1_N45.npz",
+     "m": 1,
+     "sha256": "f80f1c630b3674cd05fc0ded89b4e5838c49f9631f70ccd72d64e07dd0949625",
+     "stored_name": "GAIN_57f176bddaa2623c.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "6346df04009cb7cd92218dc510a6ec71fd980c31cacada0d2c555df33a404a55",
+     "family": "GAIN",
+     "logical": "m2_N45.npz",
+     "m": 2,
+     "sha256": "15d40c85ad27d5c85c9dc52e060f06f41f6ec0d7c140c8ee7838ae1dd99354a8",
+     "stored_name": "GAIN_581c61f48ed3ccc6.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "29f57311b2f3212ff124b7f26ea5623b8aa9f2f5f097d9d5475907a6eb6acd17",
+     "family": "SIGC",
+     "logical": "SIG_C_45.npz",
+     "m": 1,
+     "sha256": "8c1d29675831a5cb95c7539bdba0fcaf20ad5704d243545c22d8d0b9159f81f2",
+     "stored_name": "SIGC_c7f41f97c5317775.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b512f741752cd2adcd21358cdf0b78ee3308f2cf3ea502436ff85b4784cccc1e",
+     "family": "SIG",
+     "logical": "SIG_m2_N45.npz",
+     "m": 2,
+     "sha256": "1229751c96f778ad737dc5fb58e7c982cfa599314284e798543ded4cfd24afa9",
+     "stored_name": "SIG_64627aeac62ff3bc.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "f844deb321a5e52c6e65b6d3d364e0847332c180d44c5dae5239233fa7652202",
+     "family": "SIG",
+     "logical": "SIG_45.npz",
+     "m": 1,
+     "sha256": "b3c629a38d05d0a9609931f8af22e2a24103ade290a8c4fe9c8624384d99d7fc",
+     "stored_name": "SIG_af58e23f2b951252.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "e5d98e031d5f0eabf3f72c5179a43be7e7586c0cb0cb463c763d8396f8a3a412",
+     "family": "SIG",
+     "logical": "SIG_m3_N45.npz",
+     "m": 3,
+     "sha256": "a10a016c5e007ef9f46bb294cfda54e69f04f7e97e0308bfad89e4fb4d7726ca",
+     "stored_name": "SIG_bf3211473fe2b160.npz"
+    }
+   ],
+   "bytes": 6188804,
+   "file": "certoutage-banks-N45.tar.xz",
+   "sha256": "cffd1e7875c7535b9d6267d6c442a7c2cb852309a0ba64c5c8d2d7170694ac88",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 46,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "e7084e0f04b2207b3098bfc4ca7c35e133fbb26046c583a32f1d18fdf341edf6",
+     "family": "CHERNOFF",
+     "logical": "C_N46.npz",
+     "m": 1,
+     "sha256": "b85a1676622652bac57c06e224d63bed19e5fd0db0038eed5e2e313b08511c38",
+     "stored_name": "CHERNOFF_7f5eb3bdb77c251a.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "802f2d32afc3c393c5a549bea06d802eef79824e2ea0ec0ccfec97e3734f46a8",
+     "family": "GAIN",
+     "logical": "m3_N46.npz",
+     "m": 3,
+     "sha256": "477330ec353390da43e1ddb2d1b7553d50637623f65f3aef00ad87f2d94b5520",
+     "stored_name": "GAIN_3f90808f62dfc1b4.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "50d2eddc21169e7b32bfa99aabe426a4c5ce4da41d39e8b364d1956c064c1135",
+     "family": "GAIN",
+     "logical": "m2_N46.npz",
+     "m": 2,
+     "sha256": "025da72e53d4ab0ee2303b8e0c85889ddc4c61d0cb251358a787fda0b17482fe",
+     "stored_name": "GAIN_91cf785431cc33c3.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b5f5bf466f3462e4b7eeab8761fde49c1880bf99b1a6e89e26a9e40d3eea6f57",
+     "family": "GAIN",
+     "logical": "m1_N46.npz",
+     "m": 1,
+     "sha256": "02ece751ea4438c1e3b1bd22ccdfa86ead432036bfcfaa261690474e2f6175bf",
+     "stored_name": "GAIN_9814aa0e9d1a0bd5.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "0845d13bcbf91263fe27680ec0367d69a1fa5b00e8e9539ba48c6b31dd6af63e",
+     "family": "SIGC",
+     "logical": "SIG_C_46.npz",
+     "m": 1,
+     "sha256": "fc214de598d748d53f96f1572fac9e50b365a8159ab4d47da309069c20d5512c",
+     "stored_name": "SIGC_3e1820079d9bbbac.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "969757d75985de14907afa743f51dcba85432b242ea030f44ac22f0c162599e6",
+     "family": "SIG",
+     "logical": "SIG_m2_N46.npz",
+     "m": 2,
+     "sha256": "e10cd26b10c9b1c80328cf228671c50d330d91163811d1be7753b290c91b99e4",
+     "stored_name": "SIG_197d546f66b7b407.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "98446f57af6b657153b4441b97bec75fbf01b284d69a0809cb8574352e998cce",
+     "family": "SIG",
+     "logical": "SIG_m3_N46.npz",
+     "m": 3,
+     "sha256": "fe3220bc2e57aef8bfb6ac8a8626674f80480b8b21e7b4578ca89a1c97f06007",
+     "stored_name": "SIG_72a885988bdf22f9.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "ec060955903448690559a6a8eabefe783d692b3807383531c786803f8b63bea5",
+     "family": "SIG",
+     "logical": "SIG_46.npz",
+     "m": 1,
+     "sha256": "9db152a6a0d2db40bbbdec81f4024c97a712dc1d9e8012027a7980f65027440b",
+     "stored_name": "SIG_840f7075486ce8ce.npz"
+    }
+   ],
+   "bytes": 6354676,
+   "file": "certoutage-banks-N46.tar.xz",
+   "sha256": "edc42fa13be566ab678c999e669831d1bb2f95c3257bd212698b7f8f07114bbe",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 47,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "521deb9b6c4a3ae6e87470c1823001a3126da67aff576cabae7225347a7895bd",
+     "family": "CHERNOFF",
+     "logical": "C_N47.npz",
+     "m": 1,
+     "sha256": "4c046ab19d7bdccaedecca02b6467ff7eb36fbdc72fb4d7caa5a356afe3f28d2",
+     "stored_name": "CHERNOFF_20542d9c7bfb29ce.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "c1156a1d6aff76f8c3cbfffbaa876f489102c7b7ace154a0051e138dd6b6640e",
+     "family": "GAIN",
+     "logical": "m3_N47.npz",
+     "m": 3,
+     "sha256": "d712607aa1dae2334d883abecb9f70df2415004da1d3e09f933e18060eb87d2f",
+     "stored_name": "GAIN_7f8bea2a682897b2.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5ee21763537e118ba661868defaa1ae90f0ceb768250506a8e383969bc7615f8",
+     "family": "GAIN",
+     "logical": "m2_N47.npz",
+     "m": 2,
+     "sha256": "05c032c5984dfdc04fdab5903e2785ee438ff381b2d38d926e10e4ee19f1b6eb",
+     "stored_name": "GAIN_9920f260b9bbf344.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "60cdc20e5144ad57661cd3b70e2fd769027551a3d90359fdff9d2b956d91ea81",
+     "family": "GAIN",
+     "logical": "m1_N47.npz",
+     "m": 1,
+     "sha256": "2ff1a54264dee375f58e940207e2d693eb98812ebb68a11dfa5aa3408e7968d9",
+     "stored_name": "GAIN_ba822896a192bb9b.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "a84e30f6dc0966036d2c32c0c6840d3fe9335884bdf8db2cafd3ead0a82865fc",
+     "family": "SIGC",
+     "logical": "SIG_C_47.npz",
+     "m": 1,
+     "sha256": "ceee443e95f61138b9ea596927a0b817ee8b87b7c305101a4fc6f0821c238769",
+     "stored_name": "SIGC_4a12da758b88e636.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "89ca81da4cb1890e222b40040f18664376b439a7e80dd8746a6b84e9fc447272",
+     "family": "SIG",
+     "logical": "SIG_m2_N47.npz",
+     "m": 2,
+     "sha256": "ac732eb6efbf0976d9818db77ef306bf6bef57ce7ed4febefc196db2693b2a5f",
+     "stored_name": "SIG_0c5d532b25ace860.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "f1e8bcf6eb97ee20bf9b1f2b1180c9707a52ca16b2e7f4b3d7506f0777bcda9b",
+     "family": "SIG",
+     "logical": "SIG_47.npz",
+     "m": 1,
+     "sha256": "861d2aa9961b83ca0a9433e0c8c37ab13677bc3b328ec24326f5779f54abcf78",
+     "stored_name": "SIG_1523b5bb20a37e00.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "45e2282d349c117b86a496d053b5ff9a4dde7c9646fcb6ffc855b29eff5968fe",
+     "family": "SIG",
+     "logical": "SIG_m3_N47.npz",
+     "m": 3,
+     "sha256": "78fdb346a282ca0efefb8185993936f748558ba655f4d2628c755ea6155a0d34",
+     "stored_name": "SIG_2e7633c91365d924.npz"
+    }
+   ],
+   "bytes": 6383868,
+   "file": "certoutage-banks-N47.tar.xz",
+   "sha256": "4c8bc95268316a827b8d284d9f8e992987cfcdae74e19850107236080bedd947",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 48,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "3fa7417c31d7fe5a4c60b83546ea5d4c2bb60f1f8b1be33ff7dd5d78c90f80ea",
+     "family": "CHERNOFF",
+     "logical": "C_N48.npz",
+     "m": 1,
+     "sha256": "5b367d1aba05d5b393893f57087bb1213ce8d591b2504a182e09ab38b2035c73",
+     "stored_name": "CHERNOFF_0075b6764dd9ff7f.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "b9b24bc454f6e08bbf4273a43d66585ee2b634684d6d28ca42173743dbb2dbce",
+     "family": "SIGC",
+     "logical": "SIG_C_48.npz",
+     "m": 1,
+     "sha256": "eae5d0b67d1936e76222a54acee1692ba3cbb292fc3b8a88afc933842824e84b",
+     "stored_name": "SIGC_6e131e97898419ce.npz"
+    }
+   ],
+   "bytes": 185196,
+   "file": "certoutage-banks-N48.tar.xz",
+   "sha256": "b899e8d93e0e7c78a75baf413dd8a9110be68ba462704f616fa26a6a9171cea4",
+   "uncompressed_tar_bytes": 8734720
+  },
+  {
+   "N": 49,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "191d62fb417778f390509e7dce3b9bcaade8bd7135766196ec85cbd4509a62d7",
+     "family": "CHERNOFF",
+     "logical": "C_N49.npz",
+     "m": 1,
+     "sha256": "5ce22ae7c2615db9535d8d4c65439b907055d5ad68962bb33026b0d054bd0cb1",
+     "stored_name": "CHERNOFF_7b4c5eb7d4dece6c.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f985d9f72c79e719f1fef5b427cfe8a7aa78f2e8ca528fecbc7eba59587567fd",
+     "family": "GAIN",
+     "logical": "m1_N49.npz",
+     "m": 1,
+     "sha256": "990820da78b4f3b8a47cdc21bc52ce36fa9573730d929339b99385f8b5a26673",
+     "stored_name": "GAIN_05a8afb41310da05.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5a46f256dabf98ceed9a412c3ef886d553a9260f7e32b8aa251a2bc232354483",
+     "family": "GAIN",
+     "logical": "m3_N49.npz",
+     "m": 3,
+     "sha256": "9f4eb28ef9e7fc48eed8f4a1de0502e9b9487cee30ac9822ecb106ec4235cf10",
+     "stored_name": "GAIN_61e1a85eaf7808a0.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "6562ebc3e6228846dbeddadc595e235d294367b802fb5d1f25cf62623edff4ac",
+     "family": "GAIN",
+     "logical": "m2_N49.npz",
+     "m": 2,
+     "sha256": "a18ea3696cd63c8dcf08fe3753b077819ebd8ac7fecefbbe6264d02e04867094",
+     "stored_name": "GAIN_91d28150a663bed2.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "3ba95d6cf84ea1a80d2afd33dde97c1691f11475fc9b66182230b4ce0b4dad1d",
+     "family": "SIGC",
+     "logical": "SIG_C_49.npz",
+     "m": 1,
+     "sha256": "0c8a115b9a5188f9648654b6ce4ef62d4536d2ace07b5ac46bb7aa0a7bb962d6",
+     "stored_name": "SIGC_c8223f502fed7a6a.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "a4e52d3821c26120fd0eb2b015649f3be9291b68db9e17e56a3ce2279dc4434f",
+     "family": "SIG",
+     "logical": "SIG_m3_N49.npz",
+     "m": 3,
+     "sha256": "8c278ba81c5574f3f32f4be2b6a3ae823ab73c28ade13998a91928f5d25a01f9",
+     "stored_name": "SIG_7f4fbc16ed45a9e4.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "bfe9e0dd9ad4525c096c1413f06d0ce2a09f29704875b473011ca7a88ad3ead5",
+     "family": "SIG",
+     "logical": "SIG_49.npz",
+     "m": 1,
+     "sha256": "e4d3e896a49e644136dfc12ec82a46ac908119aa5982d60bb1a45c3c5e4b9a23",
+     "stored_name": "SIG_81e7bdcf376cfe85.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "53674b4d4380753672be60885e40e6d2b9fad61c47fcee7df717b2007bda96bf",
+     "family": "SIG",
+     "logical": "SIG_m2_N49.npz",
+     "m": 2,
+     "sha256": "fe93f9d6b45f599a2c20cb132af51645e80c01299ea0e74e8d94b941f45288f9",
+     "stored_name": "SIG_bf3da9ab4cbe7a34.npz"
+    }
+   ],
+   "bytes": 6500660,
+   "file": "certoutage-banks-N49.tar.xz",
+   "sha256": "ef5e26d940c36f1ff2b22498402bb17dd7597add3c920da717dbe4a7eb520ca5",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 50,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "9e129c74b443711fbbd9672a49c3395ad84e21424314d48d1e1f936a76569473",
+     "family": "CHERNOFF",
+     "logical": "C_N50.npz",
+     "m": 1,
+     "sha256": "15f50ac52bf0c5ac7bd1b794345267c971e23c2a3043bf433a96218f02573e03",
+     "stored_name": "CHERNOFF_80f5bd8789df9d83.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "c36a9a7cef6c71683f51fefab6e06a93cba4d9e9c0017b0058a116475d331fae",
+     "family": "GAIN",
+     "logical": "m2_N50.npz",
+     "m": 2,
+     "sha256": "3ddd96eea351a960a3b8f223112fdd9d30867de75efae1aea652c9556e4802b4",
+     "stored_name": "GAIN_0d323c59a1b71fe6.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "526ce3ef218b6ed3aa68fba472b374db84b7c08b5151056c5148783b5b33e562",
+     "family": "GAIN",
+     "logical": "m3_N50.npz",
+     "m": 3,
+     "sha256": "d6c84c1d152dd556d91d71e9a3871ffe60dbd2ed7b781963d855361ec3f5c88a",
+     "stored_name": "GAIN_a224cb4e8a969c5c.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "aa02d7cc8039f84717ed46a8d366a8d8e9e668e877137f7ce083de6f286600fd",
+     "family": "GAIN",
+     "logical": "m1_N50.npz",
+     "m": 1,
+     "sha256": "f3faae3fbc1cc8daef20232eab7ce5faef96096fe7158607bc41f23359ba24d3",
+     "stored_name": "GAIN_b4f51310a02eb120.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "38e79a068fad0b448efc8ac95694de10cc67e0369af0d6393d79d2186b47c49b",
+     "family": "SIGC",
+     "logical": "SIG_C_50.npz",
+     "m": 1,
+     "sha256": "03c6c4e6f913e6738819462dcd03e3c66eaf6f667699ccefc2d0b2fd45089bb0",
+     "stored_name": "SIGC_c3916012b37c34a8.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "daf4136ece689fb7642f603ade0ff1c31d14440c25fbfecc89464355e91062de",
+     "family": "SIG",
+     "logical": "SIG_m2_N50.npz",
+     "m": 2,
+     "sha256": "bd51078b5da1ff489d72da7fa35fec447e1dfbccdd25c2bd21da50e406bf9264",
+     "stored_name": "SIG_5d20493bbfde2f5d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "27a0d62096b19c9f09066b611c82387c0cb5e7ac0b79d9c676acd8fb348e1077",
+     "family": "SIG",
+     "logical": "SIG_m3_N50.npz",
+     "m": 3,
+     "sha256": "61b3623fab10c2751ed01d4a4d93742b25fc577612c3a25c448bf747818c860f",
+     "stored_name": "SIG_981bd6a6bd470b64.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "5f1a131bec9354a194052e8abac075ed8bbd1dea8eca1fbe2634ad3500dbe8c6",
+     "family": "SIG",
+     "logical": "SIG_50.npz",
+     "m": 1,
+     "sha256": "670233a52c11049f23f03894ea19f8c15776d5ff350c7e135ecb8cd7af37de41",
+     "stored_name": "SIG_c23af9e2a33793f7.npz"
+    }
+   ],
+   "bytes": 6106384,
+   "file": "certoutage-banks-N50.tar.xz",
+   "sha256": "41bfabf977b6ebaf8c22d8db63dfd70c54dda67125d39304fc81f8ee72161c59",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 51,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "e63d9561eedf1c6bfc9968c905a3e4d7f750206eb85511a2fdb002d009efca78",
+     "family": "CHERNOFF",
+     "logical": "C_N51.npz",
+     "m": 1,
+     "sha256": "413c3d5b153915357a05035e1a80fb44ec9f7323f53e281e3a2c20dd248ebc6e",
+     "stored_name": "CHERNOFF_4571ae18d5c11f54.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "4f7534d3d56aeb4e68675d269c910c4021862072cddf6c65ee0c1dc38996d6d2",
+     "family": "GAIN",
+     "logical": "m3_N51.npz",
+     "m": 3,
+     "sha256": "29ba36a4196e4276802ee36e0bf93658f1532a6a1882ebb68af9f259a80bd31e",
+     "stored_name": "GAIN_5d7e904c96ce8b47.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "cd77719a602f9bd2c367a4774ab765ffa359a9254bd7608b9ecb3704e3138d01",
+     "family": "GAIN",
+     "logical": "m2_N51.npz",
+     "m": 2,
+     "sha256": "4a615a19b84b48558f45d846d51d82256ef7bf959882f28e0a9faf19a6fa9011",
+     "stored_name": "GAIN_734fe1e6c8aca8f9.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "09e352cd161aed0e5f95c90ea13efc9c3ad999561be663c0fefabe7031d036fe",
+     "family": "GAIN",
+     "logical": "m1_N51.npz",
+     "m": 1,
+     "sha256": "8d64d5d1c4c80de920bbe5a673784152b0f6e1ad5fe1887f29e41e16f90e8815",
+     "stored_name": "GAIN_d7395f04f33343aa.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "6fdb11e3e6db18af98e9ec5845d4bda7375d964fd1904797ac57031a73234b34",
+     "family": "SIGC",
+     "logical": "SIG_C_51.npz",
+     "m": 1,
+     "sha256": "6266561456f2e82bdeae95a23002d5ac76fa64c591ca0546c5c4dd6801769a8c",
+     "stored_name": "SIGC_99dfb6bbced20631.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "c35842f870ad1d4d2e3c6677c94f01c8f1ce1ed1063b617d7dbd7e034fa77625",
+     "family": "SIG",
+     "logical": "SIG_m3_N51.npz",
+     "m": 3,
+     "sha256": "35a2e6f3c7181f46c97d10520e6a2c04bff1929a20ac9f6123c5c82814145886",
+     "stored_name": "SIG_334264b6513142bc.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "9dcbcdb817fc88c20a981f038c559eb711026383908c311ee5fc095da012a37e",
+     "family": "SIG",
+     "logical": "SIG_51.npz",
+     "m": 1,
+     "sha256": "58448ee65276c0f174bb17990687a192cad30f3ebeb902f78e27f5ec8d5c9ff4",
+     "stored_name": "SIG_798b1d6032887d78.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "d678bc46c7d72eef0bb77929dc5c4215df58d018f201633b8ecd28544c92d781",
+     "family": "SIG",
+     "logical": "SIG_m2_N51.npz",
+     "m": 2,
+     "sha256": "6f093d690bbdeebd2521c2e80cb93c601c8854b9e041e6695c9c1ba470f6d9f1",
+     "stored_name": "SIG_faa9ff5ec749c6d0.npz"
+    }
+   ],
+   "bytes": 6176076,
+   "file": "certoutage-banks-N51.tar.xz",
+   "sha256": "75ac38736db200e2453ce017865d83780b3ab9aa8c74f37664327ce2eba19f91",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 52,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "b1365fb7c9fd41667c8c3e873730fc0e2089dea3a5e417287c277e1c26196cdd",
+     "family": "CHERNOFF",
+     "logical": "C_N52.npz",
+     "m": 1,
+     "sha256": "a82d3cd085f5fdf8779741fba139875b1bbce3f72e47151a0d661a0c8e314cee",
+     "stored_name": "CHERNOFF_9320d8628984ef6e.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "380f4bfaeb59b6ca449766fd2fbfb726625b2ff67abad12dc19a73d6a20120f6",
+     "family": "GAIN",
+     "logical": "m1_N52.npz",
+     "m": 1,
+     "sha256": "d81ca2c0f266faee8d5afcdb29acf1566a51d08f6f13a2b37c35a7e3e8dbe9e7",
+     "stored_name": "GAIN_0f97335820d8b83b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "3066a50d32aa4774ffc046372e4e33edc621169c5ab07f0d7a80516a9c9776ea",
+     "family": "GAIN",
+     "logical": "m2_N52.npz",
+     "m": 2,
+     "sha256": "995460667366c5d28eef7f6f7277aba72e070fc85d900066c71e310662557baf",
+     "stored_name": "GAIN_329534f6aadb6ce0.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "08aa96506c2596f372afa9c8220f13a32edc0478ac43d688a951a555919504e5",
+     "family": "GAIN",
+     "logical": "m3_N52.npz",
+     "m": 3,
+     "sha256": "3ebc8c80117a79e9282b67440dc08749e7aa997ae76226844e100eb47ff3dce3",
+     "stored_name": "GAIN_e274c82aa04d8b45.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "e921414e1ebc990d05f6421b3040aea1f27d7f95e46e2f25167361c1bce32ce4",
+     "family": "SIGC",
+     "logical": "SIG_C_52.npz",
+     "m": 1,
+     "sha256": "91014b75a6be0d017a91af7a7c58b99a7d9302c065ae6adfc4f572eda220c056",
+     "stored_name": "SIGC_e402b594c3b1b6a2.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "10d5e2b331ea0fc02b334781ecb7a80eb4ff2810dd96665600865c9ee4b7d8cc",
+     "family": "SIG",
+     "logical": "SIG_52.npz",
+     "m": 1,
+     "sha256": "bb1d2b4ad0d42386867a815752f87c0e0adf82b7be8c52199a6ecd993c1a00f8",
+     "stored_name": "SIG_1dee883affb20b59.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "946430f254e56d0a6e861e35902208863363b8d059ea8c8a25b21f64dac099a7",
+     "family": "SIG",
+     "logical": "SIG_m2_N52.npz",
+     "m": 2,
+     "sha256": "64d6370df5c267744f57852e0061faaf229aeb1396d7a2a5d389253748b5658e",
+     "stored_name": "SIG_4f3fb5b426d357c4.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "c977195a71b0b94e5f03c213a4cf6a511bcede64a9c5f3b004c435aab6eaa8a2",
+     "family": "SIG",
+     "logical": "SIG_m3_N52.npz",
+     "m": 3,
+     "sha256": "b646b8a10ece6b66c00b29c5cb73a05c628742da59d9b8ff00289366478a366f",
+     "stored_name": "SIG_ef7aebea7a880d79.npz"
+    }
+   ],
+   "bytes": 6242924,
+   "file": "certoutage-banks-N52.tar.xz",
+   "sha256": "0a465cbbd1ded1f0a406d4f829d342d4aedd3933570174d47b5ccb14fb4dc869",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 53,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "e12877d8320daf56cfcfa59c8e838a4469fd3ffae9b56e8e94ba3cb36e31e79c",
+     "family": "CHERNOFF",
+     "logical": "C_N53.npz",
+     "m": 1,
+     "sha256": "a57a6c24ea49a9c4949bd5126b68c7221f1b4adf21e81721e81f8799ecd2b2e1",
+     "stored_name": "CHERNOFF_e6737288c4828405.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "11cbb1e4fb8bea5561010fb143abda9a91b7a41cd75ed8cf8400aa9fc1472c90",
+     "family": "GAIN",
+     "logical": "m2_N53.npz",
+     "m": 2,
+     "sha256": "13fd9ee4f6c05122bfba0220f69a55ca0a6239b3fb6d5185d4efd43bd8c1ab6c",
+     "stored_name": "GAIN_388084810118da6a.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "c3dc9fa5cd57770121060e485365ebaf76e6eefbfdfd2ce0c8c9305356a79e1d",
+     "family": "GAIN",
+     "logical": "m1_N53.npz",
+     "m": 1,
+     "sha256": "0e7298b0ebd2c4b806fff813820a2c63b276a985792384ab272a8dc1d9b5ab74",
+     "stored_name": "GAIN_729ca128d0a6e4e9.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "00f6c5a5f091692d48437c714b65194a02288666efd7b4a01917d6333108c534",
+     "family": "GAIN",
+     "logical": "m3_N53.npz",
+     "m": 3,
+     "sha256": "8f9afc600f634a506e2c85ff1a55ae17c6be678b5dd8e9fdb3308b580f9e4b9b",
+     "stored_name": "GAIN_c0bca281db265780.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "7f9d4a1f8f0eacdf01114fbec2f80be9cef0d1f497740a68b6678a39f4339c7e",
+     "family": "SIGC",
+     "logical": "SIG_C_53.npz",
+     "m": 1,
+     "sha256": "f661b3cb1ab18a60b6286be83369b625f51efbd3b5d661cd32399a8e610261ff",
+     "stored_name": "SIGC_f9b75c4c5d67600e.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "b64e37a637dd36376f206873410143aadd8886f79553aec4a7f3d96d8e31f2b1",
+     "family": "SIG",
+     "logical": "SIG_53.npz",
+     "m": 1,
+     "sha256": "9618a3ab66291785db36a6911a5b488e779dde11aece06424c71d9e7943c7920",
+     "stored_name": "SIG_0386d208a1f136ff.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "c0961f5458ca75e4dd0484d44e9bb3b83fdeb8345290ab468cce75c74661fda7",
+     "family": "SIG",
+     "logical": "SIG_m3_N53.npz",
+     "m": 3,
+     "sha256": "be0f771f218491090c5389a1aa81b24533a76aafb152cc4238a0faebc744934f",
+     "stored_name": "SIG_09181aefc4657dec.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2a431efbd857611d44df9584a6f841c00e2117764b1aa160fcc5902e8ea12fd7",
+     "family": "SIG",
+     "logical": "SIG_m2_N53.npz",
+     "m": 2,
+     "sha256": "833c34c2d670013ce071132224f99f4c0bc1a89bff2a82855fb38f1c405af1e8",
+     "stored_name": "SIG_8094e4c4ca514c58.npz"
+    }
+   ],
+   "bytes": 6268504,
+   "file": "certoutage-banks-N53.tar.xz",
+   "sha256": "f9cea00538c48172236ece7ff685815ede5a13fb0a67fddb2d2cdde6084b4ed0",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 54,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "36ebbdca60ac48d953498196d9db95e1d296dc936dfea4f200064f8a6facddc4",
+     "family": "CHERNOFF",
+     "logical": "C_N54.npz",
+     "m": 1,
+     "sha256": "1a329a1b12891fa73fc8f056d89fb8b03fe4ffa0b3aef4cc625b3ac05bdfa194",
+     "stored_name": "CHERNOFF_de27828059b96619.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "526d18005e38942a21252087617903aa61976178e27ed4ab1aec7e0898c51587",
+     "family": "GAIN",
+     "logical": "m1_N54.npz",
+     "m": 1,
+     "sha256": "5c8380ddf1ea2fa9567c24fb77905f80e01bc5d1e2a7f5c5e385d69ebe451012",
+     "stored_name": "GAIN_79ea78b9f5404394.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "2b09b31f16f80ac8bb7f0de0662c655aa6ebe37e416994d1be64d2bf4f69cde2",
+     "family": "GAIN",
+     "logical": "m3_N54.npz",
+     "m": 3,
+     "sha256": "1efc1435aa1384d2d175a38c44d003189911b639008de50c9d6da3753a0818b2",
+     "stored_name": "GAIN_84db4415c4a06a8b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0a89c896a0aa44301eb9e1eacf6ae349dd39b0d1c4c41c35b366ec1d31d3c15f",
+     "family": "GAIN",
+     "logical": "m2_N54.npz",
+     "m": 2,
+     "sha256": "ab08c7fc4fb6e9c8a9c320ac1bb52e3d274ff8aab437d7023099a5855afccffc",
+     "stored_name": "GAIN_cf20d2a91f05c299.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "ba9d8798b8c0bcb445c156f38e4e882e840aa069cd3fb93f6788132d3a96f5ea",
+     "family": "SIGC",
+     "logical": "SIG_C_54.npz",
+     "m": 1,
+     "sha256": "55378cb5ee0303cc678d5dd31eef1fae3f0eb3cad073cf70aa363c558b6b3475",
+     "stored_name": "SIGC_0c6fc5c5a94ff102.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "6e3df8b98130ea5f6bcabcc74eae5244a831e7ca72f4093e20c1a84efb885284",
+     "family": "SIG",
+     "logical": "SIG_m3_N54.npz",
+     "m": 3,
+     "sha256": "4c818c364aadccfe2f488a3104630dae793092839d109a1a033389730e06fc7c",
+     "stored_name": "SIG_57fac60ce8a058b3.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "30bd30d4c30e9a414334b0289d3ce8683083ab8c8fcc1527df0663d1ab2f352f",
+     "family": "SIG",
+     "logical": "SIG_m2_N54.npz",
+     "m": 2,
+     "sha256": "29afb4bce4666fef28a8b2c316415464f4de50fbb55ffc3d61ad476d87fd02f5",
+     "stored_name": "SIG_5b54ce129e8b8aa3.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "7b5c14dd630fa9584ffcc39508007ed4ff0dbe1381e2c723de6924c15ab8e697",
+     "family": "SIG",
+     "logical": "SIG_54.npz",
+     "m": 1,
+     "sha256": "ee98d2002cb170195d2462d76c1d9388aadd5910f9656fc2491cbda622238a35",
+     "stored_name": "SIG_7c222ae62d0266c8.npz"
+    }
+   ],
+   "bytes": 6356336,
+   "file": "certoutage-banks-N54.tar.xz",
+   "sha256": "4c050d9752eb2d29514da894243d20a487fe2045cc41109304d15c01ff8dc8d3",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 55,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "0bead4089a04625bdefac13fbd8c6cf3897b37a5191ae478bfc9f50ace568279",
+     "family": "CHERNOFF",
+     "logical": "C_N55.npz",
+     "m": 1,
+     "sha256": "d48471d3e7f062d1470f4f01893115fb9517d70a0567f492fce630df96a3c1a8",
+     "stored_name": "CHERNOFF_15da3107647ce7ba.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "e97ea72cea94171fb16319209f32e428d43ba44180853e1a85d3873d684e8fff",
+     "family": "GAIN",
+     "logical": "m1_N55.npz",
+     "m": 1,
+     "sha256": "3d6ae1687857ce4e95f3bd3705879561a802aaf1faa93ecacea023ea6940bb72",
+     "stored_name": "GAIN_385b6b3a335d5d5a.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "ee544e6482a40c95819917b866ad5becb311ca232e712018b9e1502f36cff793",
+     "family": "GAIN",
+     "logical": "m3_N55.npz",
+     "m": 3,
+     "sha256": "c87445cd2026daadb3f4f36605b7c239192c29f72bcadabb7b55cb4a722f840d",
+     "stored_name": "GAIN_b7311b0f4e39079e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "ce1be111bca280bce53ae92b5be3ef426076ae6b19b32ba172a4992a5575b14b",
+     "family": "GAIN",
+     "logical": "m2_N55.npz",
+     "m": 2,
+     "sha256": "b1c53e6ee21bd7270f235fb98a49605b81e98769365adfd58b74ddca641de9c0",
+     "stored_name": "GAIN_f72497b4137e965c.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "166127c96823e811cb1fbd1d829063dff1b29249864548fefb6920f6fc3989de",
+     "family": "SIGC",
+     "logical": "SIG_C_55.npz",
+     "m": 1,
+     "sha256": "fd21809ed117f98ac7af4d018349ddcc4a5b008160a03da974a158bd0828aa06",
+     "stored_name": "SIGC_886409c6faee2a77.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b43cd093be7c7406395a190d7ec64bf3fd2c65ca23d90f6656a1ae0b19ebdf65",
+     "family": "SIG",
+     "logical": "SIG_m3_N55.npz",
+     "m": 3,
+     "sha256": "f2a4bf3b0eb5b203842fdfde5c597158290de7d2e2b05063fb18624228b3fddc",
+     "stored_name": "SIG_4f52cbdcafe56612.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "332cd14778e749d541b3bbe74fd99d94f6bcaa773cf60eba71f5bda24e1c3584",
+     "family": "SIG",
+     "logical": "SIG_m2_N55.npz",
+     "m": 2,
+     "sha256": "a0cf7192a77ae5afc6e69814e01ff18113193e0d647a519910d2f9dd8588b379",
+     "stored_name": "SIG_81a7ac58cd9361e9.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "69216d0150c7c8ffba48eac8aabce512c1b49ef29859b4e37d3f51046e695236",
+     "family": "SIG",
+     "logical": "SIG_55.npz",
+     "m": 1,
+     "sha256": "f78a70b91d087ebe6f5275f6be6aed6b7bf11810afbfe376befcff2e47de01bc",
+     "stored_name": "SIG_eb21cc88a8a9027d.npz"
+    }
+   ],
+   "bytes": 6413200,
+   "file": "certoutage-banks-N55.tar.xz",
+   "sha256": "7bf54e0cc342af615fa0bba7dbfff96fe7955ee3db02e3e905b7d0bfc539e33b",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 56,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "2da7f16f264f96712d1e6a2e69a7856247567a448f0299485a3dc372bd8c3719",
+     "family": "CHERNOFF",
+     "logical": "C_N56.npz",
+     "m": 1,
+     "sha256": "8fd177fb8a8f01cc776e4ebe9d800e97a5cba1be833b58ad00d0f93c245c98bd",
+     "stored_name": "CHERNOFF_9f5b08d1546262e6.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "56022e26c50451d34ce682e743fa89a3d6510418d6a329021e6800ece1155257",
+     "family": "GAIN",
+     "logical": "m3_N56.npz",
+     "m": 3,
+     "sha256": "6ebcbd6cfd229df7ede904aa716f183ed230d917cbc6eb8dcfa5ddffaa881874",
+     "stored_name": "GAIN_a460acc95086f07c.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "995562ebfb24ccd7da4184fc7bbc4d4c971ade1bb4b9bfc61294665ef1ef9fbd",
+     "family": "GAIN",
+     "logical": "m2_N56.npz",
+     "m": 2,
+     "sha256": "3097af3a4d61bf820cfbaa9f811b08b16c1f719d1679ae14fc8625edd701b946",
+     "stored_name": "GAIN_d693a57acfb9d756.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "0e9025d61bc604fe4161cd8dde2fa8b8ee3218f51e99de1fa66cda29f165d5cc",
+     "family": "GAIN",
+     "logical": "m1_N56.npz",
+     "m": 1,
+     "sha256": "24eac71d64f4d305509cb7112d9fa2ef97b112e129c40dc97800653fdd4318b7",
+     "stored_name": "GAIN_daa0bde96a98804d.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "8116b176a05ae0088a40cc9e6c6a4785e7a4ddcd77f26f6a0921105af02bdee1",
+     "family": "SIGC",
+     "logical": "SIG_C_56.npz",
+     "m": 1,
+     "sha256": "c1a7b3fc461a82053dd1906867efe78fcc118154b0f08ccd2d770725ab0fe607",
+     "stored_name": "SIGC_5feb3ac1f79f2a2e.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "d066c729c8efb821b7bc6a2658e3cadfd510b04065feb4c47750d789eaf3eca9",
+     "family": "SIG",
+     "logical": "SIG_56.npz",
+     "m": 1,
+     "sha256": "56bf40a26c493c4af1f296cd71b3283f7a1478af4a050e52cf9d6d326cd93a5a",
+     "stored_name": "SIG_587b11340035dee3.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "3f666f281bee096922c73f7eb0b56da33a08db47a13baa6ff62d5c5f8907c60f",
+     "family": "SIG",
+     "logical": "SIG_m3_N56.npz",
+     "m": 3,
+     "sha256": "d582dcea479cd32078280f9a1104efd4d62347e5cd0f439c749992e6310ae43b",
+     "stored_name": "SIG_9055c07883dc3c34.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "55044a3418dcde6230181b5c41502cc7780e61414feffd3ab8f02c247cbf1b3e",
+     "family": "SIG",
+     "logical": "SIG_m2_N56.npz",
+     "m": 2,
+     "sha256": "2d83a0ca9f916568424291cf051e683c34530a1b43433ce3bd8713cf25442134",
+     "stored_name": "SIG_bd4f4435f59583a9.npz"
+    }
+   ],
+   "bytes": 6413240,
+   "file": "certoutage-banks-N56.tar.xz",
+   "sha256": "71d867d099f151476acc5cf935a39c0702fbaee625c0f68a6005eb7fedd376c5",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 57,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "79a34574c7243e02376560b12db02671cbf911d7627b0cf5dd4b205425725a02",
+     "family": "CHERNOFF",
+     "logical": "C_N57.npz",
+     "m": 1,
+     "sha256": "420a7b0d36bacc0178160c4218dc40da6e66dcd28cbdd873594f25504c1e94b8",
+     "stored_name": "CHERNOFF_5c0552ea2c520242.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "9975f04746decac78062e2abf9e1593eb7a3c42ac24fc9e22cfc33a42739fdcc",
+     "family": "GAIN",
+     "logical": "m3_N57.npz",
+     "m": 3,
+     "sha256": "604bcd157dd6846238cd611ed2ffb87402441d19a78b92f2046d1a7b1d55ae42",
+     "stored_name": "GAIN_25b6386e19ec805d.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5793387716755266a706440607b309c0ecefe508e7811770cc0150e171476c66",
+     "family": "GAIN",
+     "logical": "m1_N57.npz",
+     "m": 1,
+     "sha256": "2acc76f1b429ed923d36e081a3a87c549c3ea03a543abb7cf9ab13f6180948cb",
+     "stored_name": "GAIN_4341adee460049ca.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5392f24c5b9b45de4d536d8670fd3eb08e15688ae00c275c47b52980bc08774a",
+     "family": "GAIN",
+     "logical": "m2_N57.npz",
+     "m": 2,
+     "sha256": "985bb8220ced269fded030643c49a091bf3fb9cbd406d05896507aad4d84ffe1",
+     "stored_name": "GAIN_de9aa23ba7ca9d24.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "36edd7edac9e8af6c0a086e1ec94eb503ee927acb7f1119375ae2ddcf9fdd8d7",
+     "family": "SIGC",
+     "logical": "SIG_C_57.npz",
+     "m": 1,
+     "sha256": "49ce83ac49eeff998a5c27cc42f9a2149fb78d9a7ba87d7c354114cd51f6e29d",
+     "stored_name": "SIGC_ed2009418436f592.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "f87b039ba815a064977358969ca96e2e273f67bd245e2e45c7593680e40be7c7",
+     "family": "SIG",
+     "logical": "SIG_m3_N57.npz",
+     "m": 3,
+     "sha256": "2d7752ac85788eaf30bad82108e9df4244a4a6196f679c9aab2e702cdcd81e96",
+     "stored_name": "SIG_0c9f32a4161c2b22.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "cd4fd41268a597682a5961acf69b6335b0192850fe1f962ca410d4a7f45ffab1",
+     "family": "SIG",
+     "logical": "SIG_57.npz",
+     "m": 1,
+     "sha256": "79c9452e8c9c8417817387e65653570d8a6d93830a2e9fb588eaa372721b0357",
+     "stored_name": "SIG_5539d45ecb219946.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "31ae056ee5dcfc0916401dc861e59a518300d2d359b537958fcc4be341a0fc48",
+     "family": "SIG",
+     "logical": "SIG_m2_N57.npz",
+     "m": 2,
+     "sha256": "75a0e01b473b6d419182d6cb1f611eeabf0c13899f304a4ce5b2351387141e81",
+     "stored_name": "SIG_73cabcbe229df97e.npz"
+    }
+   ],
+   "bytes": 6533252,
+   "file": "certoutage-banks-N57.tar.xz",
+   "sha256": "eae5dfec501b68be8bb8f1a4bbd94da1bc276e2bda766cf160dee71c0d4dc147",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 58,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "d3543fb4dc01e5c81dbf587a266ffc53426dcdaa2782adcebf7a81f0c2f641f8",
+     "family": "CHERNOFF",
+     "logical": "C_N58.npz",
+     "m": 1,
+     "sha256": "5f342600391e249a5719e07b7c09046be818b02027a071988344998f3ba1a797",
+     "stored_name": "CHERNOFF_6fdd51ef730cd4fd.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "e215cad38089791c1ec66e9270e2ed8765907a35731cca76a0bc8662f20df75f",
+     "family": "GAIN",
+     "logical": "m3_N58.npz",
+     "m": 3,
+     "sha256": "36c5399af4d30346f3ba4875d47992341bcae70e22f111d0c74dbda40297498d",
+     "stored_name": "GAIN_5888804839c38df0.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "ee7454e9f5ae3e8d097c62b58133a4fe0747756856befccaab050848b028462f",
+     "family": "GAIN",
+     "logical": "m1_N58.npz",
+     "m": 1,
+     "sha256": "3044cda3502423824f1810914ef6df124d2b2f3cb5f00047b88db3db1db97356",
+     "stored_name": "GAIN_cb2f721545ce8e0b.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "32686aff43e4b7a9db75b395053b7434bce147aa6a918ae2b92fb66b3cf10e20",
+     "family": "GAIN",
+     "logical": "m2_N58.npz",
+     "m": 2,
+     "sha256": "dcac136fdf9cbdbcd88520a896f58ec00ba5a95d8da46c991a0271976a6db256",
+     "stored_name": "GAIN_e62d363e30c2c9e6.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "a7e575f603d23f352c2336c3d255dc80ffe54bc41ad3e1e204c2f3183a4dec9d",
+     "family": "SIGC",
+     "logical": "SIG_C_58.npz",
+     "m": 1,
+     "sha256": "4beb06e9f5500f0c0cadd05e6106923229c525464f6024f7f17dda45338fa3be",
+     "stored_name": "SIGC_afb9b2ea97d58dcf.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "420877aa58a7175c615592ceee0dab5eddd281779223ef75d89f732c7c6b7f3d",
+     "family": "SIG",
+     "logical": "SIG_m2_N58.npz",
+     "m": 2,
+     "sha256": "4f20e1fe87052ffafbbedb207878cc7b550d50c8c5887f53eb201d1675deb1a4",
+     "stored_name": "SIG_5769c29699e7b058.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "d0f92a35ac1ea0e267d87528ec701364cdde0eae5dbe130aaf4cf3b428f822ca",
+     "family": "SIG",
+     "logical": "SIG_58.npz",
+     "m": 1,
+     "sha256": "f05b73f2b216918323d143eb3b0dff8331998b9c88319f8315943aa673b72178",
+     "stored_name": "SIG_9834f3276df90dc8.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "ebd93caaf49ff21f95f882377b1360908ba1ca068161b9c1d4c2efd21ddf9339",
+     "family": "SIG",
+     "logical": "SIG_m3_N58.npz",
+     "m": 3,
+     "sha256": "40f9677af3eaf278753415cc6f27c07a85cb382c0357ae0cb1bf02c62cdd8034",
+     "stored_name": "SIG_a6637893446c6808.npz"
+    }
+   ],
+   "bytes": 6542968,
+   "file": "certoutage-banks-N58.tar.xz",
+   "sha256": "15ebc7943da2b721190e003443061b88b5f386cc501c8af3746af2a19b8f1898",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 59,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "cec819ec579d977f11a29dd3537ac29e071cb23cbad777d73fbfdf35b7c04787",
+     "family": "CHERNOFF",
+     "logical": "C_N59.npz",
+     "m": 1,
+     "sha256": "a8299daa58bec7a409d21187de1d432df977db2802360dfadfc76561218fc77b",
+     "stored_name": "CHERNOFF_1cab0a8be5b0ef58.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "5a8c7028079af21b84dadb5b7823c8081036c8e69a21b233676b7c7bc2022aba",
+     "family": "GAIN",
+     "logical": "m3_N59.npz",
+     "m": 3,
+     "sha256": "37fdc43aae3738af252b7156335335dc3c25f17a6f651a790908bff5abcd1dc1",
+     "stored_name": "GAIN_a483f24d6d4eb70c.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "167185fd15064956d983b0e372cc46c9e0bcd180e04afc209621a1fd8c5dc6fe",
+     "family": "GAIN",
+     "logical": "m2_N59.npz",
+     "m": 2,
+     "sha256": "bc3979c16bcc066eed3f6c565cea32e888d6a9ba44e413fb20d800bbe65e31ee",
+     "stored_name": "GAIN_b43d9c1d1d85e586.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "22ca2ca7b1c349f92ede8f28b4fb41adcf21ba5067d29c695ed3f10a5210ed98",
+     "family": "GAIN",
+     "logical": "m1_N59.npz",
+     "m": 1,
+     "sha256": "e5c8f610b381ff412cbdb6e93e86c9fb647171e59632cb9d9cf937fffef101af",
+     "stored_name": "GAIN_e238e1621e11b46f.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "27b5bba33a0052856755e1ac508f81c689e523862bdd3f069c10c666b770939e",
+     "family": "SIGC",
+     "logical": "SIG_C_59.npz",
+     "m": 1,
+     "sha256": "91cb6a325bdb1e438e370d148bf45ad7270438ba7777d99a8562a3fc2578ddba",
+     "stored_name": "SIGC_cfd68b94567317e2.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "e8edf59bc659edff96182528d3cb1e51e37e81d3d88789f62fce9c1dd8bcb866",
+     "family": "SIG",
+     "logical": "SIG_59.npz",
+     "m": 1,
+     "sha256": "2f72c05557a3a6ca79852c7feae9b9489320460ba7d4c370fa212792ba18b1f5",
+     "stored_name": "SIG_280cc6548a8037c8.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "7d5669aa1d9424abaf30a325a9f2164eafa2bb0a2b67bf24881c4cf12a2194f0",
+     "family": "SIG",
+     "logical": "SIG_m3_N59.npz",
+     "m": 3,
+     "sha256": "82f0f23cb120f7fbecc7a64dc5c70b9f10548c18d14f90071762545c41930fa4",
+     "stored_name": "SIG_a9b52f893d78f92d.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "b6faad7362c90f41eb4c975d969dae4e3f63294c75c42b109f6f5fd011cffa8f",
+     "family": "SIG",
+     "logical": "SIG_m2_N59.npz",
+     "m": 2,
+     "sha256": "5479c31b52f8d645ac3feb3a252b72afe82b04ff4610264cc30800078f2aa607",
+     "stored_name": "SIG_fb51984f161704f3.npz"
+    }
+   ],
+   "bytes": 6633840,
+   "file": "certoutage-banks-N59.tar.xz",
+   "sha256": "804291f34cc8dff4d24854d83cfbf2a6f0f5a5be0621fbdc4dd1cc57dae2d785",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 60,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "a798e0abaffb8bc6f4c53c206e354f7f25cef1631e0d7178998267a98c0a79dd",
+     "family": "CHERNOFF",
+     "logical": "C_N60.npz",
+     "m": 1,
+     "sha256": "f41ab73d4c7a93767417348259c0147677ee0e5b38f1a8da078105696aab7461",
+     "stored_name": "CHERNOFF_bf0dcecdb10cec98.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "dd8bbf1cff93035760bf0ed436b8af0d818873d1feadf7a72993693fc094d1e8",
+     "family": "GAIN",
+     "logical": "m3_N60.npz",
+     "m": 3,
+     "sha256": "697e6032a52ecbc3b165a54d025cc24afb4a541218b213a1429cefe32cfd0fd7",
+     "stored_name": "GAIN_8ae8450603597dc5.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "b3ac303ea4b84e962cde7f087020b0af5c2ff2d717afeabf0305006ba6e5bd73",
+     "family": "GAIN",
+     "logical": "m2_N60.npz",
+     "m": 2,
+     "sha256": "698e901fce8e48a18302654f8a627fa359ad02e32ed0b1937e8e7724fc546aaa",
+     "stored_name": "GAIN_a216e1947f84cc00.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "989b7c2d900a2bbcfea8cc1c000d56cfc06e059561f39abdabab24667307ad8e",
+     "family": "GAIN",
+     "logical": "m1_N60.npz",
+     "m": 1,
+     "sha256": "8d4fe26abe4a3b5f9c0f15454e82e01a933f3994cf697e93e4a931d0d85ecf70",
+     "stored_name": "GAIN_c672e91970f4b183.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "380d028356324857f9fd7453df180d5d52f558ba7eb2602baa8af34b2cea09ea",
+     "family": "SIGC",
+     "logical": "SIG_C_60.npz",
+     "m": 1,
+     "sha256": "5d728379ccacac57b075a94ca3b03b89f8a4964792cc59d1e303797cc10440d9",
+     "stored_name": "SIGC_3432f153b4fe997e.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2663e34a2925cff048f47edf1135265afe4f09ee1c245828d984947e6d676700",
+     "family": "SIG",
+     "logical": "SIG_m3_N60.npz",
+     "m": 3,
+     "sha256": "cb5a30a45fdea15a4de8abc828ca3560921bd4f104acea7fd6857951374e7e06",
+     "stored_name": "SIG_116b25a443296355.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "9af53ba9a0ec755e0eabab5b139e393e824a458a42d290c7860e312a58deb4fd",
+     "family": "SIG",
+     "logical": "SIG_60.npz",
+     "m": 1,
+     "sha256": "63b69bbe91f87399bb258253a267830ec67b314b3054350d14281407a096c4f8",
+     "stored_name": "SIG_61e6b45a44ae5b78.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "e4d3e981de05375db11f1c31497828ef5a6f28b5531ac3d4ba95d9f246d9b03c",
+     "family": "SIG",
+     "logical": "SIG_m2_N60.npz",
+     "m": 2,
+     "sha256": "b2033841553db88011342cfab4405ac9012d8a40a1a17fdf72199d6c143c22e0",
+     "stored_name": "SIG_8b0ef7f18b019071.npz"
+    }
+   ],
+   "bytes": 6732708,
+   "file": "certoutage-banks-N60.tar.xz",
+   "sha256": "b3341122f82d0a227c1a3f3601bba913d62ba7210fe7d503da0e0c4a3759b934",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 61,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "d4575e5f4e4e5276085b821d353d4049b78c3c2b1ef27eea710fdf761f1a6dc4",
+     "family": "CHERNOFF",
+     "logical": "C_N61.npz",
+     "m": 1,
+     "sha256": "d11fb281c642d6c891e05136e70f4411ef4574a1b82aae2c1f901e4447fb4098",
+     "stored_name": "CHERNOFF_ea7c32e510662d7c.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "807ddb4d4ee7371bc65238162a7aacdcfc33dc2c602945a36743e4800a530199",
+     "family": "GAIN",
+     "logical": "m2_N61.npz",
+     "m": 2,
+     "sha256": "7446679f4d1c12e5f6d1fd2bf53846c227eda418c1094b3abf90a11dd8b7058d",
+     "stored_name": "GAIN_811156960cdfb9c5.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "311efebb39980bb533ea8cf9301ac8c74c32e8ebcc487a3ddd087fb6678578ce",
+     "family": "GAIN",
+     "logical": "m3_N61.npz",
+     "m": 3,
+     "sha256": "e99dcc9bc8761f1d45e58cf3572a71ea3cff929ef12e081d957de78df0e9612d",
+     "stored_name": "GAIN_81ce39f9970d936a.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "1ff7ced2e89c7d5fe781844ed69f85e6e5bbe8ce644ad17a615c053ae505df4a",
+     "family": "GAIN",
+     "logical": "m1_N61.npz",
+     "m": 1,
+     "sha256": "30fd179de24da23612652c83ec3eab9ce73d4c42d757eea9cec6b1335b38c678",
+     "stored_name": "GAIN_a3511179e8934d16.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "3d2f82ad4d2a5db388993d3aec1db75f8f7fc7676c3e495dcce57a5336384cf1",
+     "family": "SIGC",
+     "logical": "SIG_C_61.npz",
+     "m": 1,
+     "sha256": "0fb20315e1b3e58b6d481054363f9b9930613ad4f54a5c85baf956d637ba2e88",
+     "stored_name": "SIGC_823db30186ef8e03.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "2e7396143f7dab2d0e4b8543df67ad37562ba30ee8fb1d8ab7380595404ca85c",
+     "family": "SIG",
+     "logical": "SIG_m2_N61.npz",
+     "m": 2,
+     "sha256": "31dbe854d573e129f75b8fd680b584d13bdcdf30b1bc86f958e3aba395811b16",
+     "stored_name": "SIG_18ebeac8962e0f10.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "9cb15125f36b01cd79546603cfeda3f84b814d04d9fe5cb02501e49060259aeb",
+     "family": "SIG",
+     "logical": "SIG_m3_N61.npz",
+     "m": 3,
+     "sha256": "d24f0d64f381fd7b95ee899135f9c9f8fb7b8b3be94f1941b42d2369f96221b4",
+     "stored_name": "SIG_89379ff5cb8da0ab.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "5f57096f3806e6c81ad35fb22f5f6a3644fb57892f95b12d1fc6fb9f042654c9",
+     "family": "SIG",
+     "logical": "SIG_61.npz",
+     "m": 1,
+     "sha256": "95336057430700873431771b091ac0c3dd86523e68fe30c66beafaad0eff98d9",
+     "stored_name": "SIG_c05577be3b0e6cc9.npz"
+    }
+   ],
+   "bytes": 6750828,
+   "file": "certoutage-banks-N61.tar.xz",
+   "sha256": "4b11eceb1d9b9898dc6f9a06251cedb0902977b1d7ad04ec956e8db2edd97e0f",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 62,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "a8e6f89b89b0f6ba24f87bbca1be253ad02f4c951eaa92cf2fceba053cc7582e",
+     "family": "CHERNOFF",
+     "logical": "C_N62.npz",
+     "m": 1,
+     "sha256": "6d53c25f6c33f13ea64bd89d09faca5943ee940b19fb6ec0241fd80b6cca6909",
+     "stored_name": "CHERNOFF_23dd6d217356718f.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "f328562608928a218738610c6d269dbbf4932b4bc7c0fbef094f9f78509be71e",
+     "family": "GAIN",
+     "logical": "m2_N62.npz",
+     "m": 2,
+     "sha256": "473b53a699ef0cab49158be491ec45d605911ca0796434f2dd452d8fdaf0eb7c",
+     "stored_name": "GAIN_49f8a98399162d7d.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "2888987df8214c185fc428315236c4492f0696e3f6c73c4f75f5ddda09d6e136",
+     "family": "GAIN",
+     "logical": "m1_N62.npz",
+     "m": 1,
+     "sha256": "db6d5e10ddd4b78e1af7ca5d72597865892731e7927a1e4cea257c9e527a8c47",
+     "stored_name": "GAIN_55e6599ca0d67235.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "81cda20c6741653c30d309165ab18d0bef9e6be56706e5db68cc5be5ef4dfb8e",
+     "family": "GAIN",
+     "logical": "m3_N62.npz",
+     "m": 3,
+     "sha256": "4e9b0dd6e0306b703052354eef54c99fdfd04dd2cba8e37c35044445e6d75ab9",
+     "stored_name": "GAIN_ee8be2550825da5a.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "bc257b276088469b54ccde4195947adec5626e5771949126624547aabaf0db44",
+     "family": "SIGC",
+     "logical": "SIG_C_62.npz",
+     "m": 1,
+     "sha256": "9ed0f3c0cde81100d58c527b8c3a299991ed32182d518a45fa73aeaa80d20375",
+     "stored_name": "SIGC_9d1d265795d3e479.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "813aa2d43d499c8180b5a8af397674d2040e1eb1ef2a443b69e29b3f2756af98",
+     "family": "SIG",
+     "logical": "SIG_62.npz",
+     "m": 1,
+     "sha256": "1a9b39f53f16165804d580c36b897c6a7061ecb6ef8a4dcf2d2600f459eda956",
+     "stored_name": "SIG_acf6ba15c7257a3f.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "47ecfac2c8a407f107af9d65014c5cb17eff48918b52ec66ea3eac1f43e3936b",
+     "family": "SIG",
+     "logical": "SIG_m3_N62.npz",
+     "m": 3,
+     "sha256": "88c1235befa5b74e7ecd1626d37a6ca8a21878c98fc89261aa2c885cd58dd586",
+     "stored_name": "SIG_d1a861e1239dc83c.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "11078b2f147b99747e1a7098a803fe18cf4a681c71fbf201458d51497f355416",
+     "family": "SIG",
+     "logical": "SIG_m2_N62.npz",
+     "m": 2,
+     "sha256": "b113d2d1dda5cbbd6ddbb9332d772509f24919dd8f70d9f4137510fb32e71b06",
+     "stored_name": "SIG_dc1e436066eab854.npz"
+    }
+   ],
+   "bytes": 6793944,
+   "file": "certoutage-banks-N62.tar.xz",
+   "sha256": "240e85c23f2ae52ffba3e90bd828789b9a04a7c4fb0ef6cbd85e22b925791e8c",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 63,
+   "banks": [
+    {
+     "bytes": 8389790,
+     "descriptor_bytes": 550,
+     "descriptor_sha256": "fefd588766a25639a6a16be59a4799e48d51ffa9ee64fe4078c796c4d7ba3b6b",
+     "family": "CHERNOFF",
+     "logical": "C_N63.npz",
+     "m": 1,
+     "sha256": "7ac96613be5cf46f9d52d276cd37358b732935a82e4541364f6c1437cd3d3e8a",
+     "stored_name": "CHERNOFF_075d3e7d1dd141c8.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "290ca9af6d55a0d59a2d8d7d787bc4c4d3067db7ffdc8755fcafb8a298a5f46f",
+     "family": "GAIN",
+     "logical": "m2_N63.npz",
+     "m": 2,
+     "sha256": "32bd8df02dcd462f6e5e035eb38fb98c33ba5d95cebe1a3c519fcf9d05403dd3",
+     "stored_name": "GAIN_34a2cfdab25bc86e.npz"
+    },
+    {
+     "bytes": 16778848,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "52325b856b0407d03d8a26ba4b89c5a954f3255fd2381fec5c3eae235729d47f",
+     "family": "GAIN",
+     "logical": "m3_N63.npz",
+     "m": 3,
+     "sha256": "eec3cfcc097500f14d5a64b12eba57e9ac119c6c10d26194f896da3f2566fe1a",
+     "stored_name": "GAIN_9b68c9f131edbcb9.npz"
+    },
+    {
+     "bytes": 16778626,
+     "descriptor_bytes": 534,
+     "descriptor_sha256": "62a5334f5ab7e825ece8620103ed042b9ae71d8d91c8f72c73437bdee28ff040",
+     "family": "GAIN",
+     "logical": "m1_N63.npz",
+     "m": 1,
+     "sha256": "df9030b9dc6116a79c7ba413b40d3600acb539276b4c73c7b6041ae8349e30df",
+     "stored_name": "GAIN_c459145d2faaad3f.npz"
+    },
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "6fc388499ca42277a0b127b7ccd67302e4f0c652ee73ea5172c112285e3509df",
+     "family": "SIGC",
+     "logical": "SIG_C_63.npz",
+     "m": 1,
+     "sha256": "b58020569ff4c28e9ff3f8c4741427fd0c253e4ce03fb8f50c0163add6327168",
+     "stored_name": "SIGC_4c24953575640201.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "87624fa2ba581e8278a0262c280412298baf8d290db32e1f537ec462b700b1db",
+     "family": "SIG",
+     "logical": "SIG_m2_N63.npz",
+     "m": 2,
+     "sha256": "672400ad6c0495bd077f3ccc315821a4435c331971f7689c1e132b02fb78fe2e",
+     "stored_name": "SIG_38c4ceba2c1df38b.npz"
+    },
+    {
+     "bytes": 41694,
+     "descriptor_bytes": 717,
+     "descriptor_sha256": "e799142850ffb4e842e6c5fee5c2668ed25bc2f1c2e3a79a899ab40ea3bb35bf",
+     "family": "SIG",
+     "logical": "SIG_m3_N63.npz",
+     "m": 3,
+     "sha256": "ed883306253114f0b8dbe8aab4531760d69d9846e5b566133ccbdb42be26bdf1",
+     "stored_name": "SIG_5b53e8d5c8a4deab.npz"
+    },
+    {
+     "bytes": 676563,
+     "descriptor_bytes": 705,
+     "descriptor_sha256": "8252d5ea60ce5c66ef3276b4228b5251fc571a601330ecfaa4050ac89fd409fb",
+     "family": "SIG",
+     "logical": "SIG_63.npz",
+     "m": 1,
+     "sha256": "3a0e0abc04ce48c608047e22b83cd38c6346dbe9bf17be4a5107d0b7b6e49323",
+     "stored_name": "SIG_a39250cf6859b08d.npz"
+    }
+   ],
+   "bytes": 6940752,
+   "file": "certoutage-banks-N63.tar.xz",
+   "sha256": "efac75555101fd6ebb6d2fd9fb9be1d96a57f47340811e184c389297473a08a6",
+   "uncompressed_tar_bytes": 59842560
+  },
+  {
+   "N": 64,
+   "banks": [
+    {
+     "bytes": 333291,
+     "descriptor_bytes": 722,
+     "descriptor_sha256": "dcbe7408e3449454128dd1f0eed28743faf5b2af383826f2fb1b5950697e899e",
+     "family": "SIGC",
+     "logical": "SIG_C_64.npz",
+     "m": 1,
+     "sha256": "e8c3a3b29df4df7ef14be3aec85e6ab88d9eda45e30a08231508ee1d53f7ec5e",
+     "stored_name": "SIGC_e1d316b41199287f.npz"
+    }
+   ],
+   "bytes": 44932,
+   "file": "certoutage-banks-N64.tar.xz",
+   "sha256": "cf53dda27e2cccb21d1beb56bc44bfa731125831bc0cdcba87cb80863c094378",
+   "uncompressed_tar_bytes": 337920
+  }
+ ],
+ "bits": 160,
+ "certoutage_version_in_descriptors": "0.3.0",
+ "code_sha256": "ac37fc23817e3a505eac30c8a564e5401df6bcf4043cb74fbcd8fe620c080b3d",
+ "embedded": [
+  {
+   "archive_doi": "10.5281/zenodo.24450534",
+   "archive_source": [
+    "campaigns/t23/banques/N8.npz"
+   ],
+   "bytes": 5786556,
+   "file": "m1_N8.npz",
+   "sha256": "ebd7797ceea15697d64f72f7e579b570c573583d56a23df46aca2124f9e458f8"
+  },
+  {
+   "archive_doi": "10.5281/zenodo.24450534",
+   "archive_source": [
+    "campaigns/t23/banques/N64.npz"
+   ],
+   "bytes": 9989125,
+   "file": "m1_N64.npz",
+   "sha256": "f429ae113598cc2133647ee2c6b198fc0e45b156fb1de9471b2c962db71fca0a"
+  },
+  {
+   "archive_doi": "10.5281/zenodo.24450534",
+   "archive_source": [
+    "campaigns/t20/banques/m2_N8.npz"
+   ],
+   "bytes": 2351700,
+   "file": "m2_N8.npz",
+   "sha256": "861cd99e9927d046da56a64bc01642f35d1431010dba57e6affae30458f7c95b"
+  },
+  {
+   "archive_doi": "10.5281/zenodo.24450534",
+   "archive_source": [
+    "campaigns/t20/banques/m3_N8.npz"
+   ],
+   "bytes": 2161989,
+   "file": "m3_N8.npz",
+   "sha256": "73a308f0c3a1b4a89cbb1f8825e301bdb696a5afc20173a6c133e60b805d4554"
+  },
+  {
+   "archive_doi": "10.5281/zenodo.24450534",
+   "archive_source": [
+    "campaigns/t20/banques/commun.npz"
+   ],
+   "bytes": 2042959,
+   "file": "commun.npz",
+   "sha256": "05b10e482682b688a4b8dc1f2c49ecef946ee636f8d4626b0263b29cafc4bd40"
+  }
+ ],
+ "generation_version": "1",
+ "license": "CC-BY-4.0",
+ "numpy_version": "2.5.3",
+ "produced_utc": [
+  "2026-11-28T07:23:56.999366Z",
+  "2026-11-28T09:09:26.768571Z"
+ ],
+ "python_flint_version": "0.9.0",
+ "schema": 1,
+ "source_commit": "98cc9d0023ce41b97524963ff88e6ec12ca0addc",
+ "thermal_ratio": "10",
+ "title": "certoutage bank set for N in [8, 64]"
+}

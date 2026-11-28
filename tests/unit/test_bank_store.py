@@ -569,7 +569,7 @@ def test_four_spawn_writers_leave_one_verified_pair():
 
 
 def test_fetched_origin_is_explicitly_reserved():
-    with pytest.raises(NotImplementedError, match="fetched banks are planned for version 0.4.0"):
+    with pytest.raises(_banks.BankNotAvailable, match="No pinned fetched bank: future.npz"):
         _banks._read_fetched("future.npz")
     assert not _banks.cache_dir().exists()
 

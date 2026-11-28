@@ -7,11 +7,12 @@ arrays differ from the ones it was asked to store. A generator whose code
 changes under the same name and version is not detected at read time; the
 optional code_sha256 is recorded in the descriptor, not checked.
 They do not defend against a local adversary rewriting both bank and descriptor.
-The reserved fetched origin will use digests pinned in code in version 0.4.0.
+Fetched copies of embedded banks use the same pinned manifest digests.
 Only an explicit call to the internal writer creates directories or files.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -31,6 +32,7 @@ import numpy as np
 MANIFEST_SHA256 = "0397d274f08924027840943648ca0816a4403832bace47a79642dee7cc7c5c18"
 ORIGINS = ("embedded", "generated", "fetched")
 _FORCED = ContextVar("certoutage_audit_forced_banks", default=frozenset())
+_WITHHELD = ContextVar("certoutage_audit_withheld_banks", default=frozenset())
 _GENERATED_NAME = re.compile(r"^[A-Z][A-Z0-9]{0,15}_[0-9a-f]{16}\.npz$")
 _FAMILY = re.compile(r"[A-Z][A-Z0-9]{0,15}")
 _SHA256 = re.compile(r"[0-9a-f]{64}")
@@ -176,14 +178,67 @@ def _is_embedded(name: str) -> bool:
     return name in manifest() and name not in _FORCED.get()
 
 
+def _package_available(name: str) -> bool:
+    if name in _WITHHELD.get():
+        return False
+    resource = files("certoutage").joinpath("data", name)
+    # Byte-only resource adapters cannot probe existence. Their actual read
+    # still goes through the digest check in _resolve, before deserialization.
+    probe = getattr(resource, "is_file", None)
+    return probe() if probe is not None else True
+
+
 def _read_fetched(name: str) -> bytes:
-    raise NotImplementedError("Verified fetched banks are planned for version 0.4.0: " + name)
+    if name not in manifest():
+        raise BankNotAvailable(f"No pinned fetched bank: {name}")
+    path = cache_dir() / "fetched" / name
+    try:
+        content = path.read_bytes()
+    except (FileNotFoundError, NotADirectoryError) as error:
+        match = re.search(r"_N(\d+)", name)
+        size = match.group(1) if match else "N"
+        raise BankNotAvailable(
+            f"Bank {name} is absent from the package and {path.parent}; "
+            f"call certoutage.fetch_banks({size})"
+        ) from error
+    except IsADirectoryError as error:
+        raise IntegrityError(f"Fetched bank is a directory: {path}") from error
+    reference = manifest()[name]
+    if sha256(content).hexdigest() != reference["sha256"] or len(content) != reference["bytes"]:
+        raise IntegrityError(f"SHA-256 or byte count mismatch: {path}")
+    return content
+
+
+@contextmanager
+def _withhold_embedded(*names: str):
+    """Private audit hook simulating absent package files, without changing routing.
+
+    Scoped to this context; calculation objects are cleared on entry and exit.
+    This is a release control, not a public bank-selection option.
+    """
+    from . import _runtime as rt
+    if any(name not in manifest() for name in names):
+        raise ValueError("Only manifest entries can be withheld")
+    with rt.arithmetic(160):
+        rt.clear()
+        token = _WITHHELD.set(frozenset(names))
+        try:
+            yield
+        finally:
+            _WITHHELD.reset(token)
+            rt.clear()
 
 
 def _resolve(name: str) -> tuple[bytes, str]:
     if _is_embedded(name):
-        content = files("certoutage").joinpath("data", name).read_bytes()
-        if sha256(content).hexdigest() != manifest()[name]["sha256"]:
+        if not _package_available(name):
+            return _read_fetched(name), "fetched"
+        try:
+            content = files("certoutage").joinpath("data", name).read_bytes()
+        except (FileNotFoundError, NotADirectoryError):
+            return _read_fetched(name), "fetched"
+        if (sha256(content).hexdigest() != manifest()[name]["sha256"]
+                or len(content) != manifest()[name]["bytes"]):
             raise IntegrityError(f"SHA-256 digest mismatch: {name}")
         return content, "embedded"
     if _GENERATED_NAME.fullmatch(name):
