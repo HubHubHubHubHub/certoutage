@@ -178,8 +178,8 @@ def test_generated_names_are_disjoint_from_all_embedded_names():
     assert not any(pattern.fullmatch(name) for name in names)
     assert pattern.fullmatch(_store())
     assert _banks.ORIGINS == ("embedded", "generated", "fetched")
-    assert not hasattr(certoutage, "BankNotAvailable")
-    assert "BankNotAvailable" not in certoutage.__all__
+    assert certoutage.BankNotAvailable is _banks.BankNotAvailable
+    assert "BankNotAvailable" in certoutage.__all__
 
 
 @pytest.mark.parametrize("damage", ["one-byte", "truncated"])
@@ -262,7 +262,7 @@ def test_absent_generated_bank_never_falls_back(monkeypatch, remaining):
     assert isinstance(error.value, LookupError)
     assert name in str(error.value)
     assert str(_banks.cache_dir() / "generated") in str(error.value)
-    assert "prepare it first (planned for version 0.4.0)" in str(error.value)
+    assert "call certoutage.prepare(model, gain=...) first" in str(error.value)
 
 
 def test_absence_and_descriptor_reads_are_not_cached():
@@ -632,17 +632,11 @@ def test_directory_in_place_of_bank_or_descriptor_is_an_integrity_error(which):
 
 
 def test_no_public_path_reaches_the_generated_store(monkeypatch):
-    package = Path(certoutage.__file__).parent
-    allowed = {"arrays", "manifest", "receipt", "verified_bytes"}
-    for module in ("__init__.py", "api.py", "_runtime.py", "_generate.py", "models.py"):
-        text = (package / module).read_text(encoding="utf-8")
-        assert set(re.findall(r"_banks\.(\w+)", text)) <= allowed, module
-        imported = re.findall(r"from (?:\.|certoutage\.)_banks import ([\w, ]+)", text)
-        assert {name.strip() for group in imported for name in group.split(",")} <= {"IntegrityError"}, module
-        for word in ("_store_generated", "_read_generated", "_resolve", "BankNotAvailable", "cache_dir"):
-            assert word not in text, (module, word)
-        if module != "models.py":
-            assert "generated-banks" not in text, module
+    # Embedded queries still never consult the generated store. The explicit
+    # preparation entry point now exposes that store for missing logical banks.
+    assert callable(certoutage.prepare)
+    assert "prepare" in certoutage.__all__
+    assert certoutage.BankNotAvailable is _banks.BankNotAvailable
 
     def forbidden(*args, **kwargs):
         pytest.fail("A public query reached the generated-bank store")

@@ -13,6 +13,8 @@ from flint import arb, arb_mat
 from .models import (Model, Numerics, SNRGrid, Scalar, Gain, Interference, Contract,
                      Enclosure, SNRDecision, ComparisonRow, ThresholdDifference, decimal)
 from . import _runtime as rt, _banks
+from ._generate_gain import generation_scope
+from ._prepare import _require_ready, _direct
 from ._vendor.commun import out
 from ._vendor.ppp import envelopes
 from ._transform import aliasing_exceeds_one, eta_value, informative
@@ -33,11 +35,7 @@ def _validate(model: Model, user: int, gain: Gain, interference: Interference,
         raise ValueError("gain must be 'exact', 'eq3' or 'chernoff'")
     if interference not in _KINDS:
         raise ValueError("interference must be 'PPP', 'Gamma', 'mean' or 'none'")
-    if gain == "chernoff":
-        no_ppp = Decimal(model.lam) == 0 or interference == "none" or model.g == "0"
-        supported = model.m == 1 and (model.N in (20, 24) or (no_ppp and model.N in (8, 64)))
-        if not supported:
-            raise ValueError("Chernoff is provided for Rayleigh N=20, 24, and for N=8, 64 without PPP")
+    generation_scope(gain, model.m, model.N)
 
 
 def _quantity(gain: Gain, interference: Interference) -> str:
@@ -92,8 +90,7 @@ def _evaluate(model: Model, user: int, db: Decimal | None, gain: Gain,
     if db is None and (model.convention == "C-INR" or no_ppp):
         return Enclosure(0.0, 0.0, replace(_contract(model, gain, interference, numerics, [],
                                                   analytic=True, notes=link_notes), parameters=parameters))
-    direct = no_ppp and ((model.m == 1 and model.N in (8, 64)) or
-                        (model.m in (2, 3) and model.N == 8))
+    direct = no_ppp and _direct(model)
     if direct:
         calc = rt.thermal(model.N, model.m, gain == "chernoff", numerics.precision_bits)
         if d == "80/3":
@@ -136,6 +133,7 @@ def outage_enclosure(model: Model, user: int, snr_db: Scalar, *, gain: Gain = "e
     db = decimal(snr_db, "snr_db")
     if not -1000 <= db <= 1000:
         raise ValueError("snr_db must lie in [-1000, 1000] dB; use floor for infinite SNR")
+    _require_ready(model, gain, interference)
     with rt.arithmetic(numerics.precision_bits):
         return _evaluate(model, user, db, gain, interference, numerics)
 
@@ -144,6 +142,7 @@ def floor(model: Model, user: int, *, gain: Gain = "exact",
           interference: Interference = "PPP", numerics: Numerics = DEFAULT_NUMERICS) -> Enclosure:
     """Certified floor at infinite SNR. C-INR: zero for a feasible link."""
     _validate(model, user, gain, interference, numerics)
+    _require_ready(model, gain, interference)
     with rt.arithmetic(numerics.precision_bits):
         return _evaluate(model, user, None, gain, interference, numerics)
 
@@ -222,6 +221,7 @@ def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DE
     In C-INR, returns the infinite-SNR limit: zero for a feasible link.
     """
     _validate(model, user, "exact", "PPP", numerics)
+    _require_ready(model, "exact", largest=True)
     d = model.d1 if user == 1 else model.d2
     assumptions = _assumptions(model)
     quantity = "largest-interferer bound: floor lower bound, not full PPP outage"

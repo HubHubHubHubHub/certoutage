@@ -485,10 +485,28 @@ def chernoff_signal_arrays(cbank, common, *, bits=160, kappa=Fraction(10)):
         cbank, common, range(5121), bits=bits, kappa=kappa)])
 
 
+GENERATION_VERSION = "1"
+
+
+def _signal_bank(gain, common, *, thermal_ratio="10", bits=160):
+    """Identity adapter; keep the certified signal generator unchanged."""
+    return signal_arrays(gain, common, bits=bits, kappa=Fraction(thermal_ratio))
+
+
+def _nakagami_signal_bank(gain, common, *, thermal_ratio="10", bits=160):
+    """Identity adapter for the integer Nakagami thermal bank."""
+    return nakagami_signal_arrays(gain, common, bits=bits, kappa=Fraction(thermal_ratio))
+
+
+def _chernoff_signal_bank(cbank, common, *, thermal_ratio="10", bits=160):
+    """Identity adapter for the propagated Chernoff bank."""
+    return chernoff_signal_arrays(cbank, common, bits=bits, kappa=Fraction(thermal_ratio))
+
+
 def generation_scope(gain, m, N):
     """Describe the complete bank dependency closure, or reject the case.
 
-    This is a generator contract, not an extension of Model or the public API.
+    This is the dependency contract used by explicit public preparation.
     ``banks`` is in dependency order. ``requires`` maps array arguments to
     logical bank names; commun.npz is the existing shared thermal input.
 
@@ -503,25 +521,25 @@ def generation_scope(gain, m, N):
         N = _integer(N, "N", 8, 64)
     except ValueError as error:
         raise ValueError("N must be an integer in [8, 64], without booleans; "
-                         "this is the announced generation domain for 0.4.0") from error
+                         "sizes outside the embedded set require certoutage.prepare(model)") from error
     if not isinstance(gain, str) or gain not in ("exact", "eq3", "chernoff"):
         raise ValueError("gain must be exact, eq3 or chernoff; gamma, gg and other names are not ported")
     if gain == "chernoff" and m != 1:
         raise ValueError("Chernoff generation is defined only for Rayleigh m=1, with integer N in [8, 64]")
     amplitude = f"m{m}_N{N}.npz"
     sig = f"SIG_{N}.npz" if m == 1 else f"SIG_m{m}_N{N}.npz"
-    signal_function = "signal_arrays" if m == 1 else "nakagami_signal_arrays"
-    banks = [dict(name=amplitude, function="certoutage._generate_gain.gain_arrays",
+    signal_function = "_signal_bank" if m == 1 else "_nakagami_signal_bank"
+    banks = [dict(name=amplitude, family="GAIN", function="certoutage._generate_gain.gain_arrays",
                   parameters=dict(N=N, m=m), requires={}),
-             dict(name=sig, function=f"certoutage._generate_gain.{signal_function}",
-                  parameters={}, requires=dict(gain=amplitude, common="commun.npz"))]
+             dict(name=sig, family="SIG", function=f"certoutage._generate_gain.{signal_function}",
+                  parameters=dict(thermal_ratio="10"), requires=dict(gain=amplitude, common="commun.npz"))]
     direct, interference = [amplitude], [sig]
     if gain == "chernoff":
         cbank, csig = f"C_N{N}.npz", f"SIG_C_{N}.npz"
-        banks += [dict(name=cbank, function="certoutage._chernoff.chernoff_arrays",
+        banks += [dict(name=cbank, family="CHERNOFF", function="certoutage._chernoff.chernoff_arrays",
                        parameters=dict(N=N), requires={}),
-                  dict(name=csig, function="certoutage._generate_gain.chernoff_signal_arrays",
-                       parameters={}, requires=dict(cbank=cbank, common="commun.npz"))]
+                  dict(name=csig, family="SIGC", function="certoutage._generate_gain._chernoff_signal_bank",
+                       parameters=dict(thermal_ratio="10"), requires=dict(cbank=cbank, common="commun.npz"))]
         direct.append(cbank)
         interference.append(csig)
     return dict(gain=gain, m=m, N=N, banks=banks, shared_inputs=["commun.npz"],

@@ -10,7 +10,7 @@ from certoutage import (Model, Numerics, SNRGrid, floor, outage_enclosure, requi
                         largest_interferer_bound, threshold_difference, clear_cache, IntegrityError)
 
 
-@pytest.mark.parametrize("kwargs", [dict(N=0), dict(N=21), dict(N=True), dict(m=1.5),
+@pytest.mark.parametrize("kwargs", [dict(N=0), dict(N=65), dict(N=True), dict(m=1.5),
     dict(eta=2), dict(lam=-1), dict(lam="nan"), dict(lam=True),
     dict(lam=11), dict(R0=2), dict(convention="TX")])
 def test_invalid_models(kwargs):

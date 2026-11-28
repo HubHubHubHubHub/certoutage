@@ -14,6 +14,7 @@ Gain = Literal["exact", "eq3", "chernoff"]
 Interference = Literal["PPP", "Gamma", "mean", "none"]
 Status = Literal["feasible", "excluded", "inconclusive"]
 SIZES = (8, 12, 16, 20, 24, 32, 48, 64)
+N_RANGE = (8, 64)
 
 
 def decimal(value: Scalar, name: str) -> Decimal:
@@ -86,8 +87,9 @@ class Model:
     g: Scalar | Fraction = 1
 
     def __post_init__(self) -> None:
-        if type(self.N) is not int or self.N not in SIZES:
-            raise ValueError(f"N must be one of the certified sizes {SIZES}")
+        if type(self.N) is not int or not N_RANGE[0] <= self.N <= N_RANGE[1]:
+            raise ValueError(f"N must be an exact integer in [8, 64], without booleans; "
+                             f"sizes outside {SIZES} require certoutage.prepare(model)")
         if type(self.m) is not int or self.m not in (1, 2, 3):
             raise ValueError("m must be 1 (Rayleigh), 2 or 3 (covered Nakagami)")
         eta = _bounded(decimal(self.eta, "eta"), "eta")

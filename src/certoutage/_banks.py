@@ -12,6 +12,7 @@ Only an explicit call to the internal writer creates directories or files.
 """
 from __future__ import annotations
 
+from contextvars import ContextVar
 from datetime import datetime, timezone
 from functools import lru_cache
 from hashlib import sha256
@@ -29,6 +30,7 @@ import numpy as np
 
 MANIFEST_SHA256 = "0397d274f08924027840943648ca0816a4403832bace47a79642dee7cc7c5c18"
 ORIGINS = ("embedded", "generated", "fetched")
+_FORCED = ContextVar("certoutage_audit_forced_banks", default=frozenset())
 _GENERATED_NAME = re.compile(r"^[A-Z][A-Z0-9]{0,15}_[0-9a-f]{16}\.npz$")
 _FAMILY = re.compile(r"[A-Z][A-Z0-9]{0,15}")
 _SHA256 = re.compile(r"[0-9a-f]{64}")
@@ -131,17 +133,20 @@ def _validate_descriptor(descriptor: dict, name: str) -> None:
         raise ValueError("Descriptor parameters or generator do not match the bank name")
 
 
-def _read_generated(name: str) -> bytes:
+def _generated_descriptor(name: str) -> dict:
+    """Read identity metadata only; input-bank arrays are never loaded here."""
     directory = cache_dir() / "generated"
     bank_path = directory / name
     descriptor_path = bank_path.with_suffix(".json")
     try:
         raw_descriptor = descriptor_path.read_bytes()
-        content = bank_path.read_bytes()
+        if bank_path.is_dir():
+            raise IsADirectoryError(21, "Bank is a directory", str(bank_path))
+        bank_path.stat()
     except (FileNotFoundError, NotADirectoryError) as error:
         raise BankNotAvailable(
             f"Bank {name} is not available in {directory}; "
-            "prepare it first (planned for version 0.4.0)"
+            "call certoutage.prepare(model, gain=...) first"
         ) from error
     except IsADirectoryError as error:
         raise IntegrityError(f"Bank or descriptor is a directory: {error.filename}") from error
@@ -150,6 +155,16 @@ def _read_generated(name: str) -> bytes:
         _validate_descriptor(descriptor, name)
     except (ValueError, TypeError, UnicodeError, RecursionError) as error:
         raise IntegrityError(f"Invalid bank descriptor: {descriptor_path}: {error}") from error
+    return descriptor
+
+
+def _read_generated(name: str) -> bytes:
+    descriptor = _generated_descriptor(name)
+    bank_path = cache_dir() / "generated" / name
+    try:
+        content = bank_path.read_bytes()
+    except (FileNotFoundError, NotADirectoryError) as error:
+        raise BankNotAvailable(f"Bank {name} disappeared; call certoutage.prepare(model, gain=...) first") from error
     if sha256(content).hexdigest() != descriptor["sha256"]:
         raise IntegrityError(f"SHA-256 digest mismatch: {bank_path}")
     if len(content) != descriptor["bytes"]:
@@ -157,19 +172,24 @@ def _read_generated(name: str) -> bytes:
     return content
 
 
+def _is_embedded(name: str) -> bool:
+    return name in manifest() and name not in _FORCED.get()
+
+
 def _read_fetched(name: str) -> bytes:
     raise NotImplementedError("Verified fetched banks are planned for version 0.4.0: " + name)
 
 
 def _resolve(name: str) -> tuple[bytes, str]:
-    if name in manifest():
+    if _is_embedded(name):
         content = files("certoutage").joinpath("data", name).read_bytes()
         if sha256(content).hexdigest() != manifest()[name]["sha256"]:
             raise IntegrityError(f"SHA-256 digest mismatch: {name}")
         return content, "embedded"
     if _GENERATED_NAME.fullmatch(name):
         return _read_generated(name), "generated"
-    raise ValueError(f"Bank not provided: {name}")
+    from ._prepare import _stored_name
+    return _read_generated(_stored_name(name)), "generated"
 
 
 def verified_bytes(name: str) -> bytes:
@@ -177,15 +197,103 @@ def verified_bytes(name: str) -> bytes:
 
 
 def arrays(name: str) -> dict[str, np.ndarray]:
-    with np.load(BytesIO(verified_bytes(name)), allow_pickle=False) as data:
-        result = {key: data[key] for key in data.files}
+    content = verified_bytes(name)
+    try:
+        with np.load(BytesIO(content), allow_pickle=False) as data:
+            result = {key: data[key] for key in data.files}
+        if not _is_embedded(name):
+            from ._prepare import _metadata
+            _validate_structure(result, _metadata(name))
+    except (ValueError, KeyError, TypeError, OSError, EOFError, zipfile.BadZipFile) as error:
+        from ._prepare import _LOGICAL
+        if not (_GENERATED_NAME.fullmatch(name) or
+                (_LOGICAL.fullmatch(name) and not _is_embedded(name))):
+            raise
+        raise IntegrityError(f"Invalid bank structure: {name}: {error}") from error
     for arr in result.values():
         arr.flags.writeable = False
     return result
 
 
+def _validate_structure(data: dict[str, np.ndarray], descriptor: dict) -> None:
+    """Validate production families, including identity scalars and grids.
+
+    The generic S09 store also accepts other families for internal controls;
+    they do not participate in public logical-name resolution.
+    """
+    family, p = descriptor["family"], descriptor["parameters"]
+    if family not in ("GAIN", "SIG", "CHERNOFF", "SIGC"):
+        return
+    from ._prepare import _spec
+    from ._generate_gain import gain_period
+    spec, N, m = _spec(p["logical"])
+    if (family != spec["family"] or type(p["N"]) is not int or p["N"] != N
+            or type(p["m"]) is not int or p["m"] != m
+            or type(p["bits"]) is not int or p["bits"] != 160):
+        raise ValueError("N, m, bits or family inconsistent with logical identity")
+    expected_parameters = {"logical", "N", "m", "bits"}
+    if family in ("GAIN", "CHERNOFF"):
+        expected_parameters.add("power")
+        if type(p["power"]) is not int or p["power"] != 19:
+            raise ValueError("Production gain power must be 19")
+    if family == "CHERNOFF":
+        expected_parameters.add("stride")
+        if type(p["stride"]) is not int or p["stride"] != 8:
+            raise ValueError("Production Chernoff stride must be 8")
+    if family in ("SIG", "SIGC"):
+        from fractions import Fraction
+        key = "gain_sha256" if family == "SIG" else "chernoff_sha256"
+        expected_parameters.update(("thermal_ratio", key, "common_sha256"))
+        ratio = p["thermal_ratio"]
+        if type(ratio) is not str or str(Fraction(ratio)) != ratio or Fraction(ratio) < 0:
+            raise ValueError("Noncanonical thermal ratio")
+        for name in (key, "common_sha256"):
+            if type(p[name]) is not str or not _SHA256.fullmatch(p[name]):
+                raise ValueError("Invalid input digest")
+    if p.keys() != expected_parameters:
+        raise ValueError("Unexpected identity parameters")
+    shapes = {}
+    scalars = {}
+    if family in ("GAIN", "CHERNOFF"):
+        scalars = dict(N=N, B=gain_period(N))
+        if family == "GAIN" and m != 1:
+            scalars["m"] = m
+        if family == "CHERNOFF":
+            scalars["stride"] = 8
+        methods = ("exact", "gauss") if family == "GAIN" else ("chernoff",)
+        shapes = {method + side: ((1 << 19) + 1,) for method in methods for side in ("_lo", "_hi")}
+    else:
+        methods = ("exact", "gauss") if family == "SIG" else ("chernoff",)
+        size = 1025 if m != 1 else 20481
+        shapes = {method: (2, size) for method in methods}
+        if m == 1:
+            shapes["levels"] = (5121 if family == "SIGC" else 20481,)
+        else:
+            shapes["units128"] = (1025,)
+    if data.keys() != shapes.keys() | scalars.keys():
+        raise ValueError("Unexpected array keys")
+    for key, value in scalars.items():
+        arr = data[key]
+        if arr.dtype != np.int64 or arr.shape != () or arr.item() != value:
+            raise ValueError(f"Inconsistent identity scalar {key}")
+    for key, shape in shapes.items():
+        arr = data[key]
+        dtype = np.int8 if key == "levels" else np.int64 if key == "units128" else np.float64
+        if arr.dtype != dtype or arr.shape != shape or not np.all(np.isfinite(arr)):
+            raise ValueError(f"Invalid dtype, shape or finite values for {key}")
+        if key == "levels" and not np.all((9 <= arr) & (arr <= 13)):
+            raise ValueError("Thermal levels must lie in [9, 13]")
+        if key == "units128" and not np.array_equal(arr, np.arange(-4096, 4097, 8, dtype=np.int64)):
+            raise ValueError("Invalid Nakagami signal grid")
+    for method in methods:
+        lo, hi = (data[method + "_lo"], data[method + "_hi"]) if scalars else data[method]
+        if not np.all((0 <= lo) & (lo <= hi) & (hi <= 1)):
+            raise ValueError(f"Invalid probability bounds for {method}")
+
+
 def receipt(*names: str) -> tuple[tuple[str, str], ...]:
-    return tuple((name, manifest()[name]["sha256"]) for name in names)
+    from ._prepare import _metadata
+    return tuple((meta["name"], meta["sha256"]) for meta in map(_metadata, names))
 
 
 def _serialize_arrays(arrays: dict[str, np.ndarray]) -> bytes:
