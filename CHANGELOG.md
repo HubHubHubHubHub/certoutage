@@ -2,19 +2,27 @@
 
 ## Unreleased
 
+- Accept every exact integer N in [8, 64]; expose offline `prepare`, immutable
+  `PreparedBank` results and `BankNotAvailable` with explicit preparation hints.
+- Verify generated-bank structure, identity, SHA-256 and size on loading;
+  reuse supplied banks first and keep numerical routing independent of cache.
+- Include fixed thermal ratio 10 and input digests in thermal-bank identities;
+  record generated provenance in contracts and retain schema 1.
+- Add `examples/new_size.py` with a no-write plan and one-core cost estimates.
+
 - Pure integer Nakagami m=2,3 gain and thermal generators, preserving the
   historical operation order; independent transform and variation checks.
 - Rayleigh Chernoff generation without SciPy, with Arb-certified root signs,
   explicit signal parts and directed envelopes; byte and overlap comparators.
 - Complete internal generation scope for integer N=8..64 and explicit refusals,
-  including the exact signal dependency for J_max. The public API is unchanged.
+  including the exact signal dependency for J_max; now connected to explicit preparation.
 
 - Correct thermal cell minima for exact internal shifts kappa: closed cells
   containing -kappa have minimum zero, with outward rational endpoint bounds.
   Default kappa=10 preserves historical bytes; public model parameters stay unchanged.
 
 - Pure internal Rayleigh gain and signal generators, explicit signal parts and
-  merge, local generation and archive comparison tools. No public API extension.
+  merge, local generation and archive comparison tools, now used by explicit preparation.
 - Independent transform integrals, embedded-bank overlap and signal byte checks;
   explicit Fourier remainder guards and restored arithmetic context.
 

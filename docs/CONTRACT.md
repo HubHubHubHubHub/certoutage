@@ -17,7 +17,7 @@ This normalization, the monotonicity in d and g, the exact case g=0 and the
 scaling identities have provisional proofs in [PROOFS.md](PROOFS.md#1-link-coefficients-and-interference-gain), § 1.
 
 The inversion of the gain transform, the remainders and the thermal
-rectangles come from the archive. The useful-gain banks are provided at
+rectangles come from the archive. The useful-gain banks are provided or explicitly generated at
 160 bits. The rectangles cover [-12, 12], with -10 and 0 on cell boundaries;
 the omitted mass is bounded above by 2φ(12)/12. The zero of the thermal
 factor is neither removed nor treated as a positive point probability.
@@ -38,7 +38,8 @@ conservative, binary64 additions and products are widened with `nextafter`,
 and masses and dot products stay in Arb. No linear interpolation and no
 renormalization of tails is used.
 
-The thermal parameters remain fixed; d1, d2 and g are free, with the Letter's
+The thermal ratio μ/σ remains fixed at 10 in Model and is part of the
+identity of generated thermal banks (canonical parameter `thermal_ratio="10"`); d1, d2 and g are free, with the Letter's
 defaults. [`Model.from_link`](API.md#model-and-calculation) computes the link
 coefficients exactly. An infeasible allocation gives outage 1 at every SNR,
 including its limit; g=0 removes interference and gives a zero floor for a
@@ -157,15 +158,21 @@ precision was requested: no new integration is performed in this branch.
 
 The Chernoff comparator is C_N(a)=inf_{s≥0} exp(sa)L(s)^N. The banks
 enclose the propagated comparator within the same integrations. The root of
-the optimization was certified by signs; the removable singularity near
+the optimization starts from a noncertifying binary64 initial guess; its
+bracket is certified by Arb signs. Bank bytes can therefore depend on the
+machine, while the certified intervals must overlap. The removable singularity near
 s=2 uses a series with an established remainder. The lower endpoints of the
 comparator are not lower endpoints of the outage. The API guarantees that
 they never produce `excluded` for the physical model.
 
 The recurrence of the Nakagami transform in the archive uses the integer
 index 2m-1 and an explicit variation bound. It is not a certified routine
-for arbitrary real m. For m=2, 3 the banks and their bounds are reused;
-generation and stability for other m are not claimed.
+for arbitrary real m. For m=2, 3 the banks and their bounds are reused or explicitly generated
+for every integer N in [8, 64]. Generation and stability for other m are
+not claimed. Model construction does no I/O. A missing useful-gain bank
+raises BankNotAvailable before any costly query calculation; only an
+explicit prepare call generates it. The direct/SIG/J_max route depends
+on model and query parameters, never on cache contents.
 
 ## What is a proof and what is not
 

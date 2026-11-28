@@ -14,7 +14,7 @@ from .models import (Model, Numerics, SNRGrid, Scalar, Gain, Interference, Contr
                      Enclosure, SNRDecision, ComparisonRow, ThresholdDifference, decimal)
 from . import _runtime as rt, _banks
 from ._generate_gain import generation_scope
-from ._prepare import _require_ready, _direct
+from ._prepare import _require_ready, _direct, _generated_provenance
 from ._vendor.commun import out
 from ._vendor.ppp import envelopes
 from ._transform import aliasing_exceeds_one, eta_value, informative
@@ -70,7 +70,10 @@ def _contract(model: Model, gain: Gain, interference: Interference, numerics: Nu
             notes += ("tau*a0 >= 1 (mean interference 2*pi*lam/(eta-2) >= 64 + log(expm1(20)), "
                       "about 84, too large for B=128): every inner node of the interference "
                       "CDF carries an error of at least 1; expect a trivial enclosure",)
+    local_banks, bank_notes = _generated_provenance(names)
+    notes += bank_notes
     return Contract(_quantity(gain, interference),
+                    "generated-banks" if local_banks else
                     "analytic" if analytic else "mixed" if generated else "provided-banks",
                     numerics.precision_bits, _banks.receipt(*names),
                     assumptions=_assumptions(model), notes=notes)
@@ -266,10 +269,11 @@ def largest_interferer_bound(model: Model, user: int, *, numerics: Numerics = DE
         wl, wh, missing = envelopes(cdf[0], cdf[1], grid, grid)
         lo = (arb_mat([wl]) * arb_mat(len(gl), 1, gl))[0, 0]
         hi = (arb_mat([wh]) * arb_mat(len(gh), 1, gh))[0, 0] + missing
+        local_banks, bank_notes = _generated_provenance(signal.names)
         return Enclosure(max(0.0, float(out(lo)[0])), min(1.0, float(out(hi)[1])),
-                         Contract(quantity, "mixed", numerics.precision_bits,
+                         Contract(quantity, "generated-banks" if local_banks else "mixed", numerics.precision_bits,
                                   _banks.receipt(*signal.names), assumptions=assumptions,
-                                  notes=("J_max distribution calculated on demand",), parameters=parameters))
+                                  notes=("J_max distribution calculated on demand",) + bank_notes, parameters=parameters))
 
 
 def compare_approximations(model: Model, user: int, target: Scalar, *,

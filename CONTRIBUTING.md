@@ -61,7 +61,7 @@ it must never do either without saying so. In practice:
 
 - **Certifying files** are `src/certoutage/api.py`, `models.py`,
   `_runtime.py`, `_generate.py`, `_generate_gain.py`, `_nakagami.py`, `_chernoff.py`,
-  `_banks.py` and `_vendor/`. `models.py`
+  `_banks.py`, `_prepare.py` and `_vendor/`. `models.py`
   holds the validation of the inputs, the check that every result is a
   valid probability interval, and the outward display. A change to the
   logic of any of them is declared in
@@ -87,10 +87,35 @@ it must never do either without saying so. In practice:
   failed integrity check raises `IntegrityError`; it never becomes a result.
   Guards must hold under `python -O`: use explicit checks that raise, not
   `assert`.
-- **Data.** A new or regenerated bank is listed in `data/MANIFEST.json` with
+- **Data.** A new bundled bank is listed in `data/MANIFEST.json` with
   its SHA-256 digest, and its license is stated in [LICENSES.md](LICENSES.md).
   The reference digest of the manifest is pinned in `_banks.py`. Queries
   never write banks and never access the network.
+
+## Generated-bank compatibility
+
+`_prepare.py` owns explicit preparation, dependency plans, canonical identity,
+one-core cost estimates and the private forced-reproduction audit hook.
+`_banks.py` verifies schema-1 descriptors, file digests, sizes and production
+array structure; public queries never invoke its writer implicitly.
+Local generated banks have descriptors in `<cache>/generated/`, and never
+change the bundled manifest.
+
+`GENERATION_VERSION` in `_generate_gain.py` is part of every generated name.
+`test_certifying_source_digest_is_pinned` pins `_prepare._code_sha256()`:
+SHA-256 of each filename in `_SOURCE_FILES` (UTF-8), NUL, its exact source
+bytes, then NUL, in the declared order. Any change to these sources requires
+both updating the pin and an explicit decision about GENERATION_VERSION.
+Increment it if stored arrays or their interpretation can change; document
+why it can stay unchanged otherwise. The initial integration uses version
+"1": added identity adapters and scope metadata leave every certifying
+kernel unchanged. The descriptor records this digest, but reads deliberately
+check name/version, not the current source digest.
+
+The default preparation tests replace full generators with structurally
+valid trivial bounds. Real forced generation is opt-in:
+`CERTOUTAGE_SLOW_TESTS=1 python -m pytest tests/unit/test_prepare.py`.
+Set `CERTOUTAGE_CACHE_DIR` for an isolated store when running examples.
 
 ## Dependency policy
 

@@ -268,6 +268,7 @@ def test_routing_is_independent_of_cached_gain(fast_generators, monkeypatch):
 def test_embedded_direct_answers_ignore_generated_store(fast_generators):
     model = co.Model(N=8, lam=0)
     before = co.outage_enclosure(model, 1, 20)
+    assert (before.lower.hex(), before.upper.hex()) == ("0x1.0a75f368179c6p-32", "0x1.0c3f5223f1d80p-32")
     co.prepare(co.Model(N=21, m=2))
     co.clear_cache()
     after = co.outage_enclosure(model, 1, 20)
@@ -321,3 +322,88 @@ def test_forced_generation_reproduces_embedded_bank_and_answers():
             assert expected[key].tobytes() == actual[key].tobytes()
         after = [co.outage_enclosure(model, user, db) for user in (1, 2) for db in (-10, 0, 10, 20, 30)]
     assert [(r.lower.hex(), r.upper.hex()) for r in before] == [(r.lower.hex(), r.upper.hex()) for r in after]
+
+
+@pytest.mark.parametrize("m,gain", [(1, "exact"), (2, "eq3"), (1, "chernoff")])
+def test_generated_contract_provenance(fast_generators, monkeypatch, m, gain):
+    rows = co.prepare(co.Model(N=21, m=m), gain=gain)
+    # A generated PPP environment must not hide useful-gain provenance.
+    monkeypatch.setattr(rt, "environment_arrays", lambda *args: _banks.arrays("PPP_l0p1_e4.npz"))
+    model = co.Model(N=21, m=m, lam="0.123")
+    point = co.outage_enclosure(model, 1, 0, gain=gain)
+    bound = co.largest_interferer_bound(model, 1)
+    for result in (point, bound):
+        assert result.contract.source == "generated-banks"
+        local = [row for row in rows if row.stored_name in dict(result.contract.banks)]
+        assert local and all((row.stored_name, row.sha256) in result.contract.banks for row in local)
+        for row in local:
+            meta = prep._metadata(row.logical)
+            note = next(n for n in result.contract.notes if row.logical in n)
+            assert f"N=21, m={m}, thermal ratio 10, 160 bits, GENERATION_VERSION=1" in note
+            assert all(meta[k] in note for k in ("certoutage_version", "python_flint_version", "numpy_version"))
+        assert "thermal_ratio" not in dict(result.contract.parameters)
+    if gain == "chernoff":
+        assert any("machine" in n and "noncertifying" in n for n in point.contract.notes)
+
+
+def test_new_size_example_with_fast_generators(fast_generators, monkeypatch, capsys):
+    import runpy
+    import sys
+    monkeypatch.setattr(rt, "environment_arrays", lambda *args: _banks.arrays("PPP_l0p1_e4.npz"))
+    monkeypatch.setattr(sys, "argv", ["new_size.py", "--json"])
+    runpy.run_path(str(Path(__file__).resolve().parents[2] / "examples/new_size.py"), run_name="__main__")
+    result = json.loads(capsys.readouterr().out)
+    assert not result["plan_only"] and result["target"] == "0.002"
+    assert [r["origin"] for r in result["prepared"]] == ["generated", "generated"]
+    assert len(result["cases"]) == 2
+    for case in result["cases"]:
+        assert case["model"]["N"] == 21 and case["model"]["m"] == 2
+        assert case["decision"]["evaluation_contract"]["source"] == "generated-banks"
+        if case["model"]["convention"] == "C-TX":
+            assert case["floor"]["contract"]["source"] == "generated-banks"
+            assert case["largest_interferer"]["contract"]["source"] == "generated-banks"
+
+
+def test_identity_reads_only_input_metadata(fast_generators, monkeypatch):
+    co.prepare(co.Model(N=21, m=2))
+    expected = prep._stored_name("SIG_m2_N21.npz")
+    read = Path.read_bytes
+    def metadata_only(path):
+        if path.suffix == ".npz":
+            raise AssertionError("Identity read an input bank instead of its descriptor")
+        return read(path)
+    monkeypatch.setattr(Path, "read_bytes", metadata_only)
+    monkeypatch.setattr(_banks, "arrays", forbidden)
+    assert prep._stored_name("SIG_m2_N21.npz") == expected
+
+
+@pytest.mark.parametrize("logical,change", [
+    ("SIG_21.npz", lambda d: d.update(levels=np.zeros(20481, dtype=np.int8))),
+    ("SIG_C_21.npz", lambda d: d.update(levels=np.ones(20481, dtype=np.int8))),
+    ("SIG_C_21.npz", lambda d: d.update(chernoff=d["chernoff"][:, ::2])),
+    ("C_N21.npz", lambda d: d.update(stride=np.array(4, dtype=np.int64))),
+])
+def test_all_generated_families_check_structure(fast_generators, logical, change):
+    rows = co.prepare(co.Model(N=21), gain="chernoff")
+    row = next(r for r in rows if r.logical == logical)
+    _rewrite(row, change)
+    with pytest.raises(co.IntegrityError, match="structure"):
+        _banks.arrays(logical)
+
+
+def test_cached_prepare_checks_integrity_without_recomputation(fast_generators, monkeypatch):
+    model = co.Model(N=21, m=2)
+    row = co.prepare(model)[-1]
+    (_banks.cache_dir() / "generated" / row.stored_name).write_bytes(b"truncated")
+    monkeypatch.setattr(gen, "nakagami_signal_arrays", forbidden)
+    with pytest.raises(co.IntegrityError, match="SHA-256"):
+        co.prepare(model)
+
+
+def test_malformed_thermal_identity_is_an_integrity_error(fast_generators):
+    row = co.prepare(co.Model(N=21, m=2))[-1]
+    meta = prep._metadata(row.logical)
+    parameters = dict(meta["parameters"], thermal_ratio="1/0")
+    name = _banks._store_generated(meta["family"], parameters, meta["generator"], _banks.arrays(row.logical))
+    with pytest.raises(co.IntegrityError, match="structure"):
+        _banks.arrays(name)

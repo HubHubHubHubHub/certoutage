@@ -45,3 +45,17 @@ def test_free_parameter_example(capsys, monkeypatch):
     # certified brackets must be compatible with this difference.
     a, b = rows["C-INR", 1]["threshold_db"], rows["C-INR", 2]["threshold_db"]
     assert b[0] - a[1] <= 10 * math.log10(5) <= b[1] - a[0]
+
+
+def test_new_size_plan(capsys, monkeypatch):
+    from certoutage import _banks, _generate_gain
+    monkeypatch.setattr(_generate_gain, "gain_arrays", _refuse_network)
+    monkeypatch.setattr(sys, "argv", ["new_size.py", "--plan", "--json"])
+    runpy.run_path(str(ROOT / "examples" / "new_size.py"), run_name="__main__")
+    result = json.loads(capsys.readouterr().out)
+    assert result["plan_only"] and result["prepared"] == []
+    assert result["estimated_seconds"] == [75, 75]
+    assert [r["logical"] for r in result["plan"]] == ["m2_N21.npz", "SIG_m2_N21.npz"]
+    assert all(r["origin"] == "missing" for r in result["plan"])
+    assert "one CPU core" in result["expected_cost"]
+    assert not _banks.cache_dir().exists()

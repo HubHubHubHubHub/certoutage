@@ -135,7 +135,7 @@ was 0.43 to 0.45 GiB per task. Timings depend on the machine and its load.
 ## Ported Nakagami and Chernoff generators
 
 These pure internal entries require only NumPy and python-flint. The public
-API still admits its existing model sizes and Chernoff cases. From the
+API admits all exact integer sizes N in [8, 64], and Chernoff for m=1. From the
 package root, use a new or empty output directory:
 
 ```sh
@@ -177,7 +177,7 @@ Twenty-point thermal samples including setup averaged 0.082 s (m=2,N=8),
 costs include table conversion; they are not full-bank timing estimates.
 Process peak RSS was 554 MiB. Times depend on machine load.
 
-### Generation scope (unreleased; not yet reachable from the API)
+### Generation scope (reachable through prepare)
 
 The descriptor names the complete dependency closure for the current
 adapters, with the existing `commun.npz` as a shared input:
@@ -197,9 +197,39 @@ The extra Rayleigh banks above make the current adapters and J_max path
 complete: direct thermal loading also reads m1_N, interference loading
 also reads SIG, and J_max uses exact SIG. Every named generator is available.
 The existing central J_max certificates are optional stored results; its
-on-demand distribution has no further N/m-dependent input. A future API
-integration must connect this closure to model validation, bank lookup and
-preparation; this change does not do so.
+on-demand distribution has no further N/m-dependent input. Public
+`prepare(model, gain=...)` now traverses this closure, skipping every
+embedded or verified cached target and generating only missing inputs.
+The internal scope records each family and thermal_ratio="10" for thermal
+banks. Small identity adapters pass that value as an exact Fraction to the
+unchanged numerical functions named in the table.
+
+Estimated seconds on one CPU core, based on measured Linux runs:
+
+| Missing bank | Estimate (seconds) |
+|---|---|
+| Rayleigh gain | 24 |
+| Nakagami m=2,3 gain | 25 |
+| Rayleigh SIG, 20481 points | 370–950 |
+| Nakagami SIG, 1025 points | 50 |
+| Chernoff C_N | 3–11 |
+| Chernoff SIG_C, 5121 raw points | 130–260 |
+
+Local machines can take 1.3–1.7 times longer; these are estimates, not time
+limits. Small N is not a shortcut for the Rayleigh thermal calculation.
+`prepare(..., dry_run=True)` sums the missing entries only. The exact
+thermal ratio and input-file SHA-256 digests are included in generated
+names. Chernoff bytes can depend on the machine's noncertifying binary64
+initial guess; compare nodewise overlap, not file identity across machines.
+
+The private `_prepare._force_generation(*logical_names)` context manager is
+an audit hook for forced reproduction at embedded sizes. It bypasses only
+the named embedded entries, clears runtime objects on entry and exit, and
+never changes numerical routing. It is not a public preparation option.
+The opt-in `CERTOUTAGE_SLOW_TESTS=1` test regenerates m=3,N=8 and checks
+array bytes and ten API answers. A separate one-core cluster control forces
+N=12,m=1,2,3 and compares 56 queries per case; Chernoff N=20 uses nodewise
+and query overlap checks.
 
 
 ### Full eight-size replay
@@ -246,3 +276,41 @@ for the numerical tasks. Subsequent checks changed only Nakagami array
 storage order and compared existing outputs; no data shipped in the package
 was replaced. Raw gain containers remain uncompressed as in the archive;
 small transport copies may be compressed without altering array bytes.
+
+
+### Explicit preparation replay
+
+A further one-core Linux replay (Python 3.12.3, python-flint 0.9.0,
+NumPy 2.5.3) exercised the public preparation mechanism with empty caches.
+Forced N=12 generation for m=1,2,3 reproduced every signal-array byte and
+all 56 API queries per case, including outage, floor, required SNR and J_max,
+both conventions, both users and cases with and without PPP. Contracts agreed
+apart from source, receipt and provenance notes. Forced Chernoff at N=20
+overlapped all 20481 signal nodes, with maximum relative endpoint difference
+2.82e-16; all 28 tested query results also had identical float.hex values.
+These checks were repeated locally on the transported signal banks and
+saved query results. Large gain containers remained on the compute system.
+
+| N | m | gain | gain / SIG / C_N / SIG_C seconds | Total prepare seconds | Peak RSS (MiB) |
+|---|---|---|---|---|---|
+| 9 | 1 | exact | 23.34 / 863.38 | 886.72 | 459.8 |
+| 21 | 1 | chernoff | 24.22 / 370.21 / 5.06 / 144.62 | 544.11 | 455.2 |
+| 63 | 1 | exact | 24.31 / 398.50 | 422.81 | 459.8 |
+| 9 | 2 | exact | 24.49 / 45.78 | 70.28 | 453.7 |
+| 21 | 3 | exact | 25.23 / 53.46 | 78.69 | 457.8 |
+| 21 | 2 | exact | 25.00 / 52.80 | 77.80 | 460.1 |
+
+For exact gain, the two durations are gain and SIG; Chernoff adds C_N and
+SIG_C. The last case ran `examples/new_size.py --json` from an empty bank
+cache; its complete example took 87.41 seconds, including queries and
+on-demand environments. Repeated prepare calls took 0.004–0.010 seconds and
+generated nothing. Missing-bank refusals took 1.4–2.0 milliseconds before
+preparation. Cold first queries took 0.028–0.242 seconds and subsequent
+queries 0.007–0.008 seconds. Times are observations, not guarantees.
+
+The deterministic store uses uncompressed NPZ files: Rayleigh gain
+16,778,626 bytes, Nakagami gain 16,778,848 bytes, Chernoff C_N 8,389,790 bytes;
+Rayleigh SIG 676,563 bytes, Nakagami SIG 41,694 bytes and SIG_C 333,291 bytes.
+The JSON descriptors are additional small files. The separate opt-in local
+m=3,N=8 reproduction took 35.35 seconds (Python 3.11.2, NumPy 2.4.6,
+python-flint 0.9.0), including array comparison and ten query comparisons.

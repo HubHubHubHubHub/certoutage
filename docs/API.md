@@ -64,7 +64,7 @@ wide intervals and `inconclusive` decisions after rescaling.
 
 `Numerics(precision_bits=160, ppp_dft_power=18, bank_policy="auto")` controls
 the calculations of a query. `bank_policy="fresh"` regenerates the PPP or
-Gamma distribution; the signal bank is still the provided one. From 160 to
+Gamma distribution; the signal bank is still the provided or prepared one. From 160 to
 1024 bits and M from 2^12 to 2^20 are accepted. An insufficient grid widens
 the intervals. Larger choices use more memory and time.
 
@@ -178,12 +178,51 @@ software changing `flint.ctx` in parallel does not take part in this lock:
 use separate processes in that situation. No cluster parallelism is required
 or started.
 
-## Bank store (internal; used from 0.4.0)
+## Explicit preparation
 
-The internal store distinguishes `embedded`, `generated` and the reserved
-`fetched` origin. No current public query uses the generated-bank store or
-its writer. `Contract.source` reserves `generated-banks`: not produced by any
-query in this version; planned for 0.4.0. The `fetched` reader raises
+`Model(N=...)` accepts every exact Python integer in [8, 64]; bools,
+floats and numeric strings are refused. The eight embedded sizes remain
+8, 12, 16, 20, 24, 32, 48 and 64. Construction performs no I/O.
+Chernoff is available for Rayleigh m=1 throughout [8, 64], with or without
+interference; it is refused for m=2,3 with the generation-scope error.
+
+`prepare(model, *, gain="exact", dry_run=False) -> tuple[PreparedBank, ...]`
+is the explicit offline preparation step. Exact and Eq. (3) share banks.
+It prepares the read set for all queries of the model and gain, plus missing
+inputs in dependency order. Embedded inputs take priority and verified cache
+entries are reused. It never prepares a PPP/Gamma environment; these remain
+on demand. All bank calculation uses 160 bits and one thread, restoring the
+caller's arithmetic context even on failure. Only `<cache>/generated/` is
+written. The fixed thermal ratio is passed as the exact Fraction(10).
+
+`PreparedBank` is frozen, with `logical`, `stored_name`, `origin`, `sha256`,
+`bytes`, `seconds` and `estimated_seconds`. Origins are `embedded`, `cached`
+and `generated`; a dry-run plan uses `missing` for absent banks. Its digest
+and size are then None, and its stored name is None until all input digests
+are known. `seconds` measures the operation; `estimated_seconds` is a pair
+of estimated minimum/maximum seconds on one CPU core for a missing bank.
+The plan uses metadata only, does no calculation or writing, and is suitable
+for `dataclasses.asdict`. See [cost estimates](REGENERATION.md#generation-scope-reachable-through-prepare).
+
+A query missing a required bank raises public `BankNotAvailable(LookupError)`
+before any thermal or PPP calculation, naming the missing logical banks,
+the exact prepare call and an estimated cost. Present corrupt banks raise
+`IntegrityError`; preparation never silently repairs them. Analytic results
+retain their analytic contracts, but the query's route is checked for bank
+readiness first. A generated read bank sets `Contract.source` to
+`generated-banks`, even when the environment is also calculated locally.
+The receipt contains its stored name and SHA-256. Notes record logical name,
+N, m, thermal ratio 10, 160 bits, generation version and descriptor versions
+of certoutage, python-flint and NumPy. Chernoff notes also explain its
+machine-dependent initial-guess bytes. No thermal field is added to Model
+or Contract.parameters.
+
+## Bank store
+
+The store distinguishes `embedded`, `generated` and the reserved
+`fetched` origin. Public queries resolve embedded logical names first,
+then prepared local banks. Only explicit preparation invokes the writer.
+The `fetched` reader raises
 `NotImplementedError`; its future digests will be pinned in code.
 
 The cache location is resolved on every call: nonempty `CERTOUTAGE_CACHE_DIR`,
@@ -200,8 +239,16 @@ A generated name hashes the canonical JSON of its family, exact flat
 parameters and generator name/version. Parameters accept strings, integers
 and booleans; encode reals as exact decimal or `float.hex` strings. Its JSON
 descriptor is checked for schema, identity, byte count and SHA-256 before
-loading immutable arrays without pickle. Invalid data raises `IntegrityError`;
-a missing bank or descriptor raises internal `BankNotAvailable(LookupError)`
+loading immutable arrays without pickle. Production families additionally
+check exact array keys, dtypes, shapes, finite probability bounds, grids and
+identity scalars N, m and B where stored. The schema remains 1. Thermal
+identities include the canonical rational `thermal_ratio="10"`, the common
+bank digest and the exact gain or Chernoff input digest. Input digests are
+read from the embedded manifest or the generated input's JSON descriptor,
+without loading its arrays. Removing an input makes its thermal bank unready.
+The recorded source digest is metadata, not checked at read time; generator
+name and version are part of the hashed identity. Invalid data raises `IntegrityError`;
+a missing bank or descriptor raises public `BankNotAvailable(LookupError)`
 with the name and cache directory, never a fallback. Absences are not cached.
 
 Only `_store_generated` writes, using deterministic NPZ entries and temporary

@@ -229,6 +229,24 @@ def prepare(model: Model, *, gain: Gain = "exact", dry_run: bool = False) -> tup
     return tuple(result)
 
 
+def _generated_provenance(names: list[str]) -> tuple[bool, tuple[str, ...]]:
+    notes = []
+    for name in dict.fromkeys(names):
+        meta = _metadata(name)
+        if meta["origin"] == "embedded":
+            continue
+        p = meta["parameters"]
+        notes.append(
+            f"Generated bank {p['logical']}: N={p['N']}, m={p['m']}, thermal ratio 10, "
+            f"{p['bits']} bits, GENERATION_VERSION={meta['generator']['version']}; "
+            f"certoutage {meta['certoutage_version']}, python-flint {meta['python_flint_version']}, "
+            f"numpy {meta['numpy_version']}")
+        if meta["family"] in ("CHERNOFF", "SIGC"):
+            notes.append("Generated Chernoff bank bytes can depend on the machine through the "
+                         "noncertifying binary64 initial guess; Arb signs certify the bracket")
+    return bool(notes), tuple(notes)
+
+
 @contextmanager
 def _force_generation(*logical_names: str):
     """Private audit hook: ignore embedded entries only for the named banks.

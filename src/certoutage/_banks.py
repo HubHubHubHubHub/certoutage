@@ -204,7 +204,8 @@ def arrays(name: str) -> dict[str, np.ndarray]:
         if not _is_embedded(name):
             from ._prepare import _metadata
             _validate_structure(result, _metadata(name))
-    except (ValueError, KeyError, TypeError, OSError, EOFError, zipfile.BadZipFile) as error:
+    except (ValueError, KeyError, TypeError, ZeroDivisionError, OverflowError,
+            OSError, EOFError, zipfile.BadZipFile) as error:
         from ._prepare import _LOGICAL
         if not (_GENERATED_NAME.fullmatch(name) or
                 (_LOGICAL.fullmatch(name) and not _is_embedded(name))):

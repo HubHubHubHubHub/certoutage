@@ -37,8 +37,9 @@ To contribute, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 The only runtime dependencies are **python-flint 0.9.0 and NumPy**. Normal
 execution makes no network requests, does not access the original archive,
-and does not write numerical banks. All banks are bundled in both the wheel
-and source distribution. Calculation caches live in memory; `clear_cache()`
+and queries do not write numerical banks. The supplied banks are bundled
+in both the wheel and source distribution; explicit `prepare` writes missing
+banks to the local cache. Calculation caches live in memory; `clear_cache()`
 releases them. SciPy is optional for historical regeneration tools, through
 `.[regenerate]`.
 
@@ -94,7 +95,8 @@ bank. Use a string to specify the intended decimal exactly.
 
 The supported model is deliberately limited:
 
-- Exactly **eight sizes N: 8, 12, 16, 20, 24, 32, 48, 64**. Useful fading is
+- Every **integer N in [8, 64]**, using explicit `prepare` for missing banks.
+  Eight sizes have supplied signal banks: **8, 12, 16, 20, 24, 32, 48, 64**. Useful fading is
   Rayleigh (`m=1`) or Nakagami **m=2,3**, with elementary powers following a
   Gamma distribution of shape m and rate m.
 - A planar Poisson point process outside the disk **R0=1**, with unit-mean
@@ -117,11 +119,11 @@ The supported model is deliberately limited:
 - Two power conventions: **C-INR**, E F_W(d_i(1+gJ)/rho), and **C-TX**,
   E F_W(d_i(gJ+1/rho)). For finite d the C-INR floor is zero; the C-TX floor
   is evaluated at 1/rho=0. An infeasible allocation gives outage 1 at every SNR.
-- Propagated Chernoff bounds for Rayleigh N=20,24 with PPP interference,
-  and also N=8,64 without PPP interference. These give **sufficient designs**,
+- Propagated Chernoff bounds for Rayleigh at every integer N in [8, 64],
+  with or without interference, after preparing missing banks. These give **sufficient designs**,
   not impossibility proofs.
 
-Arbitrary N, arbitrary real m, eta outside [2.1, 8], other thermal
+N outside [8, 64], arbitrary real m, eta outside [2.1, 8], other thermal
 parameters, Rice fading, 3GPP channels, correlation, phase errors and RIS
 without thermal harvesting are not implemented. Unsupported inputs raise an explicit error (`ValueError`
 for unsupported model parameters). This is **not `inconclusive`** and no
@@ -142,7 +144,7 @@ time. Higher precision does not repair an unsuitable physical model.
 |---|---|
 | `provided-banks` | Composition computed on demand from integrity-checked signal and interference banks |
 | `mixed` | Supplied useful-gain bank; PPP, Gamma or J_max distribution computed locally for the requested case |
-| `generated-banks` | Reserved for locally prepared banks; not produced by any query in this version; planned for 0.4.0 |
+| `generated-banks` | At least one read bank was explicitly prepared in the local store, including when the environment is also computed locally |
 | `provided-certificate` | Final J_max bounds for N=20/24 read from archived certificates, explicitly without a new integration |
 | `analytic` | An exact result such as the zero C-INR floor |
 
@@ -157,8 +159,23 @@ result that uses no bank does not depend on bank contents.
 For lambda=0.1 or 1 and eta=3 or 4, supplied PPP/Gamma banks are used. For a
 new lambda or eta in the technical range [2.1, 8], the PPP inversion is computed on demand with Fourier, aliasing
 and tail remainder bounds; the default is M=2^18. The useful-gain bank is
-still supplied: this is not full regeneration of the case. The contract
+supplied or explicitly prepared; the environment is separate. The contract
 records bank filenames, SHA-256 digests, parameters and precision.
+
+For a new size (unreleased API), prepare once before querying:
+
+```python
+from certoutage import Model, prepare, floor
+model = Model(N=21, m=2); prepare(model)
+print(floor(model, 1).contract.source)
+```
+
+Use `prepare(model, dry_run=True)` for an ordered plan and one-core cost
+estimates without calculation or writes. Missing banks cause an immediate
+`BankNotAvailable` naming the preparation call; no query starts bank
+generation silently. The thermal ratio μ/σ stays fixed at 10 and belongs
+to generated thermal-bank identities. `examples/new_size.py --plan --json`
+prints the plan; omitting `--plan` runs preparation and the queries.
 
 ## Decisions and approximations
 

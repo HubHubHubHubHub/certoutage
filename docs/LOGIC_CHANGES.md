@@ -454,3 +454,31 @@ than left implicit. The J_max distribution depends on lambda and eta,
 not N or m; the latter enter through SIG. Central MINORANTS certificates
 are optional previously computed results, not a prerequisite for a new N.
 The public API, its validation and its cache/bank access remain unchanged.
+
+
+## Explicit useful-gain preparation (28 November 2026, unreleased)
+
+Model accepts exact integer N in [8, 64]; construction remains pure. Chernoff
+validation delegates to generation_scope (m=1 only). The route stays direct
+only at the historical embedded-gain cases without interference, and uses
+SIG otherwise; J_max still uses exact SIG and the existing central certificates.
+The new _prepare module supplies an explicit offline dependency plan and
+preparation step. Queries check availability before constructing an environment
+and never generate missing useful-gain banks implicitly.
+
+Schema-1 generated identities contain logical name, N, m, 160 bits, applicable
+power/stride, and, for thermal banks, thermal_ratio="10" and the exact input
+file digests. Small added adapters pass Fraction(10) to the unchanged thermal
+kernels. The source digest is pinned, with initial GENERATION_VERSION="1".
+Generated loading checks identity, digest, byte count and array structure.
+Embedded entries take priority. Atomic writes and immutable arrays retain
+the existing store semantics. Contracts label a locally prepared read bank
+as generated-banks, with stored-name receipts and descriptor versions;
+PPP/Gamma environments retain their on-demand calculation.
+
+No numerical kernel, bundled bank, fixture or manifest changes. The thermal
+ratio remains fixed in Model and Contract.parameters. The ten captured
+regression cases retain identical float.hex results and contracts. Offline
+plumbing tests, an opt-in forced m=3,N=8 reproduction and forced cluster
+comparisons exercise the integration; Chernoff comparisons use overlap
+because its binary64 initial root guess is noncertifying and machine dependent.

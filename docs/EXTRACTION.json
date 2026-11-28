@@ -616,7 +616,7 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "dimensioning with a configurable grid, exact decimal comparisons and new public statuses; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "c4c5280c459ad163c94e4facd346a3073d434ae273e4e462d5a846c23b4d4dc3"
+      "src/certoutage/api.py": "5c1600d0e5fc44dc1f8cb80978724200c5e2202dcb7c41c6790f1f3658f37b78"
     },
     "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); PPP domain notes only when an inversion contributes, and a note for the trivial regime tau*a0 >= 1, no numerical change (0.3.0, 27 November 2026); see docs/LOGIC_CHANGES.md; explicit preparation, logical bank resolution and expanded integer N domain (unreleased, 2026-11-28); see docs/LOGIC_CHANGES.md"
   },
@@ -627,7 +627,7 @@
     "destination_sha256": "70309e3e64fd654929333d1f8871d11df81f14af47db61b0698aa97b1d8a408d",
     "change": "J_max: analytic distribution and integration for new cases; central certificates provided; T28b: comparability of decisions, exported target, precision of provided certificates corrected; T28c: integrity-check vocabulary, no numerical change",
     "post_release_sha256": {
-      "src/certoutage/api.py": "c4c5280c459ad163c94e4facd346a3073d434ae273e4e462d5a846c23b4d4dc3"
+      "src/certoutage/api.py": "5c1600d0e5fc44dc1f8cb80978724200c5e2202dcb7c41c6790f1f3658f37b78"
     },
     "post_release_change": "Real path-loss exponent support outside _vendor; explicit eta=3,4 arithmetic preserved (0.3.0, 26 November 2026); PPP domain notes only when an inversion contributes, and a note for the trivial regime tau*a0 >= 1, no numerical change (0.3.0, 27 November 2026); see docs/LOGIC_CHANGES.md; explicit preparation, logical bank resolution and expanded integer N domain (unreleased, 2026-11-28); see docs/LOGIC_CHANGES.md"
   }
