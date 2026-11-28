@@ -61,7 +61,7 @@ it must never do either without saying so. In practice:
 
 - **Certifying files** are `src/certoutage/api.py`, `models.py`,
   `_runtime.py`, `_generate.py`, `_generate_gain.py`, `_nakagami.py`, `_chernoff.py`,
-  `_banks.py`, `_prepare.py` and `_vendor/`. `models.py`
+  `_banks.py`, `_prepare.py`, `_fetch.py` and `_vendor/`. `models.py`
   holds the validation of the inputs, the check that every result is a
   valid probability interval, and the outward display. A change to the
   logic of any of them is declared in
@@ -116,6 +116,22 @@ The default preparation tests replace full generators with structurally
 valid trivial bounds. Real forced generation is opt-in:
 `CERTOUTAGE_SLOW_TESTS=1 python -m pytest tests/unit/test_prepare.py`.
 Set `CERTOUTAGE_CACHE_DIR` for an isolated store when running examples.
+
+## Published-bank compatibility
+
+`_fetch.py` owns explicit verified retrieval, safe archive validation,
+nonreplacement of existing banks and the all-combinations readiness check.
+Changing the published set requires copying its exact manifest bytes to
+`data/BANK_SET.json` and updating `BANK_SET_SHA256` together. Never obtain
+trust pins from a remote manifest. The five large embedded-bank copies use
+`data/MANIFEST.json` pins, which must agree with the set's embedded entries.
+No mirror URL is registered until the actual files have been published.
+
+`tests/unit/test_fetch.py` uses small synthetic banks and local HTTP servers;
+it never needs a remote host. Real-deposit tests are opt-in with
+`CERTOUTAGE_BANKSET_DIR=/path/to/deposit`. The private
+`_banks._withhold_embedded` context manager simulates absent package files;
+it is only an audit hook. Queries and dry runs must never fetch implicitly.
 
 ## Dependency policy
 

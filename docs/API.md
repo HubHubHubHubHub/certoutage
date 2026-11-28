@@ -186,18 +186,21 @@ floats and numeric strings are refused. The eight embedded sizes remain
 Chernoff is available for Rayleigh m=1 throughout [8, 64], with or without
 interference; it is refused for m=2,3 with the generation-scope error.
 
-`prepare(model, *, gain="exact", dry_run=False) -> tuple[PreparedBank, ...]`
-is the explicit offline preparation step. Exact and Eq. (3) share banks.
+`prepare(model, *, gain="exact", dry_run=False, fetch=False) -> tuple[PreparedBank, ...]`
+is the explicit preparation step, offline by default. With `fetch=True`, it
+first calls `fetch_banks(model.N)` and then calculates anything still missing.
+Retrieval errors propagate; they never trigger calculation as a fallback.
+`dry_run=True` always suppresses retrieval, even with `fetch=True`. Exact and Eq. (3) share banks.
 It prepares the read set for all queries of the model and gain, plus missing
 inputs in dependency order. Embedded inputs take priority and verified cache
 entries are reused. It never prepares a PPP/Gamma environment; these remain
 on demand. All bank calculation uses 160 bits and one thread, restoring the
-caller's arithmetic context even on failure. Only `<cache>/generated/` is
-written. The fixed thermal ratio is passed as the exact Fraction(10).
+caller's arithmetic context even on failure. Local calculation writes only
+`<cache>/generated/`; explicit retrieval also uses `<cache>/fetched/`. The fixed thermal ratio is passed as the exact Fraction(10).
 
 `PreparedBank` is frozen, with `logical`, `stored_name`, `origin`, `sha256`,
-`bytes`, `seconds` and `estimated_seconds`. Origins are `embedded`, `cached`
-and `generated`; a dry-run plan uses `missing` for absent banks. Its digest
+`bytes`, `seconds` and `estimated_seconds`. Preparation origins are `embedded`,
+`fetched`, `cached` and `generated`; a dry-run plan uses `missing` for absent banks. Its digest
 and size are then None, and its stored name is None until all input digests
 are known. `seconds` measures the operation; `estimated_seconds` is a pair
 of estimated minimum/maximum seconds on one CPU core for a missing bank.
@@ -206,7 +209,8 @@ for `dataclasses.asdict`. See [cost estimates](REGENERATION.md#generation-scope-
 
 A query missing a required bank raises public `BankNotAvailable(LookupError)`
 before any thermal or PPP calculation, naming the missing logical banks,
-the exact prepare call and an estimated cost. Present corrupt banks raise
+a `fetch_banks(N)` call with the approximate archive size from the pinned
+index, and the exact prepare call with its estimated calculation cost. Present corrupt banks raise
 `IntegrityError`; preparation never silently repairs them. Analytic results
 retain their analytic contracts, but the query's route is checked for bank
 readiness first. A generated read bank sets `Contract.source` to
@@ -217,13 +221,83 @@ of certoutage, python-flint and NumPy. Chernoff notes also explain its
 machine-dependent initial-guess bytes. No thermal field is added to Model
 or Contract.parameters.
 
+## Explicit bank retrieval
+
+`fetch_banks(*sizes, url=None, directory=None, timeout=60.0) -> tuple[PreparedBank, ...]`
+installs the precomputed set for the requested sizes. Pass one or more exact
+Python integers in [8, 64], or `Model` objects (their N is used). Booleans and
+nonintegers are refused. Duplicates are merged, and sizes are processed in
+ascending order. For the full set, use `fetch_banks(*range(8, 65))`.
+There is one archive per N, except 20 and 24, which need none. The common
+bank and the large direct-route banks required by that N are fetched only
+when absent from the package and the verified local store.
+
+No published location is registered in this development version. Locations
+are selected in this order: explicit `url=`, nonempty `CERTOUTAGE_BANKS_URL`,
+then the package's ordered mirrors (currently empty). A location is a
+`{file}` template or a base with `/` and the filename appended. HTTPS is
+required, except HTTP to `127.0.0.1`, `::1` or `localhost`. Up to five redirects
+are allowed, and every destination is checked. TLS uses the default verified
+context and no proxies. Certificate failures explain `SSL_CERT_FILE`, a CA
+bundle from `certifi`, and manual download followed by `directory=`.
+
+For an offline deposit already on disk:
+
+```python
+from certoutage import fetch_banks
+banks = fetch_banks(8, 21, 63, directory="/path/to/deposit")
+```
+
+`url` and `directory` are mutually exclusive. A nonempty `CERTOUTAGE_OFFLINE`
+other than `0` refuses every retrieval without `directory=` before any socket
+is opened. The timeout is a finite positive number of seconds, applied to
+network operations. With all target banks already verified, no transfer is
+made (offline mode still requires `directory=`).
+
+Each archive, bank and descriptor is checked against byte counts and SHA-256
+digests in the package's byte-pinned `data/BANK_SET.json`. The five large
+embedded copies use the existing `data/MANIFEST.json` pins. Downloaded
+manifests are never trusted. Streaming is bounded by the pinned file size;
+temporary `.part` files are deleted on success, failure and interruption.
+All archive members must match the exact pinned set, names, regular-file
+types, sizes and digests before any member is installed. Validation uses
+`extractfile`, without extraction filters or automatic tar extraction.
+
+Public `BankDownloadError(BankNotAvailable)` reports transport failures,
+including offline mode, missing locations, HTTP/TLS errors and disallowed
+redirects. Only transport failures try the next configured mirror; the final
+error lists every attempt and preserves its cause. Any nonconforming content
+raises `IntegrityError` immediately, with no mirror retry. Neither error
+starts calculation or returns an `inconclusive` result. Python without `lzma`
+can still import the package; reading an archive raises `BankDownloadError`.
+
+A valid existing bank is never replaced. A different valid local Chernoff
+variant is preserved and reported with a warning; its digest can make the
+published thermal bank unreachable. Corrupt pairs raise `IntegrityError`;
+a lone bank or descriptor can be completed. After installation, all seven
+fading/gain combinations of every requested N must have no `missing` entry
+in `prepare(..., dry_run=True)`, otherwise `BankNotAvailable` identifies the
+missing entries and any preserved input conflict. An earlier successfully
+installed archive is retained if a later archive fails.
+
+The returned tuple has one `PreparedBank` per targeted bank, with its logical
+name, stored name, verified digest, byte count and elapsed `seconds`.
+`estimated_seconds` is None. `embedded` means a package copy, `cached` means
+a verified existing local copy, and `fetched` means a newly installed copy.
+Archives install schema-1 pairs in `generated/`, so queries using them have
+`source="generated-banks"` and the usual generated-bank provenance. Copies
+of the five large embedded banks retain their original receipts, notes and
+contracts. The wheel still includes all its banks.
+
 ## Bank store
 
-The store distinguishes `embedded`, `generated` and the reserved
-`fetched` origin. Public queries resolve embedded logical names first,
-then prepared local banks. Only explicit preparation invokes the writer.
-The `fetched` reader raises
-`NotImplementedError`; its future digests will be pinned in code.
+The store distinguishes `embedded`, `generated` and `fetched` origins.
+For a name in the embedded manifest, resolution first uses the package file
+if present, then `<cache>/fetched/<name>`, otherwise raises `BankNotAvailable`
+with a `certoutage.fetch_banks(N)` hint. Every fetched load checks the same
+manifest digest and size as the embedded copy. Other logical names resolve
+to schema-1 pairs in `generated/`. Only explicit preparation or retrieval
+writes banks; queries never retrieve them automatically.
 
 The cache location is resolved on every call: nonempty `CERTOUTAGE_CACHE_DIR`,
 otherwise nonempty absolute `XDG_CACHE_HOME` plus `/certoutage`, otherwise
@@ -231,9 +305,10 @@ otherwise nonempty absolute `XDG_CACHE_HOME` plus `/certoutage`, otherwise
 `CERTOUTAGE_CACHE_DIR` is used as given: `~` is not expanded and a relative
 value, like a relative `HOME`, depends on the current directory, so set an
 absolute path.
-Generated banks live in `generated/`; `fetched/` is never created. Importing
-or reading creates no directory or file. Embedded names always resolve to
-the package, regardless of cache contents.
+Generated banks live in `generated/`. Only `fetch_banks` creates `fetched/`,
+for verified copies and temporary transfers. Importing or reading creates no
+directory or file. A present package file always has priority over the cache;
+corruption of that file is an error, not a reason to fall back.
 
 A generated name hashes the canonical JSON of its family, exact flat
 parameters and generator name/version. Parameters accept strings, integers
@@ -251,8 +326,10 @@ name and version are part of the hashed identity. Invalid data raises `Integrity
 a missing bank or descriptor raises public `BankNotAvailable(LookupError)`
 with the name and cache directory, never a fallback. Absences are not cached.
 
-Only `_store_generated` writes, using deterministic NPZ entries and temporary
-files in the destination directory: bank first, descriptor last. Array keys
+Local generation through `_store_generated` uses deterministic NPZ entries
+and temporary files in the destination directory: bank first, descriptor last.
+Retrieval uses the same atomic writer and commit order after archive validation.
+Array keys
 match `[A-Za-z0-9_]{1,64}`, and the serialized bytes must decode to the
 requested arrays. A verified existing pair with the same arrays is left
 untouched; a corrupt pair, or one holding different arrays under the same

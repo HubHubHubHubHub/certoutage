@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Add explicit `fetch_banks` and `BankDownloadError`, with pinned SHA-256 and
+  byte counts, bounded HTTPS/loopback transfers, validated tar members and
+  offline directory installation. No published locations are registered yet.
+- Enable verified `fetched` copies of the five large embedded banks, preserving
+  receipts, notes and numerical contracts; keep every bank in the wheel.
+- Add opt-in `prepare(..., fetch=True)`, readiness postconditions, existing-bank
+  preservation and transfer estimates in missing-bank errors. Queries never fetch.
+
 - Accept every exact integer N in [8, 64]; expose offline `prepare`, immutable
   `PreparedBank` results and `BankNotAvailable` with explicit preparation hints.
 - Verify generated-bank structure, identity, SHA-256 and size on loading;

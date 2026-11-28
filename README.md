@@ -35,13 +35,15 @@ python -m venv .venv
 
 To contribute, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The only runtime dependencies are **python-flint 0.9.0 and NumPy**. Normal
-execution makes no network requests, does not access the original archive,
-and queries do not write numerical banks. The supplied banks are bundled
-in both the wheel and source distribution; explicit `prepare` writes missing
-banks to the local cache. Calculation caches live in memory; `clear_cache()`
-releases them. SciPy is optional for historical regeneration tools, through
-`.[regenerate]`.
+The only runtime dependencies are **python-flint 0.9.0 and NumPy**. Queries
+make no network requests and write no numerical banks. Only an explicit
+`fetch_banks()` call (or `prepare(..., fetch=True)`) downloads banks; every
+downloaded file is checked against SHA-256 digests pinned in the package.
+Queries do not access the original reproducibility archive. The supplied
+banks remain bundled in both the wheel and source distribution; explicit
+`prepare` calculates missing banks in the local cache. Calculation caches
+live in memory; `clear_cache()` releases them. SciPy is optional for historical
+regeneration tools, through `.[regenerate]`.
 
 ## Reference example: Table II
 
@@ -144,7 +146,7 @@ time. Higher precision does not repair an unsuitable physical model.
 |---|---|
 | `provided-banks` | Composition computed on demand from integrity-checked signal and interference banks |
 | `mixed` | Supplied useful-gain bank; PPP, Gamma or J_max distribution computed locally for the requested case |
-| `generated-banks` | At least one read bank was explicitly prepared in the local store, including when the environment is also computed locally |
+| `generated-banks` | At least one read bank comes from the generated store, installed by `fetch_banks` or calculated by `prepare`, including when the environment is also computed locally |
 | `provided-certificate` | Final J_max bounds for N=20/24 read from archived certificates, explicitly without a new integration |
 | `analytic` | An exact result such as the zero C-INR floor |
 
@@ -162,7 +164,24 @@ and tail remainder bounds; the default is M=2^18. The useful-gain bank is
 supplied or explicitly prepared; the environment is separate. The contract
 records bank filenames, SHA-256 digests, parameters and precision.
 
-For a new size (unreleased API), prepare once before querying:
+For a new size (unreleased API), install the pinned bank set once before querying:
+
+```python
+from certoutage import Model, fetch_banks, floor
+fetch_banks(21)
+print(floor(Model(N=21), 1).contract.source)
+```
+
+No published location is registered in this development version. Configure
+`url=` or `CERTOUTAGE_BANKS_URL` first, or use
+`fetch_banks(21, directory="/path/to/deposit")` for an offline installation.
+With no configured location and missing banks, the example raises
+`BankDownloadError`. `CERTOUTAGE_OFFLINE=1` blocks downloads but allows
+`directory=`. See [retrieval details](docs/API.md#explicit-bank-retrieval).
+Fetched copies of the five large embedded banks give exactly the same
+contracts as the package copies. Nothing is removed from the wheel here.
+
+Alternatively, calculate missing banks locally:
 
 ```python
 from certoutage import Model, prepare, floor
@@ -172,8 +191,8 @@ print(floor(model, 1).contract.source)
 
 Use `prepare(model, dry_run=True)` for an ordered plan and one-core cost
 estimates without calculation or writes. Missing banks cause an immediate
-`BankNotAvailable` naming the preparation call; no query starts bank
-generation silently. The thermal ratio μ/σ stays fixed at 10 and belongs
+`BankNotAvailable` naming both the fetch call with its transfer estimate and
+the preparation call; no query starts a download or bank generation silently. The thermal ratio μ/σ stays fixed at 10 and belongs
 to generated thermal-bank identities. `examples/new_size.py --plan --json`
 prints the plan; omitting `--plan` runs preparation and the queries.
 

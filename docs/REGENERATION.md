@@ -179,6 +179,10 @@ Process peak RSS was 554 MiB. Times depend on machine load.
 
 ### Generation scope (reachable through prepare)
 
+As an alternative to local calculation, explicit [`fetch_banks`](API.md#explicit-bank-retrieval)
+installs the precomputed set from a configured location or a local deposit,
+verifying every file against digests pinned in the package.
+
 The descriptor names the complete dependency closure for the current
 adapters, with the existing `commun.npz` as a shared input:
 

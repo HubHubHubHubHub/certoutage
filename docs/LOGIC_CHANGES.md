@@ -482,3 +482,32 @@ regression cases retain identical float.hex results and contracts. Offline
 plumbing tests, an opt-in forced m=3,N=8 reproduction and forced cluster
 comparisons exercise the integration; Chernoff comparisons use overlap
 because its binary64 initial root guess is noncertifying and machine dependent.
+
+
+## Explicit verified bank retrieval (28 November 2026, unreleased)
+
+The new `_fetch` module installs the precomputed bank set only on explicit
+`fetch_banks` or `prepare(fetch=True)` calls. The package pins the exact
+BANK_SET.json bytes and every archive/member digest and size. Transport uses
+verified TLS, loopback HTTP for local mirrors, bounded streaming and at most
+five validated redirects. Every archive member is checked before any member
+is installed, using extractfile without extraction filters. Transport errors
+may try another configured mirror; integrity errors stop immediately. Neither
+error falls back to calculation. Temporary transfers are always removed.
+
+Generated-store pairs retain schema 1 and bank-then-descriptor commit order.
+Valid existing banks are preserved even when local Chernoff bytes differ;
+corruption is refused. The final preparation plans must make all seven
+supported combinations ready, or identify missing banks and input conflicts.
+The fetched origin supplies missing package copies under the same embedded
+manifest pins, retaining every receipt, note, source and numerical contract.
+A private scoped withholding hook tests that release path. Package files
+still have priority, no bank is removed from the wheel, and no published
+location is registered in this development version.
+
+The certifying kernels are unchanged. Ten captured regression cases retain
+identical float.hex results and contracts. Local HTTP tests cover transport,
+corruption, forged archives, offline behavior and preservation; default tests
+reject twelve security mutations. Real-deposit controls check N=8,21,63 with
+and without package copies, and a local TLS control verifies both certificate
+rejection and explicit CA trust. The full suite also runs under python -O.
