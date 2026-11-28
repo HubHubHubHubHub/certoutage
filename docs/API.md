@@ -232,14 +232,26 @@ There is one archive per N, except 20 and 24, which need none. The common
 bank and the large direct-route banks required by that N are fetched only
 when absent from the package and the verified local store.
 
-No published location is registered in this development version. Locations
-are selected in this order: explicit `url=`, nonempty `CERTOUTAGE_BANKS_URL`,
-then the package's ordered mirrors (currently empty). A location is a
+Locations are selected in this order: explicit `url=`, nonempty
+`CERTOUTAGE_BANKS_URL`, then the package's ordered mirrors,
+`certoutage._fetch.MIRRORS`:
+
+1. the Zenodo data record 24630633, DOI
+   [10.5281/zenodo.24630633](https://doi.org/10.5281/zenodo.24630633)
+   (`https://zenodo.org/records/24630633/files/{file}?download=1`);
+2. the GitHub release `bankset-2026-11-28` of `HubHubHubHubHub/certoutage-banks`
+   (`https://github.com/HubHubHubHubHub/certoutage-banks/releases/download/bankset-2026-11-28/{file}`).
+
+Both serve the same 64 files, whose `MANIFEST.json` is the package's
+`data/BANK_SET.json` byte for byte. A transport error moves to the next
+mirror; an integrity error stops at once. A location is a
 `{file}` template or a base with `/` and the filename appended. HTTPS is
 required, except HTTP to `127.0.0.1`, `::1` or `localhost`. Up to five redirects
 are allowed, and every destination is checked. TLS uses the default verified
 context and no proxies. Certificate failures explain `SSL_CERT_FILE`, a CA
-bundle from `certifi`, and manual download followed by `directory=`.
+bundle from `certifi`, and manual download followed by `directory=`. On
+macOS, a python.org Python has no trusted roots until its
+`Install Certificates.command` has been run.
 
 For an offline deposit already on disk:
 

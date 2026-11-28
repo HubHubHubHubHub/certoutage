@@ -262,8 +262,31 @@ def test_offline_precedes_every_socket(monkeypatch, value):
     assert not _banks.cache_dir().exists()
 
 
+def test_published_mirrors():
+    assert fetch.MIRRORS == (
+        'https://zenodo.org/records/24630633/files/{file}?download=1',
+        'https://github.com/HubHubHubHubHub/certoutage-banks/releases/download/bankset-2026-11-28/{file}')
+    for base in fetch.MIRRORS:
+        fetch._check_url(base.replace('{file}', 'MANIFEST.json'))
+
+
+def test_default_mirrors_in_order_without_url(monkeypatch):
+    seen = []
+    class Refusing:
+        def open(self, request, timeout):
+            seen.append(request.full_url)
+            raise OSError('refused by the test')
+    monkeypatch.setattr(fetch, '_opener', Refusing)
+    with pytest.raises(co.BankDownloadError, match='All bank locations failed') as error:
+        co.fetch_banks(21)
+    archive = next(a['file'] for a in fetch.bank_set()['archives'] if a['N'] == 21)
+    assert seen == [base.replace('{file}', archive) for base in fetch.MIRRORS]
+    assert all(url in str(error.value) for url in seen)
+    _no_partial_install()
+
+
 def test_no_published_location(monkeypatch):
-    assert fetch.MIRRORS == ()
+    monkeypatch.setattr(fetch, 'MIRRORS', ())
     for name in ('socket', 'create_connection', 'getaddrinfo'):
         monkeypatch.setattr(socket, name, forbidden)
     with pytest.raises(co.BankDownloadError, match='No published.*url=.*CERTOUTAGE_BANKS_URL.*directory='):
@@ -654,6 +677,28 @@ def test_real_bank_set_over_local_http(monkeypatch, withheld):
             print(json.dumps(dict(withheld=withheld, seconds=perf_counter()-started,
                                   transferred_bytes=state['bytes'], installed_bytes=sum(r.bytes for r in rows if r.origin=='fetched'),
                                   requests=len(state['requests']))))
+
+
+@pytest.mark.skipif(os.environ.get('CERTOUTAGE_REAL_MIRRORS') != '1', reason='explicit control of the published mirrors')
+@pytest.mark.parametrize('withheld', [False, True])
+@pytest.mark.parametrize('mirror', ['default', 'zenodo', 'github'])
+def test_real_published_mirrors(monkeypatch, withheld, mirror):
+    url = {'default': None, 'zenodo': fetch.MIRRORS[0], 'github': fetch.MIRRORS[1]}[mirror]
+    _disable_generators(monkeypatch)
+    started = perf_counter()
+    with _banks._withhold_embedded(*fetch._LARGE_BANKS) if withheld else nullcontext():
+        rows = co.fetch_banks(8, 21, 63, url=url)
+        assert not list(_banks.cache_dir().rglob('*.part'))
+        for N in (8, 21, 63):
+            _ready(N)
+            for m, gain in COMBINATIONS:
+                point = co.outage_enclosure(co.Model(N=N, m=m), 1, 0, gain=gain)
+                assert 0 <= point.lower <= point.upper <= 1
+                if N != 8 or gain == 'chernoff':
+                    assert point.contract.source == 'generated-banks'
+        print(json.dumps(dict(mirror=mirror, withheld=withheld, seconds=perf_counter() - started,
+                              fetched=sum(r.origin == 'fetched' for r in rows),
+                              installed_bytes=sum(r.bytes for r in rows if r.origin == 'fetched'))))
 
 
 @pytest.mark.parametrize('kind', [tarfile.SYMTYPE, tarfile.LNKTYPE], ids=['symlink', 'hardlink'])

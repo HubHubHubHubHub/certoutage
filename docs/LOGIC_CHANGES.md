@@ -502,8 +502,9 @@ supported combinations ready, or identify missing banks and input conflicts.
 The fetched origin supplies missing package copies under the same embedded
 manifest pins, retaining every receipt, note, source and numerical contract.
 A private scoped withholding hook tests that release path. Package files
-still have priority, no bank is removed from the wheel, and no published
-location is registered in this development version.
+still have priority and no bank is removed from the wheel. The ordered
+mirrors are the Zenodo data record 10.5281/zenodo.24630633 and the GitHub
+release `bankset-2026-11-28`; all 64 served files match the pinned digests.
 
 The certifying kernels are unchanged. Ten captured regression cases retain
 identical float.hex results and contracts. Local HTTP tests cover transport,

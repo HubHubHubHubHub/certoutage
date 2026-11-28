@@ -172,12 +172,15 @@ fetch_banks(21)
 print(floor(Model(N=21), 1).contract.source)
 ```
 
-No published location is registered in this development version. Configure
-`url=` or `CERTOUTAGE_BANKS_URL` first, or use
-`fetch_banks(21, directory="/path/to/deposit")` for an offline installation.
-With no configured location and missing banks, the example raises
-`BankDownloadError`. `CERTOUTAGE_OFFLINE=1` blocks downloads but allows
-`directory=`. See [retrieval details](docs/API.md#explicit-bank-retrieval).
+The bank set is published as a Zenodo data record,
+[10.5281/zenodo.24630633](https://doi.org/10.5281/zenodo.24630633), mirrored
+by the GitHub release
+[`bankset-2026-11-28`](https://github.com/HubHubHubHubHub/certoutage-banks/releases/tag/bankset-2026-11-28).
+`fetch_banks` tries them in that order; the package pins every byte, so
+neither host is trusted. Use `url=` or `CERTOUTAGE_BANKS_URL` for another
+copy, or `fetch_banks(21, directory="/path/to/deposit")` for an offline
+installation from downloaded files. `CERTOUTAGE_OFFLINE=1` blocks downloads
+but allows `directory=`. See [retrieval details](docs/API.md#explicit-bank-retrieval).
 Fetched copies of the five large embedded banks give exactly the same
 contracts as the package copies. Nothing is removed from the wheel here.
 

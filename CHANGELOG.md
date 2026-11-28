@@ -4,7 +4,8 @@
 
 - Add explicit `fetch_banks` and `BankDownloadError`, with pinned SHA-256 and
   byte counts, bounded HTTPS/loopback transfers, validated tar members and
-  offline directory installation. No published locations are registered yet.
+  offline directory installation. Mirrors: the Zenodo data record
+  10.5281/zenodo.24630633, then the GitHub release `bankset-2026-11-28`.
 - Enable verified `fetched` copies of the five large embedded banks, preserving
   receipts, notes and numerical contracts; keep every bank in the wheel.
 - Add opt-in `prepare(..., fetch=True)`, readiness postconditions, existing-bank

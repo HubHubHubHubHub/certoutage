@@ -21,7 +21,12 @@ from ._prepare import PreparedBank, prepare
 from .models import Model
 
 BANK_SET_SHA256 = "9be6b78b5e63ac2a422a05f8ec90505a26912a55bda688a43a503f46b45d2a61"
-MIRRORS: tuple[str, ...] = ()
+# Published copies of the pinned set, tried in order on transport errors only:
+# the Zenodo data record (DOI 10.5281/zenodo.24630633), then a GitHub release.
+MIRRORS: tuple[str, ...] = (
+    "https://zenodo.org/records/24630633/files/{file}?download=1",
+    "https://github.com/HubHubHubHubHub/certoutage-banks/releases/download/bankset-2026-11-28/{file}",
+)
 _MEMBER = re.compile(r"generated/[A-Z][A-Z0-9]{0,15}_[0-9a-f]{16}\.(?:npz|json)")
 _LARGE_BANKS = ("m1_N8.npz", "m1_N64.npz", "m2_N8.npz", "m3_N8.npz", "commun.npz")
 
@@ -128,7 +133,7 @@ def _verified_file(pin: dict, locations: tuple[str, ...], directory: Path | None
 
     if directory is None and not locations:
         raise BankDownloadError(
-            "No published bank location is registered in this development version. "
+            "No published bank location is registered. "
             "Supply url= or CERTOUTAGE_BANKS_URL, or use directory= for a local deposit.")
     candidates = ((str(directory / pin["file"]),) if directory is not None else
                   tuple(base.replace("{file}", pin["file"]) if "{file}" in base else
